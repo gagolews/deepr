@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+
+
+<html class="writer-html5" lang="en" >
+<!-- Copyright (C) 2020-2022, Marek Gagolewski <https://www.gagolewski.com> -->
+
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="Deep R Programming" name="citation_title" />
+<meta content="Marek Gagolewski" name="citation_author" />
+<meta content="2022" name="citation_date" />
+<meta content="2022" name="citation_publication_date" />
+<meta content="https://deepr.gagolewski.com/deepr.pdf" name="citation_pdf_url" />
+<meta content="https://deepr.gagolewski.com/" name="citation_public_url" />
+<meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="citation_abstract" />
+<meta content="summary" name="twitter:card" />
+<meta content="Deep R Programming" name="twitter:title" />
+<meta content="Deep R Programming" name="og:title" />
+<meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="twitter:description" />
+<meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="og:description" />
+<meta content="gagolews/deepr" name="og:site_name" />
+<meta content="https://deepr.gagolewski.com/" name="og:url" />
+<meta content="https://deepr.gagolewski.com/_images/cover.png" name="twitter:image" />
+<meta content="https://deepr.gagolewski.com/_images/cover.png" name="og:image" />
+<meta content="https://deepr.gagolewski.com/" name="DC.identifier" />
+<meta content="Marek Gagolewski" name="DC.publisher" />
+<meta content="INDEX,FOLLOW" name="robots" />
+<meta content="book" name="og:type" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>8. Flow of Execution &mdash; Deep R Programming by Marek Gagolewski</title>
+  
+
+  
+  
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/proof.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://deepr.gagolewski.com/chapter/180-flow.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/proof.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9. Designing Functions" href="210-design.html" />
+    <link rel="prev" title="7. Functions" href="170-function.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html"> Deep R Programming
+          
+
+          
+          </a>
+
+          <div class="version">
+          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12 (draft)
+          </div>
+
+<!--
+          
+            
+            
+              <div class="version">
+                by Marek Gagolewski
+              </div>
+            
+          
+-->
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search phrase..." />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">This Book in PDF</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/deepr/">Report Bugs or Typos (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/teaching-data">Datasets</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://datawranglingpy.gagolewski.com">Data Wrangling with Python</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start Here</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="000-preface.html">Preface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deep</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="110-basics.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="120-numeric.html">2. Numeric Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="130-logical.html">3. Logical Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="140-list.html">4. Lists and Attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="150-indexing.html">5. Vector Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="160-character.html">6. Character Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="170-function.html">7. Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Flow of Execution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#conditional-evaluation">8.1. Conditional Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#return-value">8.1.1. Return Value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nested-ifs">8.1.2. Nested <strong class="command">if</strong>s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#condition-either-true-of-false">8.1.3. Condition: Either True of False</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#short-circuit-evaluation">8.1.4. Short-Circuit Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exception-handling">8.2. Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repeated-evaluation">8.3. Repeated Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#while">8.3.1. <strong class="command">while</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#for">8.3.2. <strong class="command">for</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#break-and-next">8.3.3. <strong class="command">break</strong> and <strong class="command">next</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#return">8.3.4. <strong class="command">return</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-note-on-time-and-space-complexity-of-algorithms">8.3.5. A Note on Time and Space Complexity of Algorithms (*)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">8.4. Exercises</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deeper</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="210-design.html">9. Designing Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="220-s3.html">10. S3 Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and Other Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="240-data-frame.html">12. Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="250-graphics.html">13. 🚧 Graphics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="310-compile.html">14. 🚧 Interfacing Compiled Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧 Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧 Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="340-eval-expr.html">17. 🚧 Evaluating Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="350-eval-fun.html">18. 🚧 Evaluating Functions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="998-changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="999-bibliography.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Deep R Programming</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><span class="section-number">8. </span>Flow of Execution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+
+        
+        
+        <a class="github-button" href="https://github.com/gagolews/deepr" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star gagolews/deepr on GitHub">GitHub</a>
+        
+
+
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="210-design.html" class="btn btn-neutral float-right" title="9. Designing Functions" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="170-function.html" class="btn btn-neutral float-left" title="7. Functions" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="flow-of-execution">
+<span id="chap-flow"></span><h1><span class="section-number">8. </span>Flow of Execution<a class="headerlink" href="#flow-of-execution" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p><em>The open-access textbook</em>
+Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
+is, and will remain, freely available for everyone’s enjoyment
+(also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
+It is a non-profit project.</em>
+<strong>This book is still a work in progress. Beta versions
+of Chapters 1–12 are already complete, but there will be more.
+In the meantime, any
+<a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
+are appreciated.</strong>
+<em>Although available online, it is a whole course;
+it should be read from the beginning to the end.
+Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id52" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. ISBN 978-0-6455719-1-2. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+</div></blockquote>
+<p>The <strong class="command">ifelse</strong> and <strong class="command">Map</strong> functions are very powerful,
+but they allow us to process only the consecutive elements
+in a vector.</p>
+<p>Thus, let us (finally!) discuss different ways to alter a program’s
+control flow manually, based on some criterion,
+and to evaluate the same expression a number of times,
+but perhaps on different data.
+Before proceeding any further, let us, however, contemplate on the fact
+that we have managed to do without them for such a long time –
+and the data processing exercises we learnt to solve
+were far from trivial.</p>
+<section id="conditional-evaluation">
+<span id="sec-if"></span><h2><span class="section-number">8.1. </span>Conditional Evaluation<a class="headerlink" href="#conditional-evaluation" title="Permalink to this heading"></a></h2>
+<p>Life is full of surprises, so we would be nice if we were able to adapt to
+whatever the circumstances are going to be.</p>
+<p>The following evaluates a given <code class="docutils literal notranslate"><span class="pre">expression</span></code> <em>if and only if</em>
+a logical <code class="docutils literal notranslate"><span class="pre">condition</span></code> is true.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="n">expression</span>
+</pre></div>
+</div>
+<p>When performing some <code class="docutils literal notranslate"><span class="pre">other_expression</span></code> is preferred
+rather than doing nothing in the case of the <code class="docutils literal notranslate"><span class="pre">condition</span></code>’s being false,
+we can write:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="n">expression</span> <span class="n">else</span> <span class="n">other_expression</span>
+</pre></div>
+</div>
+<p>For instance:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>  <span class="c1"># to spice things up</span>
+<span class="c1">## [1] 0.28758</span>
+<span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span> <span class="n">else</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
+<span class="c1">## tail</span>
+</pre></div>
+</div>
+<p>Many expressions can of course be grouped with curly braces, “<code class="docutils literal notranslate"><span class="pre">{</span></code>”</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<span class="p">}</span>
+<span class="c1">## tail</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] 0</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>At the top level, we should not put a new line before <strong class="command">else</strong>,
+otherwise we will get an error like <code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">unexpected</span> <span class="pre">'else'</span> <span class="pre">in</span> <span class="pre">&quot;else&quot;</span></code>.
+This is because the interpreter enthusiastically executes the statements
+been read line by line as soon as it regards them
+as stand-alone expressions.
+In this case, we first get an <strong class="command">if</strong> without <strong class="command">else</strong>,
+and then, separately, a <em>dangling</em> <strong class="command">else</strong> without the preceding
+<strong class="command">if</strong>.</p>
+<p>This does not happen when a conditional statement is part
+of an expression group, because the latter is read in its entirety.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function </span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>  <span class="c1"># opening bracket – start</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span>
+    <span class="n">else</span>              <span class="c1"># not dandling, because {...} is read as a whole</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
+<span class="p">}</span>  <span class="c1"># closing bracket – expression ends</span>
+</pre></div>
+</div>
+<p>As an exercise, try removing the curly braces and see what happens.</p>
+</div>
+<section id="return-value">
+<h3><span class="section-number">8.1.1. </span>Return Value<a class="headerlink" href="#return-value" title="Permalink to this heading"></a></h3>
+<p>`<strong class="command">if</strong>` is a function (compare <a class="reference internal" href="210-design.html#sec-syntactic-sugar"><span class="std std-numref">Section 9.4</span></a>),
+hence has a return value – the result of evaluating the
+conditional expression.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>
+<span class="c1">## [1] 0.28758</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="s">&quot;head&quot;</span>  <span class="c1"># no else</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="c1">## NULL</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="s">&quot;head&quot;</span> <span class="n">else</span> <span class="s">&quot;tail&quot;</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="c1">## [1] &quot;tail&quot;</span>
+</pre></div>
+</div>
+<p>This is particularly useful when a call to `<strong class="command">if</strong>`
+is the last expression in the code block constituting a function’s body.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mint</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span>  <span class="c1"># the last expression (actually, the only one)</span>
+        <span class="s">&quot;head&quot;</span>        <span class="c1"># this can be the return value...</span>
+    <span class="n">else</span>
+        <span class="s">&quot;tail&quot;</span>        <span class="c1"># or this one, depending on the condition</span>
+<span class="p">}</span>
+
+<span class="nf">mint</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;tail&quot;</span>
+<span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mint</span><span class="p">,</span> <span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span>
+<span class="c1">## [1] &quot;tail&quot; &quot;head&quot; &quot;tail&quot; &quot;head&quot; &quot;head&quot;</span>
+</pre></div>
+</div>
+<div class="proof proof-type-example" id="id7">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 8.1</span>
+        
+    </div><div class="proof-content">
+<p>Add-on packages can also be loaded using <strong class="command">requireNamespace</strong>.
+Contrary to <strong class="command">library</strong>, the former does not fail
+when a package is not available. Also, it does not attach
+it on the search list; see <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:to-do</span></code>.</p>
+<p>Instead, it returns a logical value indicating if the package is available
+for use. This can be useful inside other functions where the availability
+of some additional features depends on the user environment’s configuration:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">process_data</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;some_extension_package&quot;</span><span class="p">,</span> <span class="n">quietly</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+        <span class="n">some_extension_package</span><span class="o">::</span><span class="nf">very_fast_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">else</span>
+        <span class="nf">normal_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></div></section>
+<section id="nested-ifs">
+<h3><span class="section-number">8.1.2. </span>Nested <strong class="command">if</strong>s<a class="headerlink" href="#nested-ifs" title="Permalink to this heading"></a></h3>
+<p>If more than two test cases are possible, i.e.,
+when we need to go beyond either <code class="docutils literal notranslate"><span class="pre">condition</span></code> or
+<code class="docutils literal notranslate"><span class="pre">!condition</span></code>, then we can use the following construction:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">expression_a</span>
+<span class="p">}</span> <span class="n">else</span> <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">expression_b</span>
+<span class="p">}</span> <span class="n">else</span> <span class="nf">if </span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">expression_c</span>
+<span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
+    <span class="n">expression_else</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This evaluates all conditions <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, … (in this order)
+until the first positive case is found,
+and then executes the corresponding <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
+<p>Note that the above is nothing else than a series of nested
+<strong class="command">if</strong> statements:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">expression_a</span>
+<span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">expression_b</span>
+    <span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
+        <span class="nf">if </span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">expression_c</span>
+        <span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
+            <span class="n">expression_else</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>but written in a less readable<a class="footnote-reference brackets" href="#footswitch" id="id2">1</a> manner.</p>
+<div class="proof proof-type-exercise" id="id8">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.2</span>
+        
+    </div><div class="proof-content">
+<p>Write a function named <strong class="command">sign</strong> that determines
+if a given numeric value is <code class="docutils literal notranslate"><span class="pre">&quot;positive&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;negative&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;zero&quot;</span></code>.</p>
+</div></div></section>
+<section id="condition-either-true-of-false">
+<h3><span class="section-number">8.1.3. </span>Condition: Either True of False<a class="headerlink" href="#condition-either-true-of-false" title="Permalink to this heading"></a></h3>
+<p><strong class="command">if</strong> expects a <code class="docutils literal notranslate"><span class="pre">condition</span></code> that is a single, well-defined logical
+value, either <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.
+Thence, problems may arise when this is not the case.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">condition</span></code> is of length not equal to one,
+we get an error:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<span class="c1">## Error in if (c(TRUE, FALSE)) cat(&quot;spam&quot;): the condition has length &gt; 1</span>
+<span class="nf">if </span><span class="p">(</span><span class="nf">logical</span><span class="p">(</span><span class="m">0</span><span class="p">))</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;bacon&quot;</span><span class="p">)</span>
+<span class="c1">## Error in if (logical(0)) cat(&quot;bacon&quot;): argument is of length zero</span>
+</pre></div>
+</div>
+<p>We cannot pass a missing value either:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="kc">NA</span><span class="p">)</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">)</span>
+<span class="c1">## Error in if (NA) cat(&quot;ham&quot;): missing value where TRUE/FALSE needed</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If we think that we are absolutely immune to the writing of
+code violating the above constraints, just we
+wait until the <code class="docutils literal notranslate"><span class="pre">condition</span></code> becomes a function of data
+for which there is no sanity-checking in place.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mint</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="s">&quot;H&quot;</span> <span class="n">else</span> <span class="s">&quot;T&quot;</span>
+
+<span class="nf">mint</span><span class="p">(</span><span class="m">0.25</span><span class="p">)</span>
+<span class="c1">## [1] &quot;T&quot;</span>
+<span class="nf">mint</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">))</span>
+<span class="c1">## Error in if (x &gt; 0.5) &quot;H&quot; else &quot;T&quot;: the condition has length &gt; 1</span>
+<span class="nf">mint</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span>  <span class="c1"># not obvious, only triggered sometimes</span>
+<span class="c1">## Warning in log(rnorm(1)): NaNs produced</span>
+<span class="c1">## Error in if (x &gt; 0.5) &quot;H&quot; else &quot;T&quot;: missing value where TRUE/FALSE needed</span>
+</pre></div>
+</div>
+<p>In <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>, we will be particularly interested
+in ways to assure input data integrity, so that situations
+such as above will either fail gracefully or succeed bombastically.</p>
+<p>Here, we should probably make sure that <code class="docutils literal notranslate"><span class="pre">x</span></code> is a single finite numeric value.
+Alternatively, we had rather test whether
+<strong class="command">all</strong><code class="code docutils literal notranslate"><span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">0.5,</span> <span class="pre">na.rm=TRUE)</span></code>.</p>
+</div>
+<p>Interestingly, objects other that logical are accepted: they will be coerced
+if needed.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span>
+<span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># i.e., length(x) != 0, but way less readable</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;length is not zero&quot;</span><span class="p">)</span>
+<span class="c1">## length is not zero</span>
+</pre></div>
+</div>
+<p>Recall that coercion of numeric to logical yields <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> if and
+only if the original value is zero.</p>
+</section>
+<section id="short-circuit-evaluation">
+<span id="sec-short-circuit-ops"></span><h3><span class="section-number">8.1.4. </span>Short-Circuit Evaluation<a class="headerlink" href="#short-circuit-evaluation" title="Permalink to this heading"></a></h3>
+<p>Specially for formulating logical conditions
+in <strong class="command">if</strong> and <strong class="command">while</strong> (see below),
+we have the <em>scalar</em> `<strong class="command">||</strong>` (alternative) and
+`<strong class="command">&amp;&amp;</strong>` (conjunction) operators.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="kc">FALSE</span> <span class="o">||</span> <span class="kc">TRUE</span>
+<span class="c1">## [1] TRUE</span>
+<span class="kc">NA</span> <span class="o">||</span> <span class="kc">TRUE</span>
+<span class="c1">## [1] TRUE</span>
+</pre></div>
+</div>
+<p>Contrary to their vectorised counterparts (`<strong class="command">|</strong>`
+and `<strong class="command">&amp;</strong>`),
+the scalar operators are lazy (<a class="reference internal" href="210-design.html#sec-lazy-eval"><span class="std std-numref">Section 9.5.5</span></a>) in the sense
+that they evaluate the first operand and then determine if the computing
+of the second one is necessary
+(because, e.g., <code class="docutils literal notranslate"><span class="pre">FALSE</span> <span class="pre">&amp;&amp;</span> <span class="pre">whatever</span></code> is always <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> anyway).</p>
+<p>Therefore,</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">expression</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>  <span class="c1"># compute b only if a is TRUE</span>
+        <span class="n">expression</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span> <span class="o">||</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">expression</span>
+</pre></div>
+</div>
+<p>corresponds to:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">expression</span>
+<span class="p">}</span> <span class="n">else</span> <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>  <span class="c1"># compute b only if a is FALSE</span>
+    <span class="n">expression</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For instance,
+“<strong class="command">is.vector</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">&amp;&amp;</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">&gt;</span> <span class="pre">0</span> <span class="pre">&amp;&amp;</span> <span class="pre">x[[1]]</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>” is a safe test that takes into account
+that “<code class="docutils literal notranslate"><span class="pre">x[[1]]</span></code>” has only the desired meaning for objects that
+are not non-empty vectors.</p>
+<p>Some other examples (recall that the expressions
+within the curly braces are evaluated one after another
+and that the result is determined by the last value in the series):</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">);</span> <span class="kc">FALSE</span><span class="p">}</span> <span class="o">||</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">);</span> <span class="kc">TRUE</span><span class="p">}</span> <span class="o">||</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;cherries&quot;</span><span class="p">);</span> <span class="kc">FALSE</span><span class="p">}</span>
+<span class="c1">## spamham</span>
+<span class="c1">## [1] TRUE</span>
+<span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">);</span> <span class="kc">TRUE</span><span class="p">}</span> <span class="o">&amp;&amp;</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">);</span> <span class="kc">FALSE</span><span class="p">}</span> <span class="o">&amp;&amp;</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;cherries&quot;</span><span class="p">);</span> <span class="kc">TRUE</span><span class="p">}</span>
+<span class="c1">## spamham</span>
+<span class="c1">## [1] FALSE</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id9">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.3</span>
+        
+    </div><div class="proof-content">
+<p>Study the source code of
+<strong class="command">isTRUE</strong> and <strong class="command">isFALSE</strong>
+and determine if these functions could be useful in
+formulating the conditions within the <strong class="command">if</strong> expressions.</p>
+</div></div></section>
+</section>
+<section id="exception-handling">
+<span id="sec-exceptions"></span><h2><span class="section-number">8.2. </span>Exception Handling<a class="headerlink" href="#exception-handling" title="Permalink to this heading"></a></h2>
+<p>Exceptions are exceptional, but they may happen and break things.
+For instance, when we try to download a file and the internet
+connection drops. Or an optimisation algorithm fails to converge.
+Or we just have a bug in our code. Or:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;/path/to/a/file/that/does/not/exist&quot;</span><span class="p">)</span>
+<span class="c1">## Warning in file(file, &quot;rt&quot;): cannot open file &#39;/path/to/a/file/that/does/</span>
+<span class="c1">## not/exist&#39;: No such file or directory</span>
+<span class="c1">## Error in file(file, &quot;rt&quot;): cannot open the connection</span>
+</pre></div>
+</div>
+<p>Three types of <em>conditions</em> are frequently observed:</p>
+<ul class="simple">
+<li><p>errors – they stop the flow of execution,</p></li>
+<li><p>warnings – non critical, but can be turned into errors
+(see <code class="docutils literal notranslate"><span class="pre">warn</span></code> in <strong class="command">option</strong>),</p></li>
+<li><p>messages – they transmit some diagnostic information.</p></li>
+</ul>
+<p>These can be manually triggered by means of
+<strong class="command">stop</strong>, <strong class="command">warning</strong>, and <strong class="command">message</strong> functions.</p>
+<p>Errors (but warnings too) can be handled by means of the
+<strong class="command">tryCatch</strong> function, amongst others.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">tryCatch</span><span class="p">({</span>           <span class="c1"># block of expressions to execute, until an error occurs</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;a\n&quot;</span><span class="p">)</span>
+        <span class="nf">stop</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">)</span>    <span class="c1"># error – breaks the linear control flow</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;c\n&quot;</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>  <span class="c1"># executed immediately upon an error</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;error: %s\n&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">[[</span><span class="s">&quot;message&quot;</span><span class="p">]]))</span>
+    <span class="p">},</span>
+    <span class="n">finally</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># always executed at the end, regardless of error occurrence</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;finally!\n&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="c1">## a</span>
+<span class="c1">## error: b</span>
+<span class="c1">## finally!</span>
+</pre></div>
+</div>
+<p>The two other conditions can be ignored by calling
+<strong class="command">suppressWarnings</strong> and
+<strong class="command">suppressMessages</strong>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="m">-1</span><span class="p">)</span>
+<span class="c1">## Warning in log(-1): NaNs produced</span>
+<span class="c1">## [1] NaN</span>
+<span class="nf">suppressWarnings</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="m">-1</span><span class="p">))</span>  <span class="c1"># yeah, yeah, we know what we&#39;re doing</span>
+<span class="c1">## [1] NaN</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id10">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.4</span>
+        
+    </div><div class="proof-content">
+<p>At the time of writing of this book,
+the <strong class="program">data.table</strong> package emits a message upon attachment.
+Call <strong class="command">suppressMessages</strong> to silence it.
+Note that consecutive calls to <strong class="command">library</strong> do not
+reload an already loaded package, therefore the message will only
+be seen once per R session.</p>
+</div></div><p>Related functions include <strong class="command">stopifnot</strong> discussed
+in <a class="reference internal" href="210-design.html#sec-fun-io"><span class="std std-numref">Section 9.2</span></a> and <strong class="command">on.exit</strong> mentioned
+in <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:to-do</span></code>; see also <a class="reference internal" href="210-design.html#sec-code-quality"><span class="std std-numref">Section 9.3.4</span></a>
+for some code debugging tips.</p>
+</section>
+<section id="repeated-evaluation">
+<span id="sec-loops"></span><h2><span class="section-number">8.3. </span>Repeated Evaluation<a class="headerlink" href="#repeated-evaluation" title="Permalink to this heading"></a></h2>
+<p>And now for something completely different…
+time for the elephant in the room!</p>
+<p>We have been able to do without loops so far
+(and will be quite all right in the second part of the book too),
+because many data processing tasks can be written in terms
+of vectorised operations such as
+`<strong class="command">+</strong>`,
+<strong class="command">sqrt</strong>,
+<strong class="command">sum</strong>,
+`<strong class="command">[</strong>`,
+<strong class="command">Map</strong>, and
+<strong class="command">Reduce</strong>.
+Oftentimes, compared to their
+loop-based counterparts,
+they are not only much more readable  but also more efficient.
+We will explore this in the exercises below.</p>
+<p>However, at times, using an explicit <strong class="command">while</strong> or <strong class="command">for</strong> loop
+might be the only natural way of solving a problem,
+for instance, when processing chunks of data streams.
+Also, an explicitly “looped” algorithm may occasionally
+have better<a class="footnote-reference brackets" href="#footcpp" id="id3">2</a> time or memory complexity.</p>
+<section id="while">
+<h3><span class="section-number">8.3.1. </span><strong class="command">while</strong><a class="headerlink" href="#while" title="Permalink to this heading"></a></h3>
+<p><strong class="command">if</strong> considers a given logical condition and thus determines
+whether to execute a given statement.
+On the other hand,</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">while </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>  <span class="c1"># single TRUE or FALSE, as in `if`</span>
+    <span class="n">expression</span>
+</pre></div>
+</div>
+<p>evaluates a given <code class="docutils literal notranslate"><span class="pre">expression</span></code> <em>as long as</em> the logical <code class="docutils literal notranslate"><span class="pre">condition</span></code> is true.
+Therefore, it is advisable to make the <code class="docutils literal notranslate"><span class="pre">condition</span></code> dependent upon
+some variable that can be modified by the <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d, &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+<span class="p">}</span>
+<span class="c1">## 1, 2, 3,</span>
+</pre></div>
+</div>
+<p>Nested loops are of course possible too:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">j</span> <span class="o">&lt;-</span> <span class="m">1</span>
+    <span class="nf">while </span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d %d, &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+        <span class="n">j</span> <span class="o">&lt;-</span> <span class="n">j</span> <span class="o">+</span> <span class="m">1</span>
+    <span class="p">}</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+<span class="p">}</span>
+<span class="c1">## 1 1, 1 2, 1 3, </span>
+<span class="c1">## 2 1, 2 2, 2 3,</span>
+</pre></div>
+</div>
+<div class="proof proof-type-example" id="id11">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 8.5</span>
+        
+    </div><div class="proof-content">
+<p>Implement a simple linear congruential pseudorandom number generator
+that, given some seed <span class="math notranslate nohighlight">\(X_0\in [0, m)\)</span>,
+outputs a sequence <span class="math notranslate nohighlight">\((X_1,X_2,\dots)\)</span> defined by:</p>
+<div class="math notranslate nohighlight">
+\[
+X_i = (a X_{i-1} + c) \mod m,
+\]</div>
+<p>with, e.g.,  <span class="math notranslate nohighlight">\(a=75\)</span>, <span class="math notranslate nohighlight">\(c=74\)</span>, and <span class="math notranslate nohighlight">\(m=2^{16}+1\)</span>
+(here, <em>mod</em> is the division reminder, `<strong class="command">%%</strong>`).
+Note that this generator has poor statistical properties
+and should not be used in practice.
+In particular, after some number of operations <span class="math notranslate nohighlight">\(k\)</span>,
+we will find a cycle such that <span class="math notranslate nohighlight">\(X_k=X_1, X_{k+1}=X_2, \dots\)</span>.</p>
+</div></div></section>
+<section id="for">
+<h3><span class="section-number">8.3.2. </span><strong class="command">for</strong><a class="headerlink" href="#for" title="Permalink to this heading"></a></h3>
+<p>The for-each loop:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">name</span> <span class="n">in</span> <span class="n">vector</span><span class="p">)</span>
+    <span class="n">expression</span>
+</pre></div>
+</div>
+<p>takes each element, from the beginning to the end,
+in a given <code class="docutils literal notranslate"><span class="pre">vector</span></code>, assigns it some <code class="docutils literal notranslate"><span class="pre">name</span></code>, and evaluates the <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fridge</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;eggs&quot;</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">food</span> <span class="n">in</span> <span class="n">fridge</span><span class="p">)</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s, &quot;</span><span class="p">,</span> <span class="n">food</span><span class="p">))</span>
+<span class="c1">## spam, spam, bacon, eggs,</span>
+</pre></div>
+</div>
+<p>One more:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">fridge</span><span class="p">))</span>  <span class="c1"># better: seq_along(fridge), see below</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s, &quot;</span><span class="p">,</span> <span class="n">fridge</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="c1">## spam, spam, bacon, eggs,</span>
+</pre></div>
+</div>
+<p>Just one more, promise:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">for </span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
+        <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d %d, &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">## 1 1, 1 2, 1 3, </span>
+<span class="c1">## 2 1, 2 2, 2 3,</span>
+</pre></div>
+</div>
+<p>Note that the iterator still exists after the loop’s watch has ended:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="c1">## [1] 2</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="c1">## [1] 3</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Writing:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>is not necessarily safe, because if <code class="docutils literal notranslate"><span class="pre">x</span></code> is an empty vector, then:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">logical</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="c1">## [1] NA</span>
+<span class="c1">## logical(0)</span>
+</pre></div>
+</div>
+<p>Recall from <a class="reference internal" href="150-indexing.html#chap-indexing"><span class="std std-numref">Chapter 5</span></a> that
+<code class="docutils literal notranslate"><span class="pre">x[1]</span></code> tries to access an out of bounds element here
+and <code class="docutils literal notranslate"><span class="pre">x[0]</span></code> returns nothing.</p>
+<p>We generally suggest replacing
+<code class="docutils literal notranslate"><span class="pre">1:</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>
+with <strong class="command">seq_along</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> or
+<strong class="command">seq_len</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>.
+wherever possible.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The model <strong class="command">for</strong> loop above is roughly equivalent to:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+<span class="n">tmp_vector</span> <span class="o">&lt;-</span> <span class="n">vector</span>
+<span class="n">tmp_iter</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">tmp_iter</span> <span class="o">&lt;=</span> <span class="nf">length</span><span class="p">(</span><span class="n">tmp_vector</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">name</span> <span class="o">&lt;-</span> <span class="n">tmp_vector</span><span class="p">[[</span><span class="n">tmp_iter</span><span class="p">]]</span>
+    <span class="n">expression</span>
+    <span class="n">tmp_iter</span> <span class="o">&lt;-</span> <span class="n">tmp_iter</span> <span class="o">+</span> <span class="m">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">tmp_vector</span></code> is determined before the loop itself.
+Hence, any changes to <code class="docutils literal notranslate"><span class="pre">vector</span></code> will not influence the execution flow.
+Also note that due to the use of `<strong class="command">[[</strong>`,
+the loop can be applied on lists as well.</p>
+</div>
+<div class="proof proof-type-example" id="id12">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 8.6</span>
+        
+    </div><div class="proof-content">
+<p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> be a list and <strong class="command">f</strong> be a function.
+The following code generates the same result
+as <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x)</span></code>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ret</span> <span class="o">&lt;-</span> <span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># a new list of length `n`</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div></div><div class="proof proof-type-example" id="id13">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 8.7</span>
+        
+    </div><div class="proof-content">
+<p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> be two lists and <strong class="command">f</strong> be a function.
+Here is the most basic version of
+<strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">y)</span></code>.
+Note that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> might be of different lengths.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ny</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">max</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+<span class="n">ret</span> <span class="o">&lt;-</span> <span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">nx</span><span class="p">)</span><span class="m">+1</span><span class="p">]],</span> <span class="n">y</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">ny</span><span class="p">)</span><span class="m">+1</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>Feel free to upgrade the above by adding a warning like
+<em>the longer argument is not a multiple of the length of the shorter one</em>.
+Also, rewrite it without the use of the modulo operators, `<strong class="command">%%</strong>`.</p>
+</div></div></section>
+<section id="break-and-next">
+<h3><span class="section-number">8.3.3. </span><strong class="command">break</strong> and <strong class="command">next</strong><a class="headerlink" href="#break-and-next" title="Permalink to this heading"></a></h3>
+<p><strong class="command">break</strong> can be used to escape the current loop.
+<strong class="command">next</strong> skips the remaining expressions and advances
+to the next iteration (to where the testing of
+the logical condition occurs).</p>
+<p>Here is a rather random example:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">e</span> <span class="o">&gt;</span> <span class="m">0.1</span><span class="p">)</span>
+        <span class="n">next</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">e</span> <span class="o">&lt;</span> <span class="m">0.01</span><span class="p">)</span>
+        <span class="n">break</span>
+
+    <span class="n">s</span> <span class="o">&lt;-</span> <span class="n">s</span> <span class="o">+</span> <span class="n">e</span>
+<span class="p">}</span>
+<span class="c1">## [1] 0.045556</span>
+<span class="c1">## [1] 0.04206</span>
+<span class="c1">## [1] 0.024614</span>
+<span class="c1">## [1] 0.045831</span>
+<span class="c1">## [1] 0.094841</span>
+<span class="c1">## [1] 0.00062477</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="c1">## [1] 0.2529</span>
+</pre></div>
+</div>
+<p>Computes the sum of the elements in <code class="docutils literal notranslate"><span class="pre">x</span></code>
+that are less than or equal to 0.1 from the beginning,
+stopping at the first element less than 0.01.</p>
+<p>Note that we have used the frequently occurring design pattern:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+        <span class="n">next</span>
+
+    <span class="n">many_statements...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>which is equivalent to:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="n">condition</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">many_statements...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>but avoids introducing a nested block of expressions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(*)
+There is a third loop type,</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span>
+    <span class="n">expression</span>
+</pre></div>
+</div>
+<p>which is a shorthand for</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">while </span><span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span>
+    <span class="n">expression</span>
+</pre></div>
+</div>
+<p>i.e., it is a possibly infinite loop.
+Such loops are useful when implementing situations such as
+<em>do</em>-stuff-<em>until</em>-a-thing-happens,
+e.g., when we want to execute a command at least once.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="n">repeat</span> <span class="p">{</span>  <span class="c1"># while (TRUE)</span>
+    <span class="c1"># simulate dice casting until we throw &quot;1&quot;</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span> <span class="n">break</span>  <span class="c1"># not an infinite loop after all</span>
+    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span><span class="m">+1</span>
+<span class="p">}</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="c1">## [1] 6</span>
+</pre></div>
+</div>
+</div>
+<div class="proof proof-type-exercise" id="id14">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.8</span>
+        
+    </div><div class="proof-content">
+<p>What is wrong with the following code?</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">j</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">j</span> <span class="o">%%</span> <span class="m">2</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="n">next</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="n">j</span> <span class="o">&lt;-</span> <span class="n">j</span> <span class="o">+</span> <span class="m">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></div><div class="proof proof-type-exercise" id="id15">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.9</span>
+        
+    </div><div class="proof-content">
+<p>What about this one?</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">j</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">);</span>
+    <span class="n">j</span> <span class="o">&lt;-</span> <span class="n">j</span> <span class="o">+</span> <span class="m">1</span>
+</pre></div>
+</div>
+</div></div></section>
+<section id="return">
+<h3><span class="section-number">8.3.4. </span><strong class="command">return</strong><a class="headerlink" href="#return" title="Permalink to this heading"></a></h3>
+<p><strong class="command">return</strong>, when called from within a function,
+immediately yields a specified value and goes back to the caller.</p>
+<p>For example, here is a simple recursive function
+that flattens a given list:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">my_unlist</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">is.atomic</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="nf">return</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># so if we are here, x is definitely not atomic</span>
+    <span class="n">out</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+    <span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nf">my_unlist</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="n">out</span>  <span class="c1"># or return(out); it&#39;s the last expression anyway, so not necessary</span>
+<span class="p">}</span>
+
+<span class="nf">my_unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="m">3</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="m">7</span><span class="o">:</span><span class="m">10</span><span class="p">)))))</span>
+<span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
+</pre></div>
+</div>
+<p>Note that <strong class="command">return</strong> is a function: the round brackets
+are obligatory,</p>
+</section>
+<section id="a-note-on-time-and-space-complexity-of-algorithms">
+<span id="sec-time-complexity"></span><h3><span class="section-number">8.3.5. </span>A Note on Time and Space Complexity of Algorithms (*)<a class="headerlink" href="#a-note-on-time-and-space-complexity-of-algorithms" title="Permalink to this heading"></a></h3>
+<p>Analysis of algorithms (e.g., <span id="id4">[<a class="reference internal" href="999-bibliography.html#id57" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">9</a>, <a class="reference internal" href="999-bibliography.html#id26" title="Knuth, D.E. (1997).  The Art of Computer Programming I: Fundamental Algorithms. Addison-Wesley.">34</a>]</span>),
+can give us a rough estimate of their run times
+or memory consumption as a function of the input data size,
+especially for <em>big</em> data.</p>
+<p>In scientific computing and data science, we
+most often deal with vectors (sequences)
+or matrices/data frames (tabular data).
+Therefore, we might be interested in determining how many
+<em>primitive operations</em> need to be performed as a function
+of their length <em>n</em> or the number of rows <em>n</em> and columns <em>p</em>,
+respectively.</p>
+<p>The <em>O</em> (Big-Oh) notation, for instance, can express
+the upper bounds for time/resource consumption in asymptotic cases.
+For instance, we say that the time complexity is <span class="math notranslate nohighlight">\(O(n^2)\)</span>,
+if for large <span class="math notranslate nohighlight">\(n\)</span>, the number of operations to perform
+will be proportional to <em>at most</em> the square of
+the vector size (more precisely, there exists <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(C&gt;0\)</span>
+such that for all <span class="math notranslate nohighlight">\(n&gt;m\)</span>, the number of operations is <span class="math notranslate nohighlight">\(\le Cn^2\)</span>).</p>
+<p>Therefore, if we have two algorithms that solve the same task,
+one that has <span class="math notranslate nohighlight">\(O(n^2)\)</span> time complexity, and other of <span class="math notranslate nohighlight">\(O(n^3)\)</span>,
+it is better to choose the former,
+because for large problem sizes we expect it to be faster.</p>
+<p>Moreover, whether time grows proportionally to
+<span class="math notranslate nohighlight">\(\log n\)</span>, <span class="math notranslate nohighlight">\(\sqrt{n}\)</span>, <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(n\log n\)</span>, <span class="math notranslate nohighlight">\(n^2\)</span>, <span class="math notranslate nohighlight">\(n^3\)</span>, or <span class="math notranslate nohighlight">\(2^n\)</span>,
+can be useful in predicting how big the data can be if we have
+a fixed deadline or not too much space left on the disk.</p>
+<div class="proof proof-type-exercise" id="id16">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.10</span>
+        
+    </div><div class="proof-content">
+<p>The <strong class="command">hclust</strong> function determines a hierarchical clustering
+of a dataset. It is fed with an object that stores the distance
+between all the pairs of input points.
+There are <span class="math notranslate nohighlight">\(n(n-1)/2\)</span>  (i.e., <span class="math notranslate nohighlight">\(O(n^2)\)</span>) unique point pairs for any given <em>n</em>.
+One numeric scalar (<code class="docutils literal notranslate"><span class="pre">double</span></code> type) takes 8 bytes of storage.
+If you have 16 GB or RAM, what is the largest dataset that you
+can cluster on your machine using this function?</p>
+</div></div><p>Oftentimes, we can learn about the time or memory complexity
+of the functions we use from their documentation;
+see, e.g., <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;findInterval&quot;)</span></code>.</p>
+<div class="proof proof-type-example" id="id17">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 8.11</span>
+        
+    </div><div class="proof-content">
+<p>A course in data structures in algorithms, which this one is not,
+will give us plenty of opportunities to implement many algorithms ourselves.
+This way, we can gain a lot of insights and intuitions.</p>
+<p>For instance, this is a <span class="math notranslate nohighlight">\(O(n)\)</span>-time algorithm:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">expression</span>
+</pre></div>
+</div>
+<p>and this is one runs in <span class="math notranslate nohighlight">\(O(n^2)\)</span>-time:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="nf">for </span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="n">expression</span>
+</pre></div>
+</div>
+<p>as long as, of course, the <code class="docutils literal notranslate"><span class="pre">expression</span></code> is rather primitive (e.g.,
+operations on scalar variables).</p>
+<p>R is a very expressive language and hence
+quite complex and  lengthy operations can look pretty innocent
+(it is a glue language for rapid prototyping, after all).</p>
+<p>For example:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="nf">for </span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="n">z</span> <span class="o">&lt;-</span> <span class="n">z</span> <span class="o">+</span> <span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[[</span><span class="n">j</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>can be seen as <span class="math notranslate nohighlight">\(O(n^3)\)</span> if each element in the lists <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>
+as well as <code class="docutils literal notranslate"><span class="pre">z</span></code> itself are atomic vectors of length <em>n</em>.</p>
+<p>Similarly,</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>is <span class="math notranslate nohighlight">\(O(n^2)\)</span> if <code class="docutils literal notranslate"><span class="pre">x</span></code> is a list of <em>n</em> atomic vectors each of length <em>n</em>.</p>
+</div></div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A quite common statistical scenario
+involves the generation of a data buffer of a fixed size:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ret</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">()</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="nf">generate_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># here: ret[[length(ret)+1]] &lt;- ...</span>
+</pre></div>
+</div>
+<p>This notation, however, involves the growing of the <code class="docutils literal notranslate"><span class="pre">ret</span></code> array
+in each iteration. Luckily, since R version 3.4.0,
+each such size extension has amortised <span class="math notranslate nohighlight">\(O(1)\)</span> time
+due to the fact that some more memory is internally reserved for its
+prospective growth (see, e.g., Chapter 17 of <span id="id5">[<a class="reference internal" href="999-bibliography.html#id57" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">9</a>]</span>).</p>
+<p>However, it would still be better to pre-allocate the output vector
+and grant it the desired, final size already upon creation.</p>
+<p>Note that we can construct vectors of specific lengths and types
+in an efficient way (more efficient than with <strong class="command">rep</strong>) by calling:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numeric</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+<span class="c1">## [1] 0 0 0</span>
+<span class="nf">numeric</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+<span class="c1">## numeric(0)</span>
+<span class="nf">logical</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+<span class="c1">## [1] FALSE FALSE FALSE FALSE FALSE</span>
+<span class="nf">character</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+<span class="c1">## [1] &quot;&quot; &quot;&quot;</span>
+<span class="nf">vector</span><span class="p">(</span><span class="s">&quot;numeric&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">)</span>
+<span class="c1">## [1] 0 0 0 0 0 0 0 0</span>
+<span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+<span class="c1">## [[1]]</span>
+<span class="c1">## NULL</span>
+<span class="c1">## </span>
+<span class="c1">## [[2]]</span>
+<span class="c1">## NULL</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all data fit into memory, but it does not mean that we should
+start installing Apache Hadoop and Spark immediately.
+Some datasets can be processed on a chunk-by-chunk basis.</p>
+<p>R enables data stream handling (some can be of infinite length)
+through file connections, for example:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">file</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://raw.githubusercontent.com/gagolews/teaching-data/&quot;</span><span class="p">,</span>
+    <span class="s">&quot;master/README.md&quot;</span><span class="p">),</span> <span class="n">open</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">)</span>  <span class="c1"># a big file, the biggest file ever</span>
+<span class="n">i</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<span class="nf">while </span><span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">few_lines</span> <span class="o">&lt;-</span> <span class="nf">readLines</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>  <span class="c1"># read only four lines at a time</span>
+    <span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">few_lines</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="n">break</span>
+    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="nf">length</span><span class="p">(</span><span class="n">few_lines</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">close</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># the number of lines</span>
+<span class="c1">## [1] 93</span>
+</pre></div>
+</div>
+<p>Many functions support reading from/writing to already
+established connections of different types, e.g., <strong class="command">file</strong>,
+<strong class="command">gzfile</strong>, <strong class="command">textConnection</strong>, batch-by-batch.</p>
+<p>A frequent scenario involves reading a very large CSV, JSON, or XML file
+only thousands of lines/records at a time,
+parsing and cleansing them, and exporting to SQL databases
+(which we will exercise in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>).</p>
+<p>Also note that the always-open text connections
+<strong class="command">stdout</strong> and <strong class="command">stderr</strong> (for writing),
+and <strong class="command">stdin</strong> (for reading) are by default mapped to
+the “terminal/console” and “keyboard”, respectively.
+Call <strong class="command">scan</strong>, <strong class="command">cat</strong>, and <strong class="command">stop</strong>
+to interact with such sources/targets.</p>
+</div>
+</section>
+</section>
+<section id="exercises">
+<h2><span class="section-number">8.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<p>Note that, from now on, we should stay alert.
+Many, if not all, of the following tasks can still be implemented
+without the explicit use of the R loops, but
+based only on the operations covered in the previous chapters.
+If this is the case, try implementing both the looped
+and loop-free version.
+Use <strong class="program">microbenchmark</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">microbenchmark</strong>
+or <strong class="command">proc.time</strong> to compare the run-times<a class="footnote-reference brackets" href="#footalg" id="id6">3</a>.</p>
+<div class="proof proof-type-exercise" id="id18">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.12</span>
+        
+    </div><div class="proof-content">
+<p>Answer the following questions:</p>
+<ul class="simple">
+<li><p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> be a numeric vector. When does
+<strong class="command">if</strong><code class="code docutils literal notranslate"><span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">0)</span> <span class="pre">...</span></code> yield a warning?
+When does it give an error? How to prevent this?</p></li>
+<li><p>What is the dangling <strong class="command">else</strong>?</p></li>
+<li><p>What happens if you put <strong class="command">if</strong> as the last expression
+in a curly braces block within a function’s body?</p></li>
+<li><p>Why do we say that `<strong class="command">&amp;&amp;</strong>` and `<strong class="command">||</strong>`
+are lazy? What are their use cases?</p></li>
+<li><p>What is the difference between `<strong class="command">&amp;&amp;</strong>` and `<strong class="command">&amp;</strong>`?</p></li>
+<li><p>Can <strong class="command">while</strong> always be replaced with <strong class="command">for</strong>?
+What about the other way around?</p></li>
+</ul>
+</div></div><div class="proof proof-type-exercise" id="id19">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.13</span>
+        
+    </div><div class="proof-content">
+<p>Verify which of the following can be safely used as logical conditions
+in <strong class="command">if</strong> statements. If that is not the case for all <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, …,
+determine the additional conditions that should be imposed
+in order to make them valid.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">0</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x[y]</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>,</p></li>
+<li><p><strong class="command">any</strong><code class="code docutils literal notranslate"><span class="pre">(x&gt;0)</span></code>,</p></li>
+<li><p><strong class="command">match</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>,</p></li>
+<li><p><strong class="command">any</strong><code class="code docutils literal notranslate"><span class="pre">(x</span> <span class="pre">%in%</span> <span class="pre">y)</span></code>.</p></li>
+</ul>
+</div></div><div class="proof proof-type-exercise" id="id20">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.14</span>
+        
+    </div><div class="proof-content">
+<p>What can go wrong in the following code chunk, depending on
+the type and form of <code class="docutils literal notranslate"><span class="pre">x</span></code>? Consider as many scenarios as possible.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">&lt;-</span> <span class="n">count</span> <span class="o">+</span> <span class="m">1</span>
+</pre></div>
+</div>
+</div></div><div class="proof proof-type-exercise" id="id21">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.15</span>
+        
+    </div><div class="proof-content">
+<p>Implement <strong class="command">shift_left</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">n)</span></code> and
+<strong class="command">shift_right</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">n)</span></code>.
+The former function gets rid of the first <em>n</em> observations in <code class="docutils literal notranslate"><span class="pre">x</span></code>
+and adds <em>n</em> missing values at the end of the resulting vector,
+e.g., <strong class="command">shift_left</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5),</span> <span class="pre">2)</span></code>
+is <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">NA,</span> <span class="pre">NA)</span></code>.
+On the other hand,
+<strong class="command">shift_right</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5),</span> <span class="pre">2)</span></code> is
+<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(NA,</span> <span class="pre">NA,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>.</p>
+</div></div><div class="proof proof-type-exercise" id="id22">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.16</span>
+        
+    </div><div class="proof-content">
+<p>Implement your own version of <strong class="command">diff</strong>.</p>
+</div></div><div class="proof proof-type-exercise" id="id23">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.17</span>
+        
+    </div><div class="proof-content">
+<p>Write a function that determines the longest increasing trend
+in a given numeric vector, i.e.,
+the length of the longest subsequence of consecutive elements
+that are increasing.
+For example, the input <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">3)</span></code>
+should yield 4.</p>
+</div></div><div class="proof proof-type-exercise" id="id24">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 8.18</span>
+        
+    </div><div class="proof-content">
+<p>Implement the functions that round down and round up,
+to a number of decimal digits,
+each element in a numeric vector.</p>
+</div></div><p>This concludes the first part of this magnificent book.</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="footswitch"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>Somewhat related is the <strong class="command">switch</strong> function
+which we study in <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:to-do</span></code>. It relies on lazy evaluation
+of its arguments. Still, it can always be replaced by a series
+of <strong class="command">if</strong>s.</p>
+</dd>
+<dt class="label" id="footcpp"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>But in such cases it will often benefit from a rewrite
+in C or C++; see <a class="reference internal" href="310-compile.html#chap-compile"><span class="std std-numref">Chapter 14</span></a>.</p>
+</dd>
+<dt class="label" id="footalg"><span class="brackets"><a class="fn-backref" href="#id6">3</a></span></dt>
+<dd><p>It might be the case that a <strong class="command">for</strong>-based solution is
+faster (e.g., for larger objects) because of the use
+of a more efficient algorithm. Such cases will
+especially benefit from a rewrite in C or C++
+(<a class="reference internal" href="310-compile.html#chap-compile"><span class="std std-numref">Chapter 14</span></a>).</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="210-design.html" class="btn btn-neutral float-right" title="9. Designing Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="170-function.html" class="btn btn-neutral float-left" title="7. Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        Copyright &#169; 2022 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>. Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
+
+    Built with <a href="https://sphinx-doc.org/">Sphinx</a>
+    and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
+    theme.
+      <span class="lastupdated">
+        Last updated on 2022-12-28T15:36:00+1100.
+      </span>
+
+
+    This site will never display any ads: it is a non-profit project.
+    It does not collect any data.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

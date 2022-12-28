@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+
+
+<html class="writer-html5" lang="en" >
+<!-- Copyright (C) 2020-2022, Marek Gagolewski <https://www.gagolewski.com> -->
+
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="Deep R Programming" name="citation_title" />
+<meta content="Marek Gagolewski" name="citation_author" />
+<meta content="2022" name="citation_date" />
+<meta content="2022" name="citation_publication_date" />
+<meta content="https://deepr.gagolewski.com/deepr.pdf" name="citation_pdf_url" />
+<meta content="https://deepr.gagolewski.com/" name="citation_public_url" />
+<meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="citation_abstract" />
+<meta content="summary" name="twitter:card" />
+<meta content="Deep R Programming" name="twitter:title" />
+<meta content="Deep R Programming" name="og:title" />
+<meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="twitter:description" />
+<meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="og:description" />
+<meta content="gagolews/deepr" name="og:site_name" />
+<meta content="https://deepr.gagolewski.com/" name="og:url" />
+<meta content="https://deepr.gagolewski.com/_images/cover.png" name="twitter:image" />
+<meta content="https://deepr.gagolewski.com/_images/cover.png" name="og:image" />
+<meta content="https://deepr.gagolewski.com/" name="DC.identifier" />
+<meta content="Marek Gagolewski" name="DC.publisher" />
+<meta content="INDEX,FOLLOW" name="robots" />
+<meta content="book" name="og:type" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10. S3 Classes &mdash; Deep R Programming by Marek Gagolewski</title>
+  
+
+  
+  
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/proof.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://deepr.gagolewski.com/chapter/220-s3.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/proof.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11. Matrices and Other Arrays" href="230-matrix.html" />
+    <link rel="prev" title="9. Designing Functions" href="210-design.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html"> Deep R Programming
+          
+
+          
+          </a>
+
+          <div class="version">
+          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12 (draft)
+          </div>
+
+<!--
+          
+            
+            
+              <div class="version">
+                by Marek Gagolewski
+              </div>
+            
+          
+-->
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search phrase..." />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">This Book in PDF</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/deepr/">Report Bugs or Typos (GitHub)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/gagolews/teaching-data">Datasets</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://datawranglingpy.gagolewski.com">Data Wrangling with Python</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start Here</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="000-preface.html">Preface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deep</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="110-basics.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="120-numeric.html">2. Numeric Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="130-logical.html">3. Logical Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="140-list.html">4. Lists and Attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="150-indexing.html">5. Vector Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="160-character.html">6. Character Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="170-function.html">7. Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="180-flow.html">8. Flow of Execution</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deeper</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="210-design.html">9. Designing Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. S3 Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#object-type-vs-class">10.1. Object Type vs Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generics-and-method-dispatching">10.2. Generics and Method Dispatching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generics-default-and-custom-methods">10.2.1. Generics, Default, and Custom Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-own-generics">10.2.2. Creating Own Generics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#built-in-generics">10.2.3. Built-in Generics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dispatching-only-on-one-argument-and-calling-s3-methods-directly">10.2.4. Dispatching Only on One Argument and Calling S3 Methods Directly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-class-ness">10.2.5. Multi-class-ness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operator-overloading">10.2.6. Operator Overloading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#common-built-in-s3-classes">10.3. Common Built-in S3 Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#date-time-etc">10.3.1. Date, Time, etc.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#formulae">10.3.2. Formulae (*)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#factors">10.3.3. Factors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ordered-factors">10.3.4. Ordered Factors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#argument-checking-revisited">10.4. Argument Checking Revisited</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#over-using-the-forward-pipe-operator">10.5. (Over)using the Forward-pipe Operator, `<strong class="command">|&gt;</strong>` (*)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">10.6. Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and Other Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="240-data-frame.html">12. Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="250-graphics.html">13. 🚧 Graphics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="310-compile.html">14. 🚧 Interfacing Compiled Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧 Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧 Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="340-eval-expr.html">17. 🚧 Evaluating Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="350-eval-fun.html">18. 🚧 Evaluating Functions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="998-changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="999-bibliography.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Deep R Programming</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><span class="section-number">10. </span>S3 Classes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+
+        
+        
+        <a class="github-button" href="https://github.com/gagolews/deepr" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star gagolews/deepr on GitHub">GitHub</a>
+        
+
+
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="230-matrix.html" class="btn btn-neutral float-right" title="11. Matrices and Other Arrays" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="210-design.html" class="btn btn-neutral float-left" title="9. Designing Functions" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="s3-classes">
+<span id="chap-s3"></span><h1><span class="section-number">10. </span>S3 Classes<a class="headerlink" href="#s3-classes" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p><em>The open-access textbook</em>
+Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
+is, and will remain, freely available for everyone’s enjoyment
+(also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
+It is a non-profit project.</em>
+<strong>This book is still a work in progress. Beta versions
+of Chapters 1–12 are already complete, but there will be more.
+In the meantime, any
+<a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
+are appreciated.</strong>
+<em>Although available online, it is a whole course;
+it should be read from the beginning to the end.
+Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id52" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. ISBN 978-0-6455719-1-2. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+</div></blockquote>
+<p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> be a randomly generated matrix with 1,000,000 rows and 1,000 columns,
+<code class="docutils literal notranslate"><span class="pre">y</span></code> be a data frame with results from the latest survey
+indicating that things are not the way most people (no matter the side
+of the many political spectra) think they are, and
+and <code class="docutils literal notranslate"><span class="pre">z</span></code> be another matrix, this time with many zeroes.</p>
+<p>Human brain is not capable of handling too much information
+which is too specific. This is why we have a natural tendency to group
+different entities based on their similarities so as to form some more
+abstract classes thereof.</p>
+<p>Also, many of us are inherently lazy. Thus, oftentimes we will
+take shortcuts to minimise energy (at a price to be paid later).</p>
+<p>Printing out a matrix, a data frame, and a time series
+are all still instances of the displaying of things,
+although they surely differ in detail. Now that ad probably forgotten
+which objects are hidden behind <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code>,
+being able to simply call “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>”
+without having to recall that, yes, <code class="docutils literal notranslate"><span class="pre">y</span></code> is a data frame,
+might seem quite appealing.</p>
+<p>This chapter introduces the so-called S3 classes <span id="id2">[<a class="reference internal" href="999-bibliography.html#id44" title="Chambers, J.M., Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">8</a>]</span>,
+which provide a lightweight object oriented programming (OOP) approach
+for automated dispatching of calls to <em>generics</em>
+of the type “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>” to concrete <em>methods</em>
+such as “<strong class="command">print.data.frame</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>”,
+based on the <em>class</em> of the object they are invoked upon.</p>
+<p>S3 classes in their essence are beautifully simple<a class="footnote-reference brackets" href="#foots3design" id="id3">1</a>. They are
+inspired<a class="footnote-reference brackets" href="#foots3limits" id="id4">2</a> by the well-thought-through concepts present in other
+functional programming languages (such as the Common Lisp Object System;
+see below). Ultimately, those <em>generics</em> and <em>methods</em> are ordinary R functions
+(<a class="reference internal" href="170-function.html#chap-function"><span class="std std-numref">Chapter 7</span></a>) and <em>classes</em>
+are merely additional object attributes (<a class="reference internal" href="140-list.html#sec-attribute"><span class="std std-numref">Section 4.4</span></a>).</p>
+<p>Of course this does not mean that wrapping our heads around them
+will be effortless. However, unlike other “class systems”<a class="footnote-reference brackets" href="#foototherclass" id="id5">3</a>,
+S3 is ubiquitous in R programming: suffice it to say
+that factors, matrices, and data frames discussed in the next chapters
+are quite straightforward, S3-based extensions of the concepts we have
+introduced so far.</p>
+<section id="object-type-vs-class">
+<h2><span class="section-number">10.1. </span>Object Type vs Class<a class="headerlink" href="#object-type-vs-class" title="Permalink to this heading"></a></h2>
+<p>Recall that <strong class="command">typeof</strong> (introduced in <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a>)
+returns the <em>internal</em> type of any R object. Even though there are only
+few admissible cases thereof<a class="footnote-reference brackets" href="#footsexptype" id="id6">4</a>, they open the world
+of endless possibilities<a class="footnote-reference brackets" href="#footexternalptr" id="id7">5</a>.</p>
+<p>The basic types we covered so far (mostly atomic and generic vectors;
+compare <a class="reference internal" href="000-preface.html#fig-data-types-overview"><span class="std std-numref">Figure 1</span></a>) provide a basis for more
+complex data structures. This is thanks to the fact that they can be equipped
+with arbitrary attributes (<a class="reference internal" href="140-list.html#sec-attribute"><span class="std std-numref">Section 4.4</span></a>).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
+<span class="c1">## [1] &quot;NULL&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>
+<span class="c1">## [1] &quot;logical&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">))</span>
+<span class="c1">## [1] &quot;double&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">))</span>
+<span class="c1">## [1] &quot;character&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="kc">LETTERS</span><span class="p">))</span>
+<span class="c1">## [1] &quot;list&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;closure&quot;</span>
+</pre></div>
+</div>
+<p>The interesting fact is that most <em>compound types</em>, whose most prevalent
+instances are constructed using the mechanisms discussed in this
+chapter<a class="footnote-reference brackets" href="#footalsos4" id="id8">6</a>, only pretend they are something different than
+what they actually are. They are often quite good at doing their job, though,
+and hence might be useful. By knowing what is under their hood
+we will demystify them and become able to manipulate their state outside
+of the prescribed use cases.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Setting the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute might make some objects
+behave differently in certain scenarios.</p>
+</div>
+<div class="proof proof-type-example" id="id41">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.1</span>
+        
+    </div><div class="proof-content">
+<p>Let us consider two identical objects equipped with different
+<code class="docutils literal notranslate"><span class="pre">class</span></code> attributes.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xt</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="m">123</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;POSIXct&quot;</span><span class="p">)</span>  <span class="c1"># POSIX calendar time</span>
+<span class="n">xd</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="m">123</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;Date&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Despite that both objects are being <em>represented</em>
+using numeric vectors:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">typeof</span><span class="p">(</span><span class="n">xt</span><span class="p">),</span> <span class="nf">typeof</span><span class="p">(</span><span class="n">xd</span><span class="p">))</span>
+<span class="c1">## [1] &quot;double&quot; &quot;double&quot;</span>
+</pre></div>
+</div>
+<p>When printed, they are <em>decoded</em> quite differently:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>
+<span class="c1">## [1] &quot;1970-01-01 10:02:03 AEST&quot;</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">xd</span><span class="p">)</span>
+<span class="c1">## [1] &quot;1970-05-04&quot;</span>
+</pre></div>
+</div>
+<p>In the former case, 123 is treated as the number of seconds
+since the so-called UNIX epoch, 1970-01-01T00:00:00+0000.
+The latter is deciphered as the number of days since the said
+(quite widely used in computer systems by the way) timestamp.</p>
+<p>We may hence suspect, and we are absolutely right, that there exists
+some underlying mechanism that actually calls a <em>version</em> of
+<strong class="command">print</strong> that is dependent on an object’s virtual class.</p>
+<p>That this only depends on the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute,
+which might be set, unset, or reset quite freely,
+is emphasised below:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="s">&quot;Date&quot;</span>  <span class="c1"># change class from POSIXct to Date</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>  <span class="c1"># same 123, but now interpreted as Date</span>
+<span class="c1">## [1] &quot;1970-05-04&quot;</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>  <span class="c1"># drops all attributes</span>
+<span class="c1">## [1] 123</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">xd</span><span class="p">)</span>  <span class="c1"># drops the class attribute; `attr&lt;-`(xd, &quot;class&quot;, NULL)</span>
+<span class="c1">## [1] 123</span>
+</pre></div>
+</div>
+</div></div><p>We are having so much fun that one more illustration can only add
+to joy.</p>
+<div class="proof proof-type-example" id="id42">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.2</span>
+        
+    </div><div class="proof-content">
+<p>Consider an example data frame:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="n">iris</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>  <span class="c1"># a subset of a built-in example data frame</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">##   Sepal.Length Sepal.Width</span>
+<span class="c1">## 1          5.1         3.5</span>
+<span class="c1">## 2          4.9         3.0</span>
+<span class="c1">## 3          4.7         3.2</span>
+</pre></div>
+</div>
+<p>This is an object of the following class
+(an object whose <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute is set to):</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;data.frame&quot;</span>
+</pre></div>
+</div>
+<p>Some may say, and they are absolutely right, that
+we have not covered data frames yet: this is the topic of
+<a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>, which is still ahead of us.
+However, from the current perspective, we are interested
+in the fact that an R data frame is merely
+a list (<a class="reference internal" href="140-list.html#chap-list"><span class="std std-numref">Chapter 4</span></a>) of vectors of the same
+lengths equipped with <code class="docutils literal notranslate"><span class="pre">names</span></code> and <code class="docutils literal notranslate"><span class="pre">row.names</span></code> attributes.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;list&quot;</span>
+<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>  <span class="c1"># or x &lt;- unclass(x)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## $Sepal.Length</span>
+<span class="c1">## [1] 5.1 4.9 4.7</span>
+<span class="c1">## </span>
+<span class="c1">## $Sepal.Width</span>
+<span class="c1">## [1] 3.5 3.0 3.2</span>
+<span class="c1">## </span>
+<span class="c1">## attr(,&quot;row.names&quot;)</span>
+<span class="c1">## [1] 1 2 3</span>
+</pre></div>
+</div>
+</div></div><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Revealing how <code class="docutils literal notranslate"><span class="pre">x</span></code> is <em>actually</em> represented, enables us to process it
+(although perhaps not in the most convenient or efficient manner)
+using the extensive skill set that we have already<a class="footnote-reference brackets" href="#footsplit" id="id9">7</a>
+developed by studying the material covered in the previous part of our book
+(including solving all the exercises).
+This can be particularly useful, especially bearing in mind that some
+(built-in or third-party) data types are not particularly well-designed.</p>
+</div>
+<p>Note again that attributes are simple additions to R objects.
+However, as we said in <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>,
+certain attributes are special, and <code class="docutils literal notranslate"><span class="pre">class</span></code> is one of them.</p>
+<p>In particular, we can set <code class="docutils literal notranslate"><span class="pre">class</span></code> to be only a character vector
+(possibly of length greater than one; see <a class="reference internal" href="#sec-multi-class"><span class="std std-numref">Section 10.2.5</span></a>).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">12345</span>
+<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="m">1</span>  <span class="c1"># character vectors only</span>
+<span class="c1">## Error in attr(x, &quot;class&quot;) &lt;- 1: attempt to set invalid &#39;class&#39; attribute</span>
+</pre></div>
+</div>
+<p>Furthermore, there exists the <strong class="command">class</strong> function
+that can read the value of the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute.
+Its replacement version is also available.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="s">&quot;Date&quot;</span>  <span class="c1"># set; the same as attr(x, &quot;class&quot;) &lt;- &quot;Date&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># get; the same as attr(x, &quot;class&quot;)</span>
+<span class="c1">## [1] &quot;Date&quot;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <strong class="command">class</strong> function always yields a value, even
+if the corresponding attribute is not set. We call it an <em>implicit</em>
+class. Compare between the following and the outputs generated
+by <strong class="command">typeof</strong>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>  <span class="c1"># no `class` set, because NULL cannot have attributes at all</span>
+<span class="c1">## [1] &quot;NULL&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>  <span class="c1"># no attributes, so class is implicit (= typeof)</span>
+<span class="c1">## [1] &quot;logical&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">))</span>  <span class="c1"># typeof yields &quot;double&quot;</span>
+<span class="c1">## [1] &quot;numeric&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">))</span>
+<span class="c1">## [1] &quot;character&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="kc">LETTERS</span><span class="p">))</span>
+<span class="c1">## [1] &quot;list&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># typeof yields &quot;closure&quot;</span>
+<span class="c1">## [1] &quot;function&quot;</span>
+</pre></div>
+</div>
+<p>Also, in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>, we will note that any object
+equipped with the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute also has an implicit class:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)))</span>
+<span class="c1">##      [,1]</span>
+<span class="c1">## [1,]    1</span>
+<span class="c1">## [2,]    2</span>
+<span class="c1">## [3,]    3</span>
+<span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># `class` is not amongst the attributes</span>
+<span class="c1">## $dim</span>
+<span class="c1">## [1] 3 1</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># implicit class</span>
+<span class="c1">## [1] &quot;matrix&quot; &quot;array&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># it is still a numeric vector (under the hood)</span>
+<span class="c1">## [1] &quot;double&quot;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="generics-and-method-dispatching">
+<span id="sec-s3-generic"></span><h2><span class="section-number">10.2. </span>Generics and Method Dispatching<a class="headerlink" href="#generics-and-method-dispatching" title="Permalink to this heading"></a></h2>
+<section id="generics-default-and-custom-methods">
+<h3><span class="section-number">10.2.1. </span>Generics, Default, and Custom Methods<a class="headerlink" href="#generics-default-and-custom-methods" title="Permalink to this heading"></a></h3>
+<p>Let us inspect the source code of the <strong class="command">print</strong> function:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">print</span><span class="p">)</span>  <span class="c1"># sic!</span>
+<span class="c1">## function (x, ...) </span>
+<span class="c1">## UseMethod(&quot;print&quot;)</span>
+<span class="c1">## &lt;bytecode: 0x5566182c8738&gt;</span>
+<span class="c1">## &lt;environment: namespace:base&gt;</span>
+</pre></div>
+</div>
+<p>Any function like the above<a class="footnote-reference brackets" href="#footusemeth1" id="id10">8</a> we will call from now on
+an S3 (S version 3) <em>generic</em>.
+Its only job is to invoke <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;)</span></code><a class="footnote-reference brackets" href="#footusemeth2" id="id11">9</a>.
+This dispatches the control flow to another function,
+referred to as <em>method</em>, based on the class of the first argument.</p>
+<p>For example, let us define an object of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
+(a name that we have just come up with; we could have called it
+<code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">CtGrCl</span></code>, or <code class="docutils literal notranslate"><span class="pre">SpanishInquisition</span></code> as well), which
+will be our own version of the famous built-in <code class="docutils literal notranslate"><span class="pre">factor</span></code> type that we discuss
+later.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span>
+    <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span>
+    <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span>
+    <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>We assume that such an object is a vector of small positive integers (codes)
+equipped with the <code class="docutils literal notranslate"><span class="pre">levels</span></code> attribute being a character vector
+of length no less than the maximum of the said integers.
+The first category will be used to decipher the meaning of code “1”,
+for example. Hence, the above vector represents a sequence
+<em>a, c, b, a, a, a, c</em>.</p>
+<p>We have not defined any special method for the printing of
+objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>. Hence, when we call <strong class="command">print</strong>,
+the <em>default</em> (fallback) method will be called:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] 1 3 2 1 1 1 3</span>
+<span class="c1">## attr(,&quot;levels&quot;)</span>
+<span class="c1">## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</span>
+<span class="c1">## attr(,&quot;class&quot;)</span>
+<span class="c1">## [1] &quot;categorical&quot;</span>
+</pre></div>
+</div>
+<p>This is the standard function for displaying numeric vectors
+that we are all well familiar with. Its name is <strong class="command">print.default</strong>,
+and we can always call it directly:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print.default</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># the default print method</span>
+<span class="c1">## [1] 1 3 2 1 1 1 3</span>
+<span class="c1">## attr(,&quot;levels&quot;)</span>
+<span class="c1">## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</span>
+<span class="c1">## attr(,&quot;class&quot;)</span>
+<span class="c1">## [1] &quot;categorical&quot;</span>
+</pre></div>
+</div>
+<p>We can, however, introduce our own method for the custom printing
+of objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>, whose name
+must precisely be <strong class="command">print.categorical</strong>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">print.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x_character</span> <span class="o">&lt;-</span> <span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)[</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">x_character</span><span class="p">)</span>  <span class="c1"># calls `print.default`</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Categories: %s\n&quot;</span><span class="p">,</span>
+        <span class="nf">paste</span><span class="p">(</span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">),</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)))</span>
+    <span class="nf">invisible</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># this is what all print methods do; see help(&quot;print&quot;)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, calling <strong class="command">print</strong> automatically dispatches
+the control flow to the above method:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;a&quot; &quot;c&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;c&quot;</span>
+<span class="c1">## Categories: a, b, c</span>
+</pre></div>
+</div>
+<p>Of course, the default method can still be called;
+calling <strong class="command">print.default</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> directly
+will output the same result as before.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong class="command">print.categorical</strong> has been equipped with the dot-dot-dot attribute,
+because the generic <strong class="command">print</strong> had one too; we should always
+ensure consistency ourselves<a class="footnote-reference brackets" href="#foots3consistency" id="id12">10</a>.</p>
+</div>
+</section>
+<section id="creating-own-generics">
+<h3><span class="section-number">10.2.2. </span>Creating Own Generics<a class="headerlink" href="#creating-own-generics" title="Permalink to this heading"></a></h3>
+<p>Introducing new S3 generics is as straightforward
+as defining a function that calls <strong class="command">UseMethod</strong>.</p>
+<p>For instance, here is a dispatcher which allows for
+creating new objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code> based on
+other objects:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+    <span class="nf">UseMethod</span><span class="p">(</span><span class="s">&quot;as.categorical&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We always need to define the default method:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.default</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">xu</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># drops NAs</span>
+    <span class="nf">structure</span><span class="p">(</span>
+        <span class="nf">match</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xu</span><span class="p">),</span>
+        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+        <span class="n">levels</span><span class="o">=</span><span class="n">xu</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Testing:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">))</span>
+<span class="c1">## [1] &quot;a&quot; &quot;c&quot; &quot;a&quot; &quot;a&quot; &quot;d&quot; &quot;c&quot;</span>
+<span class="c1">## Categories: a, c, d</span>
+<span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>
+<span class="c1">## [1] &quot;3&quot; &quot;6&quot; &quot;4&quot; NA  &quot;9&quot; &quot;9&quot; &quot;6&quot; NA  &quot;3&quot;</span>
+<span class="c1">## Categories: 3, 4, 6, 9</span>
+</pre></div>
+</div>
+<p>Note that <strong class="command">print.categorical</strong> has been invoked twice here.
+The above is quite flexible already, because it relies on the
+<em>generic</em> (<a class="reference internal" href="#sec-built-in-generics"><span class="std std-numref">Section 10.2.3</span></a>)
+<strong class="command">as.character</strong>, which handles a wide variety of data types.
+Of course, it does not mean we cannot be more precise about
+some particular ones.</p>
+<div class="proof proof-type-example" id="id43">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.3</span>
+        
+    </div><div class="proof-content">
+<p>For instance, we might want to forbid the conversion from lists,
+because this does not necessarily make sense:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.list</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+    <span class="nf">stop</span><span class="p">(</span><span class="s">&quot;conversion of lists to categorical is not supported&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The users can always be instructed in the method’s documentation
+that they are the ones responsible for an explicit
+conversion of list objects to something different prior to a call
+to <strong class="command">as.categorical</strong>. Whether this was a good design choice,
+time will tell.</p>
+</div></div><div class="proof proof-type-example" id="id44">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.4</span>
+        
+    </div><div class="proof-content">
+<p>Note that the default method deals with logical vectors
+perfectly fine:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>  <span class="c1"># as.categorical.default</span>
+<span class="c1">## [1] &quot;TRUE&quot;  &quot;FALSE&quot; NA      NA      &quot;FALSE&quot;</span>
+<span class="c1">## Categories: FALSE, TRUE</span>
+</pre></div>
+</div>
+<p>However, we might still want to introduce a specialised version,
+because we know a slightly more efficient algorithm
+(and we have nothing better to do)
+based on the fact that <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> and <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> converted to
+numeric yield 0 and 1, respectively:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.logical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.logical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># or stopifnot(is.logical(x)) ?</span>
+    <span class="nf">structure</span><span class="p">(</span>
+        <span class="n">x</span> <span class="o">+</span> <span class="m">1</span><span class="p">,</span>  <span class="c1"># only 1, 2, and NAs will be generated</span>
+        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+        <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;FALSE&quot;</span><span class="p">,</span> <span class="s">&quot;TRUE&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This yields the same result, but is a bit faster:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>  <span class="c1"># as.categorical.logical</span>
+<span class="c1">## [1] &quot;TRUE&quot;  &quot;FALSE&quot; NA      NA      &quot;FALSE&quot;</span>
+<span class="c1">## Categories: FALSE, TRUE</span>
+</pre></div>
+</div>
+<p>Note that we have performed some argument validation
+at the beginning, because a user is always able to
+call a method directly on an R object of any kind
+(which is a good thing!; see <a class="reference internal" href="#sec-s3-direct-method-call"><span class="std std-numref">Section 10.2.4</span></a>).
+In other words, there is no guarantee that the argument <code class="docutils literal notranslate"><span class="pre">x</span></code> must be of
+type logical.</p>
+</div></div></section>
+<section id="built-in-generics">
+<span id="sec-built-in-generics"></span><h3><span class="section-number">10.2.3. </span>Built-in Generics<a class="headerlink" href="#built-in-generics" title="Permalink to this heading"></a></h3>
+<p>Many functions and operators we have introduced so far are in fact
+S3 generics:
+<strong class="command">print</strong>,
+<strong class="command">head</strong>,
+`<strong class="command">[</strong>`,
+`<strong class="command">+</strong>`,
+`<strong class="command">&lt;=</strong>`,
+<strong class="command">as.character</strong>,
+<strong class="command">as.list</strong>,
+<strong class="command">round</strong>,
+<strong class="command">log</strong>,
+<strong class="command">sum</strong>,
+<strong class="command">c</strong>, and
+<strong class="command">na.omit</strong>,
+to name a few.</p>
+<p>Some of them might not even call <strong class="command">UseMethod</strong>
+explicitly; dispatching can be done internally, at the C language
+level<a class="footnote-reference brackets" href="#footinternaldispatch" id="id13">11</a>.
+Overall, the list of all S3 generics is somewhat difficult
+to generate<a class="footnote-reference brackets" href="#footknowns3generics" id="id14">12</a>,
+but at least the internal ones are enumerated in
+<strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;InternalMethods&quot;)</span></code> and
+<strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code>.</p>
+<div class="proof proof-type-example" id="id45">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.5</span>
+        
+    </div><div class="proof-content">
+<p>Let us overload the <strong class="command">as.character</strong> method.
+The default one does not make much sense for the objects
+of our custom type:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;1&quot; &quot;3&quot; &quot;2&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;3&quot;</span>
+</pre></div>
+</div>
+<p>So:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.character.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+    <span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)[</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>And now:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;a&quot; &quot;c&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;c&quot;</span>
+</pre></div>
+</div>
+</div></div><div class="proof proof-type-exercise" id="id46">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.6</span>
+        
+    </div><div class="proof-content">
+<p>Overload the <strong class="command">unique</strong> method for objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.</p>
+</div></div><div class="proof proof-type-exercise" id="id47">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.7</span>
+        
+    </div><div class="proof-content">
+<p>Overload the <strong class="command">rep</strong> method for objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.</p>
+</div></div><div class="proof proof-type-example" id="id48">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.8</span>
+        
+    </div><div class="proof-content">
+<p>New types should be designed carefully.
+For instance, if we forget to consider overloading the to-numeric
+converter, we might end up with some users being puzzled<a class="footnote-reference brackets" href="#footpuzzle" id="id15">13</a>
+when they see:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">42</span><span class="p">,</span> <span class="m">666</span><span class="p">,</span> <span class="m">4</span><span class="p">)))</span>
+<span class="c1">## [1] &quot;4&quot;   &quot;9&quot;   &quot;100&quot; &quot;9&quot;   &quot;9&quot;   &quot;100&quot; &quot;42&quot;  &quot;666&quot; &quot;4&quot;  </span>
+<span class="c1">## Categories: 100, 4, 42, 666, 9</span>
+<span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># as.double.default(x)</span>
+<span class="c1">## [1] 2 5 1 5 5 1 3 4 2</span>
+</pre></div>
+</div>
+<p>Hence, we might want to introduce:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.double.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1"># as.double.default(as.character.categorical(x))</span>
+    <span class="nf">as.double</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Which now yields:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># as.double.categorical(x)</span>
+<span class="c1">## [1]   4   9 100   9   9 100  42 666   4</span>
+</pre></div>
+</div>
+</div></div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We can still use <strong class="command">unclass</strong> to fetch the codes:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] 2 5 1 5 5 1 3 4 2</span>
+<span class="c1">## attr(,&quot;levels&quot;)</span>
+<span class="c1">## [1] &quot;100&quot; &quot;4&quot;   &quot;42&quot;  &quot;666&quot; &quot;9&quot;</span>
+</pre></div>
+</div>
+<p>This is because the above returns a class-free object,
+which is now guaranteed to be handled by the default methods
+(<strong class="command">print</strong>, subsetting, <strong class="command">as.character</strong>, etc.).</p>
+</div>
+<div class="proof proof-type-exercise" id="id49">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.9</span>
+        
+    </div><div class="proof-content">
+<p>What would happen if we used <strong class="command">as.numeric</strong>
+instead of <strong class="command">unclass</strong> in
+<strong class="command">print.categorical</strong> and <strong class="command">as.character.categorical</strong>?</p>
+</div></div><div class="proof proof-type-exercise" id="id50">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.10</span>
+        
+    </div><div class="proof-content">
+<p>Update the above methods in such a way that
+we can also create <em>named</em> objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
+(i.e., equipped with the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute).</p>
+</div></div><div class="proof proof-type-exercise" id="id51">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.11</span>
+        
+    </div><div class="proof-content">
+<p>Note that the levels of <code class="docutils literal notranslate"><span class="pre">x</span></code> are sorted lexicographically,
+not numerically. Introduce a single method
+that would make the above code (when re-run without any alterations)
+generate a more natural result.</p>
+</div></div></section>
+<section id="dispatching-only-on-one-argument-and-calling-s3-methods-directly">
+<span id="sec-s3-direct-method-call"></span><h3><span class="section-number">10.2.4. </span>Dispatching Only on One Argument and Calling S3 Methods Directly<a class="headerlink" href="#dispatching-only-on-one-argument-and-calling-s3-methods-directly" title="Permalink to this heading"></a></h3>
+<p>With S3, the dispatching is done based on the class of
+only one<a class="footnote-reference brackets" href="#footonedispatch" id="id16">14</a> argument:
+by default, the first one from the parameter list.</p>
+<p>For example, the <strong class="command">c</strong> function is a generic which
+dispatches on the class of the first argument.
+Let us overload it for <code class="docutils literal notranslate"><span class="pre">categorical</span></code> objects
+(or, more precisely, create a function that will be dispatched to
+when the generic is called upon a series of objects such that
+the first element is of the said class).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">c.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
+    <span class="nf">as.categorical</span><span class="p">(</span>
+        <span class="nf">unlist</span><span class="p">(</span>
+            <span class="nf">lapply</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="kc">...</span><span class="p">),</span> <span class="n">as.character</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>It converts each argument to a character vector
+(relying on the generic <strong class="command">as.character</strong> to take care of the details)
+and makes use of the fact that <strong class="command">unlist</strong> converts a list of
+such atomic vectors to a single sequence of strings.</p>
+<p>Calling <strong class="command">c</strong> with the first argument being of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
+dispatches to the above method:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">9</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+<span class="n">xc</span> <span class="o">&lt;-</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># c.categorical</span>
+<span class="c1">##  [1] &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot; &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot;</span>
+<span class="c1">## Categories: 2, 5, 7, 9</span>
+</pre></div>
+</div>
+<p>However, if the first argument is, say, unclassed, the default
+method will be consulted:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xc</span><span class="p">)</span>  <span class="c1"># default c</span>
+<span class="c1">##  [1] 9 5 7 7 2 4 2 3 3 1</span>
+</pre></div>
+</div>
+<p>This method ignores the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute and sees <code class="docutils literal notranslate"><span class="pre">xc</span></code> as-it-is,
+a barebone numeric vector:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`attributes&lt;-`</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="kc">NULL</span><span class="p">)</span>  <span class="c1"># the underlying codes</span>
+<span class="c1">## [1] 4 2 3 3 1</span>
+</pre></div>
+</div>
+<p>This is not a bug! This is a well-documented (and now explained) behaviour.
+After all, compound types (classed objects) are merely emulated
+through the basic ones.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In most cases, S3 methods can be called directly to get the desired
+outcome:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c.categorical</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xc</span><span class="p">)</span>  <span class="c1"># force a call to the specific method</span>
+<span class="c1">##  [1] &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot; &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot;</span>
+<span class="c1">## Categories: 2, 5, 7, 9</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We said “in most cases”, because some methods can be:</p>
+<ul class="simple">
+<li><p>hardcoded at the C language level
+(for instance, there is no <strong class="command">c.default</strong> defined at all<a class="footnote-reference brackets" href="#footoperoverload" id="id17">15</a>),</p></li>
+<li><p>hidden (defined in a package namespace but not exported);
+see <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.3</span></a>,</p></li>
+<li><p>overloaded as a group; see <a class="reference internal" href="350-eval-fun.html#sec-group-generics"><span class="std std-numref">Section 18.4</span></a>.</p></li>
+</ul>
+</div>
+<div class="proof proof-type-example" id="id52">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.12</span>
+        
+    </div><div class="proof-content">
+<p>Just for fun, let us find a partition of the <code class="docutils literal notranslate"><span class="pre">iris</span></code> dataset
+into three clusters using the <em>k</em>-means algorithm:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">&lt;-</span> <span class="nf">kmeans</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="m">-5</span><span class="p">],</span> <span class="n">centers</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">nstart</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1">## K-means clustering with 3 clusters of sizes 50, 62, 38</span>
+<span class="c1">## </span>
+<span class="c1">## Cluster means:</span>
+<span class="c1">##   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="c1">## 1       5.0060      3.4280       1.4620      0.2460</span>
+<span class="c1">## 2       5.9016      2.7484       4.3935      1.4339</span>
+<span class="c1">## 3       6.8500      3.0737       5.7421      2.0711</span>
+<span class="c1">## </span>
+<span class="c1">## Clustering vector:</span>
+<span class="c1">##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="c1">## [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
+<span class="c1">## [71] 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
+<span class="c1">##  [ reached getOption(&quot;max.print&quot;) -- omitted 51 entries ]</span>
+<span class="c1">## </span>
+<span class="c1">## Within cluster sum of squares by cluster:</span>
+<span class="c1">## [1] 15.151 39.821 23.879</span>
+<span class="c1">##  (between_SS / total_SS =  88.4 %)</span>
+<span class="c1">## </span>
+<span class="c1">## Available components:</span>
+<span class="c1">## </span>
+<span class="c1">## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;    </span>
+<span class="c1">## [5] &quot;tot.withinss&quot; &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;        </span>
+<span class="c1">## [9] &quot;ifault&quot;</span>
+</pre></div>
+</div>
+<p>The above is an object of class:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1">## [1] &quot;kmeans&quot;</span>
+</pre></div>
+</div>
+<p>which in fact is a:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1">## [1] &quot;list&quot;</span>
+</pre></div>
+</div>
+<p>The underlying list looks like:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unclass</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1">## $cluster</span>
+<span class="c1">##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="c1">## [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
+<span class="c1">## [71] 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
+<span class="c1">##  [ reached getOption(&quot;max.print&quot;) -- omitted 51 entries ]</span>
+<span class="c1">## </span>
+<span class="c1">## $centers</span>
+<span class="c1">##   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="c1">## 1       5.0060      3.4280       1.4620      0.2460</span>
+<span class="c1">## 2       5.9016      2.7484       4.3935      1.4339</span>
+<span class="c1">## 3       6.8500      3.0737       5.7421      2.0711</span>
+<span class="c1">## </span>
+<span class="c1">## $totss</span>
+<span class="c1">## [1] 681.37</span>
+<span class="c1">## </span>
+<span class="c1">## $withinss</span>
+<span class="c1">## [1] 15.151 39.821 23.879</span>
+<span class="c1">## </span>
+<span class="c1">## $tot.withinss</span>
+<span class="c1">## [1] 78.851</span>
+<span class="c1">## </span>
+<span class="c1">## $betweenss</span>
+<span class="c1">## [1] 602.52</span>
+<span class="c1">## </span>
+<span class="c1">## $size</span>
+<span class="c1">## [1] 50 62 38</span>
+<span class="c1">## </span>
+<span class="c1">## $iter</span>
+<span class="c1">## [1] 2</span>
+<span class="c1">## </span>
+<span class="c1">## $ifault</span>
+<span class="c1">## [1] 0</span>
+</pre></div>
+</div>
+<p>and we already know that the above is displayed in a fancy way
+only because there is a <strong class="command">print</strong> method overloaded
+for objects of class <code class="docutils literal notranslate"><span class="pre">kmeans</span></code>.</p>
+<p>But is there really?</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">print.kmeans</span>
+<span class="c1">## Error in eval(expr, envir, enclos): object &#39;print.kmeans&#39; not found</span>
+</pre></div>
+</div>
+<p>Even though the method is hidden in the <strong class="program">stats</strong> package’s
+namespace, from <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.3</span></a> we will learn that
+it can be accessed by calling
+<strong class="command">getS3method</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;,</span> <span class="pre">&quot;kmeans&quot;)</span></code>
+or referring to <strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">print.kmeans</strong>
+(note the triple colon).</p>
+</div></div></section>
+<section id="multi-class-ness">
+<span id="sec-multi-class"></span><h3><span class="section-number">10.2.5. </span>Multi-class-ness<a class="headerlink" href="#multi-class-ness" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
+of any length. For example:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
+<span class="c1">## [1] &quot;2022-12-27 20:49:37 AEDT&quot;</span>
+<span class="p">(</span><span class="n">t2</span> <span class="o">&lt;-</span> <span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span> <span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
+<span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
+</pre></div>
+</div>
+<p>Let us inspect the two objects’ classes:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span>
+<span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+<span class="c1">## [1] &quot;POSIXlt&quot; &quot;POSIXt&quot;</span>
+</pre></div>
+</div>
+<p>When we discuss date-time classes in more detail later,
+we will take note that the former is represented as a numeric
+vector, whilst the latter is a list.
+Hence, primarily, these two should be seen as instances of two
+distinct types. However, both of them have a lot in common,
+hence it was a wise design choice to also allow them to be seen
+as the representatives of the same generic category of <em>POSIX time</em>
+objects.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When calling a generic function<a class="footnote-reference brackets" href="#footoper" id="id18">16</a> <strong class="command">f</strong> on an object <code class="docutils literal notranslate"><span class="pre">x</span></code>
+of classes<a class="footnote-reference brackets" href="#footclassdispatch" id="id19">17</a>
+<code class="docutils literal notranslate"><span class="pre">class1</span></code>, <code class="docutils literal notranslate"><span class="pre">class2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">classK</span></code>  (in this order),
+<strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x)</span></code> dispatches to the method
+determined as follows:</p>
+<ol class="arabic simple">
+<li><p>if <code class="docutils literal notranslate"><span class="pre">f.class1</span></code> is available<a class="footnote-reference brackets" href="#footlookup" id="id20">18</a>, call it;</p></li>
+<li><p>otherwise, if <code class="docutils literal notranslate"><span class="pre">f.class2</span></code> is available, call this one;</p></li>
+<li><p>…;</p></li>
+<li><p>otherwise, if <code class="docutils literal notranslate"><span class="pre">f.classK</span></code> is available, invoke it;</p></li>
+<li><p>otherwise, refer to the fallback <code class="docutils literal notranslate"><span class="pre">f.default</span></code>.</p></li>
+</ol>
+</div>
+<div class="proof proof-type-example" id="id53">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.13</span>
+        
+    </div><div class="proof-content">
+<p>There is a method <strong class="command">diff</strong> for objects of class
+<code class="docutils literal notranslate"><span class="pre">POSIXt</span></code> featuring a statement:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">&lt;-</span> <span class="nf">if </span><span class="p">(</span><span class="nf">inherits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;POSIXlt&quot;</span><span class="p">))</span> <span class="nf">as.POSIXct</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">else</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>This way, we can be handling both <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> and <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> instances
+via the same procedure.</p>
+</div></div><p>Let us see in this simple scheme any magic. It is nothing more than what was
+described above: a way of determining which method should be called for a
+particular R object. It can of course be used as a mechanism to mimic
+(and certainly it was inspired by) the idea of inheritance
+in object-oriented programming languages,
+but note that the S3 system does not allow for defining classes
+in any formal manner.</p>
+<p>For example, we cannot say that objects of class <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> inherit
+from <code class="docutils literal notranslate"><span class="pre">POSIXt</span></code> or each object of class <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> is also an instance of
+<code class="docutils literal notranslate"><span class="pre">POSIXt</span></code>.  The class attribute can still be set arbitrarily on an
+per-object basis: we can create ones whose class is
+simply <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (without the <code class="docutils literal notranslate"><span class="pre">POSIXt</span></code> part)
+or even <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;POSIXt&quot;,</span> <span class="pre">&quot;POSIXct&quot;)</span></code> (in this very order).</p>
+</section>
+<section id="operator-overloading">
+<span id="sec-operator-overloading-s3"></span><h3><span class="section-number">10.2.6. </span>Operator Overloading<a class="headerlink" href="#operator-overloading" title="Permalink to this heading"></a></h3>
+<p>Operators are ordinary functions (<a class="reference internal" href="210-design.html#sec-operfun"><span class="std std-numref">Section 9.4.4</span></a>).
+Even though what follows can partially be implied by what we
+have said above, as usual in R, there will be some oddities.</p>
+<p>For example, let us overload the index operator for
+objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.
+Looking at <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>, we see that the default method<a class="footnote-reference brackets" href="#footdefaultsubst" id="id21">19</a>
+has two arguments: <code class="docutils literal notranslate"><span class="pre">x</span></code> (the <code class="docutils literal notranslate"><span class="pre">categorical</span></code> object being sliced)
+and <code class="docutils literal notranslate"><span class="pre">i</span></code> (the indexer).
+Ours will have the same interface then:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[.categorical`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nf">structure</span><span class="p">(</span>
+        <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>  <span class="c1"># `[`(unclass(x), i)</span>
+        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+        <span class="n">levels</span><span class="o">=</span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span>  <span class="c1"># the same levels as input</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We can also introduce the replacement version of this operator:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[&lt;-.categorical`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">levels</span> <span class="o">&lt;-</span> <span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span>
+    <span class="n">codes</span> <span class="o">&lt;-</span> <span class="nf">match</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>  <span class="c1"># integer codes corresponding to levels</span>
+    <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="n">codes</span>  <span class="c1"># default method for the replacement version of `[`</span>
+    <span class="nf">structure</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+        <span class="n">levels</span><span class="o">=</span><span class="n">levels</span>  <span class="c1"># same levels as input</span>
+    <span class="p">)</span>
+
+    <span class="c1"># # or, equivalently:</span>
+    <span class="c1"># structure(</span>
+    <span class="c1">#     `[&lt;-`(unclass(x), i, value=match(value, attr(x, &quot;levels&quot;))),</span>
+    <span class="c1">#     class=&quot;categorical&quot;,</span>
+    <span class="c1">#     levels=attr(x, &quot;levels&quot;)</span>
+    <span class="c1"># )</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Testing:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>
+<span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">]</span>
+<span class="c1">## [1] &quot;3&quot; &quot;6&quot; &quot;4&quot; NA </span>
+<span class="c1">## Categories: 3, 4, 6, 9</span>
+<span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;6&quot;</span><span class="p">,</span> <span class="s">&quot;7&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;6&quot; NA  &quot;6&quot; NA  &quot;9&quot; &quot;9&quot; &quot;6&quot; NA  &quot;3&quot;</span>
+<span class="c1">## Categories: 3, 4, 6, 9</span>
+</pre></div>
+</div>
+<p>Note how we handled the case of non-existing levels
+and that the recycling rule has been automagically inherited
+(amongst other features) from the default index operator.</p>
+<div class="proof proof-type-exercise" id="id54">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.14</span>
+        
+    </div><div class="proof-content">
+<p>Do these two operators preserve the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute of <code class="docutils literal notranslate"><span class="pre">x</span></code>?
+Is indexing with negative integers or logical vectors supported as well?
+Why is that/is that not the case?</p>
+</div></div><p>Furthermore, let us overload the `<strong class="command">==</strong>` operator.
+Assume<a class="footnote-reference brackets" href="#footcatcmp" id="id22">20</a> that we would like two <code class="docutils literal notranslate"><span class="pre">categorical</span></code> objects
+be compared based on the actual labels they encode, in an elementwise
+manner:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.categorical`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
+    <span class="nf">as.character</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span> <span class="o">==</span> <span class="nf">as.character</span><span class="p">(</span><span class="n">e2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We are feeling lucky: by not performing any type checking,
+we rely on the particular <strong class="command">as.character</strong> methods
+corresponding to the types of <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.
+Also, assuming that <strong class="command">as.character</strong> always<a class="footnote-reference brackets" href="#footascharacter" id="id23">21</a>
+returns an object of type character,
+we dispatch to the default method for `<strong class="command">==</strong>`
+(which handles atomic vectors).</p>
+<p>Some examples:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="o">==</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<span class="c1">## [1]  TRUE  TRUE FALSE  TRUE</span>
+<span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="o">==</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+<span class="c1">## [1]  TRUE  TRUE FALSE  TRUE</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="o">==</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<span class="c1">## [1]  TRUE  TRUE FALSE  TRUE</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In the case of binary operators,
+dispatching is done based on the classes of both arguments.
+In all three example calls above,
+we call `<strong class="command">==.categorical</strong>`, regardless
+of whether the classed object is the first or the second operand.
+If two operands are classed and different methods are
+overloaded for both of them, a warning will be generated
+and the default internal method will be called.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.A`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="s">&quot;A&quot;</span>
+<span class="n">`==.B`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="s">&quot;B&quot;</span>
+<span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;A&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;B&quot;</span><span class="p">)</span>
+<span class="c1">## Warning: Incompatible methods (&quot;==.A&quot;, &quot;==.B&quot;) for &quot;==&quot;</span>
+<span class="c1">## [1] FALSE    NA  TRUE</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In <a class="reference internal" href="350-eval-fun.html#sec-group-generics"><span class="std std-numref">Section 18.4</span></a>, we will mention
+that operators as well as certain groups of functions
+(including <strong class="command">min</strong>, <strong class="command">sum</strong>, and <strong class="command">all</strong>
+or <strong class="command">abs</strong>, <strong class="command">log</strong>, and <strong class="command">round</strong>)
+can be overloaded all at once; see also <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="common-built-in-s3-classes">
+<h2><span class="section-number">10.3. </span>Common Built-in S3 Classes<a class="headerlink" href="#common-built-in-s3-classes" title="Permalink to this heading"></a></h2>
+<p>Let us discuss some noteworthy built-in classes,
+including the ones that represent date/time information and
+factors (ordered or not).</p>
+<p>Classes for representing tabular data
+will be dealt with in separate parts of this textbook,
+owing to their importance and ubiquity.
+Namely, matrices and other arrays are covered in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>,
+and data frames in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>.</p>
+<p>The inspecting of other<a class="footnote-reference brackets" href="#foototherclasses" id="id24">22</a> interesting classes is left
+as a simple exercise to the kind reader.</p>
+<section id="date-time-etc">
+<span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, Time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
+<span class="c1">## [1] &quot;2022-12-27&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;Date&quot;</span>
+</pre></div>
+</div>
+<p>Complex types are built upon basic ones; underneath, what we deal with is:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;double&quot;</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] 19353    -1     0    NA</span>
+</pre></div>
+</div>
+<p>which is the number of days since the so called UNIX epoch,
+1970-01-01T00:00:00+0000 (midnight GMT/UTC).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
+can be used to represent date-time objects:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
+<span class="c1">## [1] &quot;2022-12-27 20:49:37 AEDT&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;double&quot;</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] 1672134577</span>
+</pre></div>
+</div>
+<p>Underneath, it is the number of seconds since the UNIX epoch.
+By default, whilst printing, the current default timezone
+is used (see <strong class="command">Sys.timezone</strong>).
+However, such objects can be equipped with the <code class="docutils literal notranslate"><span class="pre">tzone</span></code> attribute.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span> <span class="s">&quot;POSIXt&quot;</span><span class="p">))</span>  <span class="c1"># using current default timezone</span>
+<span class="c1">## [1] &quot;1970-01-01 10:00:01 AEST&quot;</span>
+<span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span> <span class="s">&quot;POSIXt&quot;</span><span class="p">),</span> <span class="n">tzone</span><span class="o">=</span><span class="s">&quot;UTC&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;1970-01-01 00:00:01 UTC&quot;</span>
+</pre></div>
+</div>
+<p>In both cases, the time is 1 second after the beginning of UNIX epoch.
+In the former, it is displayed in the current local timezone, though
+(on the author’s PC).</p>
+<div class="proof proof-type-exercise" id="id55">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.15</span>
+        
+    </div><div class="proof-content">
+<p>Use <strong class="command">ISOdatetime</strong> to inspect how
+midnights are displayed in different timezones.</p>
+</div></div><p>There is also the <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> (local time) class,
+which is represented using a list of atomic vectors<a class="footnote-reference brackets" href="#footposixlt" id="id25">23</a>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.POSIXlt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&quot;1970-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s">&quot;2030-12-31 23:59:59&quot;</span><span class="p">)))</span>
+<span class="c1">##                          a                          b </span>
+<span class="c1">## &quot;1970-01-01 00:00:00 AEST&quot; &quot;2030-12-31 23:59:59 AEDT&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;POSIXlt&quot; &quot;POSIXt&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## [1] &quot;list&quot;</span>
+<span class="nf">str</span><span class="p">(</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># calling str instead of print to make display more compact</span>
+<span class="c1">## List of 11</span>
+<span class="c1">##  $ sec   : num [1:2] 0 59</span>
+<span class="c1">##  $ min   : int [1:2] 0 59</span>
+<span class="c1">##  $ hour  : int [1:2] 0 23</span>
+<span class="c1">##  $ mday  : int [1:2] 1 31</span>
+<span class="c1">##  $ mon   : int [1:2] 0 11</span>
+<span class="c1">##  $ year  : Named int [1:2] 70 130</span>
+<span class="c1">##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;a&quot; &quot;b&quot;</span>
+<span class="c1">##  $ wday  : int [1:2] 4 2</span>
+<span class="c1">##  $ yday  : int [1:2] 0 364</span>
+<span class="c1">##  $ isdst : int [1:2] 0 1</span>
+<span class="c1">##  $ zone  : chr [1:2] &quot;AEST&quot; &quot;AEDT&quot;</span>
+<span class="c1">##  $ gmtoff: int [1:2] NA NA</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id56">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.16</span>
+        
+    </div><div class="proof-content">
+<p>Read about the meaning of each named element,
+especially <code class="docutils literal notranslate"><span class="pre">mon</span></code> and <code class="docutils literal notranslate"><span class="pre">year</span></code>; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;DateTimeClasses&quot;)</span></code>.</p>
+</div></div><p>The manual states that <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> is supposedly
+<em>closer to human-readable forms</em> than <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code>,
+but it is a matter of taste.
+Some R functions return the former, and some yield the latter type.</p>
+<div class="proof proof-type-exercise" id="id57">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.17</span>
+        
+    </div><div class="proof-content">
+<p>The two main functions for date formatting and parsing,
+<strong class="command">strftime</strong> and <strong class="command">strptime</strong>,
+use special field formatters (similar to those used
+by <strong class="command">sprintf</strong>). Read about them in the R manual.
+What type of inputs do they accept? What outputs do they produce?</p>
+</div></div><p>There is a number of methods overloaded for objects of the
+said classes.
+In fact, the first call in this section
+already involved the use of <strong class="command">c.Date</strong>.</p>
+<div class="proof proof-type-exercise" id="id58">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.18</span>
+        
+    </div><div class="proof-content">
+<p>Play around with the overloaded versions of
+<strong class="command">seq</strong>, <strong class="command">rep</strong>, and
+<strong class="command">as.character</strong>.</p>
+</div></div><p>Note that a specific number of days or seconds can be added to or
+subtracted from a date or time, respectively.
+However, <strong class="command">-</strong> (see also <strong class="command">diff</strong>)
+can also be applied on two date-time objects,
+which yields an object of class <code class="docutils literal notranslate"><span class="pre">difftime</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Sys.Date</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="nf">Sys.Date</span><span class="p">()</span> <span class="o">-</span> <span class="m">1</span><span class="p">)</span>
+<span class="c1">## Time difference of 1 days</span>
+<span class="nf">Sys.time</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="nf">Sys.time</span><span class="p">()</span> <span class="o">-</span> <span class="m">1</span><span class="p">)</span>
+<span class="c1">## Time difference of 1 secs</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id59">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.19</span>
+        
+    </div><div class="proof-content">
+<p>Check out how objects of class <code class="docutils literal notranslate"><span class="pre">difftime</span></code> are internally represented.</p>
+</div></div><p>Applying other arithmetic operations on date-time objects
+yields an error.
+Also note that because date-time objects are just numbers,
+they can be compared to each other using binary operators<a class="footnote-reference brackets" href="#footdateops" id="id26">24</a>
+and methods such as <strong class="command">sort</strong> and <strong class="command">order</strong><a class="footnote-reference brackets" href="#footdatextfrm" id="id27">25</a>.</p>
+<div class="proof proof-type-exercise" id="id60">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.20</span>
+        
+    </div><div class="proof-content">
+<p>Check out the <strong class="program">stringx</strong> package <span id="id28">[<a class="reference internal" href="999-bibliography.html#id49" title="Gagolewski, M. (2022).  stringx: Drop-in replacements for base R string functions powered by stringi. URL: https://stringx.gagolewski.com.">22</a>]</span>
+which replaces the base R date-time processing functions with
+their more portable counterparts.</p>
+</div></div><div class="proof proof-type-exercise" id="id61">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.21</span>
+        
+    </div><div class="proof-content">
+<p><strong class="command">system.time</strong> can be used to measure the time
+to execute a given expression:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">system.time</span><span class="p">({</span>
+    <span class="nf">sum</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1e7</span><span class="p">))</span>  <span class="c1"># whatever, just testing</span>
+<span class="p">})</span>
+<span class="c1">##    user  system elapsed </span>
+<span class="c1">##   0.232   0.012   0.245</span>
+</pre></div>
+</div>
+<p>The function returns an object of class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
+Inspect how it is represented internally.</p>
+</div></div></section>
+<section id="formulae">
+<span id="sec-formula-intro"></span><h3><span class="section-number">10.3.2. </span>Formulae (*)<a class="headerlink" href="#formulae" title="Permalink to this heading"></a></h3>
+<p>Formulae (created by means of `<strong class="command">~</strong>`)
+are quite advanced language constructs and hence they will be discussed
+much further: in <a class="reference internal" href="320-language.html#sec-formula"><span class="std std-numref">Section 15.2</span></a>.</p>
+<p>Some R users refer to them in functions such as
+<strong class="command">lm</strong>, <strong class="command">aggregate</strong>, <strong class="command">t.test</strong>,
+<strong class="command">boxplot</strong>, or <strong class="command">plot</strong> to specify models or queries
+such as “<code class="docutils literal notranslate"><span class="pre">y</span></code> as a function of <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, and <code class="docutils literal notranslate"><span class="pre">x3</span></code>” and
+“<code class="docutils literal notranslate"><span class="pre">y</span></code> grouped/split by a combination of <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>”
+where <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">x1</span></code>, etc. are for example
+column names in a data frame or named items in a list.</p>
+<p>There is no single standard governing how a function should interpret
+a formula’s terms. In fact, each procedure is free to introduce
+its own meaning (a micro-language built on top of R). Due to this,
+yours truly discourages<a class="footnote-reference brackets" href="#footagainstformulae" id="id29">26</a>
+their use (especially by beginners).</p>
+</section>
+<section id="factors">
+<span id="sec-factor"></span><h3><span class="section-number">10.3.3. </span>Factors<a class="headerlink" href="#factors" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">factor</span></code> class is often used to represent categorical (qualitative) data,
+e.g., species, groups, types.
+In fact, the example <code class="docutils literal notranslate"><span class="pre">categorical</span></code> class that we played with above has been
+inspired by the built-in <code class="docutils literal notranslate"><span class="pre">factor</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">))</span>
+<span class="c1">## [1] &quot;spam&quot;    &quot;spam&quot;    &quot;bacon&quot;   &quot;sausage&quot; &quot;spam&quot;    &quot;bacon&quot;</span>
+<span class="p">(</span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
+<span class="c1">## Levels: bacon sausage spam</span>
+</pre></div>
+</div>
+<p>Take note of how factors are printed: there are no double quote characters
+around the labels and the list of levels is given at the end.</p>
+<p>Internally, such objects are represented as integer vectors
+(<a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>) with elements between 1 and <em>k</em> with the special
+(as in <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>) <code class="docutils literal notranslate"><span class="pre">levels</span></code>
+attribute being a character vector of length <em>k</em><a class="footnote-reference brackets" href="#footfactorint" id="id30">27</a>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="c1">## [1] &quot;factor&quot;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="c1">## [1] &quot;integer&quot;</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="c1">## [1] 3 3 1 2 3 1</span>
+<span class="c1">## attr(,&quot;levels&quot;)</span>
+<span class="c1">## [1] &quot;bacon&quot;   &quot;sausage&quot; &quot;spam&quot;</span>
+<span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span>  <span class="c1"># also: levels(f)</span>
+<span class="c1">## [1] &quot;bacon&quot;   &quot;sausage&quot; &quot;spam&quot;</span>
+</pre></div>
+</div>
+<p>Factors are often  used instead of
+character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id31">28</a>,
+where there is a need to manipulate their levels easily.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>  <span class="c1"># also levels(f) &lt;- c(....new...)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="c1">## [1] c c a b c a</span>
+<span class="c1">## Levels: a b c</span>
+</pre></div>
+</div>
+<p>The underlying codes remain the same.</p>
+<p>Certain operations on vectors of small integers are relatively easy to
+implement, especially those concerning element grouping:
+splitting, counting, plotting (e.g., <a class="reference internal" href="250-graphics.html#fig-irisplot-factors"><span class="std std-numref">Figure 13.1</span></a>).
+It is because the integer codes can naturally be used whilst indexing
+other vectors. In <a class="reference internal" href="150-indexing.html#sec-fun-indexing"><span class="std std-numref">Section 5.4</span></a>, we mentioned a few functions
+related to this, such as
+<strong class="command">match</strong>,
+<strong class="command">split</strong>,
+<strong class="command">findInterval</strong>, and
+<strong class="command">tabulate</strong>.
+Specifically, the latter can be implemented like
+“for each <code class="docutils literal notranslate"><span class="pre">i</span></code>, increase <code class="docutils literal notranslate"><span class="pre">count[factor_codes[i]]</span></code> by one”.</p>
+<div class="proof proof-type-exercise" id="id62">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.22</span>
+        
+    </div><div class="proof-content">
+<p>Study the source code of the <strong class="command">factor</strong> function.
+Note the use of <strong class="command">as.character</strong>,
+<strong class="command">unique</strong>, <strong class="command">order</strong>, and <strong class="command">match</strong>.</p>
+</div></div><div class="proof proof-type-exercise" id="id63">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.23</span>
+        
+    </div><div class="proof-content">
+<p>Implement a simplified version of <strong class="command">table</strong>
+based on <strong class="command">tabulate</strong>. It should work
+for objects of class <code class="docutils literal notranslate"><span class="pre">factor</span></code> and return a named numeric vector.</p>
+</div></div><div class="proof proof-type-exercise" id="id64">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.24</span>
+        
+    </div><div class="proof-content">
+<p>Implement your own version of <strong class="command">cut</strong>
+based on <strong class="command">findInterval</strong>.</p>
+</div></div><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <strong class="command">as.numeric</strong> method has not been overloaded for factors.
+Therefore, when we call the generic, the default method is
+used: it returns the underlying integer codes as-is.
+This can surprise the unaware users when they play with
+factors that feature levels consisting of strings representing
+integer numbers:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">g</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">11</span><span class="p">,</span> <span class="m">15</span><span class="p">,</span> <span class="m">16</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">13</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">15</span><span class="p">)))</span>  <span class="c1"># converts numbers to strings</span>
+<span class="c1">## [1] 11 15 16 11 13 4  15</span>
+<span class="c1">## Levels: 4 11 13 15 16</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>  <span class="c1"># the underlying codes</span>
+<span class="c1">## [1] 2 4 5 2 3 1 4</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>  <span class="c1"># to get the numbers en-coded</span>
+<span class="c1">## [1] 11 15 16 11 13  4 15</span>
+</pre></div>
+</div>
+<p>Unfortunately, support for factors is often hardcoded at the
+C language level, which will make this class behave less predictably
+(from the R perspective). In particular, the manual overloading
+of methods for factor objects might have no effect.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">f</span></code> is a factor, then <code class="docutils literal notranslate"><span class="pre">x[f]</span></code> does not behave like
+<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code>
+(indexing by labels, using the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute). Instead,
+we get <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code> (the underlying codes will determine the positions).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">))</span>
+<span class="nf">levels</span><span class="p">(</span><span class="n">h</span><span class="p">)[</span><span class="n">h</span><span class="p">]</span>  <span class="c1"># the same as c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)[c(1, 2, 1, 3, 1, 3)]</span>
+<span class="c1">## [1] &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;c&quot; &quot;a&quot; &quot;c&quot;</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="s">&quot;z&quot;</span><span class="p">)[</span><span class="n">h</span><span class="p">]</span>  <span class="c1"># names are not used whilst indexing</span>
+<span class="c1">##   b   c   b   a   b   a </span>
+<span class="c1">## &quot;x&quot; &quot;y&quot; &quot;x&quot; &quot;z&quot; &quot;x&quot; &quot;z&quot;</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="s">&quot;z&quot;</span><span class="p">)[</span><span class="nf">as.character</span><span class="p">(</span><span class="n">h</span><span class="p">)]</span>  <span class="c1"># names are used now</span>
+<span class="c1">##   a   b   a   c   a   c </span>
+<span class="c1">## &quot;z&quot; &quot;x&quot; &quot;z&quot; &quot;y&quot; &quot;z&quot; &quot;y&quot;</span>
+</pre></div>
+</div>
+<p>More often than not, indexing by factors will happen “accidentally”,
+leading to our being slightly puzzled. In particular,
+factors look much like character vectors when they are featured
+in data frames:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">A</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">),</span> <span class="n">B</span><span class="o">=</span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">))))</span>
+<span class="c1">##   A B</span>
+<span class="c1">## 1 x x</span>
+<span class="c1">## 2 y y</span>
+<span class="c1">## 3 z z</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s">&quot;A&quot;</span><span class="p">]])</span>
+<span class="c1">## [1] &quot;character&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s">&quot;B&quot;</span><span class="p">]])</span>
+<span class="c1">## [1] &quot;factor&quot;</span>
+</pre></div>
+</div>
+<p>(*) Up until R 4.0, many functions (including <strong class="command">data.frame</strong>
+and <strong class="command">read.csv</strong>) had the <code class="docutils literal notranslate"><span class="pre">stringsAsFactors</span></code> option
+(see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;options&quot;)</span></code>) set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, which resulted in all character
+vectors’ being automatically converted to factors when, e.g.,
+creating data frames (compare <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>).
+Luckily, this is no longer the case, but they can still be
+encountered sporadically: for instance,
+the built-in <code class="docutils literal notranslate"><span class="pre">iris</span></code> dataset has the fifth column of class:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]])</span>
+<span class="c1">## [1] &quot;factor&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Be careful when combining factors and not-factors:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="s">&quot;A&quot;</span><span class="p">))</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;C&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;1&quot; &quot;2&quot; &quot;1&quot; &quot;C&quot;</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">factor</span><span class="p">(</span><span class="s">&quot;C&quot;</span><span class="p">))</span>
+<span class="c1">## [1] A B A C</span>
+<span class="c1">## Levels: A B C</span>
+</pre></div>
+</div>
+</div>
+<div class="proof proof-type-exercise" id="id65">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.25</span>
+        
+    </div><div class="proof-content">
+<p>Note that when subsetting a factor object,
+the result will have the <code class="docutils literal notranslate"><span class="pre">levels</span></code> attribute inherited as-is.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)]</span>
+<span class="c1">## [1] c c</span>
+<span class="c1">## Levels: a b c</span>
+</pre></div>
+</div>
+<p>Implement your own version of the <strong class="command">droplevels</strong> function
+which removes the unused attributes.</p>
+</div></div><div class="proof proof-type-exercise" id="id66">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.26</span>
+        
+    </div><div class="proof-content">
+<p>The replacement version of the index operator does not automatically
+add new levels to the modified object:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="s">&quot;A&quot;</span><span class="p">))</span>
+<span class="nf">`[&lt;-`</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;C&quot;</span><span class="p">)</span>  <span class="c1"># like in x[4] &lt;- &quot;C&quot;</span>
+<span class="c1">## Warning in `[&lt;-.factor`(x, 4, value = &quot;C&quot;): invalid factor level, NA</span>
+<span class="c1">## generated</span>
+<span class="c1">## [1] A    B    A    &lt;NA&gt;</span>
+<span class="c1">## Levels: A B</span>
+</pre></div>
+</div>
+<p>Implement your own version of `<strong class="command">[&lt;-.factor]</strong>` which
+is capable of doing so.</p>
+</div></div></section>
+<section id="ordered-factors">
+<h3><span class="section-number">10.3.4. </span>Ordered Factors<a class="headerlink" href="#ordered-factors" title="Permalink to this heading"></a></h3>
+<p>Note that when creating factors, we can enforce a particular ordering
+and the number of levels:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">)</span>
+<span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">))</span>
+<span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
+<span class="c1">## Levels: eggs bacon sausage spam</span>
+</pre></div>
+</div>
+<p>If we want the arrangement of the levels to define a linear ordering
+relation over set of the labels, we can call:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">),</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
+<span class="c1">## Levels: eggs &lt; bacon &lt; sausage &lt; spam</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="c1">## [1] &quot;ordered&quot; &quot;factor&quot;</span>
+</pre></div>
+</div>
+<p>This yields an ordered factor, which enables comparisons like:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="n">f</span> <span class="o">&gt;=</span> <span class="s">&quot;bacon&quot;</span><span class="p">]</span>  <span class="c1"># what&#39;s not worse than bacon?</span>
+<span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
+<span class="c1">## Levels: eggs &lt; bacon &lt; sausage &lt; spam</span>
+</pre></div>
+</div>
+<p>How is that possible? Well, based on information provided in this chapter
+it will come as no surprise that it is because… someone has
+implemented a comparison operator for objects of class <code class="docutils literal notranslate"><span class="pre">ordered</span></code>.</p>
+</section>
+</section>
+<section id="argument-checking-revisited">
+<span id="sec-arg-check-s3"></span><h2><span class="section-number">10.4. </span>Argument Checking Revisited<a class="headerlink" href="#argument-checking-revisited" title="Permalink to this heading"></a></h2>
+<p>Recall that anything can be passed as a function’s input.
+Here are some additions to the topic we touched upon in
+<a class="reference internal" href="210-design.html#sec-arg-check"><span class="std std-numref">Section 9.2.1</span></a>.</p>
+<p>Despite that compound objects are internally represented
+through basic types (such as numeric vectors, lists, or combinations thereof)
+and attributes, unless we really know better (which, by the way,
+this book is all about), we should be relying on the
+hopefully well-thought-out methods developed by the class’ designer.</p>
+<p>Ideally, when checking arguments passed to a function,
+determining if an object is of a desired type
+should be solely done by means of the generics like <strong class="command">is.class</strong>.
+If that is not the case, a call to <strong class="command">as.class</strong> should
+be used to make sure we will be dealing with an object of the desired type.</p>
+<p>If a conversion is not possible, either because a specific method
+is unavailable or because its designer decided that this must be the case,
+whatever the consequences are is not necessarily our problem anymore.</p>
+<p>We should explain to the user that the input type assurance
+is done via this very mechanism and, in case they get
+any surprising results, they should check/redefine the underlying
+<strong class="command">is.class</strong> or <strong class="command">as.class</strong> themselves.</p>
+<p>This is of course not watertight, and there will be users complaining
+that they get <em>unexpected</em> or <em>confusing</em> (in their opinion) outputs.
+With infinitely many potential types, however, we cannot respond
+to every possible situation.</p>
+<div class="proof proof-type-example" id="id67">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.27</span>
+        
+    </div><div class="proof-content">
+<p>As an illustration, here is a function that counts the number
+of occurrences of items in a <em>numerised</em> (digitised?) version
+of a given object:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">numtable</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># two generics!</span>
+
+    <span class="n">u</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="nf">structure</span><span class="p">(</span>
+        <span class="nf">tabulate</span><span class="p">(</span><span class="nf">match</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span>
+        <span class="n">names</span><span class="o">=</span><span class="nf">as.character</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Let us assume that the user has been informed (in the corresponding
+documentation page) that <code class="docutils literal notranslate"><span class="pre">x</span></code> must be a numeric vector
+(as in <code class="code docutils literal notranslate"><span class="pre">is.numeric</span></code>) or an object coercible to
+(by means of <code class="code docutils literal notranslate"><span class="pre">as.numeric</span></code>).</p>
+<p>The callers will be stress-testing our function in many different ways:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+<span class="c1">## 1 3 5 </span>
+<span class="c1">## 2 1 3</span>
+</pre></div>
+</div>
+<p>This is an intended behaviour.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="s">&quot;3&quot;</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">))</span>
+<span class="c1">## 1 3 5 </span>
+<span class="c1">## 2 1 3</span>
+</pre></div>
+</div>
+<p>This makes sense too, a character vector consisting of
+number-strings has been fed on input.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">))</span>
+<span class="c1">## Warning in numtable(c(&quot;a&quot;, &quot;e&quot;, &quot;z&quot;, &quot;z&quot;, &quot;a&quot;, &quot;z&quot;)): NAs introduced by</span>
+<span class="c1">## coercion</span>
+<span class="c1">## &lt;NA&gt; </span>
+<span class="c1">##    6</span>
+</pre></div>
+</div>
+<p>Does the output make no sense? Of course, it does,
+they have just passed something not easily coercible
+to a numeric vector. Note the warning that suggests
+there is something wrong. The user needs to correct
+their possible mistake by themself.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>
+<span class="c1">## Error in numtable(list(1, 2, 3:10, 2)): &#39;list&#39; object cannot be coerced to type &#39;double&#39;</span>
+</pre></div>
+</div>
+<p>Again, makes sense. ‘But I think that this function should
+apply <strong class="command">unlist</strong> automatically’ – well, if
+you want such a behaviour, why don’t you
+call <strong class="command">numtable</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">unlist</strong><code class="code docutils literal notranslate"><span class="pre">(...))</span></code>
+yourself? It is not so difficult.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">)))</span>
+<span class="c1">## 1 2 3 </span>
+<span class="c1">## 2 1 3</span>
+</pre></div>
+</div>
+<p>Is this confusing? No; this is a well-documented behaviour
+of <strong class="command">as.numeric</strong> on objects of type <code class="docutils literal notranslate"><span class="pre">factor</span></code>
+(which was designed by another developer).
+A user should know (but we can remind them about it in the documentation)
+that in this case, <strong class="command">as.character</strong> should rather be called first.</p>
+<p>Of course, sometimes users might discover bugs or unexpected
+behaviours, especially related to boundary cases we have not been
+considerate enough to inspect. We are of course the ones to blame for
+the following:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">numeric</span><span class="p">(</span><span class="m">0</span><span class="p">))</span>  <span class="c1"># bug: this should be corrected</span>
+<span class="c1">## &lt;NA&gt; </span>
+<span class="c1">##    0</span>
+</pre></div>
+</div>
+</div></div></section>
+<section id="over-using-the-forward-pipe-operator">
+<span id="sec-pipe"></span><h2><span class="section-number">10.5. </span>(Over)using the Forward-pipe Operator, `<strong class="command">|&gt;</strong>` (*)<a class="headerlink" href="#over-using-the-forward-pipe-operator" title="Permalink to this heading"></a></h2>
+<p>The object-oriented programming paradigm is useful when we wish
+to define a new data type, perhaps even a hierarchy of types.
+Many development teams find it an efficient tool to organise larger
+pieces of software.
+Yet, in the broad data science and numerical computing domains,
+we are more often consumers of OOP rather than class designers.</p>
+<p>Thanks to the discussed method dispatch mechanism,
+our language is easily extensible and something that
+mimics a new data type can easily be
+introduced. Most importantly, methods can be added or removed
+during run-time, e.g., when importing external packages.</p>
+<p>However, R is still a functional programming language,
+where functions not only are first-class citizens; they are privileged.
+Of course, there are some inherent limitations
+stemming from the ingenious simplicity of S3:
+method dispatch is usually based only on the type of the first
+function argument, classes cannot be defined formally
+(but see <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>) and that there is no real encapsulation
+(we cannot actually hide data from a user<a class="footnote-reference brackets" href="#footencapsulation" id="id32">29</a>).
+However, overall the whole concept has proven quite versatile.</p>
+<p>In functional programming, emphasis is on operations (verbs),
+not data (nouns).
+This leads to a very readable syntax, for example
+(assuming that <strong class="command">square</strong>, <code class="docutils literal notranslate"><span class="pre">x</span></code>, and <code class="docutils literal notranslate"><span class="pre">y</span></code> are sensibly defined),
+the mean squared error can be written as:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mean</span><span class="p">(</span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This is very user-centric. However, when implementing more complex
+data processing pipelines, a programmer thinks
+“first, I need to do this, then I need to do that, end afterwards…”.
+When they write it down, there can be some pressing of HOME and END
+keys on the keyboard involved.
+This should not be a problem for most programmers.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">finally</span><span class="p">(</span><span class="nf">thereafter</span><span class="p">(</span><span class="nf">then</span><span class="p">(</span><span class="nf">first</span><span class="p">(</span><span class="n">x</span><span class="p">))))</span>
+</pre></div>
+</div>
+<p>However, some people are inherently lazy, always
+complaining and/or always trying to “optimise”<a class="footnote-reference brackets" href="#footoptimise" id="id33">30</a> things.</p>
+<div class="proof proof-type-example" id="id68">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.28</span>
+        
+    </div><div class="proof-content">
+<p>Base R is of course extremely flexible and we can introduce new
+vocabulary as we please. In <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>, we study an example,
+where we define:</p>
+<ul class="simple">
+<li><p><strong class="command">group_by</strong> (a function
+that splits a data frame with respect to
+a combination of levels in given named columns
+and returns a list of data frames with class <code class="docutils literal notranslate"><span class="pre">list_dfs</span></code>),</p></li>
+<li><p><strong class="command">aggregate.list_dfs</strong> (which applies
+a given aggregation function on each column of each data frame in
+a given list), and</p></li>
+<li><p><strong class="command">mean.list_dfs</strong> (a specialised version of the former
+that calls <strong class="command">mean</strong>).</p></li>
+</ul>
+<p>The specifics do not really matter now, let us just
+consider the notation we use when the operations are chained:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># select a few rows and columns from the `iris` data frame:</span>
+<span class="n">iris_subset</span> <span class="o">&lt;-</span> <span class="n">iris</span><span class="p">[</span><span class="m">51</span><span class="o">:</span><span class="m">150</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">,</span> <span class="s">&quot;Petal.Length&quot;</span><span class="p">,</span> <span class="s">&quot;Species&quot;</span><span class="p">)]</span>
+<span class="c1"># compute the averages of all variables grouped by Species:</span>
+<span class="nf">mean</span><span class="p">(</span><span class="nf">group_by</span><span class="p">(</span><span class="n">iris_subset</span><span class="p">,</span> <span class="s">&quot;Species&quot;</span><span class="p">))</span>
+<span class="c1">##      Species            x  Mean</span>
+<span class="c1">## 1 versicolor  Sepal.Width 2.770</span>
+<span class="c1">## 2 versicolor Petal.Length 4.260</span>
+<span class="c1">## 3  virginica  Sepal.Width 2.974</span>
+<span class="c1">## 4  virginica Petal.Length 5.552</span>
+</pre></div>
+</div>
+<p>This is quite readable: we compute the mean
+in groups defined by <code class="docutils literal notranslate"><span class="pre">Species</span></code> in a subset of the <code class="docutils literal notranslate"><span class="pre">iris</span></code> data frame.
+All <em>verbs</em> appear on the lefthand side of the expression,
+with the last (the most important?) operation
+being listed first.</p>
+<p>By the way, self-explanatory variable names and rich comments are priceless.</p>
+</div></div><p>In more traditional object-oriented programming languages,
+either the method list is sealed inside<a class="footnote-reference brackets" href="#footsealmeth" id="id34">31</a> the class’ definition
+(like in C++), or some peculiar patches must be applied to
+inject a method (like in Python)<a class="footnote-reference brackets" href="#footextmeth" id="id35">32</a>.
+There, it is the objects that are <em>told</em> what to do: they are treated
+as black boxes.</p>
+<p>Some popular languages rely on the message-passing syntax,
+where operations are propagated (and written) left-to-right
+instead of inside-out.
+For instance, in C++ and Python (amongst many others),
+“<code class="docutils literal notranslate"><span class="pre">obj.</span></code><strong class="command">method1</strong><code class="code docutils literal notranslate"><span class="pre">().</span></code><strong class="command">method2</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>”
+means “call <strong class="command">method1</strong> on <code class="docutils literal notranslate"><span class="pre">obj</span></code> and
+then call <strong class="command">method2</strong> on the result.</p>
+<p>Since R 4.1.0, there is a <em>pipe operator</em><a class="footnote-reference brackets" href="#footpipe" id="id36">33</a>, `<strong class="command">|&gt;</strong>`,
+which is merely a syntactic sugar for
+translating between the message-passing and function-centric notion.
+In a nutshell, writing:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">|&gt;</span> <span class="nf">f</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="nf">g</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">h</span><span class="p">()</span>
+<span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">square</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="nf">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">h</span><span class="p">(</span><span class="nf">g</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">))</span>
+<span class="nf">mean</span><span class="p">(</span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This syntax is developer-centric: it emphasises on the
+order in which the operations are executed,
+something that could always be achieved with the
+function-centric form and perhaps a few auxiliary variables.</p>
+<div class="proof proof-type-example" id="id69">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 10.29</span>
+        
+    </div><div class="proof-content">
+<p>In the above example, a pipe operator version
+of the <code class="docutils literal notranslate"><span class="pre">iris</span></code> aggregation exercise would look like:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris_subset</span> <span class="o">|&gt;</span> <span class="nf">group_by</span><span class="p">(</span><span class="s">&quot;Species&quot;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></div><p>This book is minimalistic by design and there is nothing that
+cannot be achieved without the pipe operator,
+hence we will be refraining<a class="footnote-reference brackets" href="#footcool" id="id37">34</a> ourselves from using it.</p>
+</section>
+<section id="exercises">
+<h2><span class="section-number">10.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<div class="proof proof-type-exercise" id="id70">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.30</span>
+        
+    </div><div class="proof-content">
+<p>Answer the following questions:</p>
+<ul class="simple">
+<li><p>How to display the source code of the default methods
+for <strong class="command">head</strong> and <strong class="command">tail</strong>?</p></li>
+<li><p>Can there be, at the same time,
+one object of class <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;A&quot;,</span> <span class="pre">&quot;B&quot;)</span></code>
+and another one of class <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;B&quot;,</span> <span class="pre">&quot;A&quot;)</span></code>?</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">f</span></code> is a factor, what are the relationships between
+<strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(f)</span></code>,
+<strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(f)</span></code>,
+<strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(f))</span></code>, and
+<strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(f))</span></code>?</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is a named vector and <code class="docutils literal notranslate"><span class="pre">f</span></code> is a factor,
+is <code class="docutils literal notranslate"><span class="pre">x[f]</span></code> equivalent to <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code> or rather
+<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code>?</p></li>
+</ul>
+</div></div><div class="proof proof-type-exercise" id="id71">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.31</span>
+        
+    </div><div class="proof-content">
+<p>A user calls:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">log</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are numeric vectors. Consult <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;plot&quot;)</span></code>
+for the meaning of the <code class="docutils literal notranslate"><span class="pre">ylim</span></code> and <code class="docutils literal notranslate"><span class="pre">log</span></code> arguments.
+Was that straightforward?</p>
+</div></div><div class="proof proof-type-exercise" id="id72">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.32</span>
+        
+    </div><div class="proof-content">
+<p>Explain why the two following calls yield significantly different
+results and present a workaround:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;2022-12-27&quot; &quot;1970-01-01&quot;</span>
+<span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="nf">Sys.Date</span><span class="p">())</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19353&quot;</span>
+</pre></div>
+</div>
+</div></div><div class="proof proof-type-exercise" id="id73">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.33</span>
+        
+    </div><div class="proof-content">
+<p>Write methods <strong class="command">head</strong> and <strong class="command">tail</strong>
+for our example <code class="docutils literal notranslate"><span class="pre">categorical</span></code> class.</p>
+</div></div><div class="proof proof-type-exercise" id="id74">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.34</span>
+        
+    </div><div class="proof-content">
+<p>(*) Write an R package that defines S3 class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
+and a couple of methods therefor.
+Note the need for the use of the <code class="docutils literal notranslate"><span class="pre">S3method</span></code> directive  <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code>;
+see <span id="id38">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2022).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">45</a>]</span>.</p>
+</div></div><div class="proof proof-type-exercise" id="id75">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.35</span>
+        
+    </div><div class="proof-content">
+<p>Inspect the result of a call to
+<strong class="command">binom.test</strong><code class="code docutils literal notranslate"><span class="pre">(79,</span> <span class="pre">100)</span></code>.
+Find the method responsible for the pretty-printing of such objects.</p>
+</div></div><div class="proof proof-type-exercise" id="id76">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.36</span>
+        
+    </div><div class="proof-content">
+<p>Inspect the result of a call to
+<strong class="command">rle</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">4,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">3,,</span> <span class="pre">2,</span> <span class="pre">2))</span></code>.
+Find the method responsible for the pretty-printing of such objects.</p>
+</div></div><div class="proof proof-type-exercise" id="id77">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.37</span>
+        
+    </div><div class="proof-content">
+<p>Read more about the <code class="docutils literal notranslate"><span class="pre">connection</span></code> class; see the <em>Value</em> section
+in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;connections&quot;)</span></code>.</p>
+</div></div><div class="proof proof-type-exercise" id="id78">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.38</span>
+        
+    </div><div class="proof-content">
+<p>Read about the subsetting
+operators overloaded for the <code class="docutils literal notranslate"><span class="pre">package_version</span></code> class;
+see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;numeric_version&quot;)</span></code>.</p>
+</div></div><div class="proof proof-type-exercise" id="id79">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.39</span>
+        
+    </div><div class="proof-content">
+<p>There are <strong class="command">xtfrm</strong> methods
+overloaded for classes such as <code class="docutils literal notranslate"><span class="pre">numeric_version</span></code>,
+<code class="docutils literal notranslate"><span class="pre">difftime</span></code>, <code class="docutils literal notranslate"><span class="pre">Date</span></code>, and <code class="docutils literal notranslate"><span class="pre">factor</span></code>.  Find out how they work and
+where they might be useful (especially in relation to
+<strong class="command">order</strong> and <strong class="command">sort</strong>; see also <a class="reference internal" href="240-data-frame.html#sec-df-order"><span class="std std-numref">Section 12.3.1</span></a>).</p>
+</div></div><div class="proof proof-type-exercise" id="id80">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.40</span>
+        
+    </div><div class="proof-content">
+<p>Give an example where
+<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(y1,</span> <span class="pre">y2))</span></code>
+(with default arguments) will fail to generate the correct result.</p>
+</div></div><div class="proof proof-type-exercise" id="id81">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.41</span>
+        
+    </div><div class="proof-content">
+<p>Write a function that determines the mode, i.e., the most frequently
+occurring value in a given object of class <code class="docutils literal notranslate"><span class="pre">factor</span></code>. If the mode is not unique,
+return a randomly chosen one (each with the same probability).</p>
+</div></div><div class="proof proof-type-exercise" id="id82">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.42</span>
+        
+    </div><div class="proof-content">
+<p>Implement your own version of the <strong class="command">gl</strong> function.</p>
+</div></div><div class="proof proof-type-exercise" id="id83">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 10.43</span>
+        
+    </div><div class="proof-content">
+<p>Check out which built-in date-time functions the <strong class="program">stringx</strong> package
+replaces with more portable ones.</p>
+</div></div><hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="foots3design"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>However, some classes, even the built-in ones that
+we describe here, can be poorly designed (e.g, some crucial
+methods might be missing, they can be not-well-interoperable
+with other classes, etc.). Do not blame this messenger.
+Remember that the R environment is still very reliable.
+Also, there are cases where changing the current behaviour
+in one place could lead to undesirable consequences elsewhere.</p>
+</dd>
+<dt class="label" id="foots3limits"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dd><p>They were built on top of the ordinary (“old S”)
+R, hence have certain limitations what we discuss in the sequel:
+classes cannot be formally defined
+(often we will use named lists for representing objects,
+and we know we cannot be any more flexible than this),
+and the dispatching can only be based on the class of one
+(usually the first, but, e.g., binary operators
+take both types into account) of the arguments.</p>
+</dd>
+<dt class="label" id="foototherclass"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dd><p>Other class systems may give an impression that
+they are alien implants that were forcefully added to our language
+to solve a specific, rather narrow class of problems; e.g.,
+S4 (<a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>), Reference Classes (<a class="reference internal" href="330-environment.html#sec-refclass"><span class="std std-numref">Section 16.3</span></a>),
+and other ones proposed by third-party packages</p>
+</dd>
+<dt class="label" id="footsexptype"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
+<dd><p>Their list is hardcoded at the C language level;
+compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id39">[<a class="reference internal" href="999-bibliography.html#id8" title="R Development Core Team. (2022).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">48</a>]</span> and
+see also <a class="reference internal" href="310-compile.html#chap-compile"><span class="std std-numref">Chapter 14</span></a>.</p>
+</dd>
+<dt class="label" id="footexternalptr"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
+<dd><p>In particular, later we mention
+<code class="docutils literal notranslate"><span class="pre">externalptr</span></code>s which are simply pointers to memory allocated on the
+heap, so these might be any instances of C <code class="docutils literal notranslate"><span class="pre">struct</span></code>s
+or C++ <code class="docutils literal notranslate"><span class="pre">class</span></code>es, etc.
+This makes R a very extensible language.</p>
+</dd>
+<dt class="label" id="footalsos4"><span class="brackets"><a class="fn-backref" href="#id8">6</a></span></dt>
+<dd><p>But of course there is more; see the S4 and other systems
+discussed in <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>.</p>
+</dd>
+<dt class="label" id="footsplit"><span class="brackets"><a class="fn-backref" href="#id9">7</a></span></dt>
+<dd><p>For instance, consider once again the example from
+<a class="reference internal" href="150-indexing.html#sec-split"><span class="std std-numref">Section 5.4.3</span></a> that applies the <strong class="command">split</strong>
+function on a data frame reduced to a list.</p>
+</dd>
+<dt class="label" id="footusemeth1"><span class="brackets"><a class="fn-backref" href="#id10">8</a></span></dt>
+<dd><p>Note that some functions can have a version of
+<strong class="command">UseMethod</strong> hidden at the C language level (internally);
+see <a class="reference internal" href="#sec-built-in-generics"><span class="std std-numref">Section 10.2.3</span></a>.</p>
+</dd>
+<dt class="label" id="footusemeth2"><span class="brackets"><a class="fn-backref" href="#id11">9</a></span></dt>
+<dd><p>Which in this context is equivalent to
+<strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;,</span> <span class="pre">x)</span></code>,
+with <code class="docutils literal notranslate"><span class="pre">x</span></code> being the first argument to the function.</p>
+</dd>
+<dt class="label" id="foots3consistency"><span class="brackets"><a class="fn-backref" href="#id12">10</a></span></dt>
+<dd><p>In particular, the checking of S3 generic/method
+consistency is part of R package check.</p>
+</dd>
+<dt class="label" id="footinternaldispatch"><span class="brackets"><a class="fn-backref" href="#id13">11</a></span></dt>
+<dd><p>Which is quite unfortunate because
+it decreases transparency; we need to look this information
+up somewhere in the documentation (instead of simply inspecting
+a function’s source code; see, e.g., <strong class="command">cbind</strong>).
+Also, it allows for some methods to
+be hardcoded at the C language level too and thus be unoverloadable.
+Some of such design choices can somewhat be defended, though,
+as they increase execution speed or memory consumption,
+but still: we are not fans thereof.</p>
+</dd>
+<dt class="label" id="footknowns3generics"><span class="brackets"><a class="fn-backref" href="#id14">12</a></span></dt>
+<dd><p>See also
+<code class="docutils literal notranslate"><span class="pre">.knownS3Generics</span></code> and <code class="docutils literal notranslate"><span class="pre">.S3_methods_table</span></code> which are related
+to the advanced topics we cover in <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.3</span></a>.</p>
+</dd>
+<dt class="label" id="footpuzzle"><span class="brackets"><a class="fn-backref" href="#id15">13</a></span></dt>
+<dd><p>It is a different story if this is our conscious design
+choice and that this is the behaviour we really want.
+If we document this thoroughly (see how <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;factor&quot;)</span></code> discusses
+the behaviour of a to-numeric conversion), only a user’s ignorance
+will there be to blame when they still are confused about
+this behaviour. Remember that we can never make an API
+totally foolproof and that there will always be someone
+who will challenge/stress-test our ideas.
+Bad design is always bad, but being overprotective
+has its cons as well. Choose your audience wisely.</p>
+</dd>
+<dt class="label" id="footonedispatch"><span class="brackets"><a class="fn-backref" href="#id16">14</a></span></dt>
+<dd><p>This is R, so there are of course many exceptions
+to this rule which were made for the (debatable) sake of the
+R users’ convenience. In particular, in
+<a class="reference internal" href="240-data-frame.html#sec-cbind-data-frame"><span class="std std-numref">Section 12.1.2</span></a>
+we mention that <strong class="command">cbind</strong> and <strong class="command">rbind</strong>
+will dispatch to the <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> method if at least one argument
+is a data frame (and other ones are unclassed).
+Also it is worth noting that the S4 class system that we discuss
+in <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a> allows for dispatching based on the classes
+many arguments.</p>
+</dd>
+<dt class="label" id="footoperoverload"><span class="brackets"><a class="fn-backref" href="#id17">15</a></span></dt>
+<dd><p>Also, dispatching can be done internally
+to internal methods: overloading `<strong class="command">&lt;.character</strong>`
+will have no effect unless the base `<strong class="command">&lt;</strong>` is
+replaced with a custom one that makes an explicit
+call to <strong class="command">UseMethod</strong>.
+Most often, we can expect that the built-in types (e.g.,
+atomic vectors), factors, data frames, and matrices and other arrays
+might be treated specially.</p>
+</dd>
+<dt class="label" id="footoper"><span class="brackets"><a class="fn-backref" href="#id18">16</a></span></dt>
+<dd><p>The case of binary operators is handled differently;
+see <a class="reference internal" href="#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>.</p>
+</dd>
+<dt class="label" id="footclassdispatch"><span class="brackets"><a class="fn-backref" href="#id19">17</a></span></dt>
+<dd><p><strong class="command">UseMethod</strong> dispatches on the implicit
+class as determined by the <strong class="command">class</strong> function
+(note that the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute does not necessarily have to be set
+in order for <strong class="command">class</strong> to return a sensible answer).</p>
+</dd>
+<dt class="label" id="footlookup"><span class="brackets"><a class="fn-backref" href="#id20">18</a></span></dt>
+<dd><p>For more details on S3 method lookup;
+see <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.3</span></a>.</p>
+</dd>
+<dt class="label" id="footdefaultsubst"><span class="brackets"><a class="fn-backref" href="#id21">19</a></span></dt>
+<dd><p>Note that the default S3 method,
+`<strong class="command">[.default</strong>`, is hardcoded at the C language level.
+Therefore,     we cannot refer to it directly (but <strong class="command">unclass</strong>
+does the trick).
+Also note that we can also call <strong class="command">NextMethod</strong> here;
+see <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.3</span></a>.</p>
+</dd>
+<dt class="label" id="footcatcmp"><span class="brackets"><a class="fn-backref" href="#id22">20</a></span></dt>
+<dd><p>There are of course many possible ways to implement
+the `<strong class="command">==</strong>` operator. For instance, it may return
+either a single <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> depending if two objects are
+identical (although probably overloading <strong class="command">all.equal</strong>
+would be a better idea). We could also be comparing the
+corresponding underlying integer codes instead of the labels, etc.</p>
+</dd>
+<dt class="label" id="footascharacter"><span class="brackets"><a class="fn-backref" href="#id23">21</a></span></dt>
+<dd><p>Which of course does not
+have to be the case; it is merely an assumption based on
+our belief in the common sense of other developers.</p>
+</dd>
+<dt class="label" id="foototherclasses"><span class="brackets"><a class="fn-backref" href="#id24">22</a></span></dt>
+<dd><p>An (incomprehensive) approximation to the
+list of available classes can be generated by calling
+<strong class="command">unique</strong><code class="code docutils literal notranslate"><span class="pre">(.S3_methods_table[,</span> <span class="pre">2])</span></code>.</p>
+</dd>
+<dt class="label" id="footposixlt"><span class="brackets"><a class="fn-backref" href="#id25">23</a></span></dt>
+<dd><p>Which was inspired by C’s <code class="docutils literal notranslate"><span class="pre">tm</span></code> structure defined
+in <code class="docutils literal notranslate"><span class="pre">&lt;time.h&gt;</span></code>.</p>
+</dd>
+<dt class="label" id="footdateops"><span class="brackets"><a class="fn-backref" href="#id26">24</a></span></dt>
+<dd><p>The overloaded group generic <code class="docutils literal notranslate"><span class="pre">Ops</span></code>
+prevents us from adding or multiplying two dates
+and defines the meaning of the comparison operators;
+see <a class="reference internal" href="350-eval-fun.html#sec-group-generics"><span class="std std-numref">Section 18.4</span></a>.</p>
+</dd>
+<dt class="label" id="footdatextfrm"><span class="brackets"><a class="fn-backref" href="#id27">25</a></span></dt>
+<dd><p>See an exercise below on the use of <strong class="command">xtfrm</strong>.</p>
+</dd>
+<dt class="label" id="footagainstformulae"><span class="brackets"><a class="fn-backref" href="#id29">26</a></span></dt>
+<dd><p>For example, <strong class="command">lm.fit</strong>
+can be used instead of <strong class="command">lm</strong>. It is slightly more difficult
+to learn, surely, but has the added benefit of making sure
+the user knows that all model variables are not magical
+(especially the nonlinear/mixed effect terms).</p>
+</dd>
+<dt class="label" id="footfactorint"><span class="brackets"><a class="fn-backref" href="#id30">27</a></span></dt>
+<dd><p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id6" title="R Development Core Team. (2022).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">49</a>]</span> states: <em>Factors are currently
+implemented using an integer
+array to specify the actual levels and a second array of names that are
+mapped to the integers. Rather unfortunately users often make use of the
+implementation in order to make some calculations easier. This, however,
+is an implementation issue and is not guaranteed to hold in all
+implementations of R.</em>
+Still, <em>fortunately</em>, this has been a de facto standard for factors for
+a very long time.</p>
+</dd>
+<dt class="label" id="footstrcache"><span class="brackets"><a class="fn-backref" href="#id31">28</a></span></dt>
+<dd><p>Recall that there is a global (internal) string cache,
+hence having many duplicated strings is not an issue,
+memory-use-wisely.</p>
+</dd>
+<dt class="label" id="footencapsulation"><span class="brackets"><a class="fn-backref" href="#id32">29</a></span></dt>
+<dd><p>Which can be good, right?</p>
+</dd>
+<dt class="label" id="footoptimise"><span class="brackets"><a class="fn-backref" href="#id33">30</a></span></dt>
+<dd><p>Do not get yours truly wrong, improving things is generally
+good, but overall, in the long run, as a compulsive habit
+(“this is what (some) stakeholders want”,
+“we need to be agile and responsive”, etc.),
+it is not really sustainable (also for the environment!).
+Less is better, even though a little harder.
+By introducing a new, parallel syntax, we not only duplicate
+the existing features and cause some divide in the community
+(some users will be introduced to the system through the new interface
+and not know the old one, others will have to learn the new syntax
+to be able to communicate with the former group) but also introduce
+a whole new set of issues (how to make the new functions
+interoperable with each other in a seamless manner, etc.).</p>
+</dd>
+<dt class="label" id="footsealmeth"><span class="brackets"><a class="fn-backref" href="#id34">31</a></span></dt>
+<dd><p>When methods are parts of particular classes,
+there can be a lot of duplicated code.
+Functional OOP can be more developer-friendly as we
+can implement all methods related to roughly the same
+functionality in one spot.</p>
+</dd>
+<dt class="label" id="footextmeth"><span class="brackets"><a class="fn-backref" href="#id35">32</a></span></dt>
+<dd><p>See also the concept
+of extension methods in C# or Kotlin or, to some extent,
+class inheritance.</p>
+</dd>
+<dt class="label" id="footpipe"><span class="brackets"><a class="fn-backref" href="#id36">33</a></span></dt>
+<dd><p>It was inspired by `<strong class="command">|</strong>` in Bash
+and `<strong class="command">|&gt;&#64;</strong>` in F# and Julia (which are part of the
+language specification).
+Also, there is a `<strong class="command">%&gt;%</strong>` operator (and related ones)
+in the R package <strong class="program">magrittr</strong>.</p>
+</dd>
+<dt class="label" id="footcool"><span class="brackets"><a class="fn-backref" href="#id37">34</a></span></dt>
+<dd><p>Which some readers would name an <em>uncool</em> (old-school)
+approach, but we do not care. Remember that the functional
+syntax is the native one and we have to be able
+to understand it anyway.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="230-matrix.html" class="btn btn-neutral float-right" title="11. Matrices and Other Arrays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="210-design.html" class="btn btn-neutral float-left" title="9. Designing Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        Copyright &#169; 2022 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>. Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
+
+    Built with <a href="https://sphinx-doc.org/">Sphinx</a>
+    and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
+    theme.
+      <span class="lastupdated">
+        Last updated on 2022-12-28T15:36:00+1100.
+      </span>
+
+
+    This site will never display any ads: it is a non-profit project.
+    It does not collect any data.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
