@@ -35,7 +35,7 @@ You can read it at:
 Consider citing this book as:
 [Gagolewski M.][1] (2023), *Deep R Programming*,
 Zenodo, Melbourne,
-<!-- DOI: [10.5281/zenodo.zzz](https://dx.doi.org/10.5281/zenodo.zzz), -->
+DOI: [10.5281/zenodo.7490464](https://dx.doi.org/10.5281/zenodo.7490464),
 ISBN: 978-0-6455719-2-9,
 URL: <https://deepr.gagolewski.com/>.
 
