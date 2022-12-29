@@ -27,9 +27,18 @@ You can read it at:
 * <https://deepr.gagolewski.com/> (a browser-friendly version)
 * <https://deepr.gagolewski.com/deepr.pdf> (PDF)
 
+<!-- TODO: printed version -->
+
+
 **Please spread the news about this project.**
 
-<!-- TODO: citation -->
+Consider citing this book as:
+[Gagolewski M.][1] (2023), *Deep R Programming*,
+Zenodo, Melbourne,
+<!-- DOI: [10.5281/zenodo.zzz](https://dx.doi.org/10.5281/zenodo.zzz), -->
+ISBN: 978-0-6455719-2-9,
+URL: <https://deepr.gagolewski.com/>.
+
 
 Any remarks and bug fixes are appreciated. Please submit them via
 this repository's *Issues* tracker. Thank you.
@@ -68,7 +77,7 @@ and many [others](https://github.com/gagolews).
 
 --------------------------------------------------------------------------------
 
-Copyright (C) 2022, [Marek Gagolewski][1]. Some rights reserved.
+Copyright (C) 2022–2023, [Marek Gagolewski][1]. Some rights reserved.
 
 This material is licensed under the Creative Commons
 [Attribution-NonCommercial-NoDerivatives 4.0 International][2] License
