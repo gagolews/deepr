@@ -101,7 +101,7 @@
           </a>
 
           <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12 (draft)
+          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9001 (draft)
           </div>
 
 <!--
@@ -171,9 +171,11 @@
 <li class="toctree-l1"><a class="reference internal" href="310-compile.html">14. 🚧 Interfacing Compiled Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧 Expressions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">16. 🚧 Environments</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#classification-of-r-data-types-revisited">16.1. 🚧 Classification of R Data Types (Revisited)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#copying-on-demand">16.2. 🚧 Copying on Demand</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#a-note-on-reference-classes">16.3. 🚧 A Note on Reference Classes (*)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environments-as-object-containers">16.1. 🚧 Environments as Object Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environments-vs-named-lists">16.2. 🚧 Environments vs Named Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pass-by-value-copy-on-demand-not-for-environments">16.3. 🚧 Pass-by-value, Copy on Demand – Not for Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enclosing-environments">16.4. 🚧 Enclosing Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-note-on-reference-classes">16.5. 🚧 A Note on Reference Classes (*)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="340-eval-expr.html">17. 🚧 Evaluating Expressions</a></li>
@@ -282,25 +284,162 @@ it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. ISBN 978-0-6455719-1-2. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
 </div></blockquote>
+<p>In the first part of our book, we have discussed quite a few
+<em>basic</em> types of objects: numeric, logical, and character vectors,
+lists (generic vectors), and functions.</p>
+<p><em>Environments</em>, which we introduce in this chapter, are instances of
+recursive types (compare <a class="reference internal" href="000-preface.html#fig-data-types-overview"><span class="std std-numref">Figure 1</span></a>).
+We rarely interact with them directly (unless we need
+a hash table-like data structure with quick element look up by name).</p>
+<p>Still, they are utterly important as they form the basis
+of the <em>environment model of evaluation</em> which governs how
+R expressions are computed; see <a class="reference internal" href="340-eval-expr.html#sec-env-mod-eval"><span class="std std-numref">Section 17.1</span></a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Each object of type <em>environment</em> consists of:</p>
+<ul class="simple">
+<li><p>a <em>frame</em><a class="footnote-reference brackets" href="#footdf" id="id2">1</a> – a container for named R objects of any kind,</p></li>
+<li><p>a pointer to an <em>enclosing environment</em> (also called
+a parent environment).</p></li>
+</ul>
+</div>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
-<section id="classification-of-r-data-types-revisited">
-<span id="sec-data-types-full"></span><h2><span class="section-number">16.1. </span>🚧 Classification of R Data Types (Revisited)<a class="headerlink" href="#classification-of-r-data-types-revisited" title="Permalink to this heading"></a></h2>
-<p>Recall our first approximation to the classification of R Data Types
-that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.</p>
-<figure class="align-default" id="id2">
-<span id="fig-data-types-full"></span><img alt="../_images/data-types-full.png" src="../_images/data-types-full.png" />
-<figcaption>
-<p><span class="caption-number">Figure 16.1 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
+<section id="environments-as-object-containers">
+<h2><span class="section-number">16.1. </span>🚧 Environments as Object Containers<a class="headerlink" href="#environments-as-object-containers" title="Permalink to this heading"></a></h2>
+<p>To create a new, empty environment, we call the <strong class="command">new.env</strong>
+function:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e1</span> <span class="o">&lt;-</span> <span class="nf">new.env</span><span class="p">())</span>
+<span class="c1">## &lt;environment: 0x56016e380528&gt;</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
+<span class="c1">## [1] &quot;environment&quot;</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;x&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="s">&quot;x in e1&quot;</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;x&quot;</span><span class="p">]]</span>
+<span class="c1">## [1] &quot;x in e1&quot;</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;spam&quot;</span><span class="p">]]</span>
+<span class="c1">## NULL</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span><span class="o">*</span><span class="m">10</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;z&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>  <span class="c1"># unlike in the case of lists, creates a new element</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># but is not equipped with the `names` attribute</span>
+<span class="c1">## [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;</span>
+<span class="nf">length</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
+<span class="c1">## [1] 3</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># same with str(e1)</span>
+<span class="c1">## &lt;environment: 0x56016e380528&gt;</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">key</span> <span class="n">in</span> <span class="nf">names</span><span class="p">(</span><span class="n">e1</span><span class="p">))</span>  <span class="p">{</span> <span class="c1"># for (elem in e1) does not work...</span>
+    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s: &quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+    <span class="nf">str</span><span class="p">(</span><span class="n">e1</span><span class="p">[[</span><span class="n">key</span><span class="p">]])</span>
+<span class="p">}</span>
+<span class="c1">## x:  chr &quot;x in e1&quot;</span>
+<span class="c1">## y:  num [1:3] 10 20 30</span>
+<span class="c1">## z:  NULL</span>
+<span class="n">e1</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">)]</span>  <span class="c1"># but see the mget function</span>
+<span class="c1">## Error in e1[c(&quot;x&quot;, &quot;y&quot;)]: object of type &#39;environment&#39; is not subsettable</span>
+<span class="n">e1</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="s">&quot;bad key&quot;</span>
+<span class="c1">## Error in e1[[1]] &lt;- &quot;bad key&quot;: wrong args for environment subassignment</span>
+</pre></div>
+</div>
 </section>
-<section id="copying-on-demand">
-<span id="sec-copy-on-demand"></span><h2><span class="section-number">16.2. </span>🚧 Copying on Demand<a class="headerlink" href="#copying-on-demand" title="Permalink to this heading"></a></h2>
+<section id="environments-vs-named-lists">
+<h2><span class="section-number">16.2. </span>🚧 Environments vs Named Lists<a class="headerlink" href="#environments-vs-named-lists" title="Permalink to this heading"></a></h2>
+<p>as.list,
+as.environment</p>
+<p>hash tables</p>
+<p>as a consequence:</p>
+<ul class="simple">
+<li><p>elements are unordered - cannot be accessed by position</p></li>
+<li><p>names must be unique</p></li>
+</ul>
+<p>amortised constant vs linear-time lookup</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&lt;-</span> <span class="m">10000</span>
+<span class="n">x_list</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="nf">as.list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">),</span> <span class="n">names</span><span class="o">=</span><span class="nf">as.character</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">))</span>
+<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">names</span><span class="p">(</span><span class="n">x_list</span><span class="p">))</span> <span class="n">x_list</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span>
+<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="c1">##    user  system elapsed </span>
+<span class="c1">##   1.026   0.001   1.026</span>
+<span class="n">x_env</span> <span class="o">&lt;-</span> <span class="nf">as.environment</span><span class="p">(</span><span class="n">x_list</span><span class="p">)</span>
+<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">names</span><span class="p">(</span><span class="n">x_env</span><span class="p">))</span> <span class="n">x_env</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span>
+<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="c1">##    user  system elapsed </span>
+<span class="c1">##   0.005   0.000   0.006</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id3">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 16.1</span>
+        
+    </div><div class="proof-content">
+<p>TODO: assign consecutive, unique numeric IDs for a large list of items</p>
+<p>match vs mget</p>
+</div></div></section>
+<section id="pass-by-value-copy-on-demand-not-for-environments">
+<span id="sec-copy-on-demand"></span><h2><span class="section-number">16.3. </span>🚧 Pass-by-value, Copy on Demand – Not for Environments<a class="headerlink" href="#pass-by-value-copy-on-demand-not-for-environments" title="Permalink to this heading"></a></h2>
+<p>Environments are the only R objects that are not passed-by-value!</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="n">key</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="n">x</span><span class="p">[[</span><span class="n">key</span><span class="p">]]</span><span class="m">+1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="nf">mod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>  <span class="c1"># pass a &quot;copy&quot; of x</span>
+<span class="c1">## [1] 2</span>
+<span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span>  <span class="c1"># state of x did not change</span>
+<span class="c1">## [1] 1</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">))</span>
+<span class="nf">mod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>  <span class="c1"># pass by &quot;reference&quot;</span>
+<span class="c1">## [1] 2</span>
+<span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span>   <span class="c1"># x has changed</span>
+<span class="c1">## [1] 2</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="n">x</span>
+<span class="nf">mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>  <span class="c1"># pass by &quot;reference&quot;</span>
+<span class="c1">## [1] 3</span>
+<span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span>   <span class="c1"># x has changed (names `y` and `x` are bound to the same object)</span>
+<span class="c1">## [1] 3</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## &lt;environment: 0x56016d4fa730&gt;</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="c1">## &lt;environment: 0x56016d4fa730&gt;</span>
+</pre></div>
+</div>
+<p>copy on demand:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&lt;-</span> <span class="m">100000000</span>  <span class="c1"># like, a lot</span>
+<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">numeric</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="c1">##    user  system elapsed </span>
+<span class="c1">##   0.132   0.196   0.328</span>
+<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="n">x</span>
+<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="c1">##    user  system elapsed </span>
+<span class="c1">##   0.001   0.000   0.001</span>
+<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
+<span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="c1">##    user  system elapsed </span>
+<span class="c1">##   0.158   0.203   0.361</span>
+<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
+<span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">2</span>
+<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="c1">##    user  system elapsed </span>
+<span class="c1">##   0.001   0.000   0.001</span>
+</pre></div>
+</div>
+</section>
+<section id="enclosing-environments">
+<h2><span class="section-number">16.4. </span>🚧 Enclosing Environments<a class="headerlink" href="#enclosing-environments" title="Permalink to this heading"></a></h2>
 </section>
 <section id="a-note-on-reference-classes">
-<span id="sec-refclass"></span><h2><span class="section-number">16.3. </span>🚧 A Note on Reference Classes (*)<a class="headerlink" href="#a-note-on-reference-classes" title="Permalink to this heading"></a></h2>
+<span id="sec-refclass"></span><h2><span class="section-number">16.5. </span>🚧 A Note on Reference Classes (*)<a class="headerlink" href="#a-note-on-reference-classes" title="Permalink to this heading"></a></h2>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="footdf"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>Not to be confused with a “data frame”, i.e., an object
+of S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>.</p>
+</dd>
+</dl>
 </section>
 </section>
 
@@ -324,7 +463,7 @@ that we presented in the <a class="reference internal" href="000-preface.html#ch
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2022-12-29T11:22:44+1100.
+        Last updated on 2023-01-01T15:24:00+1100.
       </span>
 
 
