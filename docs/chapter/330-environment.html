@@ -73,6 +73,8 @@
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/proof.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -178,6 +180,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#enclosing-environments">16.2. 🚧 Enclosing Environments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a-note-on-reference-classes">16.3. 🚧 A Note on Reference Classes (*)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">16.4. Exercises</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="340-eval-expr.html">17. 🚧 Evaluating Expressions</a></li>
@@ -287,15 +290,16 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
 </div></blockquote>
 <p>In the first part of our book, we have discussed quite a few
-<em>basic</em> types of objects: numeric, logical, and character vectors,
+<em>basic</em> object types: numeric, logical, and character vectors,
 lists (generic vectors), and functions.</p>
-<p><em>Environments</em>, which we introduce in this chapter, are instances of
-recursive types (compare <a class="reference internal" href="000-preface.html#fig-data-types-overview"><span class="std std-numref">Figure 1</span></a>).
-We rarely interact with them directly (unless we need
-a hash table-like data structure with quick element look up by name).</p>
-<p>Still, they are utterly important as they form the basis
-of the <em>environment model of evaluation</em> which governs how
-R expressions are computed; see <a class="reference internal" href="340-eval-expr.html#sec-env-mod-eval"><span class="std std-numref">Section 17.1</span></a>.</p>
+<p><em>Environments</em>, which we introduce in this chapter, just like
+lists, are instances of recursive types
+(compare the diagram in <a class="reference internal" href="350-eval-fun.html#fig-data-types-full"><span class="std std-numref">Figure 18.1</span></a>).</p>
+<p>Even though we rarely interact with them directly (unless we need
+a hash table-like data structure with quick by-name element look-up),
+they are utterly important for R itself:
+they form the basis of the <em>environment model of evaluation</em>
+which governs how expressions are computed; see <a class="reference internal" href="340-eval-expr.html#sec-env-mod-eval"><span class="std std-numref">Section 17.1</span></a>.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Each object of type <em>environment</em> consists of:</p>
@@ -312,78 +316,131 @@ it can be thought of as a container of named R objects of any type;</p></li>
 <section id="frames-environments-as-object-containers">
 <h2><span class="section-number">16.1. </span>🚧 Frames: Environments as Object Containers<a class="headerlink" href="#frames-environments-as-object-containers" title="Permalink to this heading"></a></h2>
 <p>To create a new, empty environment,
-we call the <strong class="command">new.env</strong> function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e1</span> <span class="o">&lt;-</span> <span class="nf">new.env</span><span class="p">())</span>
-<span class="c1">## &lt;environment: 0x55d287966f08&gt;</span>
+we can call the <strong class="command">new.env</strong> function:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span> <span class="o">&lt;-</span> <span class="nf">new.env</span><span class="p">()</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
 <span class="c1">## [1] &quot;environment&quot;</span>
 </pre></div>
 </div>
 <p>In this section, we treat environments merely as
 containers for named objects of any kind, i.e.,
-deal with the <em>frame</em> part thereof.</p>
+we deal with the <em>frame</em> part thereof.</p>
+<p>Let us insert some elements into <code class="docutils literal notranslate"><span class="pre">e1</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span><span class="p">[[</span><span class="s">&quot;x&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="s">&quot;x in e1&quot;</span>
 <span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span>
-<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;x&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The `<strong class="command">[[</strong>` operator provides some named list-like look-and-feel
+also in the case of element extraction:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span><span class="p">[[</span><span class="s">&quot;x&quot;</span><span class="p">]]</span>
 <span class="c1">## [1] &quot;x in e1&quot;</span>
-<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;spam&quot;</span><span class="p">]]</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;spam&quot;</span><span class="p">]]</span>  <span class="c1"># does not exist</span>
 <span class="c1">## NULL</span>
-<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span><span class="o">*</span><span class="m">10</span>
+<span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="n">e1</span><span class="p">[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span><span class="o">*</span><span class="m">10</span>  <span class="c1"># replace with new content</span>
 <span class="n">e1</span><span class="p">[[</span><span class="s">&quot;z&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>  <span class="c1"># unlike in the case of lists, creates a new element</span>
-<span class="nf">names</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># but is not equipped with the `names` attribute</span>
+</pre></div>
+</div>
+<p>Even though the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute is not set explicitly,
+the corresponding function returns a sensible result:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># compare attr(e1, &quot;names&quot;) – it is not set</span>
 <span class="c1">## [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;</span>
 <span class="nf">length</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
 <span class="c1">## [1] 3</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># same with str(e1)</span>
-<span class="c1">## &lt;environment: 0x55d287966f08&gt;</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">key</span> <span class="n">in</span> <span class="nf">names</span><span class="p">(</span><span class="n">e1</span><span class="p">))</span>  <span class="p">{</span> <span class="c1"># for (elem in e1) does not work...</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s: &quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
-    <span class="nf">str</span><span class="p">(</span><span class="n">e1</span><span class="p">[[</span><span class="n">key</span><span class="p">]])</span>
-<span class="p">}</span>
-<span class="c1">## x:  chr &quot;x in e1&quot;</span>
-<span class="c1">## y:  num [1:3] 10 20 30</span>
-<span class="c1">## z:  NULL</span>
-<span class="n">e1</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">)]</span>  <span class="c1"># but see the mget function</span>
-<span class="c1">## Error in e1[c(&quot;x&quot;, &quot;y&quot;)]: object of type &#39;environment&#39; is not subsettable</span>
-<span class="n">e1</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="s">&quot;bad key&quot;</span>
-<span class="c1">## Error in e1[[1]] &lt;- &quot;bad key&quot;: wrong args for environment subassignment</span>
 </pre></div>
 </div>
 <section id="environments-vs-named-lists">
 <h3><span class="section-number">16.1.1. </span>🚧 Environments vs Named Lists<a class="headerlink" href="#environments-vs-named-lists" title="Permalink to this heading"></a></h3>
-<p>as.list,
-as.environment</p>
-<p>hash tables</p>
-<p>as a consequence:</p>
-<ul class="simple">
-<li><p>elements are unordered - cannot be accessed by position</p></li>
-<li><p>names must be unique</p></li>
-</ul>
-<p>amortised constant vs linear-time lookup</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&lt;-</span> <span class="m">10000</span>
-<span class="n">x_list</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="nf">as.list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">),</span> <span class="n">names</span><span class="o">=</span><span class="nf">as.character</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">))</span>
-<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">names</span><span class="p">(</span><span class="n">x_list</span><span class="p">))</span> <span class="n">x_list</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span>
-<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
-<span class="c1">##    user  system elapsed </span>
-<span class="c1">##   1.078   0.000   1.078</span>
-<span class="n">x_env</span> <span class="o">&lt;-</span> <span class="nf">as.environment</span><span class="p">(</span><span class="n">x_list</span><span class="p">)</span>
-<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">names</span><span class="p">(</span><span class="n">x_env</span><span class="p">))</span> <span class="n">x_env</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span>
-<span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
-<span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.005   0.000   0.005</span>
+<p>Let us note that the printing of an environment is quite awkward:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># same with str(e1)</span>
+<span class="c1">## &lt;environment: 0x55b320bd0018&gt;</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id5">
+<p>Later we will mention that this is the address where <code class="docutils literal notranslate"><span class="pre">e1</span></code> is stored
+in computer’s memory.</p>
+<p>As we have said, these objects are rather of <em>internal</em> interest,
+so nobody cared<a class="footnote-reference brackets" href="#footdiscourage" id="id4">3</a> about making the interaction therewith
+particularly smooth.</p>
+<p>Environment frames, in some sense, can be thought of
+as named lists, but the set of admissible operations is severely restricted.
+In particular, we cannot extract more than one element
+at the same time with the index operator:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">)]</span>  <span class="c1"># but see the mget function</span>
+<span class="c1">## Error in e1[c(&quot;x&quot;, &quot;y&quot;)]: object of type &#39;environment&#39; is not subsettable</span>
+</pre></div>
+</div>
+<p>nor can we refer to the elements by position:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="s">&quot;bad key&quot;</span>
+<span class="c1">## Error in e1[[1]] &lt;- &quot;bad key&quot;: wrong args for environment subassignment</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id9">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.1</span>
         
     </div><div class="proof-content">
-<p>TODO: assign consecutive, unique numeric IDs for a large list of items</p>
-<p>match vs mget</p>
-</div></div></section>
+<p>Check if <strong class="command">lapply</strong> and <strong class="command">Map</strong> can be applied
+directly on environments.
+Also, can we iterate over their elements using a <strong class="command">for</strong> loop?</p>
+</div></div><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Environment frames are internally implemented
+using hash tables (hash maps; see, e.g., <span id="id5">[<a class="reference internal" href="999-bibliography.html#id57" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">9</a>, <a class="reference internal" href="999-bibliography.html#id30" title="Knuth, D.E. (1997).  The Art of Computer Programming III: Sorting and Searching. Addison-Wesley.">33</a>]</span>)
+with string keys.</p>
+<p>A <em>hash table</em> is a data structure that allows for
+a very quick<a class="footnote-reference brackets" href="#footquickhash" id="id6">4</a> lookup, insertion, and deletion
+of individual elements <em>by name</em>.</p>
+<p>But this comes at a price, including:</p>
+<ul class="simple">
+<li><p>elements are not particularly unordered: they cannot
+be referred to by a numeric index;</p></li>
+<li><p>all element names must be unique.</p></li>
+</ul>
+</div>
+<p>A list may be considered a <em>sequence</em>,
+but an environment frame is only <em>set</em> (a bag) of objects.
+In the majority of numerical computing applications,
+we would rather store, iterate over, and process all the elements
+<em>in order</em>, hence the greater popularity of the former.
+Lists still allow for an element look-up by name, even though this
+is slightly slower<a class="footnote-reference brackets" href="#footlisttime" id="id7">5</a>. Hence, they are much more universal.</p>
+<p>🚧 TODO: environments: use case</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">key</span> <span class="n">in</span> <span class="n">some_container</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">counter</span><span class="p">[[</span><span class="s">&quot;key&quot;</span><span class="p">]]))</span>
+        <span class="n">counter</span><span class="p">[[</span><span class="s">&quot;key&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="n">counter</span><span class="p">[[</span><span class="s">&quot;key&quot;</span><span class="p">]]</span><span class="m">+1</span>
+    <span class="n">else</span>
+        <span class="n">counter</span><span class="p">[[</span><span class="s">&quot;key&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">counter</span></code> is a list, then, theoretically, the worst-case time of the above
+algorithm is <span class="math notranslate nohighlight">\(O(n^2)\)</span>; for environments, it is amortised <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
+<p>🚧 TODO: <strong class="command">mget</strong> vs <strong class="command">match</strong>/`<strong class="command">[</strong>` time</p>
+<div class="proof proof-type-exercise" id="id10">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 16.2</span>
+        
+    </div><div class="proof-content">
+<p>🚧 TODO: amortised constant vs linear-time lookup check: implement the
+above scheme and benchmark the two data structures
+using <strong class="command">proc.time</strong></p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>  <span class="c1"># timer start</span>
+<span class="c1"># ... to do - something time-consuming ...</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>  <span class="c1"># elapsed time</span>
+</pre></div>
+</div>
+</div></div><p>🚧 TODO: <strong class="command">as.list</strong>, <strong class="command">as.environment</strong></p>
+<p>🚧 TODO: All names must be unique:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.list</span><span class="p">(</span><span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="m">3</span><span class="p">)))</span>
+<span class="c1">## $y</span>
+<span class="c1">## [1] 2</span>
+<span class="c1">## </span>
+<span class="c1">## $x</span>
+<span class="c1">## [1] 3</span>
+</pre></div>
+</div>
+</section>
 <section id="pass-by-value-copy-on-demand-not-for-environments">
 <span id="sec-copy-on-demand"></span><h3><span class="section-number">16.1.2. </span>🚧 Pass-by-value, Copy on Demand – Not for Environments<a class="headerlink" href="#pass-by-value-copy-on-demand-not-for-environments" title="Permalink to this heading"></a></h3>
 <p>Environments are the only R objects that are not passed-by-value!</p>
@@ -405,9 +462,9 @@ as.environment</p>
 <span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span>   <span class="c1"># x has changed (names `y` and `x` are bound to the same object)</span>
 <span class="c1">## [1] 3</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x55d286acac10&gt;</span>
+<span class="c1">## &lt;environment: 0x55b31fcf3c28&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x55d286acac10&gt;</span>
+<span class="c1">## &lt;environment: 0x55b31fcf3c28&gt;</span>
 </pre></div>
 </div>
 <p>copy on demand:</p>
@@ -416,7 +473,7 @@ as.environment</p>
 <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">numeric</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.108   0.216   0.324</span>
+<span class="c1">##   0.095   0.223   0.318</span>
 <span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
 <span class="n">y</span> <span class="o">&lt;-</span> <span class="n">x</span>
 <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
@@ -426,12 +483,12 @@ as.environment</p>
 <span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
 <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.160   0.200   0.359</span>
+<span class="c1">##   0.167   0.179   0.348</span>
 <span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">()</span>
 <span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">2</span>
 <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.001   0.000   0.001</span>
+<span class="c1">##   0.000   0.000   0.001</span>
 </pre></div>
 </div>
 </section>
@@ -441,18 +498,71 @@ as.environment</p>
 </section>
 <section id="a-note-on-reference-classes">
 <span id="sec-refclass"></span><h2><span class="section-number">16.3. </span>🚧 A Note on Reference Classes (*)<a class="headerlink" href="#a-note-on-reference-classes" title="Permalink to this heading"></a></h2>
-<hr class="footnotes docutils" />
+</section>
+<section id="exercises">
+<h2><span class="section-number">16.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<div class="proof proof-type-exercise" id="id11">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 16.3</span>
+        
+    </div><div class="proof-content">
+<p>Answer the following questions:</p>
+<ul class="simple">
+<li><p>What is the role of a frame in an environment?</p></li>
+<li><p>What is the role of an enclosing environment?</p></li>
+<li><p>What is the difference between a named list and an environment?</p></li>
+<li><p>What functions and operators work on named lists but cannot be
+applied on environments?</p></li>
+<li><p>What do we mean by saying that environments are not passed by value
+to R functions?</p></li>
+<li><p>🚧 TODO…</p></li>
+</ul>
+</div></div><div class="proof proof-type-exercise" id="id12">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 16.4</span>
+        
+    </div><div class="proof-content">
+<p>(*)
+🚧 TODO: assign consecutive, unique numeric IDs for a large list of items</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">pkg</span> <span class="o">&lt;-</span> <span class="nf">available.packages</span><span class="p">()</span>
+<span class="n">pkg</span><span class="p">[,</span> <span class="s">&quot;Package&quot;</span><span class="p">]</span>  <span class="c1"># a list of the names of available packages</span>
+<span class="n">pkg</span><span class="p">[,</span> <span class="s">&quot;Depends&quot;</span><span class="p">]</span>  <span class="c1"># dependencies</span>
+</pre></div>
+</div>
+<p>Convert the dependency lists to a list of character vectors
+(preferably using a regular expression).</p>
+<p>Then, generate a list of reverse dependencies:</p>
+<p>What packages depend on each given package.</p>
+<p>This will be much faster using an environment.</p>
+</div></div><hr class="footnotes docutils" />
 <dl class="footnote brackets">
 <dt class="label" id="footdf"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
 <dd><p>Not to be confused with a “data frame”, i.e., an object
-of S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>.</p>
+of S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>; see <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>.</p>
 </dd>
 <dt class="label" id="footencpar"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
 <dd><p>Some also call it a <em>parent</em> environment,
 but we will not. We will try following the nomenclature
-established in Section 3.2 in <span id="id4">[<a class="reference internal" href="999-bibliography.html#id13" title="Abelson, H., Sussman, G.J., Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span>.
+established in Section 3.2 in <span id="id8">[<a class="reference internal" href="999-bibliography.html#id13" title="Abelson, H., Sussman, G.J., Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span>.
 Note that there is a bit of a mess in the R documentation
 regarding the way enclosing environments are referred to as.</p>
+</dd>
+<dt class="label" id="footdiscourage"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
+<dd><p>Which might be by design, to discourage the novices
+from playing with fire.</p>
+</dd>
+<dt class="label" id="footquickhash"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
+<dd><p>Element lookup, insertion, and deletion
+in hash tables takes amortised <span class="math notranslate nohighlight">\(O(1)\)</span> time.</p>
+</dd>
+<dt class="label" id="footlisttime"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
+<dd><p>Accessing elements by position (numeric index)
+in lists takes <span class="math notranslate nohighlight">\(O(1)\)</span> time.
+Worst-case scenario for the element look-up by name (non-existence)
+is linear with respect to the container size.
+Also, inserting new elements at the end takes amortised <span class="math notranslate nohighlight">\(O(1)\)</span> time.</p>
 </dd>
 </dl>
 </section>
@@ -478,7 +588,7 @@ regarding the way enclosing environments are referred to as.</p>
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-10T12:10:35+1100.
+        Last updated on 2023-01-10T18:18:41+1100.
       </span>
 
 
