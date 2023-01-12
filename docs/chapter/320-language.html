@@ -73,6 +73,8 @@
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/proof.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -170,8 +172,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="310-compile.html">14. 🚧🚧 Interfacing Compiled Code</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">15. 🚧🚧 Expressions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#the-dollar-operator">15.1. 🚧 The Dollar Operator, `<strong class="command">$</strong>`</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#formulae">15.2. 🚧 Formulae, `<strong class="command">~</strong>`</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expressions-at-a-glance">15.1. Expressions at a Glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-dollar-operator">15.2. 🚧 The Dollar Operator, `<strong class="command">$</strong>`</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#formulas">15.3. 🚧 Formulas, `<strong class="command">~</strong>`</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments</a></li>
@@ -281,14 +284,123 @@ it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
 </div></blockquote>
+<p>In this and the remaining chapters, we will learn some hocus-pocus
+that should only be of interest to advanced-to-be<a class="footnote-reference brackets" href="#footbegend" id="id2">1</a> and open-minded
+R programmers who would really like to understand what
+is going on under our language’s hood.
+why certain functions do something very different from what
+we would expect them to do, if a <em>standard</em> evaluation
+scheme was followed
+(compare <strong class="command">subset</strong> and <strong class="command">transform</strong>
+mentioned in <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>).</p>
+<p>Namely, in <em>normal</em> programming languages,
+when we write something like (compare <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a>):</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>the expression <strong class="command">exp</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>,
+is evaluated <em>first</em> and its value<a class="footnote-reference brackets" href="#footofref" id="id3">2</a>
+(in this case: a numeric vector) is only then passed
+to the <strong class="command">plot</strong> function as the actual parameter.
+Thus, if <code class="docutils literal notranslate"><span class="pre">x</span></code> was set to be <strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">10,</span> <span class="pre">length.out=1001)</span></code>,
+the above never means anything else than:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.00</span><span class="p">,</span> <span class="m">0.01</span><span class="p">,</span> <span class="m">0.02</span><span class="p">,</span> <span class="m">0.03</span><span class="p">,</span> <span class="kc">...</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">1.0000</span><span class="p">,</span> <span class="m">1.0101</span><span class="p">,</span> <span class="m">1.0202</span><span class="p">,</span> <span class="m">1.0305</span><span class="p">,</span> <span class="kc">...</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>But R was heavily inspired by a Lisp language dialect called Scheme<a class="footnote-reference brackets" href="#footlisp" id="id4">3</a>,
+from whom it has inherited a quite disturbing ability to
+write functions that can fetch their arguments as <em>unevaluated expressions</em>.
+They can do with them whatever they please: modify, subset,
+re-interpret, or ignore whatsoever. We refer to such
+a set of techniques as <em>metaprogramming</em>.</p>
+<p>In theory, this enables the implementing of many <em>potentially helpful</em>
+beginner-friendly features, which allow us to express certain
+requests in a more concise manner.
+For instance, that the y-axis labels
+in <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a> could be generated automatically
+is exactly due to the fact that <strong class="command">plot</strong>
+was able to see not only
+a vector like <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1.0000,</span> <span class="pre">1.0101,</span> <span class="pre">1.0202,</span> <span class="pre">1.0305,</span> <span class="pre">...)</span></code>,
+but also the expression that generated it, <strong class="command">exp</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>.</p>
+<p>It also can, and did, cause chaos, confusion, and division.</p>
+<p>In the current author’s opinion, R (as a whole,
+in the sense of <a class="reference internal" href="000-preface.html#sec-r-env"><span class="std std-ref">R as a Language and an Environment</span></a>) would be better-off if metaprogramming
+was never implemented<a class="footnote-reference brackets" href="#footform" id="id5">4</a>.
+A healthy R user (also yours truly 99% of the time)
+can perfectly do without such a technique
+and hence should refrain from using it.
+The fact that we call them “advanced” will not make us “cool”
+if we start horsing around with non-standard evaluation.
+“Perverse” is perhaps a better label.</p>
+<p>Cursed be us, as we are about to start eating from tree of the knowledge
+of good and evil. But remember: with great power comes great responsibility.</p>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
-<section id="the-dollar-operator">
-<span id="sec-dollar"></span><h2><span class="section-number">15.1. </span>🚧 The Dollar Operator, `<strong class="command">$</strong>`<a class="headerlink" href="#the-dollar-operator" title="Permalink to this heading"></a></h2>
+<section id="expressions-at-a-glance">
+<h2><span class="section-number">15.1. </span>Expressions at a Glance<a class="headerlink" href="#expressions-at-a-glance" title="Permalink to this heading"></a></h2>
+<p>At the most general level, expressions in a language like R
+can be classified into two groups:</p>
+<ul class="simple">
+<li><p><em>simple expressions</em>:</p>
+<ul>
+<li><p><em>constants</em> (e.g., <code class="docutils literal notranslate"><span class="pre">3.14</span></code>, <code class="docutils literal notranslate"><span class="pre">2i</span></code>, <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;character</span> <span class="pre">string&quot;</span></code>),</p></li>
+<li><p><em>names</em> (symbols, identifiers),</p></li>
+</ul>
+</li>
+<li><p><em>compound expressions</em>: combinations of <span class="math notranslate nohighlight">\(n+1\)</span> expressions
+(simple or compound) of the form <span class="math notranslate nohighlight">\((f, e_1, e_2, \dots, e_n)\)</span>.</p></li>
+</ul>
+<p>As we will soon see, compound expressions are used to
+represent a <em>call</em> to <span class="math notranslate nohighlight">\(f\)</span> (an <em>operator</em>) on a sequence of arguments
+<span class="math notranslate nohighlight">\(e_1,e_2,\dots,e_n\)</span> (<em>operands</em>). This is why we will also
+be denoting them simply with <span class="math notranslate nohighlight">\(f(e_1,e_2,\dots,e_n)\)</span>.</p>
+<p>On the other hand, <em>names</em> such as <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">iris</span></code>, <code class="docutils literal notranslate"><span class="pre">sum</span></code>, and <code class="docutils literal notranslate"><span class="pre">spam</span></code>,
+have no meaning without an explicitly provided context,
+which will be a topic that we explore in <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:to-do</span></code>.
+Prior to that, we treat them as meaning-less.</p>
+<p>Hence, we are now only being interested in the syntax or grammar of
+our language, not the semantics. We are abstract in the sense that
+in the expression “<strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(x)+2</span></code>”
+(which we know that we can equivalently desyntacticsugarise
+as “`<strong class="command">+</strong>`<code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(x),</span> <span class="pre">2)</span></code>”)
+neither
+`<code class="docutils literal notranslate"><span class="pre">mean</span></code>`, `<code class="docutils literal notranslate"><span class="pre">x</span></code>`, nor even `<code class="docutils literal notranslate"><span class="pre">+</span></code>` does not have the “usual” sense.
+We should therefore treat them now as
+<strong class="command">spam</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">bacon</strong><code class="code docutils literal notranslate"><span class="pre">(x),</span> <span class="pre">2)</span></code>.</p>
 </section>
-<section id="formulae">
-<span id="sec-formula"></span><h2><span class="section-number">15.2. </span>🚧 Formulae, `<strong class="command">~</strong>`<a class="headerlink" href="#formulae" title="Permalink to this heading"></a></h2>
+<section id="the-dollar-operator">
+<span id="sec-dollar"></span><h2><span class="section-number">15.2. </span>🚧 The Dollar Operator, `<strong class="command">$</strong>`<a class="headerlink" href="#the-dollar-operator" title="Permalink to this heading"></a></h2>
+</section>
+<section id="formulas">
+<span id="sec-formula"></span><h2><span class="section-number">15.3. </span>🚧 Formulas, `<strong class="command">~</strong>`<a class="headerlink" href="#formulas" title="Permalink to this heading"></a></h2>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="footbegend"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>Remember that this book is supposed to be read from the
+beginning to the end. Also, if you have not tested yourself against all
+the 250-odd exercises suggested so far, please do it before proceeding
+with the material presented here.
+Only practice makes perfect, and nothing is built in a day.
+Give yourself time: you can always come back later.</p>
+</dd>
+<dt class="label" id="footofref"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Or a reference/pointer to an object that stores the said value,
+whatever.</p>
+</dd>
+<dt class="label" id="footlisp"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
+<dd><p>That is why everyone <em>serious</em> (not exactly in a good way)
+about R programming should add the
+<em>Structure and Interpretation of Computer Programs</em>
+<span id="id6">[<a class="reference internal" href="999-bibliography.html#id13" title="Abelson, H., Sussman, G.J., Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> to their reading list.
+Also note that R is not the only environment that marries
+statistics and Lisp-like languages; see also LISP-STAT
+<span id="id7">[<a class="reference internal" href="999-bibliography.html#id14" title="Tierney, L. (1990).  LISP-STAT: An Object-Oriented Environment for Statistical Computing and Dynamic Graphics. Wiley.">40</a>]</span>.</p>
+</dd>
+<dt class="label" id="footform"><span class="brackets"><a class="fn-backref" href="#id5">4</a></span></dt>
+<dd><p>So yes, no formulas.</p>
+</dd>
+</dl>
 </section>
 </section>
 
@@ -312,7 +424,7 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-11T17:00:57+1100.
+        Last updated on 2023-01-12T19:07:59+1100.
       </span>
 
 
