@@ -182,7 +182,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#enclosing-environments">16.2. 🚧 Enclosing Environments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a-note-on-reference-classes">16.3. 🚧 A Note on Reference Classes (*)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#exercises">16.4. Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">16.4. 🚧 Exercises</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="340-eval-expr.html">17. 🚧🚧 Evaluating Expressions</a></li>
@@ -347,7 +347,7 @@ also in the case of element extraction:</p>
 <h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Permalink to this heading"></a></h3>
 <p>Let us note that the printing of an environment is quite awkward:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># same with str(e1)</span>
-<span class="c1">## &lt;environment: 0x564208f4b5a0&gt;</span>
+<span class="c1">## &lt;environment: 0x55a84c10c5a0&gt;</span>
 </pre></div>
 </div>
 <p>Later we will mention that this is the address where <code class="docutils literal notranslate"><span class="pre">e1</span></code> is stored
@@ -404,7 +404,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 <span class="c1">## $z</span>
 <span class="c1">## NULL</span>
 <span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="m">42</span><span class="p">,</span> <span class="n">whatever</span><span class="o">=</span><span class="s">&quot;it&#39;s not gonna be printed anyway&quot;</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x564208f997a8&gt;</span>
+<span class="c1">## &lt;environment: 0x55a84c15a7a8&gt;</span>
 <span class="nf">as.list</span><span class="p">(</span><span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="m">3</span><span class="p">)))</span>  <span class="c1"># no duplicates allowed</span>
 <span class="c1">## $y</span>
 <span class="c1">## [1] 2</span>
@@ -422,7 +422,7 @@ with string keys.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>A <em>hash table</em> is a data structure that allows for
-a very quick<a class="footnote-reference brackets" href="#footquickhash" id="id7">5</a> lookup, insertion, and deletion
+a very quick<a class="footnote-reference brackets" href="#footquickhash" id="id7">5</a> lookup and insertion
 of individual elements <em>by name</em>.</p>
 </div>
 <p>This comes at a price, including what we have already observed above:</p>
@@ -552,14 +552,14 @@ in computer’s memory.</p>
 <p>This is exactly seen when we print the address where the environments
 are located:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x5642082f7c60&gt;</span>
+<span class="c1">## &lt;environment: 0x55a84b4b8c60&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x5642082f7c60&gt;</span>
+<span class="c1">## &lt;environment: 0x55a84b4b8c60&gt;</span>
 </pre></div>
 </div>
 <p>The same when we pass them to a function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>  <span class="c1"># pass-by-reference (`y` is `x`, remember?)</span>
-<span class="c1">## &lt;environment: 0x5642082f7c60&gt;</span>
+<span class="c1">## &lt;environment: 0x55a84b4b8c60&gt;</span>
 <span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span>   <span class="c1"># `x` has changed (names `y` and `x` are bound to the same object)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
@@ -583,13 +583,13 @@ is only created if absolutely necessary.</p>
 <p>Creation of a new large numeric vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">numeric</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>                <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.094   0.233   0.327</span>
+<span class="c1">##   0.088   0.235   0.323</span>
 </pre></div>
 </div>
 <p>Creation of a (delayed) copy:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">y</span> <span class="o">&lt;-</span> <span class="n">x</span><span class="p">;</span>                         <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.001   0.000   0.001</span>
+<span class="c1">##   0.000   0.000   0.001</span>
 </pre></div>
 </div>
 <p>This was instant. Thus, we definitely did not clone the <code class="docutils literal notranslate"><span class="pre">n</span></code> data cells.</p>
@@ -597,23 +597,23 @@ is only created if absolutely necessary.</p>
 compare <a class="reference internal" href="310-compile.html#sec-memory-management"><span class="std std-numref">Section 14.4</span></a>. That – temporarily –
 <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> point to the same address in memory can be inspected by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="c1">## @7f85d458a010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f847fed8010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f85d458a010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f847fed8010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 </pre></div>
 </div>
 <p>The real copying is only triggered when we try to modify <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code>.
 This is when they need to be separated.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="p">;</span>                      <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.168   0.195   0.363</span>
+<span class="c1">##   0.187   0.175   0.362</span>
 </pre></div>
 </div>
 <p>Now <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are different objects.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="c1">## @7f85d458a010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f847fed8010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f85a4a99010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0,0,...</span>
+<span class="c1">## @7f84503e7010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0,0,...</span>
 </pre></div>
 </div>
 <p>Note that the elapsed time  is similar to that needed to create
@@ -621,7 +621,7 @@ This is when they need to be separated.</p>
 <p>Further modifications can already be fast:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="p">;</span>                      <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.212   0.199   0.412</span>
+<span class="c1">##   0.191   0.219   0.410</span>
 </pre></div>
 </div>
 </div>
@@ -634,7 +634,7 @@ This is when they need to be separated.</p>
 <span id="sec-refclass"></span><h2><span class="section-number">16.3. </span>🚧 A Note on Reference Classes (*)<a class="headerlink" href="#a-note-on-reference-classes" title="Permalink to this heading"></a></h2>
 </section>
 <section id="exercises">
-<h2><span class="section-number">16.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">16.4. </span>🚧 Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
 <div class="proof proof-type-exercise" id="id16">
 
     <div class="proof-title">
@@ -734,7 +734,7 @@ count (<a class="reference internal" href="310-compile.html#chap-compile"><span 
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-12T19:07:59+1100.
+        Last updated on 2023-01-13T16:02:31+1100.
       </span>
 
 
