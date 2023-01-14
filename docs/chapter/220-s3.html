@@ -101,7 +101,7 @@
           </a>
 
           <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9001 (draft)
+          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9002 (draft)
           </div>
 
 <!--
@@ -186,15 +186,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and Other Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="240-data-frame.html">12. Data Frames</a></li>
-<li class="toctree-l1"><a class="reference internal" href="250-graphics.html">13. 🚧🚧 Graphics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="310-compile.html">14. 🚧🚧 Interfacing Compiled Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧🚧 Expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="340-eval-expr.html">17. 🚧🚧 Evaluating Expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="350-eval-fun.html">18. 🚧🚧 Evaluating Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="310-graphics.html">13. 🚧🚧 Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="320-compiled.html">14. 🚧🚧 Interfacing Compiled Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-language.html">15. 🚧🚧 Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="340-environment.html">16. 🚧🚧 Environments and Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -533,7 +531,7 @@ equipped with the <code class="docutils literal notranslate"><span class="pre">d
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">print</span><span class="p">)</span>  <span class="c1"># sic!</span>
 <span class="c1">## function (x, ...) </span>
 <span class="c1">## UseMethod(&quot;print&quot;)</span>
-<span class="c1">## &lt;bytecode: 0x562752dc4110&gt;</span>
+<span class="c1">## &lt;bytecode: 0x5588d293ba60&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
@@ -908,8 +906,8 @@ outcome:</p>
 <li><p>hardcoded at the C language level
 (for instance, there is no <strong class="command">c.default</strong> defined at all<a class="footnote-reference brackets" href="#footoperoverload" id="id17">15</a>),</p></li>
 <li><p>hidden (defined in a package namespace but not exported);
-see <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.4</span></a>,</p></li>
-<li><p>overloaded as a group; see <a class="reference internal" href="350-eval-fun.html#sec-group-generics"><span class="std std-numref">Section 18.5</span></a>.</p></li>
+see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>,</p></li>
+<li><p>overloaded as a group; see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>.</p></li>
 </ul>
 </div>
 <div class="proof proof-type-example" id="id52">
@@ -1002,7 +1000,7 @@ for objects of class <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>Even though the method is hidden in the <strong class="program">stats</strong> package’s
-namespace, from <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.4</span></a> we will learn that
+namespace, from <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a> we will learn that
 it can be accessed by calling
 <strong class="command">getS3method</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;,</span> <span class="pre">&quot;kmeans&quot;)</span></code>
 or referring to <strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">print.kmeans</strong>
@@ -1013,7 +1011,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-01-12 17:46:56 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-01-14 15:19:30 AEDT&quot;</span>
 <span class="p">(</span><span class="n">t2</span> <span class="o">&lt;-</span> <span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span> <span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1077,7 +1075,7 @@ or even <strong class="command">c</strong><code class="code docutils literal not
 </section>
 <section id="operator-overloading">
 <span id="sec-operator-overloading-s3"></span><h3><span class="section-number">10.2.6. </span>Operator Overloading<a class="headerlink" href="#operator-overloading" title="Permalink to this heading"></a></h3>
-<p>Operators are ordinary functions (<a class="reference internal" href="210-design.html#sec-operfun"><span class="std std-numref">Section 9.4.4</span></a>).
+<p>Operators are ordinary functions (<a class="reference internal" href="210-design.html#sec-operfun"><span class="std std-numref">Section 9.4.5</span></a>).
 Even though what follows can partially be implied by what we
 have said above, as usual in R, there will be some oddities.</p>
 <p>For example, let us overload the index operator for
@@ -1185,7 +1183,7 @@ and the default internal method will be called.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In <a class="reference internal" href="350-eval-fun.html#sec-group-generics"><span class="std std-numref">Section 18.5</span></a>, we will mention
+<p>In <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>, we will mention
 that operators as well as certain groups of functions
 (including <strong class="command">min</strong>, <strong class="command">sum</strong>, and <strong class="command">all</strong>
 or <strong class="command">abs</strong>, <strong class="command">log</strong>, and <strong class="command">round</strong>)
@@ -1209,7 +1207,7 @@ as a simple exercise to the kind reader.</p>
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, Time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-01-12&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="c1">## [1] &quot;2023-01-14&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
@@ -1218,7 +1216,7 @@ as a simple exercise to the kind reader.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19369    -1     0    NA</span>
+<span class="c1">## [1] 19371    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the so called UNIX epoch,
@@ -1226,13 +1224,13 @@ as a simple exercise to the kind reader.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-01-12 17:46:56 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-01-14 15:19:30 AEDT&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1673506017</span>
+<span class="c1">## [1] 1673669970</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1361,7 +1359,7 @@ to execute a given expression:</p>
     <span class="nf">sum</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1e7</span><span class="p">))</span>  <span class="c1"># whatever, just testing</span>
 <span class="p">})</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.247   0.016   0.263</span>
+<span class="c1">##   0.221   0.028   0.250</span>
 </pre></div>
 </div>
 <p>The function returns an object of class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1371,7 +1369,7 @@ Inspect how it is represented internally.</p>
 <span id="sec-formula-intro"></span><h3><span class="section-number">10.3.2. </span>Formulas (*)<a class="headerlink" href="#formulas" title="Permalink to this heading"></a></h3>
 <p>Formulas (created by means of `<strong class="command">~</strong>`)
 are quite advanced language constructs and hence they will be discussed
-much further: in <a class="reference internal" href="320-language.html#sec-formula"><span class="std std-numref">Section 15.5</span></a>.</p>
+much further: in <a class="reference internal" href="340-environment.html#sec-formula"><span class="std std-numref">Section 16.5</span></a>.</p>
 <p>Some R users refer to them in functions such as
 <strong class="command">lm</strong>, <strong class="command">aggregate</strong>, <strong class="command">t.test</strong>,
 <strong class="command">boxplot</strong>, or <strong class="command">plot</strong> to specify models or queries
@@ -1428,7 +1426,7 @@ where there is a need to manipulate their levels easily.</p>
 <p>The underlying codes remain the same.</p>
 <p>Certain operations on vectors of small integers are relatively easy to
 implement, especially those concerning element grouping:
-splitting, counting, plotting (e.g., <a class="reference internal" href="250-graphics.html#fig-irisplot-factors"><span class="std std-numref">Figure 13.1</span></a>).
+splitting, counting, plotting (e.g., <a class="reference internal" href="310-graphics.html#fig-irisplot-factors"><span class="std std-numref">Figure 13.1</span></a>).
 It is because the integer codes can naturally be used whilst indexing
 other vectors. In <a class="reference internal" href="150-indexing.html#sec-fun-indexing"><span class="std std-numref">Section 5.4</span></a>, we mentioned a few functions
 related to this, such as
@@ -1906,9 +1904,9 @@ Was that straightforward?</p>
 <p>Explain why the two following calls yield significantly different
 results and present a workaround:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-01-12&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2023-01-14&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19369&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19371&quot;</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id73">
@@ -2033,13 +2031,13 @@ take both types into account) of the arguments.</p>
 <dd><p>Other class systems may give an impression that
 they are alien implants that were forcefully added to our language
 to solve a specific, rather narrow class of problems; e.g.,
-S4 (<a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>), Reference Classes (<a class="reference internal" href="330-environment.html#sec-refclass"><span class="std std-numref">Section 16.3</span></a>),
+S4 (<a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>), Reference Classes (<a class="reference internal" href="340-environment.html#sec-refclass"><span class="std std-numref">Section 16.1.5</span></a>),
 and other ones proposed by third-party packages</p>
 </dd>
 <dt class="label" id="footsexptype"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
 <dd><p>Their list is hardcoded at the C language level;
 compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id39">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">50</a>]</span> and
-see also <a class="reference internal" href="310-compile.html#chap-compile"><span class="std std-numref">Chapter 14</span></a>.</p>
+see also <code class="xref std std-numref docutils literal notranslate"><span class="pre">Chapter</span> <span class="pre">%s</span></code>.</p>
 </dd>
 <dt class="label" id="footexternalptr"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
 <dd><p>In particular, later we mention
@@ -2085,7 +2083,7 @@ but still: we are not fans thereof.</p>
 <dt class="label" id="footknowns3generics"><span class="brackets"><a class="fn-backref" href="#id14">12</a></span></dt>
 <dd><p>See also
 <code class="docutils literal notranslate"><span class="pre">.knownS3Generics</span></code> and <code class="docutils literal notranslate"><span class="pre">.S3_methods_table</span></code> which are related
-to the advanced topics we cover in <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.4</span></a>.</p>
+to the advanced topics we cover in <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
 </dd>
 <dt class="label" id="footpuzzle"><span class="brackets"><a class="fn-backref" href="#id15">13</a></span></dt>
 <dd><p>It is a different story if this is our conscious design
@@ -2133,7 +2131,7 @@ in order for <strong class="command">class</strong> to return a sensible answer)
 </dd>
 <dt class="label" id="footlookup"><span class="brackets"><a class="fn-backref" href="#id20">18</a></span></dt>
 <dd><p>For more details on S3 method lookup;
-see <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.4</span></a>.</p>
+see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
 </dd>
 <dt class="label" id="footdefaultsubst"><span class="brackets"><a class="fn-backref" href="#id21">19</a></span></dt>
 <dd><p>Note that the default S3 method,
@@ -2141,7 +2139,7 @@ see <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span 
 Therefore,     we cannot refer to it directly (but <strong class="command">unclass</strong>
 does the trick).
 Also note that we can also call <strong class="command">NextMethod</strong> here;
-see <a class="reference internal" href="350-eval-fun.html#sec-use-method"><span class="std std-numref">Section 18.4</span></a>.</p>
+see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
 </dd>
 <dt class="label" id="footcatcmp"><span class="brackets"><a class="fn-backref" href="#id22">20</a></span></dt>
 <dd><p>There are of course many possible ways to implement
@@ -2169,7 +2167,7 @@ in <code class="docutils literal notranslate"><span class="pre">&lt;time.h&gt;</
 <dd><p>The overloaded group generic <code class="docutils literal notranslate"><span class="pre">Ops</span></code>
 prevents us from adding or multiplying two dates
 and defines the meaning of the comparison operators;
-see <a class="reference internal" href="350-eval-fun.html#sec-group-generics"><span class="std std-numref">Section 18.5</span></a>.</p>
+see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>.</p>
 </dd>
 <dt class="label" id="footdatextfrm"><span class="brackets"><a class="fn-backref" href="#id27">25</a></span></dt>
 <dd><p>See an exercise below on the use of <strong class="command">xtfrm</strong>.</p>
@@ -2264,7 +2262,7 @@ to understand it anyway.</p>
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-13T16:02:31+1100.
+        Last updated on 2023-01-14T15:35:43+1100.
       </span>
 
 

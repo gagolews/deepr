@@ -33,7 +33,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>17. 🚧🚧 Evaluating Expressions &mdash; Deep R Programming by Marek Gagolewski</title>
+  <title>14. 🚧🚧 Interfacing Compiled Code &mdash; Deep R Programming by Marek Gagolewski</title>
   
 
   
@@ -58,7 +58,7 @@
   
 
   
-    <link rel="canonical" href="https://deepr.gagolewski.com/chapter/340-eval-expr.html" />
+    <link rel="canonical" href="https://deepr.gagolewski.com/chapter/320-compiled.html" />
 
   
   <!--[if lt IE 9]>
@@ -79,8 +79,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="18. 🚧🚧 Evaluating Functions" href="350-eval-fun.html" />
-    <link rel="prev" title="16. 🚧🚧 Environments" href="330-environment.html" /> 
+    <link rel="next" title="15. 🚧🚧 Expressions" href="330-language.html" />
+    <link rel="prev" title="13. 🚧🚧 Graphics" href="310-graphics.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,7 +101,7 @@
           </a>
 
           <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9001 (draft)
+          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9002 (draft)
           </div>
 
 <!--
@@ -164,18 +164,19 @@
 <li class="toctree-l1"><a class="reference internal" href="220-s3.html">10. S3 Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and Other Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="240-data-frame.html">12. Data Frames</a></li>
-<li class="toctree-l1"><a class="reference internal" href="250-graphics.html">13. 🚧🚧 Graphics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="310-compile.html">14. 🚧🚧 Interfacing Compiled Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧🚧 Expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">17. 🚧🚧 Evaluating Expressions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#the-environment-model-of-evaluation">17.1. 🚧 The Environment Model of Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="310-graphics.html">13. 🚧🚧 Graphics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">14. 🚧🚧 Interfacing Compiled Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#r-c-api">14.1. 🚧 R/C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#external-pointers">14.2. 🚧 External Pointers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rcpp">14.3. 🚧 RCpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memory-management">14.4. 🚧 Memory Management</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="350-eval-fun.html">18. 🚧🚧 Evaluating Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-language.html">15. 🚧🚧 Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="340-environment.html">16. 🚧🚧 Environments and Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -231,7 +232,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li><span class="section-number">17. </span>🚧🚧 Evaluating Expressions</li>
+      <li><span class="section-number">14. </span>🚧🚧 Interfacing Compiled Code</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -250,10 +251,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="350-eval-fun.html" class="btn btn-neutral float-right" title="18. 🚧🚧 Evaluating Functions" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="330-language.html" class="btn btn-neutral float-right" title="15. 🚧🚧 Expressions" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="330-environment.html" class="btn btn-neutral float-left" title="16. 🚧🚧 Environments" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="310-graphics.html" class="btn btn-neutral float-left" title="13. 🚧🚧 Graphics" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -262,8 +263,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section class="tex2jax_ignore mathjax_ignore" id="evaluating-expressions">
-<span id="chap-eval-expr"></span><h1><span class="section-number">17. </span>🚧🚧 Evaluating Expressions<a class="headerlink" href="#evaluating-expressions" title="Permalink to this heading"></a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="interfacing-compiled-code">
+<span id="chap-compiled"></span><h1><span class="section-number">14. </span>🚧🚧 Interfacing Compiled Code<a class="headerlink" href="#interfacing-compiled-code" title="Permalink to this heading"></a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -280,11 +281,29 @@ it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
 </div></blockquote>
+<p>R is a nice <em>glue</em> language: it is perfect for
+implementing data wrangling pipelines, visualisation,
+and developing prototypes of data analysis algorithms.
+In other words, it makes connecting larger <em>building blocks</em>
+very easy.
+Still, the more computing-intensive tasks should be done at
+the C, C++, or Fortran level.</p>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
-<section id="the-environment-model-of-evaluation">
-<span id="sec-env-mod-eval"></span><h2><span class="section-number">17.1. </span>🚧 The Environment Model of Evaluation<a class="headerlink" href="#the-environment-model-of-evaluation" title="Permalink to this heading"></a></h2>
+<section id="r-c-api">
+<h2><span class="section-number">14.1. </span>🚧 R/C API<a class="headerlink" href="#r-c-api" title="Permalink to this heading"></a></h2>
+</section>
+<section id="external-pointers">
+<span id="sec-xptr"></span><h2><span class="section-number">14.2. </span>🚧 External Pointers<a class="headerlink" href="#external-pointers" title="Permalink to this heading"></a></h2>
+</section>
+<section id="rcpp">
+<h2><span class="section-number">14.3. </span>🚧 RCpp<a class="headerlink" href="#rcpp" title="Permalink to this heading"></a></h2>
+</section>
+<section id="memory-management">
+<span id="sec-memory-management"></span><h2><span class="section-number">14.4. </span>🚧 Memory Management<a class="headerlink" href="#memory-management" title="Permalink to this heading"></a></h2>
+<p>See <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Memory&quot;)</span></code>, <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Memory-limits&quot;)</span></code></p>
+<p><strong class="command">gc</strong></p>
 </section>
 </section>
 
@@ -294,8 +313,8 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="350-eval-fun.html" class="btn btn-neutral float-right" title="18. 🚧🚧 Evaluating Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="330-environment.html" class="btn btn-neutral float-left" title="16. 🚧🚧 Environments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="330-language.html" class="btn btn-neutral float-right" title="15. 🚧🚧 Expressions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="310-graphics.html" class="btn btn-neutral float-left" title="13. 🚧🚧 Graphics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -308,7 +327,7 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-13T16:02:31+1100.
+        Last updated on 2023-01-14T15:35:43+1100.
       </span>
 
 

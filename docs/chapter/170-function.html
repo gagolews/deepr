@@ -103,7 +103,7 @@
           </a>
 
           <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9001 (draft)
+          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9002 (draft)
           </div>
 
 <!--
@@ -194,15 +194,13 @@
 <li class="toctree-l1"><a class="reference internal" href="220-s3.html">10. S3 Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and Other Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="240-data-frame.html">12. Data Frames</a></li>
-<li class="toctree-l1"><a class="reference internal" href="250-graphics.html">13. 🚧🚧 Graphics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="310-compile.html">14. 🚧🚧 Interfacing Compiled Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧🚧 Expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="340-eval-expr.html">17. 🚧🚧 Evaluating Expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="350-eval-fun.html">18. 🚧🚧 Evaluating Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="310-graphics.html">13. 🚧🚧 Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="320-compiled.html">14. 🚧🚧 Interfacing Compiled Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-language.html">15. 🚧🚧 Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="340-environment.html">16. 🚧🚧 Environments and Evaluation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -497,7 +495,7 @@ are concrete, specific, and real.</p>
 precisely <code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span></code>, and nothing else.
 Also, the <code class="docutils literal notranslate"><span class="pre">u</span></code> object from the caller’s environment
 is seen under the name <code class="docutils literal notranslate"><span class="pre">y</span></code> there.
-Most of the time (however, see <a class="reference internal" href="350-eval-fun.html#chap-eval-fun"><span class="std std-numref">Chapter 18</span></a>),
+Most of the time (however, see <a class="reference internal" href="340-environment.html#sec-eval-fun"><span class="std std-numref">Section 16.4</span></a>),
 it is best to think of the function as being fed not with <code class="docutils literal notranslate"><span class="pre">u</span></code> per se,
 but the value that <code class="docutils literal notranslate"><span class="pre">u</span></code> is bound to, i.e., “<code class="docutils literal notranslate"><span class="pre">1:5</span></code>”.</p>
 <p>Also:</p>
@@ -556,7 +554,7 @@ experienced so far. Rarely are we faced with such simple computing tasks
 and we have already seen R functions performing quite sophisticated
 operations.</p>
 <p>It turns out that, grammatically, a single R expression can be
-arbitrarily complex (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>);
+arbitrarily complex (<a class="reference internal" href="330-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>);
 we can use curly braces to group many calls
 that are to be evaluated one after another.</p>
 <p>For instance:</p>
@@ -666,7 +664,7 @@ This applies both to functions that we have authored ourselves:</p>
 <span class="c1">##     z[is.na(a) | is.na(b)] &lt;- NA_character_</span>
 <span class="c1">##     z  # last expression in the block – return value</span>
 <span class="c1">## }</span>
-<span class="c1">## &lt;bytecode: 0x5602cc598138&gt;</span>
+<span class="c1">## &lt;bytecode: 0x562536c9b138&gt;</span>
 </pre></div>
 </div>
 <p>and to the routines that are part of base R or any other
@@ -678,7 +676,7 @@ extension packages:</p>
 <span class="c1">##     v &lt;- as.vector(y)</span>
 <span class="c1">##     unique(c(u, v))</span>
 <span class="c1">## }</span>
-<span class="c1">## &lt;bytecode: 0x5602cdbeea28&gt;</span>
+<span class="c1">## &lt;bytecode: 0x5625382f1a28&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
@@ -689,7 +687,7 @@ of <strong class="command">paste</strong>, <strong class="command">.Primitive</s
 or <strong class="command">.Call</strong> in <strong class="command">runif</strong>.
 Therefore, we will sometimes have to dig a little bit deeper to access
 the underlying source code; see
-<a class="reference internal" href="310-compile.html#chap-compile"><span class="std std-numref">Chapter 14</span></a> for more details.</p>
+<code class="xref std std-numref docutils literal notranslate"><span class="pre">Chapter</span> <span class="pre">%s</span></code> for more details.</p>
 </div>
 </section>
 </section>
@@ -714,13 +712,13 @@ Namely, they can be:</p>
 <span></span><span class="c1">## [[1]]</span>
 <span class="c1">## function (x) </span>
 <span class="c1">## x</span>
-<span class="c1">## &lt;bytecode: 0x5602cc125c30&gt;</span>
+<span class="c1">## &lt;bytecode: 0x562536828c30&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 <span class="c1">## </span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## function (x) </span>
 <span class="c1">## dim(x)[1L]</span>
-<span class="c1">## &lt;bytecode: 0x5602cd212320&gt;</span>
+<span class="c1">## &lt;bytecode: 0x562537915320&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 <span class="c1">## </span>
 <span class="c1">## [[3]]</span>
@@ -1165,7 +1163,7 @@ on W****ws or some m**OS boxes;
 see <strong class="command">getOption</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;pkgType&quot;)</span></code>.
 This is because these two might require additional build tools
 to be present in the system, especially if a package features
-C, C++, or Fortran code; see <a class="reference internal" href="310-compile.html#chap-compile"><span class="std std-numref">Chapter 14</span></a>
+C, C++, or Fortran code; see <code class="xref std std-numref docutils literal notranslate"><span class="pre">Chapter</span> <span class="pre">%s</span></code>
 and Section C.3 of <span id="id6">[<a class="reference internal" href="999-bibliography.html#id9" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">49</a>]</span>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> on W****ws,</p></li>
@@ -1354,7 +1352,7 @@ within R, Python, Julia, etc.
 This is the case with FFTW, LIBSVM, mlpack, OpenBLAS,
 ICU, and GNU GSL, amongst many others.</p>
 <p>For basic ways to interact with such compiled code, see
-<a class="reference internal" href="310-compile.html#chap-compile"><span class="std std-numref">Chapter 14</span></a>.</p>
+<code class="xref std std-numref docutils literal notranslate"><span class="pre">Chapter</span> <span class="pre">%s</span></code>.</p>
 <p>Also, the <strong class="program">rJava</strong> package can be used to dynamically
 create JVM objects and access their fields and methods.
 Similarly, <strong class="program">reticulate</strong> can be used to
@@ -1680,7 +1678,7 @@ is equivalent to <strong class="command">Map</strong><code class="code docutils 
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-13T16:02:31+1100.
+        Last updated on 2023-01-14T15:35:43+1100.
       </span>
 
 
