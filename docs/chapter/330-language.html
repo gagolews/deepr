@@ -181,8 +181,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#inspecting-function-definitions-and-arguments-thereto">15.4. 🚧 Inspecting Function Definitions and Arguments Thereto</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#getting-formal-arguments-and-body">15.4.1. Getting Formal Arguments and Body</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#checking-if-an-argument-is-missing">15.4.2. 🚧 Checking if an Argument is Missing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#getting-the-expression-passed-as-an-argument">15.4.3. 🚧 Getting the Expression Passed as an Argument</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-the-expression-passed-as-an-argument">15.4.2. 🚧 Getting the Expression Passed as an Argument</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-if-an-argument-is-missing">15.4.3. 🚧 Checking if an Argument is Missing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#determining-how-a-function-was-called">15.4.4. 🚧 Determining How a Function was Called</a></li>
 </ul>
 </li>
@@ -537,7 +537,7 @@ it can consist of other compound expressions.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Can be written using the <span class="math notranslate nohighlight">\(f(...)\)</span> notation like:</p>
+<p>can be rewritten using the <span class="math notranslate nohighlight">\(f(...)\)</span> notation like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`while`</span><span class="p">(</span><span class="nf">`&lt;`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="m">10</span><span class="p">),</span> <span class="nf">`{`</span><span class="p">(</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;i =&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">),</span> <span class="nf">`&lt;-`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nf">`+`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="m">1</span><span class="p">))))</span>
 </pre></div>
 </div>
@@ -661,13 +661,34 @@ ordinary list elements.</p>
 </pre></div>
 </div>
 </section>
-<section id="checking-if-an-argument-is-missing">
-<h3><span class="section-number">15.4.2. </span>🚧 Checking if an Argument is Missing<a class="headerlink" href="#checking-if-an-argument-is-missing" title="Permalink to this heading"></a></h3>
-<p><strong class="command">missing</strong></p>
-</section>
 <section id="getting-the-expression-passed-as-an-argument">
-<h3><span class="section-number">15.4.3. </span>🚧 Getting the Expression Passed as an Argument<a class="headerlink" href="#getting-the-expression-passed-as-an-argument" title="Permalink to this heading"></a></h3>
-<p><strong class="command">substitute</strong></p>
+<h3><span class="section-number">15.4.2. </span>🚧 Getting the Expression Passed as an Argument<a class="headerlink" href="#getting-the-expression-passed-as-an-argument" title="Permalink to this heading"></a></h3>
+<p><strong class="command">substitute</strong>…</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+<span class="c1">## [1] 1</span>
+<span class="nf">test</span><span class="p">(</span><span class="m">2</span><span class="o">+</span><span class="n">spam</span><span class="p">)</span>
+<span class="c1">## 2 + spam</span>
+<span class="nf">test</span><span class="p">(</span><span class="nf">test</span><span class="p">(</span><span class="nf">test</span><span class="p">(</span><span class="o">!!</span><span class="m">7</span><span class="p">)))</span>
+<span class="c1">## test(test(!!7))</span>
+<span class="nf">test</span><span class="p">()</span>  <span class="c1"># it is not an error</span>
+</pre></div>
+</div>
+<p>In <a class="reference internal" href="340-environment.html#sec-not-all-args-eval"><span class="std std-numref">Section 16.4.2</span></a> we note that arguments are
+evaluated only on demand – <strong class="command">substitute</strong> does not trigger that.</p>
+</section>
+<section id="checking-if-an-argument-is-missing">
+<h3><span class="section-number">15.4.3. </span>🚧 Checking if an Argument is Missing<a class="headerlink" href="#checking-if-an-argument-is-missing" title="Permalink to this heading"></a></h3>
+<p><strong class="command">missing</strong>…</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nf">missing</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+<span class="c1">## [1] FALSE</span>
+<span class="nf">test</span><span class="p">()</span>
+<span class="c1">## [1] TRUE</span>
+</pre></div>
+</div>
 </section>
 <section id="determining-how-a-function-was-called">
 <h3><span class="section-number">15.4.4. </span>🚧 Determining How a Function was Called<a class="headerlink" href="#determining-how-a-function-was-called" title="Permalink to this heading"></a></h3>
@@ -729,9 +750,11 @@ Give a few examples.</p></li>
 <li><p>What is the difference between a <code class="docutils literal notranslate"><span class="pre">call</span></code> and an <code class="docutils literal notranslate"><span class="pre">expression</span></code> object?</p></li>
 <li><p>What does <strong class="command">formals</strong> and <strong class="command">body</strong> return
 when fed with a function object?</p></li>
-<li><p>How to test if an argument to a function was provided?</p></li>
+<li><p>How to test if an argument to a function was provided?
+Provide a use case for such a verification.</p></li>
 <li><p>What is the purpose of
-<strong class="command">deparse</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(...))</span></code>?</p></li>
+<strong class="command">deparse</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(...))</span></code>?
+Give a few examples of functions that use this technique.</p></li>
 <li><p>What is the difference between
 <strong class="command">sys.call</strong> and <strong class="command">match.call</strong>?</p></li>
 <li><p>…</p></li>
@@ -800,7 +823,7 @@ as named lists is perfectly fine.</p>
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-14T15:35:43+1100.
+        Last updated on 2023-01-14T20:06:21+1100.
       </span>
 
 
