@@ -33,7 +33,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>16. 🚧🚧 Environments and Evaluation &mdash; Deep R Programming by Marek Gagolewski</title>
+  <title>16. 🚧🚧 Environments and Evaluation (**) &mdash; Deep R Programming by Marek Gagolewski</title>
   
 
   
@@ -82,7 +82,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Changelog" href="998-changelog.html" />
-    <link rel="prev" title="15. 🚧🚧 Expressions" href="330-language.html" /> 
+    <link rel="prev" title="15. 🚧 Unevaluated Expressions (**)" href="330-language.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -103,7 +103,7 @@
           </a>
 
           <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.12.9002 (draft)
+          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.13.9001 (draft)
           </div>
 
 <!--
@@ -170,9 +170,9 @@
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="310-graphics.html">13. 🚧🚧 Graphics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="320-compiled.html">14. 🚧🚧 Interfacing Compiled Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-language.html">15. 🚧🚧 Expressions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">16. 🚧🚧 Environments and Evaluation</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="320-compiled.html">14. 🚧🚧 Interfacing Compiled Code (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-language.html">15. 🚧 Unevaluated Expressions (**)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">16. 🚧🚧 Environments and Evaluation (**)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#frames-environments-as-object-containers">16.1. Frames: Environments as Object Containers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#printing">16.1.1. Printing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#environments-vs-named-lists">16.1.2. Environments vs Named Lists</a></li>
@@ -253,7 +253,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li><span class="section-number">16. </span>🚧🚧 Environments and Evaluation</li>
+      <li><span class="section-number">16. </span>🚧🚧 Environments and Evaluation (**)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -275,7 +275,7 @@
         <a href="998-changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
-        <a href="330-language.html" class="btn btn-neutral float-left" title="15. 🚧🚧 Expressions" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="330-language.html" class="btn btn-neutral float-left" title="15. 🚧 Unevaluated Expressions (**)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
       
   </div>
   
@@ -285,7 +285,7 @@
            <div itemprop="articleBody">
             
   <section class="tex2jax_ignore mathjax_ignore" id="environments-and-evaluation">
-<span id="chap-environment"></span><h1><span class="section-number">16. </span>🚧🚧 Environments and Evaluation<a class="headerlink" href="#environments-and-evaluation" title="Permalink to this heading"></a></h1>
+<span id="chap-environment"></span><h1><span class="section-number">16. </span>🚧🚧 Environments and Evaluation (**)<a class="headerlink" href="#environments-and-evaluation" title="Permalink to this heading"></a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -359,7 +359,7 @@ also in the case of element extraction:</p>
 <h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Permalink to this heading"></a></h3>
 <p>Let us note that the printing of an environment is quite awkward:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># same with str(e1)</span>
-<span class="c1">## &lt;environment: 0x55e796eabe58&gt;</span>
+<span class="c1">## &lt;environment: 0x557639a86e58&gt;</span>
 </pre></div>
 </div>
 <p>Later we will mention that this is the address where <code class="docutils literal notranslate"><span class="pre">e1</span></code> is stored
@@ -416,7 +416,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 <span class="c1">## $z</span>
 <span class="c1">## NULL</span>
 <span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="m">42</span><span class="p">,</span> <span class="n">whatever</span><span class="o">=</span><span class="s">&quot;it&#39;s not gonna be printed anyway&quot;</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x55e796efafd8&gt;</span>
+<span class="c1">## &lt;environment: 0x557639ad5fd8&gt;</span>
 <span class="nf">as.list</span><span class="p">(</span><span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="m">3</span><span class="p">)))</span>  <span class="c1"># no duplicates allowed</span>
 <span class="c1">## $y</span>
 <span class="c1">## [1] 2</span>
@@ -565,14 +565,14 @@ in computer’s memory.</p>
 <p>This is exactly seen when we print the address where the environments
 are located:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x55e7962c1ac0&gt;</span>
+<span class="c1">## &lt;environment: 0x557638e9cac0&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x55e7962c1ac0&gt;</span>
+<span class="c1">## &lt;environment: 0x557638e9cac0&gt;</span>
 </pre></div>
 </div>
 <p>The same when we pass them to a function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>  <span class="c1"># pass-by-reference (`y` is `x`, remember?)</span>
-<span class="c1">## &lt;environment: 0x55e7962c1ac0&gt;</span>
+<span class="c1">## &lt;environment: 0x557638e9cac0&gt;</span>
 <span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span>   <span class="c1"># `x` has changed (names `y` and `x` are bound to the same object)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
@@ -596,13 +596,13 @@ is only created if absolutely necessary.</p>
 <p>Creation of a new large numeric vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">numeric</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>                <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.101   0.212   0.313</span>
+<span class="c1">##   0.135   0.175   0.309</span>
 </pre></div>
 </div>
 <p>Creation of a (delayed) copy:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">y</span> <span class="o">&lt;-</span> <span class="n">x</span><span class="p">;</span>                         <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.001   0.000   0.001</span>
+<span class="c1">##       0       0       0</span>
 </pre></div>
 </div>
 <p>This was instant. Thus, we definitely did not clone the <code class="docutils literal notranslate"><span class="pre">n</span></code> data cells.</p>
@@ -610,23 +610,23 @@ is only created if absolutely necessary.</p>
 compare <a class="reference internal" href="320-compiled.html#sec-memory-management"><span class="std std-numref">Section 14.4</span></a>. That – temporarily –
 <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> point to the same address in memory can be inspected by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="c1">## @7f36dcc5f010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f39ca5df010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f36dcc5f010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f39ca5df010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 </pre></div>
 </div>
 <p>The real copying is only triggered when we try to modify <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code>.
 This is when they need to be separated.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="p">;</span>                      <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.181   0.176   0.358</span>
+<span class="c1">##   0.182   0.187   0.369</span>
 </pre></div>
 </div>
 <p>Now <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are different objects.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="c1">## @7f36dcc5f010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f39ca5df010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f36ad16e010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0,0,...</span>
+<span class="c1">## @7f399aaee010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0,0,...</span>
 </pre></div>
 </div>
 <p>Note that the elapsed time  is similar to that needed to create
@@ -634,7 +634,7 @@ This is when they need to be separated.</p>
 <p>Further modifications can already be fast:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">proc.time</span><span class="p">();</span>           <span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="p">;</span>                      <span class="nf">proc.time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.221   0.176   0.398</span>
+<span class="c1">##   0.163   0.239   0.402</span>
 </pre></div>
 </div>
 </div>
@@ -850,7 +850,7 @@ count (<code class="xref std std-numref docutils literal notranslate"><span clas
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="998-changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="330-language.html" class="btn btn-neutral float-left" title="15. 🚧🚧 Expressions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="330-language.html" class="btn btn-neutral float-left" title="15. 🚧 Unevaluated Expressions (**)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -863,7 +863,7 @@ count (<code class="xref std std-numref docutils literal notranslate"><span clas
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-14T20:06:21+1100.
+        Last updated on 2023-01-15T14:51:24+1100.
       </span>
 
 
