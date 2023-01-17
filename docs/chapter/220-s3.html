@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8" />
 
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <meta content="Deep R Programming" name="citation_title" />
 <meta content="Marek Gagolewski" name="citation_author" />
 <meta content="2023" name="citation_date" />
@@ -321,14 +321,14 @@ for automated dispatching of calls to <em>generics</em>
 of the type “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>” to concrete <em>methods</em>
 such as “<strong class="command">print.data.frame</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>”,
 based on the <em>class</em> of the object they are invoked upon.</p>
-<p>S3 classes in their essence are beautifully simple<a class="footnote-reference brackets" href="#foots3design" id="id3">1</a>. They are
-inspired<a class="footnote-reference brackets" href="#foots3limits" id="id4">2</a> by the well-thought-through concepts present in other
+<p>S3 classes in their essence are beautifully simple<a class="footnote-reference brackets" href="#foots3design" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. They are
+inspired<a class="footnote-reference brackets" href="#foots3limits" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> by the well-thought-through concepts present in other
 functional programming languages (such as the Common Lisp Object System;
 see below). Ultimately, those <em>generics</em> and <em>methods</em> are ordinary R functions
 (<a class="reference internal" href="170-function.html#chap-function"><span class="std std-numref">Chapter 7</span></a>) and <em>classes</em>
 are merely additional object attributes (<a class="reference internal" href="140-list.html#sec-attribute"><span class="std std-numref">Section 4.4</span></a>).</p>
 <p>Of course this does not mean that wrapping our heads around them
-will be effortless. However, unlike other “class systems”<a class="footnote-reference brackets" href="#foototherclass" id="id5">3</a>,
+will be effortless. However, unlike other “class systems”<a class="footnote-reference brackets" href="#foototherclass" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>,
 S3 is ubiquitous in R programming: suffice it to say
 that factors, matrices, and data frames discussed in the next chapters
 are quite straightforward, S3-based extensions of the concepts we have
@@ -337,8 +337,8 @@ introduced so far.</p>
 <h2><span class="section-number">10.1. </span>Object Type vs Class<a class="headerlink" href="#object-type-vs-class" title="Permalink to this heading"></a></h2>
 <p>Recall that <strong class="command">typeof</strong> (introduced in <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a>)
 returns the <em>internal</em> type of any R object. Even though there are only
-few admissible cases thereof<a class="footnote-reference brackets" href="#footsexptype" id="id6">4</a>, they open the world
-of endless possibilities<a class="footnote-reference brackets" href="#footexternalptr" id="id7">5</a>.</p>
+few admissible cases thereof<a class="footnote-reference brackets" href="#footsexptype" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, they open the world
+of endless possibilities<a class="footnote-reference brackets" href="#footexternalptr" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
 <p>The basic types we covered so far (mostly atomic and generic vectors;
 compare <a class="reference internal" href="000-preface.html#fig-data-types-overview"><span class="std std-numref">Figure 1</span></a>) provide a basis for more
 complex data structures. This is thanks to the fact that they can be equipped
@@ -359,7 +359,7 @@ with arbitrary attributes (<a class="reference internal" href="140-list.html#sec
 </div>
 <p>The interesting fact is that most <em>compound types</em>, whose most prevalent
 instances are constructed using the mechanisms discussed in this
-chapter<a class="footnote-reference brackets" href="#footalsos4" id="id8">6</a>, only pretend they are something different from
+chapter<a class="footnote-reference brackets" href="#footalsos4" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>, only pretend they are something different from
 what they actually are. They are often quite good at doing their job, though,
 and hence might be useful. By knowing what is under their hood
 we will demystify them and become able to manipulate their state outside
@@ -461,7 +461,7 @@ lengths equipped with <code class="docutils literal notranslate"><span class="pr
 <p class="admonition-title">Important</p>
 <p>Revealing how <code class="docutils literal notranslate"><span class="pre">x</span></code> is <em>actually</em> represented, enables us to process it
 (although perhaps not in the most convenient or efficient manner)
-using the extensive skill set that we have already<a class="footnote-reference brackets" href="#footsplit" id="id9">7</a>
+using the extensive skill set that we have already<a class="footnote-reference brackets" href="#footsplit" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>
 developed by studying the material covered in the previous part of our book
 (including solving all the exercises).
 This can be particularly useful, especially bearing in mind that some
@@ -531,13 +531,13 @@ equipped with the <code class="docutils literal notranslate"><span class="pre">d
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">print</span><span class="p">)</span>  <span class="c1"># sic!</span>
 <span class="c1">## function (x, ...) </span>
 <span class="c1">## UseMethod(&quot;print&quot;)</span>
-<span class="c1">## &lt;bytecode: 0x557a34c3edc8&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55ecc88904e0&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
-<p>Any function like the above<a class="footnote-reference brackets" href="#footusemeth1" id="id10">8</a> we will call from now on
+<p>Any function like the above<a class="footnote-reference brackets" href="#footusemeth1" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a> we will call from now on
 an S3 (S version 3) <em>generic</em>.
-Its only job is to invoke <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;)</span></code><a class="footnote-reference brackets" href="#footusemeth2" id="id11">9</a>.
+Its only job is to invoke <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;)</span></code><a class="footnote-reference brackets" href="#footusemeth2" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>.
 This dispatches the control flow to another function,
 referred to as <em>method</em>, based on the class of the first argument.</p>
 <p>For example, let us define an object of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
@@ -607,7 +607,7 @@ will output the same result as before.</p>
 <p class="admonition-title">Note</p>
 <p><strong class="command">print.categorical</strong> has been equipped with the dot-dot-dot attribute,
 because the generic <strong class="command">print</strong> had one too; we should always
-ensure consistency ourselves<a class="footnote-reference brackets" href="#foots3consistency" id="id12">10</a>.</p>
+ensure consistency ourselves<a class="footnote-reference brackets" href="#foots3consistency" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>.</p>
 </div>
 </section>
 <section id="creating-own-generics">
@@ -727,9 +727,9 @@ S3 generics:
 to name a few.</p>
 <p>Some of them might not even call <strong class="command">UseMethod</strong>
 explicitly; dispatching can be done internally, at the C language
-level<a class="footnote-reference brackets" href="#footinternaldispatch" id="id13">11</a>.
+level<a class="footnote-reference brackets" href="#footinternaldispatch" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.
 Overall, the list of all S3 generics is somewhat difficult
-to generate<a class="footnote-reference brackets" href="#footknowns3generics" id="id14">12</a>,
+to generate<a class="footnote-reference brackets" href="#footknowns3generics" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>,
 but at least the internal ones are enumerated in
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;InternalMethods&quot;)</span></code> and
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code>.</p>
@@ -778,7 +778,7 @@ of our custom type:</p>
     </div><div class="proof-content">
 <p>New types should be designed carefully.
 For instance, if we forget to consider overloading the to-numeric
-converter, we might end up with some users being puzzled<a class="footnote-reference brackets" href="#footpuzzle" id="id15">13</a>
+converter, we might end up with some users being puzzled<a class="footnote-reference brackets" href="#footpuzzle" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>
 when they see:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">42</span><span class="p">,</span> <span class="m">666</span><span class="p">,</span> <span class="m">4</span><span class="p">)))</span>
 <span class="c1">## [1] &quot;4&quot;   &quot;9&quot;   &quot;100&quot; &quot;9&quot;   &quot;9&quot;   &quot;100&quot; &quot;42&quot;  &quot;666&quot; &quot;4&quot;  </span>
@@ -845,7 +845,7 @@ generate a more natural result.</p>
 <section id="dispatching-only-on-one-argument-and-calling-s3-methods-directly">
 <span id="sec-s3-direct-method-call"></span><h3><span class="section-number">10.2.4. </span>Dispatching Only on One Argument and Calling S3 Methods Directly<a class="headerlink" href="#dispatching-only-on-one-argument-and-calling-s3-methods-directly" title="Permalink to this heading"></a></h3>
 <p>With S3, the dispatching is done based on the class of
-only one<a class="footnote-reference brackets" href="#footonedispatch" id="id16">14</a> argument:
+only one<a class="footnote-reference brackets" href="#footonedispatch" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a> argument:
 by default, the first one from the parameter list.</p>
 <p>For example, the <strong class="command">c</strong> function is a generic which
 dispatches on the class of the first argument.
@@ -904,7 +904,7 @@ outcome:</p>
 <p>We said “in most cases”, because some methods can be:</p>
 <ul class="simple">
 <li><p>hardcoded at the C language level
-(for instance, there is no <strong class="command">c.default</strong> defined at all<a class="footnote-reference brackets" href="#footoperoverload" id="id17">15</a>),</p></li>
+(for instance, there is no <strong class="command">c.default</strong> defined at all<a class="footnote-reference brackets" href="#footoperoverload" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>),</p></li>
 <li><p>hidden (defined in a package namespace but not exported);
 see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>,</p></li>
 <li><p>overloaded as a group; see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>.</p></li>
@@ -1011,7 +1011,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-01-15 14:21:12 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-01-18 09:42:09 AEDT&quot;</span>
 <span class="p">(</span><span class="n">t2</span> <span class="o">&lt;-</span> <span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span> <span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1033,13 +1033,13 @@ as the representatives of the same generic category of <em>POSIX time</em>
 objects.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>When calling a generic function<a class="footnote-reference brackets" href="#footoper" id="id18">16</a> <strong class="command">f</strong> on an object <code class="docutils literal notranslate"><span class="pre">x</span></code>
-of classes<a class="footnote-reference brackets" href="#footclassdispatch" id="id19">17</a>
+<p>When calling a generic function<a class="footnote-reference brackets" href="#footoper" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></a> <strong class="command">f</strong> on an object <code class="docutils literal notranslate"><span class="pre">x</span></code>
+of classes<a class="footnote-reference brackets" href="#footclassdispatch" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></a>
 <code class="docutils literal notranslate"><span class="pre">class1</span></code>, <code class="docutils literal notranslate"><span class="pre">class2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">classK</span></code>  (in this order),
 <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x)</span></code> dispatches to the method
 determined as follows:</p>
 <ol class="arabic simple">
-<li><p>if <code class="docutils literal notranslate"><span class="pre">f.class1</span></code> is available<a class="footnote-reference brackets" href="#footlookup" id="id20">18</a>, call it;</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">f.class1</span></code> is available<a class="footnote-reference brackets" href="#footlookup" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></a>, call it;</p></li>
 <li><p>otherwise, if <code class="docutils literal notranslate"><span class="pre">f.class2</span></code> is available, call this one;</p></li>
 <li><p>…;</p></li>
 <li><p>otherwise, if <code class="docutils literal notranslate"><span class="pre">f.classK</span></code> is available, invoke it;</p></li>
@@ -1080,7 +1080,7 @@ Even though what follows can partially be implied by what we
 have said above, as usual in R, there will be some oddities.</p>
 <p>For example, let us overload the index operator for
 objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.
-Looking at <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>, we see that the default method<a class="footnote-reference brackets" href="#footdefaultsubst" id="id21">19</a>
+Looking at <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>, we see that the default method<a class="footnote-reference brackets" href="#footdefaultsubst" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></a>
 has two arguments: <code class="docutils literal notranslate"><span class="pre">x</span></code> (the <code class="docutils literal notranslate"><span class="pre">categorical</span></code> object being sliced)
 and <code class="docutils literal notranslate"><span class="pre">i</span></code> (the indexer).
 Ours will have the same interface then:</p>
@@ -1140,7 +1140,7 @@ and that the recycling rule has been automagically inherited
 Is indexing with negative integers or logical vectors supported as well?
 Why is that/is that not the case?</p>
 </div></div><p>Furthermore, let us overload the `<strong class="command">==</strong>` operator.
-Assume<a class="footnote-reference brackets" href="#footcatcmp" id="id22">20</a> that we would like two <code class="docutils literal notranslate"><span class="pre">categorical</span></code> objects
+Assume<a class="footnote-reference brackets" href="#footcatcmp" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a> that we would like two <code class="docutils literal notranslate"><span class="pre">categorical</span></code> objects
 be compared based on the actual labels they encode, in an elementwise
 manner:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.categorical`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
@@ -1150,7 +1150,7 @@ manner:</p>
 <p>We are feeling lucky: by not performing any type checking,
 we rely on the particular <strong class="command">as.character</strong> methods
 corresponding to the types of <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.
-Also, assuming that <strong class="command">as.character</strong> always<a class="footnote-reference brackets" href="#footascharacter" id="id23">21</a>
+Also, assuming that <strong class="command">as.character</strong> always<a class="footnote-reference brackets" href="#footascharacter" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></a>
 returns an object of type character,
 we dispatch to the default method for `<strong class="command">==</strong>`
 (which handles atomic vectors).</p>
@@ -1201,13 +1201,13 @@ will be dealt with in separate parts of this textbook,
 owing to their importance and ubiquity.
 Namely, matrices and other arrays are covered in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>,
 and data frames in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>.</p>
-<p>The inspecting of other<a class="footnote-reference brackets" href="#foototherclasses" id="id24">22</a> interesting classes is left
+<p>The inspecting of other<a class="footnote-reference brackets" href="#foototherclasses" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></a> interesting classes is left
 as a simple exercise to the kind reader.</p>
 <section id="date-time-etc">
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, Time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-01-15&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="c1">## [1] &quot;2023-01-18&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
@@ -1216,7 +1216,7 @@ as a simple exercise to the kind reader.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19372    -1     0    NA</span>
+<span class="c1">## [1] 19375    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the so called UNIX epoch,
@@ -1224,13 +1224,13 @@ as a simple exercise to the kind reader.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-01-15 14:21:12 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-01-18 09:42:09 AEDT&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1673752873</span>
+<span class="c1">## [1] 1.674e+09</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1255,7 +1255,7 @@ In the former, it is displayed in the current local timezone, though
 <p>Use <strong class="command">ISOdatetime</strong> to inspect how
 midnights are displayed in different timezones.</p>
 </div></div><p>There is also the <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> (local time) class,
-which is represented using a list of atomic vectors<a class="footnote-reference brackets" href="#footposixlt" id="id25">23</a>.</p>
+which is represented using a list of atomic vectors<a class="footnote-reference brackets" href="#footposixlt" id="id25" role="doc-noteref"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.POSIXlt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&quot;1970-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s">&quot;2030-12-31 23:59:59&quot;</span><span class="p">)))</span>
 <span class="c1">##                          a                          b </span>
 <span class="c1">## &quot;1970-01-01 00:00:00 AEST&quot; &quot;2030-12-31 23:59:59 AEDT&quot;</span>
@@ -1336,8 +1336,8 @@ which yields an object of class <code class="docutils literal notranslate"><span
 </div></div><p>Applying other arithmetic operations on date-time objects
 yields an error.
 Also note that because date-time objects are just numbers,
-they can be compared to each other using binary operators<a class="footnote-reference brackets" href="#footdateops" id="id26">24</a>
-and methods such as <strong class="command">sort</strong> and <strong class="command">order</strong><a class="footnote-reference brackets" href="#footdatextfrm" id="id27">25</a>.</p>
+they can be compared to each other using binary operators<a class="footnote-reference brackets" href="#footdateops" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></a>
+and methods such as <strong class="command">sort</strong> and <strong class="command">order</strong><a class="footnote-reference brackets" href="#footdatextfrm" id="id27" role="doc-noteref"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></a>.</p>
 <div class="proof proof-type-exercise" id="id60">
 
     <div class="proof-title">
@@ -1359,7 +1359,7 @@ to execute a given expression:</p>
     <span class="nf">sum</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1e7</span><span class="p">))</span>  <span class="c1"># whatever, just testing</span>
 <span class="p">})</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.212   0.032   0.245</span>
+<span class="c1">##   0.225   0.019   0.245</span>
 </pre></div>
 </div>
 <p>The function returns an object of class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1380,7 +1380,7 @@ column names in a data frame or named items in a list.</p>
 <p>There is no single standard governing how a function should interpret
 a formula’s terms. In fact, each procedure is free to introduce
 its own meaning (a micro-language built on top of R). Due to this,
-yours truly discourages<a class="footnote-reference brackets" href="#footagainstformulas" id="id29">26</a>
+yours truly discourages<a class="footnote-reference brackets" href="#footagainstformulas" id="id29" role="doc-noteref"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></a>
 their use (especially by beginners).</p>
 </section>
 <section id="factors">
@@ -1401,7 +1401,7 @@ around the labels and the list of levels is given at the end.</p>
 <p>Internally, such objects are represented as integer vectors
 (<a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>) with elements between 1 and <em>k</em> with the special
 (as in <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>) <code class="docutils literal notranslate"><span class="pre">levels</span></code>
-attribute being a character vector of length <em>k</em><a class="footnote-reference brackets" href="#footfactorint" id="id30">27</a>.</p>
+attribute being a character vector of length <em>k</em><a class="footnote-reference brackets" href="#footfactorint" id="id30" role="doc-noteref"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="c1">## [1] &quot;factor&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -1415,7 +1415,7 @@ attribute being a character vector of length <em>k</em><a class="footnote-refere
 </pre></div>
 </div>
 <p>Factors are often  used instead of
-character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id31">28</a>,
+character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id31" role="doc-noteref"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></a>,
 where there is a need to manipulate their levels easily.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>  <span class="c1"># also levels(f) &lt;- c(....new...)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -1731,7 +1731,7 @@ stemming from the ingenious simplicity of S3:
 method dispatch is usually based only on the type of the first
 function argument, classes cannot be defined formally
 (but see <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>) and that there is no real encapsulation
-(we cannot actually hide data from a user<a class="footnote-reference brackets" href="#footencapsulation" id="id32">29</a>).
+(we cannot actually hide data from a user<a class="footnote-reference brackets" href="#footencapsulation" id="id32" role="doc-noteref"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></a>).
 However, overall the whole concept has proven quite versatile.</p>
 <p>In functional programming, emphasis is on operations (verbs),
 not data (nouns).
@@ -1751,7 +1751,7 @@ This should not be a problem for most programmers.</p>
 </pre></div>
 </div>
 <p>However, some people are inherently lazy, always
-complaining and/or always trying to “optimise”<a class="footnote-reference brackets" href="#footoptimise" id="id33">30</a> things.</p>
+complaining and/or always trying to “optimise”<a class="footnote-reference brackets" href="#footoptimise" id="id33" role="doc-noteref"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></a> things.</p>
 <div class="proof proof-type-example" id="id68">
 
     <div class="proof-title">
@@ -1792,9 +1792,9 @@ with the last (the most important?) operation
 being listed first.</p>
 <p>By the way, self-explanatory variable names and rich comments are priceless.</p>
 </div></div><p>In more traditional object-oriented programming languages,
-either the method list is sealed inside<a class="footnote-reference brackets" href="#footsealmeth" id="id34">31</a> the class’ definition
+either the method list is sealed inside<a class="footnote-reference brackets" href="#footsealmeth" id="id34" role="doc-noteref"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></a> the class’ definition
 (like in C++), or some peculiar patches must be applied to
-inject a method (like in Python)<a class="footnote-reference brackets" href="#footextmeth" id="id35">32</a>.
+inject a method (like in Python)<a class="footnote-reference brackets" href="#footextmeth" id="id35" role="doc-noteref"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></a>.
 There, it is the objects that are <em>told</em> what to do: they are treated
 as black boxes.</p>
 <p>Some popular languages rely on the message-passing syntax,
@@ -1804,7 +1804,7 @@ For instance, in C++ and Python (amongst many others),
 “<code class="docutils literal notranslate"><span class="pre">obj.</span></code><strong class="command">method1</strong><code class="code docutils literal notranslate"><span class="pre">().</span></code><strong class="command">method2</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>”
 means “call <strong class="command">method1</strong> on <code class="docutils literal notranslate"><span class="pre">obj</span></code> and
 then call <strong class="command">method2</strong> on the result.</p>
-<p>Since R 4.1.0, there is a <em>pipe operator</em><a class="footnote-reference brackets" href="#footpipe" id="id36">33</a>, `<strong class="command">|&gt;</strong>`,
+<p>Since R 4.1.0, there is a <em>pipe operator</em><a class="footnote-reference brackets" href="#footpipe" id="id36" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>, `<strong class="command">|&gt;</strong>`,
 which is merely a syntactic sugar for
 translating between the message-passing and function-centric notion.
 In a nutshell, writing:</p>
@@ -1834,7 +1834,7 @@ of the <code class="docutils literal notranslate"><span class="pre">iris</span><
 </div>
 </div></div><p>This book is minimalist by design and there is nothing that
 cannot be achieved without the pipe operator,
-hence we will be refraining<a class="footnote-reference brackets" href="#footcool" id="id37">34</a> ourselves from using it.</p>
+hence we will be refraining<a class="footnote-reference brackets" href="#footcool" id="id37" role="doc-noteref"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></a> ourselves from using it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When writing code interactively, we may sometimes benefit from
@@ -1904,9 +1904,9 @@ Was that straightforward?</p>
 <p>Explain why the two following calls yield significantly different
 results and present a workaround:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-01-15&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2023-01-18&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19372&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19375&quot;</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id73">
@@ -2007,18 +2007,20 @@ return a randomly chosen one (each with the same probability).</p>
 <p>Check out which built-in date-time functions the <strong class="program">stringx</strong> package
 replaces with more portable ones.</p>
 </div></div><hr class="footnotes docutils" />
-<dl class="footnote brackets">
-<dt class="label" id="foots3design"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
-<dd><p>However, some classes, even the built-in ones that
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="foots3design" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
+<p>However, some classes, even the built-in ones that
 we describe here, can be poorly designed (e.g, some crucial
 methods might be missing, they can be not-well-interoperable
 with other classes, etc.). Do not blame this messenger.
 Remember that the R environment is still very reliable.
 Also, there are cases where changing the current behaviour
 in one place could lead to undesirable consequences elsewhere.</p>
-</dd>
-<dt class="label" id="foots3limits"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
-<dd><p>They were built on top of the ordinary (“old S”)
+</aside>
+<aside class="footnote brackets" id="foots3limits" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
+<p>They were built on top of the ordinary (“old S”)
 R, hence have certain limitations what we discuss in the sequel:
 classes cannot be formally defined
 (often we will use named lists for representing objects,
@@ -2026,51 +2028,60 @@ and we know we cannot be any more flexible than this),
 and the dispatching can only be based on the class of one
 (usually the first, but, e.g., binary operators
 take both types into account) of the arguments.</p>
-</dd>
-<dt class="label" id="foototherclass"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
-<dd><p>Other class systems may give an impression that
+</aside>
+<aside class="footnote brackets" id="foototherclass" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
+<p>Other class systems may give an impression that
 they are alien implants that were forcefully added to our language
 to solve a specific, rather narrow class of problems; e.g.,
 S4 (<a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>), Reference Classes (<a class="reference internal" href="340-environment.html#sec-refclass"><span class="std std-numref">Section 16.1.5</span></a>),
 and other ones proposed by third-party packages</p>
-</dd>
-<dt class="label" id="footsexptype"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
-<dd><p>Their list is hardcoded at the C language level;
+</aside>
+<aside class="footnote brackets" id="footsexptype" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
+<p>Their list is hardcoded at the C language level;
 compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id39">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">50</a>]</span> and
-see also <code class="xref std std-numref docutils literal notranslate"><span class="pre">Chapter</span> <span class="pre">%s</span></code>.</p>
-</dd>
-<dt class="label" id="footexternalptr"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
-<dd><p>In particular, later we mention
+see also <a class="reference internal" href="320-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
+</aside>
+<aside class="footnote brackets" id="footexternalptr" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">5</a><span class="fn-bracket">]</span></span>
+<p>In particular, in <a class="reference internal" href="320-compiled.html#sec-xptr"><span class="std std-numref">Section 14.2</span></a>, we mention
 <code class="docutils literal notranslate"><span class="pre">externalptr</span></code>s which are simply pointers to memory allocated on the
 heap, so these might be any instances of C <code class="docutils literal notranslate"><span class="pre">struct</span></code>s
 or C++ <code class="docutils literal notranslate"><span class="pre">class</span></code>es, etc.
 This makes R a very extensible language.</p>
-</dd>
-<dt class="label" id="footalsos4"><span class="brackets"><a class="fn-backref" href="#id8">6</a></span></dt>
-<dd><p>But of course there is more; see the S4 and other systems
+</aside>
+<aside class="footnote brackets" id="footalsos4" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">6</a><span class="fn-bracket">]</span></span>
+<p>But of course there is more; see the S4 and other systems
 discussed in <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>.</p>
-</dd>
-<dt class="label" id="footsplit"><span class="brackets"><a class="fn-backref" href="#id9">7</a></span></dt>
-<dd><p>For instance, consider once again the example from
+</aside>
+<aside class="footnote brackets" id="footsplit" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">7</a><span class="fn-bracket">]</span></span>
+<p>For instance, consider once again the example from
 <a class="reference internal" href="150-indexing.html#sec-split"><span class="std std-numref">Section 5.4.3</span></a> that applies the <strong class="command">split</strong>
 function on a data frame reduced to a list.</p>
-</dd>
-<dt class="label" id="footusemeth1"><span class="brackets"><a class="fn-backref" href="#id10">8</a></span></dt>
-<dd><p>Note that some functions can have a version of
+</aside>
+<aside class="footnote brackets" id="footusemeth1" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">8</a><span class="fn-bracket">]</span></span>
+<p>Note that some functions can have a version of
 <strong class="command">UseMethod</strong> hidden at the C language level (internally);
 see <a class="reference internal" href="#sec-built-in-generics"><span class="std std-numref">Section 10.2.3</span></a>.</p>
-</dd>
-<dt class="label" id="footusemeth2"><span class="brackets"><a class="fn-backref" href="#id11">9</a></span></dt>
-<dd><p>Which in this context is equivalent to
+</aside>
+<aside class="footnote brackets" id="footusemeth2" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">9</a><span class="fn-bracket">]</span></span>
+<p>Which in this context is equivalent to
 <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;,</span> <span class="pre">x)</span></code>,
 with <code class="docutils literal notranslate"><span class="pre">x</span></code> being the first argument to the function.</p>
-</dd>
-<dt class="label" id="foots3consistency"><span class="brackets"><a class="fn-backref" href="#id12">10</a></span></dt>
-<dd><p>In particular, the checking of S3 generic/method
+</aside>
+<aside class="footnote brackets" id="foots3consistency" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">10</a><span class="fn-bracket">]</span></span>
+<p>In particular, the checking of S3 generic/method
 consistency is part of R package check.</p>
-</dd>
-<dt class="label" id="footinternaldispatch"><span class="brackets"><a class="fn-backref" href="#id13">11</a></span></dt>
-<dd><p>Which is quite unfortunate because
+</aside>
+<aside class="footnote brackets" id="footinternaldispatch" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">11</a><span class="fn-bracket">]</span></span>
+<p>Which is quite unfortunate because
 it decreases transparency; we need to look this information
 up somewhere in the documentation (instead of simply inspecting
 a function’s source code; see, e.g., <strong class="command">cbind</strong>).
@@ -2079,14 +2090,16 @@ be hardcoded at the C language level too and thus be unoverloadable.
 Some of such design choices can somewhat be defended, though,
 as they increase execution speed or memory consumption,
 but still: we are not fans thereof.</p>
-</dd>
-<dt class="label" id="footknowns3generics"><span class="brackets"><a class="fn-backref" href="#id14">12</a></span></dt>
-<dd><p>See also
+</aside>
+<aside class="footnote brackets" id="footknowns3generics" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">12</a><span class="fn-bracket">]</span></span>
+<p>See also
 <code class="docutils literal notranslate"><span class="pre">.knownS3Generics</span></code> and <code class="docutils literal notranslate"><span class="pre">.S3_methods_table</span></code> which are related
 to the advanced topics we cover in <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
-</dd>
-<dt class="label" id="footpuzzle"><span class="brackets"><a class="fn-backref" href="#id15">13</a></span></dt>
-<dd><p>It is a different story if this is our conscious design
+</aside>
+<aside class="footnote brackets" id="footpuzzle" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">13</a><span class="fn-bracket">]</span></span>
+<p>It is a different story if this is our conscious design
 choice and that this is the behaviour we really want.
 If we document this thoroughly (see how <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;factor&quot;)</span></code> discusses
 the behaviour of a to-numeric conversion), only a user’s ignorance
@@ -2096,9 +2109,10 @@ totally foolproof and that there will always be someone
 who will challenge/stress-test our ideas.
 Bad design is always bad, but being overprotective
 has its cons as well. Choose your audience wisely.</p>
-</dd>
-<dt class="label" id="footonedispatch"><span class="brackets"><a class="fn-backref" href="#id16">14</a></span></dt>
-<dd><p>This is R, so there are of course many exceptions
+</aside>
+<aside class="footnote brackets" id="footonedispatch" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">14</a><span class="fn-bracket">]</span></span>
+<p>This is R, so there are of course many exceptions
 to this rule which were made for the (debatable) sake of the
 R users’ convenience. In particular, in
 <a class="reference internal" href="240-data-frame.html#sec-cbind-data-frame"><span class="std std-numref">Section 12.1.2</span></a>
@@ -2108,9 +2122,10 @@ is a data frame (and other ones are unclassed).
 Also it is worth noting that the S4 class system that we discuss
 in <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a> allows for dispatching based on the classes
 many arguments.</p>
-</dd>
-<dt class="label" id="footoperoverload"><span class="brackets"><a class="fn-backref" href="#id17">15</a></span></dt>
-<dd><p>Also, dispatching can be done internally
+</aside>
+<aside class="footnote brackets" id="footoperoverload" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">15</a><span class="fn-bracket">]</span></span>
+<p>Also, dispatching can be done internally
 to internal methods: overloading `<strong class="command">&lt;.character</strong>`
 will have no effect unless the base `<strong class="command">&lt;</strong>` is
 replaced with a custom one that makes an explicit
@@ -2118,69 +2133,81 @@ call to <strong class="command">UseMethod</strong>.
 Most often, we can expect that the built-in types (e.g.,
 atomic vectors), factors, data frames, and matrices and other arrays
 might be treated specially.</p>
-</dd>
-<dt class="label" id="footoper"><span class="brackets"><a class="fn-backref" href="#id18">16</a></span></dt>
-<dd><p>The case of binary operators is handled differently;
+</aside>
+<aside class="footnote brackets" id="footoper" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">16</a><span class="fn-bracket">]</span></span>
+<p>The case of binary operators is handled differently;
 see <a class="reference internal" href="#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>.</p>
-</dd>
-<dt class="label" id="footclassdispatch"><span class="brackets"><a class="fn-backref" href="#id19">17</a></span></dt>
-<dd><p><strong class="command">UseMethod</strong> dispatches on the implicit
+</aside>
+<aside class="footnote brackets" id="footclassdispatch" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">17</a><span class="fn-bracket">]</span></span>
+<p><strong class="command">UseMethod</strong> dispatches on the implicit
 class as determined by the <strong class="command">class</strong> function
 (note that the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute does not necessarily have to be set
 in order for <strong class="command">class</strong> to return a sensible answer).</p>
-</dd>
-<dt class="label" id="footlookup"><span class="brackets"><a class="fn-backref" href="#id20">18</a></span></dt>
-<dd><p>For more details on S3 method lookup;
+</aside>
+<aside class="footnote brackets" id="footlookup" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">18</a><span class="fn-bracket">]</span></span>
+<p>For more details on S3 method lookup;
 see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
-</dd>
-<dt class="label" id="footdefaultsubst"><span class="brackets"><a class="fn-backref" href="#id21">19</a></span></dt>
-<dd><p>Note that the default S3 method,
+</aside>
+<aside class="footnote brackets" id="footdefaultsubst" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">19</a><span class="fn-bracket">]</span></span>
+<p>Note that the default S3 method,
 `<strong class="command">[.default</strong>`, is hardcoded at the C language level.
 Therefore,     we cannot refer to it directly (but <strong class="command">unclass</strong>
 does the trick).
 Also note that we can also call <strong class="command">NextMethod</strong> here;
 see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
-</dd>
-<dt class="label" id="footcatcmp"><span class="brackets"><a class="fn-backref" href="#id22">20</a></span></dt>
-<dd><p>There are of course many possible ways to implement
+</aside>
+<aside class="footnote brackets" id="footcatcmp" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">20</a><span class="fn-bracket">]</span></span>
+<p>There are of course many possible ways to implement
 the `<strong class="command">==</strong>` operator. For instance, it may return
 either a single <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> depending if two objects are
 identical (although probably overloading <strong class="command">all.equal</strong>
 would be a better idea). We could also be comparing the
 corresponding underlying integer codes instead of the labels, etc.</p>
-</dd>
-<dt class="label" id="footascharacter"><span class="brackets"><a class="fn-backref" href="#id23">21</a></span></dt>
-<dd><p>Which of course does not
+</aside>
+<aside class="footnote brackets" id="footascharacter" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">21</a><span class="fn-bracket">]</span></span>
+<p>Which of course does not
 have to be the case; it is merely an assumption based on
 our belief in the common sense of other developers.</p>
-</dd>
-<dt class="label" id="foototherclasses"><span class="brackets"><a class="fn-backref" href="#id24">22</a></span></dt>
-<dd><p>An (incomprehensive) approximation to the
+</aside>
+<aside class="footnote brackets" id="foototherclasses" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">22</a><span class="fn-bracket">]</span></span>
+<p>An (incomprehensive) approximation to the
 list of available classes can be generated by calling
 <strong class="command">unique</strong><code class="code docutils literal notranslate"><span class="pre">(.S3_methods_table[,</span> <span class="pre">2])</span></code>.</p>
-</dd>
-<dt class="label" id="footposixlt"><span class="brackets"><a class="fn-backref" href="#id25">23</a></span></dt>
-<dd><p>Which was inspired by C’s <code class="docutils literal notranslate"><span class="pre">tm</span></code> structure defined
+</aside>
+<aside class="footnote brackets" id="footposixlt" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id25">23</a><span class="fn-bracket">]</span></span>
+<p>Which was inspired by C’s <code class="docutils literal notranslate"><span class="pre">tm</span></code> structure defined
 in <code class="docutils literal notranslate"><span class="pre">&lt;time.h&gt;</span></code>.</p>
-</dd>
-<dt class="label" id="footdateops"><span class="brackets"><a class="fn-backref" href="#id26">24</a></span></dt>
-<dd><p>The overloaded group generic <code class="docutils literal notranslate"><span class="pre">Ops</span></code>
+</aside>
+<aside class="footnote brackets" id="footdateops" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">24</a><span class="fn-bracket">]</span></span>
+<p>The overloaded group generic <code class="docutils literal notranslate"><span class="pre">Ops</span></code>
 prevents us from adding or multiplying two dates
 and defines the meaning of the comparison operators;
 see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>.</p>
-</dd>
-<dt class="label" id="footdatextfrm"><span class="brackets"><a class="fn-backref" href="#id27">25</a></span></dt>
-<dd><p>See an exercise below on the use of <strong class="command">xtfrm</strong>.</p>
-</dd>
-<dt class="label" id="footagainstformulas"><span class="brackets"><a class="fn-backref" href="#id29">26</a></span></dt>
-<dd><p>For example, <strong class="command">lm.fit</strong>
+</aside>
+<aside class="footnote brackets" id="footdatextfrm" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">25</a><span class="fn-bracket">]</span></span>
+<p>See an exercise below on the use of <strong class="command">xtfrm</strong>.</p>
+</aside>
+<aside class="footnote brackets" id="footagainstformulas" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">26</a><span class="fn-bracket">]</span></span>
+<p>For example, <strong class="command">lm.fit</strong>
 can be used instead of <strong class="command">lm</strong>. It is slightly more difficult
 to learn, surely, but has the added benefit of making sure
 the user knows that all model variables are not magical
 (especially the nonlinear/mixed effect terms).</p>
-</dd>
-<dt class="label" id="footfactorint"><span class="brackets"><a class="fn-backref" href="#id30">27</a></span></dt>
-<dd><p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id8" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">51</a>]</span> states: <em>Factors are currently
+</aside>
+<aside class="footnote brackets" id="footfactorint" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id30">27</a><span class="fn-bracket">]</span></span>
+<p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id8" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">51</a>]</span> states: <em>Factors are currently
 implemented using an integer
 array to specify the actual levels and a second array of names that are
 mapped to the integers. Rather unfortunately users often make use of the
@@ -2189,17 +2216,20 @@ is an implementation issue and is not guaranteed to hold in all
 implementations of R.</em>
 Still, <em>fortunately</em>, this has been a de facto standard for factors for
 a very long time.</p>
-</dd>
-<dt class="label" id="footstrcache"><span class="brackets"><a class="fn-backref" href="#id31">28</a></span></dt>
-<dd><p>Recall that there is a global (internal) string cache,
+</aside>
+<aside class="footnote brackets" id="footstrcache" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id31">28</a><span class="fn-bracket">]</span></span>
+<p>Recall that there is a global (internal) string cache,
 hence having many duplicated strings is not an issue,
 memory-use-wisely.</p>
-</dd>
-<dt class="label" id="footencapsulation"><span class="brackets"><a class="fn-backref" href="#id32">29</a></span></dt>
-<dd><p>Which can be good, right?</p>
-</dd>
-<dt class="label" id="footoptimise"><span class="brackets"><a class="fn-backref" href="#id33">30</a></span></dt>
-<dd><p>Do not get yours truly wrong, improving things is generally
+</aside>
+<aside class="footnote brackets" id="footencapsulation" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id32">29</a><span class="fn-bracket">]</span></span>
+<p>Which can be good, right?</p>
+</aside>
+<aside class="footnote brackets" id="footoptimise" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id33">30</a><span class="fn-bracket">]</span></span>
+<p>Do not get yours truly wrong, improving things is generally
 good, but overall, in the long run, as a compulsive habit
 (“this is what (some) stakeholders want”,
 “we need to be agile and responsive”, etc.),
@@ -2212,33 +2242,37 @@ and not know the old one, others will have to learn the new syntax
 to be able to communicate with the former group) but also introduce
 a whole new set of issues (how to make the new functions
 interoperable with each other in a seamless manner, etc.).</p>
-</dd>
-<dt class="label" id="footsealmeth"><span class="brackets"><a class="fn-backref" href="#id34">31</a></span></dt>
-<dd><p>When methods are parts of particular classes,
+</aside>
+<aside class="footnote brackets" id="footsealmeth" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id34">31</a><span class="fn-bracket">]</span></span>
+<p>When methods are parts of particular classes,
 there can be a lot of duplicated code.
 Functional OOP can be more developer-friendly as we
 can implement all methods related to roughly the same
 functionality in one spot.</p>
-</dd>
-<dt class="label" id="footextmeth"><span class="brackets"><a class="fn-backref" href="#id35">32</a></span></dt>
-<dd><p>See also the concept
+</aside>
+<aside class="footnote brackets" id="footextmeth" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id35">32</a><span class="fn-bracket">]</span></span>
+<p>See also the concept
 of extension methods in C# or Kotlin or, to some extent,
 class inheritance.</p>
-</dd>
-<dt class="label" id="footpipe"><span class="brackets"><a class="fn-backref" href="#id36">33</a></span></dt>
-<dd><p>It was inspired by `<strong class="command">|</strong>` in Bash
+</aside>
+<aside class="footnote brackets" id="footpipe" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id36">33</a><span class="fn-bracket">]</span></span>
+<p>It was inspired by `<strong class="command">|</strong>` in Bash
 and `<strong class="command">|&gt;&#64;</strong>` in F# and Julia (which are part of the
 language specification).
 Also, there is a `<strong class="command">%&gt;%</strong>` operator (and related ones)
 in the R package <strong class="program">magrittr</strong>.</p>
-</dd>
-<dt class="label" id="footcool"><span class="brackets"><a class="fn-backref" href="#id37">34</a></span></dt>
-<dd><p>Which some readers would name an <em>uncool</em> (old-school)
+</aside>
+<aside class="footnote brackets" id="footcool" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id37">34</a><span class="fn-bracket">]</span></span>
+<p>Which some readers would name an <em>uncool</em> (old-school)
 approach, but we do not care. Remember that the functional
 syntax is the native one and we have to be able
 to understand it anyway.</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -2262,7 +2296,7 @@ to understand it anyway.</p>
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-15T14:51:24+1100.
+        Last updated on 2023-01-18T09:57:43+1100.
       </span>
 
 
