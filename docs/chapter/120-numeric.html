@@ -72,6 +72,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/proof.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -289,7 +290,7 @@
            <div itemprop="articleBody">
             
   <section class="tex2jax_ignore mathjax_ignore" id="numeric-vectors">
-<span id="chap-numeric"></span><h1><span class="section-number">2. </span>Numeric Vectors<a class="headerlink" href="#numeric-vectors" title="Permalink to this heading"></a></h1>
+<span id="chap-numeric"></span><h1><span class="section-number">2. </span>Numeric Vectors<a class="headerlink" href="#numeric-vectors" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -304,7 +305,7 @@ are appreciated.</strong>
 <em>Although available online, it is a whole course;
 it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
-<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
 </div></blockquote>
 <p>In this chapter, we discuss the uttermost common operations
 on numeric vectors. They are so fundamental that we will also find them
@@ -319,7 +320,7 @@ representative and educational amongst the plethora of possible choices.
 More complex building blocks can either be reduced to a creative combination
 of the former or be easily found – should the need arise –
 in a number additional packages or libraries
-(e.g., the GNU GSL <span id="id2">[<a class="reference internal" href="999-bibliography.html#id27" title="Galassi, M., Theiler, J., et al. (2021).  GNU Scientific Library Reference Manual. URL: http://www.gnu.org/software/gsl/.">23</a>]</span>).</p>
+(e.g., the GNU GSL <span id="id2">[<a class="reference internal" href="999-bibliography.html#id29" title="Galassi, M., Theiler, J., et al. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">24</a>]</span>).</p>
 <p>A solid understanding of base R programming is necessary for the
 effective dealing with the popular packages
 (such as <strong class="program">data.table</strong>, <strong class="program">dplyr</strong>,
@@ -345,9 +346,9 @@ the reader should be seeking relevant information within the current and
 preceding chapters as well as the R help system.</p>
 </div>
 <section id="creating-numeric-vectors">
-<h2><span class="section-number">2.1. </span>Creating Numeric Vectors<a class="headerlink" href="#creating-numeric-vectors" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">2.1. </span>Creating Numeric Vectors<a class="headerlink" href="#creating-numeric-vectors" title="Permalink to this heading">¶</a></h2>
 <section id="numeric-constants">
-<h3><span class="section-number">2.1.1. </span>Numeric Constants<a class="headerlink" href="#numeric-constants" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.1.1. </span>Numeric Constants<a class="headerlink" href="#numeric-constants" title="Permalink to this heading">¶</a></h3>
 <p>The simplest numeric vectors are those of length one:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">-3.14</span>
 <span class="c1">## [1] -3.14</span>
@@ -366,7 +367,7 @@ In other words, given <span class="math notranslate nohighlight">\(1.23\)</span>
 may be inherently or temporarily missing, unknown, or <code class="docutils literal notranslate"><span class="pre">N</span></code>ot <code class="docutils literal notranslate"><span class="pre">A</span></code>vailable.
 R is data processing-oriented, hence it is equipped with
 a special indicator:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="kc">NA_real_</span>  <span class="c1"># numeric NA (missing value)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="kc">NA_real_</span><span class="w">  </span><span class="c1"># numeric NA (missing value)</span>
 <span class="c1">## [1] NA</span>
 </pre></div>
 </div>
@@ -380,15 +381,15 @@ and <code class="docutils literal notranslate"><span class="pre">NaN</span></cod
 of some illegal operations, e.g., <span class="math notranslate nohighlight">\(0/0\)</span> or <span class="math notranslate nohighlight">\(\infty-\infty\)</span>).</p>
 </section>
 <section id="concatenating-vectors-with-c">
-<h3><span class="section-number">2.1.2. </span>Concatenating Vectors with <strong class="command">c</strong><a class="headerlink" href="#concatenating-vectors-with-c" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.1.2. </span>Concatenating Vectors with <strong class="command">c</strong><a class="headerlink" href="#concatenating-vectors-with-c" title="Permalink to this heading">¶</a></h3>
 <p>Let us provide some ways to create numeric vectors with possibly
 more than 1 element.</p>
 <p>First, the <strong class="command">c</strong> function we introduced in the previous chapter,
 can be used to <em>c</em>ombine (concatenate) many numeric vectors, each
 of any length, so as to form a single object:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>  <span class="c1"># 3 vectors of length 1  -&gt;  1 vector of length 3</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># 3 vectors of length 1  -&gt;  1 vector of length 3</span>
 <span class="c1">## [1] 1 2 3</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="m">4</span><span class="p">),</span> <span class="m">5</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="kc">Inf</span><span class="p">)))</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">)))</span>
 <span class="c1">## [1]   1   2  NA   4   5   6   7 Inf</span>
 </pre></div>
 </div>
@@ -403,21 +404,21 @@ the dot-dot-dot (ellipsis) parameter in more detail.</p>
 </div>
 </section>
 <section id="repeating-entries-with-rep">
-<span id="sec-rep"></span><h3><span class="section-number">2.1.3. </span>Repeating Entries with <strong class="command">rep</strong><a class="headerlink" href="#repeating-entries-with-rep" title="Permalink to this heading"></a></h3>
+<span id="sec-rep"></span><h3><span class="section-number">2.1.3. </span>Repeating Entries with <strong class="command">rep</strong><a class="headerlink" href="#repeating-entries-with-rep" title="Permalink to this heading">¶</a></h3>
 <p>Second, <strong class="command">rep</strong> <em>rep</em>licates the elements
 in a given vector a given number of times.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span>
 <span class="c1">## [1] 1 1 1 1 1</span>
-<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span>
+<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
 <span class="c1">##  [1] 1 2 3 1 2 3 1 2 3 1 2 3</span>
 </pre></div>
 </div>
 <p>In the second case, the whole vector (1, 2, 3) has been <em>recycled</em>
 (tiled) four times. Interestingly, if the second argument was a vector
 of the same length as the first one, the behaviour would be quite different:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span>
 <span class="c1">## [1] 1 1 2 3 3 3 3</span>
-<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">4</span><span class="p">))</span>
+<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span>
 <span class="c1">##  [1] 1 1 1 1 2 2 2 2 3 3 3 3</span>
 </pre></div>
 </div>
@@ -438,22 +439,22 @@ whose elements are to be repeated).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>It turns out that the following function calls are all equivalent:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span>   <span class="c1"># positional matching of arguments: `x`, then `times`</span>
-<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>    <span class="c1"># `times` is the second argument</span>
-<span class="nf">rep</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>  <span class="c1"># keyword arguments of the form name=value</span>
-<span class="nf">rep</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>  <span class="c1"># keyword arguments can be given in any order</span>
-<span class="nf">rep</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>    <span class="c1"># mixed positional and keyword arguments</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">   </span><span class="c1"># positional matching of arguments: `x`, then `times`</span>
+<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w">    </span><span class="c1"># `times` is the second argument</span>
+<span class="nf">rep</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w">  </span><span class="c1"># keyword arguments of the form name=value</span>
+<span class="nf">rep</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># keyword arguments can be given in any order</span>
+<span class="nf">rep</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w">    </span><span class="c1"># mixed positional and keyword arguments</span>
 </pre></div>
 </div>
 </div>
 <p>We can also pass <code class="docutils literal notranslate"><span class="pre">each</span></code> or <code class="docutils literal notranslate"><span class="pre">length.out</span></code>
 (a dot has no special meaning in R; see <a class="reference internal" href="#sec-assign"><span class="std std-numref">Section 2.2</span></a>),
 but their names should be mentioned explicitly:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">length.out</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
 <span class="c1">## [1] 1 2 3 1 2 3 1</span>
-<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">each</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] 1 1 1 2 2 2 3 3 3</span>
-<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">length.out</span><span class="o">=</span><span class="m">7</span><span class="p">,</span> <span class="n">each</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="n">each</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] 1 1 1 2 2 2 3</span>
 </pre></div>
 </div>
@@ -469,7 +470,7 @@ depending, e.g., on the length of the <code class="docutils literal notranslate"
 Anyway, we have been warned<a class="footnote-reference brackets" href="#footillusionarycare" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 </div>
 <p>Zero-length vectors are also possible:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="m">0</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
 <span class="c1">## numeric(0)</span>
 </pre></div>
 </div>
@@ -479,11 +480,11 @@ we will see later that they are useful in contexts like
 “create an empty data frame with a specific column structure”.</p>
 </section>
 <section id="generating-arithmetic-progressions-with-seq-and">
-<h3><span class="section-number">2.1.4. </span>Generating Arithmetic Progressions with <strong class="command">seq</strong> and `<strong class="command">:</strong>`<a class="headerlink" href="#generating-arithmetic-progressions-with-seq-and" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.1.4. </span>Generating Arithmetic Progressions with <strong class="command">seq</strong> and `<strong class="command">:</strong>`<a class="headerlink" href="#generating-arithmetic-progressions-with-seq-and" title="Permalink to this heading">¶</a></h3>
 <p>Third, we can call the <strong class="command">seq</strong> function
 to create a sequence of equally-spaced numbers
 (on a linear scale, i.e., an arithmetic progression).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">15</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1]  1  3  5  7  9 11 13 15</span>
 </pre></div>
 </div>
@@ -491,12 +492,12 @@ to create a sequence of equally-spaced numbers
 we note that it has the following parameters:
 <code class="docutils literal notranslate"><span class="pre">from</span></code>, <code class="docutils literal notranslate"><span class="pre">to</span></code>, <code class="docutils literal notranslate"><span class="pre">by</span></code>, <code class="docutils literal notranslate"><span class="pre">length.out</span></code>, amongst others.</p>
 <p>Thus, the above call is equivalent to:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="n">from</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">15</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="n">from</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="o">=</span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1]  1  3  5  7  9 11 13 15</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">to</span></code> actually means “up to”:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="n">from</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">16</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="n">from</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1]  1  3  5  7  9 11 13 15</span>
 </pre></div>
 </div>
@@ -504,22 +505,22 @@ we note that it has the following parameters:
 In such a case, the increments or decrements will be computed via the formula
 <code class="docutils literal notranslate"><span class="pre">((to</span> <span class="pre">-</span> <span class="pre">from)/(length.out</span> <span class="pre">-</span> <span class="pre">1))</span></code>; this <em>default value</em>
 is reported in the <em>Usage</em> section in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;seq&quot;)</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>
 <span class="c1">## [1] 1.00 0.75 0.50 0.25 0.00</span>
 </pre></div>
 </div>
 <p>Also, this:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="n">length.out</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>  <span class="c1"># default `from` is 1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">seq</span><span class="p">(</span><span class="n">length.out</span><span class="o">=</span><span class="m">5</span><span class="p">)</span><span class="w">  </span><span class="c1"># default `from` is 1</span>
 <span class="c1">## [1] 1 2 3 4 5</span>
 </pre></div>
 </div>
 <p>Arithmetic progressions with step equal to 1 or -1
 can also be generated via the `<strong class="command">:</strong>` operator.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="o">:</span><span class="m">10</span>    <span class="c1"># seq(1, 10) or seq(1, 10, 1)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="w">    </span><span class="c1"># seq(1, 10) or seq(1, 10, 1)</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
-<span class="m">-1</span><span class="o">:</span><span class="m">10</span>   <span class="c1"># seq(-1, 10) or seq(-1, 10, 1)</span>
+<span class="m">-1</span><span class="o">:</span><span class="m">10</span><span class="w">   </span><span class="c1"># seq(-1, 10) or seq(-1, 10, 1)</span>
 <span class="c1">##  [1] -1  0  1  2  3  4  5  6  7  8  9 10</span>
-<span class="m">-1</span><span class="o">:</span><span class="m">-10</span>  <span class="c1"># seq(-1, -10) or seq(-1, -10, -1)</span>
+<span class="m">-1</span><span class="o">:</span><span class="m">-10</span><span class="w">  </span><span class="c1"># seq(-1, -10) or seq(-1, -10, -1)</span>
 <span class="c1">##  [1]  -1  -2  -3  -4  -5  -6  -7  -8  -9 -10</span>
 </pre></div>
 </div>
@@ -537,12 +538,12 @@ and determine whether they can easily be done without,
 having <strong class="command">seq</strong><a class="footnote-reference brackets" href="#footinteger" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> at hand.</p>
 </div></div></section>
 <section id="generating-pseudorandom-numbers">
-<h3><span class="section-number">2.1.5. </span>Generating Pseudorandom Numbers<a class="headerlink" href="#generating-pseudorandom-numbers" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.1.5. </span>Generating Pseudorandom Numbers<a class="headerlink" href="#generating-pseudorandom-numbers" title="Permalink to this heading">¶</a></h3>
 <p>We can also generate sequences drawn independently from a range
 of univariate probability distributions.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">runif</span><span class="p">(</span><span class="m">7</span><span class="p">)</span>  <span class="c1"># uniform U(0, 1)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">runif</span><span class="p">(</span><span class="m">7</span><span class="p">)</span><span class="w">  </span><span class="c1"># uniform U(0, 1)</span>
 <span class="c1">## [1] 0.287578 0.788305 0.408977 0.883017 0.940467 0.045556 0.528105</span>
-<span class="nf">rnorm</span><span class="p">(</span><span class="m">7</span><span class="p">)</span>  <span class="c1"># normal N(0, 1)</span>
+<span class="nf">rnorm</span><span class="p">(</span><span class="m">7</span><span class="p">)</span><span class="w">  </span><span class="c1"># normal N(0, 1)</span>
 <span class="c1">## [1]  1.23950 -0.10897 -0.11724  0.18308  1.28055 -1.72727  1.69018</span>
 </pre></div>
 </div>
@@ -557,9 +558,9 @@ real-world statistical modelling exercises), see
 <a class="reference internal" href="#sec-probability-distributions"><span class="std std-numref">Section 2.3.4</span></a>.</p>
 <p>Another useful function samples a number of values from a given vector,
 either with or without replacement:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>  <span class="c1"># 20 with replacement (allow repetitions)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># 20 with replacement (allow repetitions)</span>
 <span class="c1">##  [1]  3  3 10  2  6  5  4  6  9 10  5  3  9  9  9  3  8 10  7 10</span>
-<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>  <span class="c1"># 5 without replacement (do not repeat)</span>
+<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">  </span><span class="c1"># 5 without replacement (do not repeat)</span>
 <span class="c1">## [1] 9 3 4 6 1</span>
 </pre></div>
 </div>
@@ -569,7 +570,7 @@ probabilities. For example, here are 20 independent realisations
 of the random variable <span class="math notranslate nohighlight">\(X\)</span> such that
 <span class="math notranslate nohighlight">\(\Pr(X=0)=0.9\)</span>  (the probability that we obtain 0 is equal to 90%)
 and <span class="math notranslate nohighlight">\(\Pr(X=1)=0.1\)</span>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">1</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0.9</span><span class="p">,</span> <span class="m">0.1</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="p">))</span>
 <span class="c1">##  [1] 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1</span>
 </pre></div>
 </div>
@@ -589,27 +590,27 @@ Read more at <strong class="command">help</strong><code class="code docutils lit
 </div>
 <p>Let us stress that the numbers we obtain are merely <em>pseudo</em>random,
 because they are generated algorithmically.
-R uses the Mersenne-Twister MT19937 method <span id="id5">[<a class="reference internal" href="999-bibliography.html#id33" title="Matsumoto, M., Nishimura, T. (1998).  Mersenne Twister: A 623-dimensionally equidistributed uniform pseudo-random number generator. ACM Transactions on Modeling and Computer Simulation, 8:3–30.">37</a>]</span> by default;
-see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;RNG&quot;)</span></code> and <span id="id6">[<a class="reference internal" href="999-bibliography.html#id32" title="Devroye, L. (1986).  Non-Uniform Random Variate Generation. Springer-Verlag. URL: http://luc.devroye.org/rnbookindex.html.">16</a>, <a class="reference internal" href="999-bibliography.html#id39" title="Gentle, J.E. (2003).  Random Number Generation and Monte Carlo methods. Springer.">24</a>, <a class="reference internal" href="999-bibliography.html#id30" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">34</a>]</span>.
+R uses the Mersenne-Twister MT19937 method <span id="id5">[<a class="reference internal" href="999-bibliography.html#id35" title="Matsumoto, M., Nishimura, T. (1998).  Mersenne Twister: A 623-dimensionally equidistributed uniform pseudo-random number generator. ACM Transactions on Modeling and Computer Simulation, 8:3–30.">38</a>]</span> by default;
+see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;RNG&quot;)</span></code> and <span id="id6">[<a class="reference internal" href="999-bibliography.html#id34" title="Devroye, L. (1986).  Non-Uniform Random Variate Generation. Springer-Verlag. URL: https://luc.devroye.org/rnbookindex.html.">17</a>, <a class="reference internal" href="999-bibliography.html#id41" title="Gentle, J.E. (2003).  Random Number Generation and Monte Carlo methods. Springer.">25</a>, <a class="reference internal" href="999-bibliography.html#id32" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">35</a>]</span>.
 By setting the <em>seed</em> of the random number generator, i.e., re-setting
 its state to a given one, we can obtain results
 that are <em>reproducible</em>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">12345</span><span class="p">)</span>  <span class="c1"># seeds are specified with integers</span>
-<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># a,b,c,d,e</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">12345</span><span class="p">)</span><span class="w">  </span><span class="c1"># seeds are specified with integers</span>
+<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># a,b,c,d,e</span>
 <span class="c1">## [1]  3 10  8 10  8</span>
-<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># f,g,h,i,j</span>
+<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># f,g,h,i,j</span>
 <span class="c1">## [1]  2  6  6  7 10</span>
 </pre></div>
 </div>
 <p>Setting the seed to the one used previously gives:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">12345</span><span class="p">)</span>
-<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># a,b,c,d,e</span>
+<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># a,b,c,d,e</span>
 <span class="c1">## [1]  3 10  8 10  8</span>
 </pre></div>
 </div>
 <p>We did not(?) expect that! And now for something completely different:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">12345</span><span class="p">)</span>
-<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># a,b,c,d,e,f,g,h,i,j</span>
+<span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># a,b,c,d,e,f,g,h,i,j</span>
 <span class="c1">##  [1]  3 10  8 10  8  2  6  6  7 10</span>
 </pre></div>
 </div>
@@ -628,8 +629,8 @@ in the <code class="docutils literal notranslate"><span class="pre">i</span></co
 seed settings are applied consistently across all our scripts.
 Otherwise, we might be accused of tampering with evidence.
 For instance, here is the ultimate proof that we are very lucky today:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">1679619</span><span class="p">)</span>  <span class="c1"># totally unsuspicious, right?</span>
-<span class="nf">sample</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">1</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>  <span class="c1"># so random</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">1679619</span><span class="p">)</span><span class="w">  </span><span class="c1"># totally unsuspicious, right?</span>
+<span class="nf">sample</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># so random</span>
 <span class="c1">##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
 </pre></div>
 </div>
@@ -648,7 +649,7 @@ in <a class="reference internal" href="180-flow.html#sec-loops"><span class="std
 ourselves.</p>
 </section>
 <section id="reading-data-with-scan">
-<span id="sec-scan"></span><h3><span class="section-number">2.1.6. </span>Reading Data with <strong class="command">scan</strong><a class="headerlink" href="#reading-data-with-scan" title="Permalink to this heading"></a></h3>
+<span id="sec-scan"></span><h3><span class="section-number">2.1.6. </span>Reading Data with <strong class="command">scan</strong><a class="headerlink" href="#reading-data-with-scan" title="Permalink to this heading">¶</a></h3>
 <p>The example text file named <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/euraud-20200101-20200630.csv"><code class="docutils literal notranslate"><span class="pre">euraud-20200101-20200630.csv</span></code></a>
 gives the EUR to AUD exchange rates
 (how many Australian Dollars can one buy for 1 Euro)
@@ -672,7 +673,7 @@ hence a missing observation).</p>
 <p>The <strong class="command">scan</strong> function can be used to read all the inputs
 and convert them to a single numeric vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
-    <span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span> <span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
 <span class="c1">##  [1]     NA 1.6006 1.6031     NA     NA 1.6119 1.6251 1.6195 1.6193 1.6132</span>
 <span class="c1">## [11]     NA     NA 1.6117 1.6110 1.6188 1.6115 1.6122     NA     NA 1.6154</span>
 <span class="c1">## [21] 1.6177 1.6184 1.6149 1.6127     NA     NA 1.6291 1.6290 1.6299 1.6412</span>
@@ -691,7 +692,7 @@ long (too long to fit a single line of code)
 strings to form a single URL; see <a class="reference internal" href="160-character.html#sec-string-concatenate"><span class="std std-numref">Section 6.1.3</span></a>.</p>
 <p>We can also read the files located on our computer, for example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">scan</span><span class="p">(</span><span class="s">&quot;~/teaching-data/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">,</span>
-    <span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>uses an absolute file path that starts at the user’s home
@@ -739,14 +740,14 @@ vector’s contents to a text file.</p>
 <p><a class="reference internal" href="#fig-euraud-plot"><span class="std std-numref">Figure 2.1</span></a> shows the graph of
 the aforementioned exchange rates, which was generated by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
-    <span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span> <span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">),</span>
-    <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Day&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;EUR/AUD&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Day&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;EUR/AUD&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id20">
 <span id="fig-euraud-plot"></span><img alt="../_images/euraud-plot-1.png" src="../_images/euraud-plot-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 2.1 </span><span class="caption-text">EUR/AUD exchange rates from 2020-01-01 (day 1) to 2020-06-30 (day 182)</span><a class="headerlink" href="#id20" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Figure 2.1 </span><span class="caption-text">EUR/AUD exchange rates from 2020-01-01 (day 1) to 2020-06-30 (day 182)</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Somewhat misleadingly (and for the reasons that will
@@ -759,18 +760,18 @@ arguments. More plotting routines will be discussed in
 </div></div></section>
 </section>
 <section id="creating-named-objects">
-<span id="sec-assign"></span><h2><span class="section-number">2.2. </span>Creating Named Objects<a class="headerlink" href="#creating-named-objects" title="Permalink to this heading"></a></h2>
+<span id="sec-assign"></span><h2><span class="section-number">2.2. </span>Creating Named Objects<a class="headerlink" href="#creating-named-objects" title="Permalink to this heading">¶</a></h2>
 <p>Often, the objects we bring forth will need to be memorised so that
 they can be referred to in further computations.
 The assignment operator, `<strong class="command">&lt;-</strong>`, can be used for this very purpose:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span>  <span class="c1"># creates a numeric vector and binds the name `x` to it</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="w">  </span><span class="c1"># creates a numeric vector and binds the name `x` to it</span>
 </pre></div>
 </div>
 <p>The now-named object can be recalled and dealt with
 as we please:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># or just `x` in the R console</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># or just `x` in the R console</span>
 <span class="c1">## [1] 1 2 3</span>
-<span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># example operation: compute the sum of all elements in `x`</span>
+<span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">    </span><span class="c1"># example operation: compute the sum of all elements in `x`</span>
 <span class="c1">## [1] 6</span>
 </pre></div>
 </div>
@@ -822,9 +823,9 @@ languages will need to habituate themselves to this convention.</p>
 </div>
 <p>R, as a dynamic language, allows for introducing new variables at any time.
 Moreover, existing names can be re-bound to new values. For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span>  <span class="c1"># bracketed expression - printing not suppressed</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">))</span><span class="w">  </span><span class="c1"># bracketed expression - printing not suppressed</span>
 <span class="c1">## [1]   1  10 100</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">y</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1]   1  10 100</span>
 </pre></div>
@@ -840,18 +841,18 @@ no more names bound with them. In particular, by now the
 </div>
 </section>
 <section id="vectorised-mathematical-functions">
-<span id="sec-vectorised-funs"></span><h2><span class="section-number">2.3. </span>Vectorised Mathematical Functions<a class="headerlink" href="#vectorised-mathematical-functions" title="Permalink to this heading"></a></h2>
+<span id="sec-vectorised-funs"></span><h2><span class="section-number">2.3. </span>Vectorised Mathematical Functions<a class="headerlink" href="#vectorised-mathematical-functions" title="Permalink to this heading">¶</a></h2>
 <p>Mathematically, we will be denoting a given vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>
 of length <em>n</em>
 as <span class="math notranslate nohighlight">\((x_1, x_2, \dots, x_n)\)</span>.
 In other words, its <em>i</em>-th element is equal to <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
 <p>Let us review some ubiquitous operations in numerical computing.</p>
 <section id="abs-and-sqrt">
-<h3><span class="section-number">2.3.1. </span><strong class="command">abs</strong> and <strong class="command">sqrt</strong><a class="headerlink" href="#abs-and-sqrt" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.3.1. </span><strong class="command">abs</strong> and <strong class="command">sqrt</strong><a class="headerlink" href="#abs-and-sqrt" title="Permalink to this heading">¶</a></h3>
 <p>R implements <em>vectorised</em> versions of the most popular
 mathematical functions, e.g., <strong class="command">abs</strong> (absolute value, <span class="math notranslate nohighlight">\(|x|\)</span>) and
 <strong class="command">sqrt</strong> (square root, <span class="math notranslate nohighlight">\(\sqrt{x}\)</span>).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">abs</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">-3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">abs</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">-3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">))</span>
 <span class="c1">## [1]  2  1  0  3 NA</span>
 </pre></div>
 </div>
@@ -862,8 +863,8 @@ is a transformed version of the <em>i</em>-th input.
 If an input is a missing value, the corresponding output will be
 marked as “don’t know” as well.</p>
 <p>Another example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">-1</span><span class="p">)</span>
-<span class="p">(</span><span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">)</span>
+<span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="c1">## Warning in sqrt(x): NaNs produced</span>
 <span class="c1">## [1] 2.0000 1.4142    NaN</span>
 </pre></div>
@@ -879,13 +880,13 @@ it is only rounded when printing, for aesthetic reasons.
 In fact, in <a class="reference internal" href="130-logical.html#sec-fp"><span class="std std-numref">Section 3.2.3</span></a> we will point out that the computer’s
 floating-point arithmetic allows for roughly 16 decimal digits precision
 (but we shall see that the devil is in the detail).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="m">16</span><span class="p">)</span>  <span class="c1"># display more significant figures</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">16</span><span class="p">)</span><span class="w">  </span><span class="c1"># display more significant figures</span>
 <span class="c1">## [1] 2.000000000000000 1.414213562373095               NaN</span>
 </pre></div>
 </div>
 </section>
 <section id="rounding">
-<h3><span class="section-number">2.3.2. </span>Rounding<a class="headerlink" href="#rounding" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.3.2. </span>Rounding<a class="headerlink" href="#rounding" title="Permalink to this heading">¶</a></h3>
 <p>The following functions get rid of all or portions of
 fractional parts of numbers:</p>
 <ul class="simple">
@@ -896,7 +897,7 @@ denoted <span class="math notranslate nohighlight">\(\lfloor x\rfloor\)</span>),
 <li><p><strong class="command">round</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">digits=0)</span></code> (rounds to the nearest number with <code class="docutils literal notranslate"><span class="pre">digits</span></code> decimal digits).</p></li>
 </ul>
 <p>For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">7.0001</span><span class="p">,</span> <span class="m">6.9999</span><span class="p">,</span> <span class="m">-4.3149</span><span class="p">,</span> <span class="m">-5.19999</span><span class="p">,</span> <span class="m">123.4567</span><span class="p">,</span> <span class="m">-765.4321</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1.5</span><span class="p">,</span> <span class="m">2.5</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">7.0001</span><span class="p">,</span><span class="w"> </span><span class="m">6.9999</span><span class="p">,</span><span class="w"> </span><span class="m">-4.3149</span><span class="p">,</span><span class="w"> </span><span class="m">-5.19999</span><span class="p">,</span><span class="w"> </span><span class="m">123.4567</span><span class="p">,</span><span class="w"> </span><span class="m">-765.4321</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="m">2.5</span><span class="p">)</span>
 <span class="nf">floor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1]    7    6   -5   -6  123 -766    0    1    2</span>
 <span class="nf">ceiling</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -913,17 +914,17 @@ is equipped with the <em>default value</em> of 0.
 In other words, if rounding to 0 decimal digits is what we need,
 the second argument can be omitted.</p>
 </div>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># the same as round(x, 0)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># the same as round(x, 0)</span>
 <span class="c1">## [1]    7    7   -4   -5  123 -765    0    2    2</span>
-<span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+<span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## [1]    7.0    7.0   -4.3   -5.2  123.5 -765.4    0.5    1.5    2.5</span>
-<span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">-2</span><span class="p">)</span>
+<span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">)</span>
 <span class="c1">## [1]    0    0    0    0  100 -800    0    0    0</span>
 </pre></div>
 </div>
 </section>
 <section id="natural-exponential-function-and-logarithm">
-<h3><span class="section-number">2.3.3. </span>Natural Exponential Function and Logarithm<a class="headerlink" href="#natural-exponential-function-and-logarithm" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.3.3. </span>Natural Exponential Function and Logarithm<a class="headerlink" href="#natural-exponential-function-and-logarithm" title="Permalink to this heading">¶</a></h3>
 <p>Moreover:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">exp</span></code><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> outputs the natural exponential function, <span class="math notranslate nohighlight">\(e^x\)</span>, where
@@ -934,9 +935,9 @@ the natural logarithm of <span class="math notranslate nohighlight">\(x\)</span>
 </ul>
 <p>Recall that if <span class="math notranslate nohighlight">\(x=e^y\)</span>, then <span class="math notranslate nohighlight">\(\log_e x = y\)</span>, i.e., one is the
 inverse of the other.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2.7183</span><span class="p">,</span> <span class="m">7.3891</span><span class="p">,</span> <span class="m">20.0855</span><span class="p">))</span>  <span class="c1"># grows slowly</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2.7183</span><span class="p">,</span><span class="w"> </span><span class="m">7.3891</span><span class="p">,</span><span class="w"> </span><span class="m">20.0855</span><span class="p">))</span><span class="w">  </span><span class="c1"># grows slowly</span>
 <span class="c1">## [1] -Inf    0    1    2    3</span>
-<span class="nf">exp</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>                     <span class="c1"># grows fast</span>
+<span class="nf">exp</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w">                     </span><span class="c1"># grows fast</span>
 <span class="c1">## [1]  1.0000  2.7183  7.3891 20.0855</span>
 </pre></div>
 </div>
@@ -949,10 +950,10 @@ inverse of the other.</p>
 <li><p><span class="math notranslate nohighlight">\(e^{x+y} = e^x\cdot e^y\)</span>.</p></li>
 </ul>
 <p>For more properties like these,
-take a glance at Chapter 4 of the freely available handbook <span id="id8">[<a class="reference internal" href="999-bibliography.html#id51" title="Olver, F.W.J., et al. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">39</a>]</span>.</p>
+take a glance at Chapter 4 of the freely available handbook <span id="id8">[<a class="reference internal" href="999-bibliography.html#id53" title="Olver, F.W.J., et al. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">40</a>]</span>.</p>
 </div>
 <p>For the logarithm to a different base, say <span class="math notranslate nohighlight">\(\log_{10} x\)</span>, we can call:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">1000</span><span class="p">,</span> <span class="m">1e10</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>  <span class="c1"># or log(..., base=10)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">1e10</span><span class="p">),</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># or log(..., base=10)</span>
 <span class="c1">## [1] -Inf    0    1    2    3   10</span>
 </pre></div>
 </div>
@@ -962,16 +963,16 @@ take a glance at Chapter 4 of the freely available handbook <span id="id8">[<a c
 <p>Commonly, a logarithmic scale is used for variables
 that grow rapidly when expressed as functions of each other;
 see <a class="reference internal" href="#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">1001</span><span class="p">)</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>  <span class="c1"># two plots in one figure (1 row, 2 columns)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>  <span class="c1"># log-scale on the y-axis</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">1001</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># two plots in one figure (1 row, 2 columns)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># log-scale on the y-axis</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id21">
 <span id="fig-ex-log-scale"></span><img alt="../_images/ex-log-scale-1.png" src="../_images/ex-log-scale-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 2.2 </span><span class="caption-text">Linear- vs log-scale on the y-axis</span><a class="headerlink" href="#id21" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Figure 2.2 </span><span class="caption-text">Linear- vs log-scale on the y-axis</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Note that <span class="math notranslate nohighlight">\(e^x\)</span> on the log-scale is just a straight line.
@@ -980,7 +981,7 @@ can only be applied in the case of values strictly greater than 0.</p>
 </div>
 </section>
 <section id="probability-distributions">
-<span id="sec-probability-distributions"></span><h3><span class="section-number">2.3.4. </span>Probability Distributions (*)<a class="headerlink" href="#probability-distributions" title="Permalink to this heading"></a></h3>
+<span id="sec-probability-distributions"></span><h3><span class="section-number">2.3.4. </span>Probability Distributions (*)<a class="headerlink" href="#probability-distributions" title="Permalink to this heading">¶</a></h3>
 <p>It should come as no surprise that R offers an extensive support for
 many univariate probability distribution families, including:</p>
 <ul>
@@ -1049,7 +1050,7 @@ of each of the distribution listed, e.g., a Poisson distribution
 can describe the probability of observing the number of independent
 events in a fixed time interval (e.g., the number of users downloading
 a copy of R from CRAN per hour), and an exponential distribution can model
-the time between such events; compare <span id="id9">[<a class="reference internal" href="999-bibliography.html#id54" title="Forbes, C., Evans, M., Hastings, N., Peacock, B. (2010).  Statistical Distributions. Wiley.">17</a>]</span>.</p>
+the time between such events; compare <span id="id9">[<a class="reference internal" href="999-bibliography.html#id54" title="Forbes, C., Evans, M., Hastings, N., Peacock, B. (2010).  Statistical Distributions. Wiley.">18</a>]</span>.</p>
 </div>
 <div class="proof proof-type-exercise" id="id22">
 
@@ -1061,21 +1062,21 @@ the time between such events; compare <span id="id9">[<a class="reference intern
 which can serve as an estimator of the underlying continuous
 probability density function of a given
 sample; see <a class="reference internal" href="#fig-ex-hist"><span class="std std-numref">Figure 2.3</span></a> for an illustration.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>  <span class="c1"># 2 plots in 1 figure</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># 2 plots in 1 figure</span>
 <span class="c1"># Uniform U(0, 1)</span>
-<span class="nf">hist</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">10000</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">101</span><span class="p">)</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">dunif</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1"># draw the true density function (PDF)</span>
+<span class="nf">hist</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">101</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dunif</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># draw the true density function (PDF)</span>
 <span class="c1"># Normal N(0, 1)</span>
-<span class="nf">hist</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">10000</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">101</span><span class="p">)</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1"># draw the PDF</span>
+<span class="nf">hist</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">101</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># draw the PDF</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id23">
 <span id="fig-ex-hist"></span><img alt="../_images/ex-hist-1.png" src="../_images/ex-hist-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 2.3 </span><span class="caption-text">Example histograms of some pseudorandom samples and the true underlying probability density functions: the uniform distribution on the unit interval (left) and the standard normal distribution (right)</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Figure 2.3 </span><span class="caption-text">Example histograms of some pseudorandom samples and the true underlying probability density functions: the uniform distribution on the unit interval (left) and the standard normal distribution (right)</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Draw a histogram of some random samples of different sizes <code class="docutils literal notranslate"><span class="pre">n</span></code>
@@ -1112,7 +1113,7 @@ and <span class="math notranslate nohighlight">\(p=1/6\)</span> (the probability
 <p>The probabilities that the number of “<code class="docutils literal notranslate"><span class="pre">1</span></code>”s rolled will be equal to
 0, 1, …, 4 , i.e., <span class="math notranslate nohighlight">\(P(C=0)\)</span>, <span class="math notranslate nohighlight">\(P(C=1)\)</span>, …, <span class="math notranslate nohighlight">\(P(C=4)\)</span>, respectively,
 can be computed based on the probability mass function (<strong class="command">dbinom</strong>):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">dbinom</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">4</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>  <span class="c1"># probability mass function at 5 different points</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">dbinom</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span><span class="w">  </span><span class="c1"># probability mass function at 5 different points</span>
 <span class="c1">## [1] 0.112157 0.269176 0.296094 0.197396 0.088828</span>
 </pre></div>
 </div>
@@ -1120,15 +1121,15 @@ can be computed based on the probability mass function (<strong class="command">
 more than three “<code class="docutils literal notranslate"><span class="pre">1</span></code>”s, <span class="math notranslate nohighlight">\(P(C &gt; 3) = 1-P(C\le 3)\)</span>,
 can be determined by means of the cumulative distribution function
 (<strong class="command">pbinom</strong>) or survival function (<code class="docutils literal notranslate"><span class="pre">pbinom(...,</span> <span class="pre">lower.tail=FALSE)</span></code>):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="o">-</span><span class="nf">pbinom</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>  <span class="c1"># pbinom(3, 12, 1/6, lower.tail=FALSE)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="o">-</span><span class="nf">pbinom</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span><span class="w">  </span><span class="c1"># pbinom(3, 12, 1/6, lower.tail=FALSE)</span>
 <span class="c1">## [1] 0.12518</span>
 </pre></div>
 </div>
 <p>The smallest <span class="math notranslate nohighlight">\(c\)</span> such that <span class="math notranslate nohighlight">\(P(C \le c)\ge 0.95\)</span> can be computed
 based on the quantile function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">qbinom</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">qbinom</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>
 <span class="c1">## [1] 2</span>
-<span class="nf">pbinom</span><span class="p">(</span><span class="m">3</span><span class="o">:</span><span class="m">4</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>   <span class="c1"># for comparison - 0.95 is in-between</span>
+<span class="nf">pbinom</span><span class="p">(</span><span class="m">3</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span><span class="w">   </span><span class="c1"># for comparison: 0.95 is in-between</span>
 <span class="c1">## [1] 0.87482 0.96365</span>
 </pre></div>
 </div>
@@ -1136,13 +1137,13 @@ based on the quantile function:</p>
 we will be observing no more than 4 successes.</p>
 <p>Also here are some pseudorandom realisations of <span class="math notranslate nohighlight">\(C\)</span> –
 the number of “<code class="docutils literal notranslate"><span class="pre">1</span></code>”s in 30 simulations of 12 independent dice rolls each:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rbinom</span><span class="p">(</span><span class="m">30</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rbinom</span><span class="p">(</span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>
 <span class="c1">##  [1] 1 3 2 4 4 0 2 4 2 2 4 2 3 2 0 4 1 0 1 4 4 3 2 6 2 3 2 2 1 1</span>
 </pre></div>
 </div>
 </div></div></section>
 <section id="special-functions">
-<h3><span class="section-number">2.3.5. </span>Special Functions (*)<a class="headerlink" href="#special-functions" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.3.5. </span>Special Functions (*)<a class="headerlink" href="#special-functions" title="Permalink to this heading">¶</a></h3>
 <p>Within mathematical formulae and across assorted application areas,
 certain functions appear more frequently than others.
 Hence, for the sake of notational brevity and computational precision,
@@ -1159,20 +1160,20 @@ related to some of the probability distributions listed above:</p>
 A specific, tailored function should be faster and more precise
 than its DIY version; its underlying implementation
 does not have to involve any calls to <strong class="command">gamma</strong> at all.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">beta</span><span class="p">(</span><span class="m">0.25</span><span class="p">,</span> <span class="m">250</span><span class="p">)</span>  <span class="c1"># okay</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">beta</span><span class="p">(</span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">250</span><span class="p">)</span><span class="w">  </span><span class="c1"># okay</span>
 <span class="c1">## [1] 0.91213</span>
-<span class="nf">gamma</span><span class="p">(</span><span class="m">0.25</span><span class="p">)</span><span class="o">*</span><span class="nf">gamma</span><span class="p">(</span><span class="m">250</span><span class="p">)</span><span class="o">/</span><span class="nf">gamma</span><span class="p">(</span><span class="m">250.25</span><span class="p">)</span>  <span class="c1"># not okay</span>
+<span class="nf">gamma</span><span class="p">(</span><span class="m">0.25</span><span class="p">)</span><span class="o">*</span><span class="nf">gamma</span><span class="p">(</span><span class="m">250</span><span class="p">)</span><span class="o">/</span><span class="nf">gamma</span><span class="p">(</span><span class="m">250.25</span><span class="p">)</span><span class="w">  </span><span class="c1"># not okay</span>
 <span class="c1">## [1] NaN</span>
 </pre></div>
 </div>
 <p>The <span class="math notranslate nohighlight">\(\Gamma\)</span> function grows so rapidly that already <code class="docutils literal notranslate"><span class="pre">gamma(172)</span></code>
 yields <code class="docutils literal notranslate"><span class="pre">Inf</span></code>. It is due to the fact that a computer’s arithmetic
 is not infinitely precise; compare <a class="reference internal" href="130-logical.html#sec-fp"><span class="std std-numref">Section 3.2.3</span></a>.</p>
-<p>Special functions are plentiful; see the open-access <span id="id10">[<a class="reference internal" href="999-bibliography.html#id51" title="Olver, F.W.J., et al. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">39</a>]</span>
+<p>Special functions are plentiful; see the open-access <span id="id10">[<a class="reference internal" href="999-bibliography.html#id53" title="Olver, F.W.J., et al. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">40</a>]</span>
 for one of the most definitive references
-(and also <span id="id11">[<a class="reference internal" href="999-bibliography.html#id50" title="Abramowitz, M., Stegun, I.A. (1972).  Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables. Dover. URL: https://people.math.sfu.ca/~cbm/aands/.">2</a>]</span> for its predecessor).
-R package <strong class="program">gsl</strong> <span id="id12">[<a class="reference internal" href="999-bibliography.html#id28" title="Hankin, R.K.S. (2006).  Special functions in R: Introducing the gsl package. R News, 6:24–26. URL: https://cran.r-project.org/web/packages/gsl/vignettes/gslpaper.pdf.">28</a>]</span> provides a vectorised interface
-to the famous GNU GSL <span id="id13">[<a class="reference internal" href="999-bibliography.html#id27" title="Galassi, M., Theiler, J., et al. (2021).  GNU Scientific Library Reference Manual. URL: http://www.gnu.org/software/gsl/.">23</a>]</span> library, which implements
+(and also <span id="id11">[<a class="reference internal" href="999-bibliography.html#id52" title="Abramowitz, M., Stegun, I.A. (1972).  Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables. Dover. URL: http://people.math.sfu.ca/~cbm/aands/.">2</a>]</span> for its predecessor).
+R package <strong class="program">gsl</strong> <span id="id12">[<a class="reference internal" href="999-bibliography.html#id30" title="Hankin, R.K.S. (2006).  Special functions in R: Introducing the gsl package. R News, 6:24–26. URL: https://cran.r-project.org/web/packages/gsl/vignettes/gslpaper.pdf.">29</a>]</span> provides a vectorised interface
+to the famous GNU GSL <span id="id13">[<a class="reference internal" href="999-bibliography.html#id29" title="Galassi, M., Theiler, J., et al. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">24</a>]</span> library, which implements
 many of them.</p>
 <div class="proof proof-type-exercise" id="id25">
 
@@ -1186,8 +1187,8 @@ can be computed via a call to
 (i.e., the <strong class="command">poch</strong> function from the <strong class="program">gsl</strong> package;
 see <a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># call install.packages(&quot;gsl&quot;) first</span>
-<span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span>  <span class="c1"># load the package</span>
-<span class="nf">poch</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">3</span><span class="o">:</span><span class="m">6</span><span class="p">)</span>   <span class="c1"># calls gsl_sf_poch() from GNU GSL</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># load the package</span>
+<span class="nf">poch</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="o">:</span><span class="m">6</span><span class="p">)</span><span class="w">   </span><span class="c1"># calls gsl_sf_poch() from GNU GSL</span>
 <span class="c1">## [1]    1320   17160  240240 3603600</span>
 </pre></div>
 </div>
@@ -1206,9 +1207,9 @@ estimation, which involves the sums of the <em>logarithms</em> of densities.</p>
 </section>
 </section>
 <section id="arithmetic-operations">
-<h2><span class="section-number">2.4. </span>Arithmetic Operations<a class="headerlink" href="#arithmetic-operations" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">2.4. </span>Arithmetic Operations<a class="headerlink" href="#arithmetic-operations" title="Permalink to this heading">¶</a></h2>
 <section id="vectorised-arithmetic-operators">
-<span id="sec-op-arith"></span><h3><span class="section-number">2.4.1. </span>Vectorised Arithmetic Operators<a class="headerlink" href="#vectorised-arithmetic-operators" title="Permalink to this heading"></a></h3>
+<span id="sec-op-arith"></span><h3><span class="section-number">2.4.1. </span>Vectorised Arithmetic Operators<a class="headerlink" href="#vectorised-arithmetic-operators" title="Permalink to this heading">¶</a></h3>
 <p>R features the following arithmetic operators:</p>
 <ul class="simple">
 <li><p>`<strong class="command">+</strong>` (addition)
@@ -1221,7 +1222,7 @@ and `<strong class="command">%%</strong>` (modulo, division remainder),</p></li>
 </ul>
 <p>They are all <em>vectorised</em>: they take two
 vectors on input and yield another vector in result.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span> <span class="o">*</span> <span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">1000</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">)</span>
 <span class="c1">## [1]   10  200 3000</span>
 </pre></div>
 </div>
@@ -1231,41 +1232,41 @@ by the <em>corresponding</em> element in the right vector
 and the result has been stored in the 1st element of the output,
 then the 2nd element in the left… all right, we get the point.</p>
 <p>Other operators are vectorised in the same manner:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0</span><span class="o">:</span><span class="m">10</span> <span class="o">+</span> <span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.1</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span>
 <span class="c1">##  [1]  0.0  1.1  2.2  3.3  4.4  5.5  6.6  7.7  8.8  9.9 11.0</span>
-<span class="m">0</span><span class="o">:</span><span class="m">7</span> <span class="o">/</span> <span class="nf">rep</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">8</span><span class="p">)</span>   <span class="c1"># division by 3</span>
+<span class="m">0</span><span class="o">:</span><span class="m">7</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">8</span><span class="p">)</span><span class="w">   </span><span class="c1"># division by 3</span>
 <span class="c1">## [1] 0.00000 0.33333 0.66667 1.00000 1.33333 1.66667 2.00000 2.33333</span>
-<span class="m">0</span><span class="o">:</span><span class="m">7</span> <span class="o">%/%</span> <span class="nf">rep</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">8</span><span class="p">)</span> <span class="c1"># integer division</span>
+<span class="m">0</span><span class="o">:</span><span class="m">7</span><span class="w"> </span><span class="o">%/%</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">8</span><span class="p">)</span><span class="w"> </span><span class="c1"># integer division</span>
 <span class="c1">## [1] 0 0 0 1 1 1 2 2</span>
-<span class="m">0</span><span class="o">:</span><span class="m">7</span> <span class="o">%%</span> <span class="nf">rep</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">8</span><span class="p">)</span>  <span class="c1"># division remainder</span>
+<span class="m">0</span><span class="o">:</span><span class="m">7</span><span class="w"> </span><span class="o">%%</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">8</span><span class="p">)</span><span class="w">  </span><span class="c1"># division remainder</span>
 <span class="c1">## [1] 0 1 2 0 1 2 0 1</span>
 </pre></div>
 </div>
 <p>Note that operations involving missing values also yield <code class="docutils literal notranslate"><span class="pre">NA</span></code>s:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">)</span> <span class="o">+</span> <span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">)</span>
 <span class="c1">## [1] NA NA  6 NA</span>
 </pre></div>
 </div>
 </section>
 <section id="recycling-rule">
-<h3><span class="section-number">2.4.2. </span>Recycling Rule<a class="headerlink" href="#recycling-rule" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.4.2. </span>Recycling Rule<a class="headerlink" href="#recycling-rule" title="Permalink to this heading">¶</a></h3>
 <p>Some of the above statements can be written more concisely.
 When the operands are of different lengths, the shorter one
 is <em>recycled</em> (think:
 <strong class="command">rep</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">length.out=</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>)
 as many times as necessary.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0</span><span class="o">:</span><span class="m">7</span> <span class="o">/</span> <span class="m">3</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0</span><span class="o">:</span><span class="m">7</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">3</span>
 <span class="c1">## [1] 0.00000 0.33333 0.66667 1.00000 1.33333 1.66667 2.00000 2.33333</span>
-<span class="m">1</span><span class="o">:</span><span class="m">10</span> <span class="o">*</span> <span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+<span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">##  [1] -1  2 -3  4 -5  6 -7  8 -9 10</span>
-<span class="m">2</span> <span class="o">^</span> <span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="p">)</span>
+<span class="m">2</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="p">)</span>
 <span class="c1">##  [1]    1    2    4    8   16   32   64  128  256  512 1024</span>
 </pre></div>
 </div>
 <p>We call this the <em>recycling rule</em>.</p>
 <p>If an operand cannot be recycled in its entirety, a warning<a class="footnote-reference brackets" href="#footwarnrec" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>
 is generated, but the output is still available.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">100</span><span class="p">)</span> <span class="o">*</span> <span class="m">1</span><span class="o">:</span><span class="m">8</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">8</span>
 <span class="c1">## Warning in c(1, 10, 100) * 1:8: longer object length is not a multiple of</span>
 <span class="c1">## shorter object length</span>
 <span class="c1">## [1]   1  20 300   4  50 600   7  80</span>
@@ -1275,7 +1276,7 @@ is generated, but the output is still available.</p>
 <p class="admonition-title">Note</p>
 <p>Some functions are also deeply vectorised, i.e., with respect to multiple
 arguments. For example,</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">runif</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">11</span><span class="p">,</span> <span class="m">22</span><span class="p">,</span> <span class="m">33</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">runif</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">22</span><span class="p">,</span><span class="w"> </span><span class="m">33</span><span class="p">))</span>
 <span class="c1">## [1] 10.288 21.577 31.227</span>
 </pre></div>
 </div>
@@ -1283,11 +1284,11 @@ arguments. For example,</p>
 over the intervals <span class="math notranslate nohighlight">\((10, 11)\)</span>, <span class="math notranslate nohighlight">\((20, 22)\)</span>, and <span class="math notranslate nohighlight">\((30, 33)\)</span>, respectively.</p>
 <p>Also, <strong class="command">pmin</strong> and <strong class="command">pmax</strong> return the <em>parallel</em> minimum
 and maximum of the corresponding elements of the input vectors:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">pmin</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">pmin</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1] 1 2 3 1</span>
-<span class="nf">pmin</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span>
+<span class="nf">pmin</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span>
 <span class="c1">## [1] 1 2 3 3 3</span>
-<span class="nf">pmax</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="nf">pmin</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.25</span><span class="p">,</span> <span class="m">-2</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">-0.5</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1.3</span><span class="p">,</span> <span class="m">0.99</span><span class="p">)))</span>  <span class="c1"># clipping to [0, 1]</span>
+<span class="nf">pmax</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">pmin</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">-0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.99</span><span class="p">)))</span><span class="w">  </span><span class="c1"># clipping to [0, 1]</span>
 <span class="c1">## [1] 0.25 0.00 1.00 0.00 0.00 1.00 0.99</span>
 </pre></div>
 </div>
@@ -1306,7 +1307,7 @@ use cases in matrix/tensor processing.</p>
 </div>
 </section>
 <section id="operator-precedence">
-<span id="sec-precedence-numeric"></span><h3><span class="section-number">2.4.3. </span>Operator Precedence<a class="headerlink" href="#operator-precedence" title="Permalink to this heading"></a></h3>
+<span id="sec-precedence-numeric"></span><h3><span class="section-number">2.4.3. </span>Operator Precedence<a class="headerlink" href="#operator-precedence" title="Permalink to this heading">¶</a></h3>
 <p>Apart from the seven binary arithmetic operators,
 other noteworthy, already mentioned  ones include:
 the unary `<strong class="command">-</strong>` (change of sign),
@@ -1351,7 +1352,7 @@ bracket a subexpression to make sure it is executed
 in the intended order (which can also increase readability of the code).</p>
 </section>
 <section id="accumulating">
-<h3><span class="section-number">2.4.4. </span>Accumulating<a class="headerlink" href="#accumulating" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">2.4.4. </span>Accumulating<a class="headerlink" href="#accumulating" title="Permalink to this heading">¶</a></h3>
 <p>The `<strong class="command">+</strong>` and `<strong class="command">*</strong>` operators
 as well as the <strong class="command">pmin</strong> and <strong class="command">pmax</strong> functions
 implement elementwise operations that are applied on the corresponding
@@ -1426,9 +1427,9 @@ x_1+x_2+x_3+\dots+x_n
 <span class="c1">## [1]  1  3  6 10 15 21 28 36</span>
 <span class="nf">cumprod</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">8</span><span class="p">)</span>
 <span class="c1">## [1]     1     2     6    24   120   720  5040 40320</span>
-<span class="nf">cummin</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+<span class="nf">cummin</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span>
 <span class="c1">## [1] 3 2 2 2 1 1 0</span>
-<span class="nf">cummax</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+<span class="nf">cummax</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span>
 <span class="c1">## [1] 3 3 4 5 5 6 6</span>
 </pre></div>
 </div>
@@ -1448,9 +1449,9 @@ functions at our disposal:</p>
 <span class="c1">## [1] 36</span>
 <span class="nf">prod</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">8</span><span class="p">)</span>
 <span class="c1">## [1] 40320</span>
-<span class="nf">min</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+<span class="nf">min</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span>
 <span class="c1">## [1] 0</span>
-<span class="nf">max</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+<span class="nf">max</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span>
 <span class="c1">## [1] 6</span>
 </pre></div>
 </div>
@@ -1470,33 +1471,33 @@ to be propagated over a given vector.</p>
 the iterative difference. Namely, it subtracts the first two elements,
 then the 2nd from the 3rd one, the 3rd from the 4th, and so on.
 In other words, <strong class="command">diff</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> gives <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> such that <span class="math notranslate nohighlight">\(y_i=x_{i+1}-x_i\)</span>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">15</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">)</span>
 <span class="nf">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1]  5  3 -4 13</span>
 <span class="nf">cumsum</span><span class="p">(</span><span class="nf">diff</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="c1">## [1]  5  8  4 17</span>
-<span class="nf">cumsum</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span> <span class="nf">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>  <span class="c1"># recreates x</span>
+<span class="nf">cumsum</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="nf">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span><span class="w">  </span><span class="c1"># recreates x</span>
 <span class="c1">## [1] -2  3  6  2 15</span>
 </pre></div>
 </div>
 <p>Thanks to <strong class="command">diff</strong>, we can compute the daily changes
 to the EUR/AUD forex rates; see <a class="reference internal" href="#fig-euraud-diff"><span class="std std-numref">Figure 2.4</span></a>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">aud</span> <span class="o">&lt;-</span> <span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
-    <span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span> <span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
-<span class="n">aud_all</span> <span class="o">&lt;-</span> <span class="nf">na.omit</span><span class="p">(</span><span class="n">aud</span><span class="p">)</span>  <span class="c1"># remove all missing values</span>
-<span class="nf">plot</span><span class="p">(</span><span class="nf">diff</span><span class="p">(</span><span class="n">aud_all</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Daily change [EUR/AUD]&quot;</span><span class="p">)</span>
-<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="s">&quot;dotted&quot;</span><span class="p">)</span>  <span class="c1"># draw a horizontal line at y=0</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">aud</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
+<span class="n">aud_all</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">na.omit</span><span class="p">(</span><span class="n">aud</span><span class="p">)</span><span class="w">  </span><span class="c1"># remove all missing values</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">diff</span><span class="p">(</span><span class="n">aud_all</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Daily change [EUR/AUD]&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dotted&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># draw a horizontal line at y=0</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id27">
 <span id="fig-euraud-diff"></span><img alt="../_images/euraud-diff-1.png" src="../_images/euraud-diff-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 2.4 </span><span class="caption-text">Iterative differences of the exchange rates (non-missing values only)</span><a class="headerlink" href="#id27" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Figure 2.4 </span><span class="caption-text">Iterative differences of the exchange rates (non-missing values only)</span><a class="headerlink" href="#id27" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div></div></section>
 <section id="aggregating">
-<span id="sec-numeric-aggregation"></span><h3><span class="section-number">2.4.5. </span>Aggregating<a class="headerlink" href="#aggregating" title="Permalink to this heading"></a></h3>
+<span id="sec-numeric-aggregation"></span><h3><span class="section-number">2.4.5. </span>Aggregating<a class="headerlink" href="#aggregating" title="Permalink to this heading">¶</a></h3>
 <p>The above functions form the basis for some popular summary
 statistics<a class="footnote-reference brackets" href="#footstats" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> (sample aggregates), such as:</p>
 <ul class="simple">
@@ -1510,8 +1511,8 @@ statistics<a class="footnote-reference brackets" href="#footstats" id="id15" rol
 i.e., the middle value in the sorted version of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
 </ul>
 <p>For instance<a class="footnote-reference brackets" href="#footquantile" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span>
-<span class="nf">c</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">median</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">sd</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nf">median</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nf">sd</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="c1">## [1] 0.00046535 0.49727780 0.48995025 0.99940453 0.28748391</span>
 </pre></div>
 </div>
@@ -1548,11 +1549,11 @@ like “<code class="docutils literal notranslate"><span class="pre">x</span> <s
 of the input elements is unavailable.
 Luckily, they are equipped with the <code class="docutils literal notranslate"><span class="pre">na.rm</span></code> parameter
 on behalf of which we can request the removal of <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">aud</span> <span class="o">&lt;-</span> <span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
-    <span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span> <span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
-<span class="nf">c</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">aud</span><span class="p">),</span> <span class="nf">mean</span><span class="p">(</span><span class="n">aud</span><span class="p">),</span> <span class="nf">max</span><span class="p">(</span><span class="n">aud</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">aud</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">aud</span><span class="p">),</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">aud</span><span class="p">),</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">aud</span><span class="p">))</span>
 <span class="c1">## [1] NA NA NA</span>
-<span class="nf">c</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">aud</span><span class="p">,</span> <span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> <span class="nf">mean</span><span class="p">(</span><span class="n">aud</span><span class="p">,</span> <span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> <span class="nf">max</span><span class="p">(</span><span class="n">aud</span><span class="p">,</span> <span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="nf">c</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">aud</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">aud</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">aud</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 <span class="c1">## [1] 1.6006 1.6775 1.8635</span>
 </pre></div>
 </div>
@@ -1582,7 +1583,7 @@ it is <strong class="command">mean</strong> that is based on <strong class="comm
 </section>
 </section>
 <section id="exercises">
-<h2><span class="section-number">2.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">2.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
 <div class="proof proof-type-exercise" id="id29">
 
     <div class="proof-title">
@@ -1592,7 +1593,9 @@ it is <strong class="command">mean</strong> that is based on <strong class="comm
 <p>Answer the following questions:</p>
 <ul class="simple">
 <li><p>What is the meaning of the dot-dot-dot parameter in the definition of the <strong class="command">c</strong> function?</p></li>
-<li><p>We say that the <strong class="command">round</strong> function is <em>vectorised</em>: what does that mean?</p></li>
+<li><p>We say that the <strong class="command">round</strong> function is <em>vectorised</em>; what does that mean?</p></li>
+<li><p>What is wrong with a call to
+<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">sqrt</strong><code class="code docutils literal notranslate"><span class="pre">(1),</span> </code><strong class="command">sqrt</strong><code class="code docutils literal notranslate"><span class="pre">(2),</span> </code><strong class="command">sqrt</strong><code class="code docutils literal notranslate"><span class="pre">(3))</span></code>?</p></li>
 <li><p>What do we mean by saying that multiplication operates element-by-element?</p></li>
 <li><p>How does the recycling rule work when applying `<strong class="command">+</strong>`?</p></li>
 <li><p>How to (and why) set the seed of the pseudorandom number generator?</p></li>
@@ -1605,7 +1608,7 @@ equivalent to <strong class="command">rep</strong><code class="code docutils lit
 (-1, -0.75, -0.5, …, 0.75, 1).</p></li>
 <li><p>Is “<code class="docutils literal notranslate"><span class="pre">-3:5</span></code>” the same as <code class="docutils literal notranslate"><span class="pre">&quot;-(3:5)&quot;</span></code>? What about the
 precedence of operators in expressions such as “<code class="docutils literal notranslate"><span class="pre">2^3/4*5^6</span></code>”,
-“<code class="docutils literal notranslate"><span class="pre">5*6+4/17%%8</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">1+-2^3:4</span></code>”?</p></li>
+“<code class="docutils literal notranslate"><span class="pre">5*6+4/17%%8</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">1+-2^3:4-1</span></code>”?</p></li>
 <li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is a numeric vector of length <span class="math notranslate nohighlight">\(n\)</span> (for some <span class="math notranslate nohighlight">\(n\ge 0\)</span>),
 how many values will <strong class="command">sample</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> output?</p></li>
 <li><p>Does <strong class="command">scan</strong> support reading directly from compressed archives,
@@ -1622,14 +1625,14 @@ and/or the R manual.</p>
 <p>The following code generates an example graph of
 arcsine and arccosine, whose preparation – thanks to vectorisation –
 is quite straightforward.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">11</span><span class="p">)</span>  <span class="c1"># increase length.out for a smoother curve</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">asin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>                <span class="c1"># asin() computed for 11 points</span>
-    <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span>                   <span class="c1"># lines</span>
-    <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">pi</span><span class="o">/</span><span class="m">2</span><span class="p">,</span> <span class="kc">pi</span><span class="p">),</span>          <span class="c1"># y axis limits like c(y_min, y_max)</span>
-    <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;asin(x), acos(x)&quot;</span><span class="p">)</span>    <span class="c1"># y axis label</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">acos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">)</span>  <span class="c1"># adds to the current plot</span>
-<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;asin(x)&quot;</span><span class="p">,</span> <span class="s">&quot;acos(x)&quot;</span><span class="p">),</span>
-    <span class="n">lty</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;solid&quot;</span><span class="p">,</span> <span class="s">&quot;dashed&quot;</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span> <span class="s">&quot;red&quot;</span><span class="p">),</span> <span class="n">bg</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">11</span><span class="p">)</span><span class="w">  </span><span class="c1"># increase length.out for a smoother curve</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">asin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w">                </span><span class="c1"># asin() computed for 11 points</span>
+<span class="w">    </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span><span class="w">                   </span><span class="c1"># lines</span>
+<span class="w">    </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">pi</span><span class="o">/</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="p">),</span><span class="w">          </span><span class="c1"># y axis limits like c(y_min, y_max)</span>
+<span class="w">    </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;asin(x), acos(x)&quot;</span><span class="p">)</span><span class="w">    </span><span class="c1"># y axis label</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">acos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># adds to the current plot</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;asin(x)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;acos(x)&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;solid&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dashed&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Inspired by the above, plot the following functions:
@@ -1663,8 +1666,8 @@ as much as possible.</p>
     </div><div class="proof-content">
 <p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> be two vectors of identical lengths <span class="math notranslate nohighlight">\(n\)</span>,
 say:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="o">*</span><span class="n">x</span><span class="m">+10</span><span class="o">+</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="o">*</span><span class="n">x</span><span class="m">+10</span><span class="o">+</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Compute the Pearson linear correlation coefficient given by:</p>
@@ -1777,7 +1780,7 @@ This is because it returns a named vector.</p>
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-18T09:57:43+1100.
+        Last updated on 2023-02-09T13:06:20+1100.
       </span>
 
 

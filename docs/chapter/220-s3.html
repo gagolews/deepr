@@ -72,6 +72,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/proof.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -280,7 +281,7 @@
            <div itemprop="articleBody">
             
   <section class="tex2jax_ignore mathjax_ignore" id="s3-classes">
-<span id="chap-s3"></span><h1><span class="section-number">10. </span>S3 Classes<a class="headerlink" href="#s3-classes" title="Permalink to this heading"></a></h1>
+<span id="chap-s3"></span><h1><span class="section-number">10. </span>S3 Classes<a class="headerlink" href="#s3-classes" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -295,7 +296,7 @@ are appreciated.</strong>
 <em>Although available online, it is a whole course;
 it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
-<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
 </div></blockquote>
 <p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> be a randomly generated matrix with 1,000,000 rows and 1,000 columns,
 <code class="docutils literal notranslate"><span class="pre">y</span></code> be a data frame with results from the latest survey
@@ -315,7 +316,7 @@ which objects are hidden behind <code class="docutils literal notranslate"><span
 being able to simply call “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>”
 without having to recall that, yes, <code class="docutils literal notranslate"><span class="pre">y</span></code> is a data frame,
 might seem quite appealing.</p>
-<p>This chapter introduces the so-called S3 classes <span id="id2">[<a class="reference internal" href="999-bibliography.html#id47" title="Chambers, J.M., Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">8</a>]</span>,
+<p>This chapter introduces the so-called S3 classes <span id="id2">[<a class="reference internal" href="999-bibliography.html#id49" title="Chambers, J.M., Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">9</a>]</span>,
 which provide a lightweight object oriented programming (OOP) approach
 for automated dispatching of calls to <em>generics</em>
 of the type “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>” to concrete <em>methods</em>
@@ -334,7 +335,7 @@ that factors, matrices, and data frames discussed in the next chapters
 are quite straightforward, S3-based extensions of the concepts we have
 introduced so far.</p>
 <section id="object-type-vs-class">
-<h2><span class="section-number">10.1. </span>Object Type vs Class<a class="headerlink" href="#object-type-vs-class" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">10.1. </span>Object Type vs Class<a class="headerlink" href="#object-type-vs-class" title="Permalink to this heading">¶</a></h2>
 <p>Recall that <strong class="command">typeof</strong> (introduced in <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a>)
 returns the <em>internal</em> type of any R object. Even though there are only
 few admissible cases thereof<a class="footnote-reference brackets" href="#footsexptype" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, they open the world
@@ -345,15 +346,15 @@ complex data structures. This is thanks to the fact that they can be equipped
 with arbitrary attributes (<a class="reference internal" href="140-list.html#sec-attribute"><span class="std std-numref">Section 4.4</span></a>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
 <span class="c1">## [1] &quot;NULL&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span>
 <span class="c1">## [1] &quot;logical&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">))</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">))</span>
 <span class="c1">## [1] &quot;double&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">))</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span><span class="p">))</span>
 <span class="c1">## [1] &quot;character&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="kc">LETTERS</span><span class="p">))</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="kc">LETTERS</span><span class="p">))</span>
 <span class="c1">## [1] &quot;list&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="p">)</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;closure&quot;</span>
 </pre></div>
 </div>
@@ -377,13 +378,13 @@ behave differently in certain scenarios.</p>
     </div><div class="proof-content">
 <p>Let us consider two identical objects equipped with different
 <code class="docutils literal notranslate"><span class="pre">class</span></code> attributes.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xt</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="m">123</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;POSIXct&quot;</span><span class="p">)</span>  <span class="c1"># POSIX calendar time</span>
-<span class="n">xd</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="m">123</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;Date&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="m">123</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;POSIXct&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># POSIX calendar time</span>
+<span class="n">xd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="m">123</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;Date&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Despite that both objects are being <em>represented</em>
 using numeric vectors:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">typeof</span><span class="p">(</span><span class="n">xt</span><span class="p">),</span> <span class="nf">typeof</span><span class="p">(</span><span class="n">xd</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">typeof</span><span class="p">(</span><span class="n">xt</span><span class="p">),</span><span class="w"> </span><span class="nf">typeof</span><span class="p">(</span><span class="n">xd</span><span class="p">))</span>
 <span class="c1">## [1] &quot;double&quot; &quot;double&quot;</span>
 </pre></div>
 </div>
@@ -404,12 +405,12 @@ some underlying mechanism that actually calls a <em>version</em> of
 <p>That this only depends on the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute,
 which might be set, unset, or reset quite freely,
 is emphasised below:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="s">&quot;Date&quot;</span>  <span class="c1"># change class from POSIXct to Date</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>  <span class="c1"># same 123, but now interpreted as Date</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;class&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Date&quot;</span><span class="w">  </span><span class="c1"># change class from POSIXct to Date</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span><span class="w">  </span><span class="c1"># same 123, but now interpreted as Date</span>
 <span class="c1">## [1] &quot;1970-05-04&quot;</span>
-<span class="nf">as.numeric</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>  <span class="c1"># drops all attributes</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span><span class="w">  </span><span class="c1"># drops all attributes</span>
 <span class="c1">## [1] 123</span>
-<span class="nf">unclass</span><span class="p">(</span><span class="n">xd</span><span class="p">)</span>  <span class="c1"># drops the class attribute; `attr&lt;-`(xd, &quot;class&quot;, NULL)</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">xd</span><span class="p">)</span><span class="w">  </span><span class="c1"># drops the class attribute; `attr&lt;-`(xd, &quot;class&quot;, NULL)</span>
 <span class="c1">## [1] 123</span>
 </pre></div>
 </div>
@@ -422,7 +423,7 @@ to joy.</p>
         
     </div><div class="proof-content">
 <p>Consider an example data frame:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="n">iris</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>  <span class="c1"># a subset of a built-in example data frame</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1"># a subset of a built-in example data frame</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">##   Sepal.Length Sepal.Width</span>
 <span class="c1">## 1          5.1         3.5</span>
@@ -432,7 +433,7 @@ to joy.</p>
 </div>
 <p>This is an object of the following class
 (an object whose <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute is set to):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;class&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;data.frame&quot;</span>
 </pre></div>
 </div>
@@ -445,7 +446,7 @@ a list (<a class="reference internal" href="140-list.html#chap-list"><span class
 lengths equipped with <code class="docutils literal notranslate"><span class="pre">names</span></code> and <code class="docutils literal notranslate"><span class="pre">row.names</span></code> attributes.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;list&quot;</span>
-<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>  <span class="c1"># or x &lt;- unclass(x)</span>
+<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;class&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">  </span><span class="c1"># or x &lt;- unclass(x)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## $Sepal.Length</span>
 <span class="c1">## [1] 5.1 4.9 4.7</span>
@@ -472,16 +473,16 @@ However, as we said in <a class="reference internal" href="140-list.html#sec-spe
 certain attributes are special, and <code class="docutils literal notranslate"><span class="pre">class</span></code> is one of them.</p>
 <p>In particular, we can set <code class="docutils literal notranslate"><span class="pre">class</span></code> to be only a character vector
 (possibly of length greater than one; see <a class="reference internal" href="#sec-multi-class"><span class="std std-numref">Section 10.2.5</span></a>).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">12345</span>
-<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;class&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="m">1</span>  <span class="c1"># character vectors only</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">12345</span>
+<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;class&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># character vectors only</span>
 <span class="c1">## Error in attr(x, &quot;class&quot;) &lt;- 1: attempt to set invalid &#39;class&#39; attribute</span>
 </pre></div>
 </div>
 <p>Furthermore, there exists the <strong class="command">class</strong> function
 that can read the value of the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute.
 Its replacement version is also available.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="s">&quot;Date&quot;</span>  <span class="c1"># set; the same as attr(x, &quot;class&quot;) &lt;- &quot;Date&quot;</span>
-<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># get; the same as attr(x, &quot;class&quot;)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Date&quot;</span><span class="w">  </span><span class="c1"># set; the same as attr(x, &quot;class&quot;) &lt;- &quot;Date&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># get; the same as attr(x, &quot;class&quot;)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
 </div>
@@ -491,47 +492,47 @@ Its replacement version is also available.</p>
 if the corresponding attribute is not set. We call it an <em>implicit</em>
 class. Compare between the following and the outputs generated
 by <strong class="command">typeof</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>  <span class="c1"># no `class` set, because NULL cannot have attributes at all</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span><span class="w">  </span><span class="c1"># no `class` set, because NULL cannot have attributes at all</span>
 <span class="c1">## [1] &quot;NULL&quot;</span>
-<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>  <span class="c1"># no attributes, so class is implicit (= typeof)</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w">  </span><span class="c1"># no attributes, so class is implicit (= typeof)</span>
 <span class="c1">## [1] &quot;logical&quot;</span>
-<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">))</span>  <span class="c1"># typeof yields &quot;double&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">))</span><span class="w">  </span><span class="c1"># typeof yields &quot;double&quot;</span>
 <span class="c1">## [1] &quot;numeric&quot;</span>
-<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">))</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span><span class="p">))</span>
 <span class="c1">## [1] &quot;character&quot;</span>
-<span class="nf">class</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="kc">LETTERS</span><span class="p">))</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="kc">LETTERS</span><span class="p">))</span>
 <span class="c1">## [1] &quot;list&quot;</span>
-<span class="nf">class</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># typeof yields &quot;closure&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># typeof yields &quot;closure&quot;</span>
 <span class="c1">## [1] &quot;function&quot;</span>
 </pre></div>
 </div>
 <p>Also, in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>, we will note that any object
 equipped with the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute also has an implicit class:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span>
 <span class="c1">##      [,1]</span>
 <span class="c1">## [1,]    1</span>
 <span class="c1">## [2,]    2</span>
 <span class="c1">## [3,]    3</span>
-<span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># `class` is not amongst the attributes</span>
+<span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># `class` is not amongst the attributes</span>
 <span class="c1">## $dim</span>
 <span class="c1">## [1] 3 1</span>
-<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># implicit class</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># implicit class</span>
 <span class="c1">## [1] &quot;matrix&quot; &quot;array&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># it is still a numeric vector (under the hood)</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># it is still a numeric vector (under the hood)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="generics-and-method-dispatching">
-<span id="sec-s3-generic"></span><h2><span class="section-number">10.2. </span>Generics and Method Dispatching<a class="headerlink" href="#generics-and-method-dispatching" title="Permalink to this heading"></a></h2>
+<span id="sec-s3-generic"></span><h2><span class="section-number">10.2. </span>Generics and Method Dispatching<a class="headerlink" href="#generics-and-method-dispatching" title="Permalink to this heading">¶</a></h2>
 <section id="generics-default-and-custom-methods">
-<h3><span class="section-number">10.2.1. </span>Generics, Default, and Custom Methods<a class="headerlink" href="#generics-default-and-custom-methods" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.2.1. </span>Generics, Default, and Custom Methods<a class="headerlink" href="#generics-default-and-custom-methods" title="Permalink to this heading">¶</a></h3>
 <p>Let us inspect the source code of the <strong class="command">print</strong> function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">print</span><span class="p">)</span>  <span class="c1"># sic!</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">print</span><span class="p">)</span><span class="w">  </span><span class="c1"># sic!</span>
 <span class="c1">## function (x, ...) </span>
 <span class="c1">## UseMethod(&quot;print&quot;)</span>
-<span class="c1">## &lt;bytecode: 0x55ecc88904e0&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55650743bf50&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
@@ -545,10 +546,10 @@ referred to as <em>method</em>, based on the class of the first argument.</p>
 <code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">CtGrCl</span></code>, or <code class="docutils literal notranslate"><span class="pre">SpanishInquisition</span></code> as well), which
 will be our own version of the famous built-in <code class="docutils literal notranslate"><span class="pre">factor</span></code> type that we discuss
 later.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span>
-    <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span>
-    <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span>
-    <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span>
+<span class="w">    </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -572,7 +573,7 @@ the <em>default</em> (fallback) method will be called:</p>
 <p>This is the standard function for displaying numeric vectors
 that we are all well familiar with. Its name is <strong class="command">print.default</strong>,
 and we can always call it directly:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print.default</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># the default print method</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print.default</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># the default print method</span>
 <span class="c1">## [1] 1 3 2 1 1 1 3</span>
 <span class="c1">## attr(,&quot;levels&quot;)</span>
 <span class="c1">## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</span>
@@ -583,13 +584,13 @@ and we can always call it directly:</p>
 <p>We can, however, introduce our own method for the custom printing
 of objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>, whose name
 must precisely be <strong class="command">print.categorical</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">print.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">print.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">x_character</span> <span class="o">&lt;-</span> <span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)[</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
-    <span class="nf">print</span><span class="p">(</span><span class="n">x_character</span><span class="p">)</span>  <span class="c1"># calls `print.default`</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Categories: %s\n&quot;</span><span class="p">,</span>
-        <span class="nf">paste</span><span class="p">(</span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">),</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)))</span>
-    <span class="nf">invisible</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># this is what all print methods do; see help(&quot;print&quot;)</span>
+<span class="w">    </span><span class="n">x_character</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)[</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="n">x_character</span><span class="p">)</span><span class="w">  </span><span class="c1"># calls `print.default`</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Categories: %s\n&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nf">paste</span><span class="p">(</span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)))</span>
+<span class="w">    </span><span class="nf">invisible</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># this is what all print methods do; see help(&quot;print&quot;)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -611,34 +612,34 @@ ensure consistency ourselves<a class="footnote-reference brackets" href="#foots3
 </div>
 </section>
 <section id="creating-own-generics">
-<h3><span class="section-number">10.2.2. </span>Creating Own Generics<a class="headerlink" href="#creating-own-generics" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.2.2. </span>Creating Own Generics<a class="headerlink" href="#creating-own-generics" title="Permalink to this heading">¶</a></h3>
 <p>Introducing new S3 generics is as straightforward
 as defining a function that calls <strong class="command">UseMethod</strong>.</p>
 <p>For instance, here is a dispatcher which allows for
 creating new objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code> based on
 other objects:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
-    <span class="nf">UseMethod</span><span class="p">(</span><span class="s">&quot;as.categorical&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">UseMethod</span><span class="p">(</span><span class="s">&quot;as.categorical&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We always need to define the default method:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.default</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.default</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">xu</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># drops NAs</span>
-    <span class="nf">structure</span><span class="p">(</span>
-        <span class="nf">match</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xu</span><span class="p">),</span>
-        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
-        <span class="n">levels</span><span class="o">=</span><span class="n">xu</span>
-    <span class="p">)</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="n">xu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">unique</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># drops NAs</span>
+<span class="w">    </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">match</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">xu</span><span class="p">),</span>
+<span class="w">        </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">levels</span><span class="o">=</span><span class="n">xu</span>
+<span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Testing:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;a&quot; &quot;c&quot; &quot;a&quot; &quot;a&quot; &quot;d&quot; &quot;c&quot;</span>
 <span class="c1">## Categories: a, c, d</span>
-<span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>
+<span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
 <span class="c1">## [1] &quot;3&quot; &quot;6&quot; &quot;4&quot; NA  &quot;9&quot; &quot;9&quot; &quot;6&quot; NA  &quot;3&quot;</span>
 <span class="c1">## Categories: 3, 4, 6, 9</span>
 </pre></div>
@@ -657,8 +658,8 @@ some particular ones.</p>
     </div><div class="proof-content">
 <p>For instance, we might want to forbid the conversion from lists,
 because this does not necessarily make sense:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.list</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
-    <span class="nf">stop</span><span class="p">(</span><span class="s">&quot;conversion of lists to categorical is not supported&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.list</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">stop</span><span class="p">(</span><span class="s">&quot;conversion of lists to categorical is not supported&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The users can always be instructed in the method’s documentation
@@ -674,7 +675,7 @@ time will tell.</p>
     </div><div class="proof-content">
 <p>Note that the default method deals with logical vectors
 perfectly fine:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>  <span class="c1"># as.categorical.default</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span><span class="w">  </span><span class="c1"># as.categorical.default</span>
 <span class="c1">## [1] &quot;TRUE&quot;  &quot;FALSE&quot; NA      NA      &quot;FALSE&quot;</span>
 <span class="c1">## Categories: FALSE, TRUE</span>
 </pre></div>
@@ -684,19 +685,19 @@ because we know a slightly more efficient algorithm
 (and we have nothing better to do)
 based on the fact that <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> and <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> converted to
 numeric yield 0 and 1, respectively:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.logical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical.logical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.logical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># or stopifnot(is.logical(x)) ?</span>
-    <span class="nf">structure</span><span class="p">(</span>
-        <span class="n">x</span> <span class="o">+</span> <span class="m">1</span><span class="p">,</span>  <span class="c1"># only 1, 2, and NAs will be generated</span>
-        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
-        <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;FALSE&quot;</span><span class="p">,</span> <span class="s">&quot;TRUE&quot;</span><span class="p">)</span>
-    <span class="p">)</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.logical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># or stopifnot(is.logical(x)) ?</span>
+<span class="w">    </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">  </span><span class="c1"># only 1, 2, and NAs will be generated</span>
+<span class="w">        </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;FALSE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TRUE&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This yields the same result, but is a bit faster:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>  <span class="c1"># as.categorical.logical</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span><span class="w">  </span><span class="c1"># as.categorical.logical</span>
 <span class="c1">## [1] &quot;TRUE&quot;  &quot;FALSE&quot; NA      NA      &quot;FALSE&quot;</span>
 <span class="c1">## Categories: FALSE, TRUE</span>
 </pre></div>
@@ -709,7 +710,7 @@ In other words, there is no guarantee that the argument <code class="docutils li
 type logical.</p>
 </div></div></section>
 <section id="built-in-generics">
-<span id="sec-built-in-generics"></span><h3><span class="section-number">10.2.3. </span>Built-in Generics<a class="headerlink" href="#built-in-generics" title="Permalink to this heading"></a></h3>
+<span id="sec-built-in-generics"></span><h3><span class="section-number">10.2.3. </span>Built-in Generics<a class="headerlink" href="#built-in-generics" title="Permalink to this heading">¶</a></h3>
 <p>Many functions and operators we have introduced so far are in fact
 S3 generics:
 <strong class="command">print</strong>,
@@ -747,8 +748,8 @@ of our custom type:</p>
 </pre></div>
 </div>
 <p>So:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.character.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
-    <span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)[</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.character.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)[</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
 </pre></div>
 </div>
 <p>And now:</p>
@@ -780,23 +781,23 @@ of our custom type:</p>
 For instance, if we forget to consider overloading the to-numeric
 converter, we might end up with some users being puzzled<a class="footnote-reference brackets" href="#footpuzzle" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>
 when they see:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">42</span><span class="p">,</span> <span class="m">666</span><span class="p">,</span> <span class="m">4</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">666</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)))</span>
 <span class="c1">## [1] &quot;4&quot;   &quot;9&quot;   &quot;100&quot; &quot;9&quot;   &quot;9&quot;   &quot;100&quot; &quot;42&quot;  &quot;666&quot; &quot;4&quot;  </span>
 <span class="c1">## Categories: 100, 4, 42, 666, 9</span>
-<span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># as.double.default(x)</span>
+<span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># as.double.default(x)</span>
 <span class="c1">## [1] 2 5 1 5 5 1 3 4 2</span>
 </pre></div>
 </div>
 <p>Hence, we might want to introduce:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.double.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.double.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="c1"># as.double.default(as.character.categorical(x))</span>
-    <span class="nf">as.double</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="w">    </span><span class="c1"># as.double.default(as.character.categorical(x))</span>
+<span class="w">    </span><span class="nf">as.double</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Which now yields:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># as.double.categorical(x)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># as.double.categorical(x)</span>
 <span class="c1">## [1]   4   9 100   9   9 100  42 666   4</span>
 </pre></div>
 </div>
@@ -843,7 +844,7 @@ that would make the above code (when re-run without any alterations)
 generate a more natural result.</p>
 </div></div></section>
 <section id="dispatching-only-on-one-argument-and-calling-s3-methods-directly">
-<span id="sec-s3-direct-method-call"></span><h3><span class="section-number">10.2.4. </span>Dispatching Only on One Argument and Calling S3 Methods Directly<a class="headerlink" href="#dispatching-only-on-one-argument-and-calling-s3-methods-directly" title="Permalink to this heading"></a></h3>
+<span id="sec-s3-direct-method-call"></span><h3><span class="section-number">10.2.4. </span>Dispatching Only on One Argument and Calling S3 Methods Directly<a class="headerlink" href="#dispatching-only-on-one-argument-and-calling-s3-methods-directly" title="Permalink to this heading">¶</a></h3>
 <p>With S3, the dispatching is done based on the class of
 only one<a class="footnote-reference brackets" href="#footonedispatch" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a> argument:
 by default, the first one from the parameter list.</p>
@@ -853,12 +854,12 @@ Let us overload it for <code class="docutils literal notranslate"><span class="p
 (or, more precisely, create a function that will be dispatched to
 when the generic is called upon a series of objects such that
 the first element is of the said class).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">c.categorical</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
-    <span class="nf">as.categorical</span><span class="p">(</span>
-        <span class="nf">unlist</span><span class="p">(</span>
-            <span class="nf">lapply</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="kc">...</span><span class="p">),</span> <span class="n">as.character</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">c.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">as.categorical</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">unlist</span><span class="p">(</span>
+<span class="w">            </span><span class="nf">lapply</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="kc">...</span><span class="p">),</span><span class="w"> </span><span class="n">as.character</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span>
 </pre></div>
 </div>
 <p>It converts each argument to a character vector
@@ -867,22 +868,22 @@ and makes use of the fact that <strong class="command">unlist</strong> converts 
 such atomic vectors to a single sequence of strings.</p>
 <p>Calling <strong class="command">c</strong> with the first argument being of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
 dispatches to the above method:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">9</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
-<span class="n">xc</span> <span class="o">&lt;-</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nf">c</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># c.categorical</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
+<span class="n">xc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.categorical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># c.categorical</span>
 <span class="c1">##  [1] &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot; &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot;</span>
 <span class="c1">## Categories: 2, 5, 7, 9</span>
 </pre></div>
 </div>
 <p>However, if the first argument is, say, unclassed, the default
 method will be consulted:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xc</span><span class="p">)</span>  <span class="c1"># default c</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">xc</span><span class="p">)</span><span class="w">  </span><span class="c1"># default c</span>
 <span class="c1">##  [1] 9 5 7 7 2 4 2 3 3 1</span>
 </pre></div>
 </div>
 <p>This method ignores the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute and sees <code class="docutils literal notranslate"><span class="pre">xc</span></code> as-it-is,
 a barebone numeric vector:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`attributes&lt;-`</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="kc">NULL</span><span class="p">)</span>  <span class="c1"># the underlying codes</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`attributes&lt;-`</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w">  </span><span class="c1"># the underlying codes</span>
 <span class="c1">## [1] 4 2 3 3 1</span>
 </pre></div>
 </div>
@@ -893,7 +894,7 @@ through the basic ones.</p>
 <p class="admonition-title">Important</p>
 <p>In most cases, S3 methods can be called directly to get the desired
 outcome:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c.categorical</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xc</span><span class="p">)</span>  <span class="c1"># force a call to the specific method</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c.categorical</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">xc</span><span class="p">)</span><span class="w">  </span><span class="c1"># force a call to the specific method</span>
 <span class="c1">##  [1] &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot; &quot;9&quot; &quot;5&quot; &quot;7&quot; &quot;7&quot; &quot;2&quot;</span>
 <span class="c1">## Categories: 2, 5, 7, 9</span>
 </pre></div>
@@ -906,8 +907,8 @@ outcome:</p>
 <li><p>hardcoded at the C language level
 (for instance, there is no <strong class="command">c.default</strong> defined at all<a class="footnote-reference brackets" href="#footoperoverload" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>),</p></li>
 <li><p>hidden (defined in a package namespace but not exported);
-see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>,</p></li>
-<li><p>overloaded as a group; see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>.</p></li>
+see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.3.9</span></a>,</p></li>
+<li><p>overloaded as a group; see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.3.10</span></a>.</p></li>
 </ul>
 </div>
 <div class="proof proof-type-example" id="id52">
@@ -918,7 +919,7 @@ see <a class="reference internal" href="340-environment.html#sec-use-method"><sp
     </div><div class="proof-content">
 <p>Just for fun, let us find a partition of the <code class="docutils literal notranslate"><span class="pre">iris</span></code> dataset
 into three clusters using the <em>k</em>-means algorithm:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">&lt;-</span> <span class="nf">kmeans</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="m">-5</span><span class="p">],</span> <span class="n">centers</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">nstart</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">kmeans</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="m">-5</span><span class="p">],</span><span class="w"> </span><span class="n">centers</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">nstart</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="c1">## K-means clustering with 3 clusters of sizes 50, 62, 38</span>
 <span class="c1">## </span>
@@ -1000,19 +1001,19 @@ for objects of class <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>Even though the method is hidden in the <strong class="program">stats</strong> package’s
-namespace, from <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a> we will learn that
+namespace, from <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.3.9</span></a> we will learn that
 it can be accessed by calling
 <strong class="command">getS3method</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;,</span> <span class="pre">&quot;kmeans&quot;)</span></code>
 or referring to <strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">print.kmeans</strong>
 (note the triple colon).</p>
 </div></div></section>
 <section id="multi-class-ness">
-<span id="sec-multi-class"></span><h3><span class="section-number">10.2.5. </span>Multi-class-ness<a class="headerlink" href="#multi-class-ness" title="Permalink to this heading"></a></h3>
+<span id="sec-multi-class"></span><h3><span class="section-number">10.2.5. </span>Multi-class-ness<a class="headerlink" href="#multi-class-ness" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-01-18 09:42:09 AEDT&quot;</span>
-<span class="p">(</span><span class="n">t2</span> <span class="o">&lt;-</span> <span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span> <span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
+<span class="c1">## [1] &quot;2023-02-09 12:31:03 AEDT&quot;</span>
+<span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
 </div>
@@ -1054,7 +1055,7 @@ determined as follows:</p>
     </div><div class="proof-content">
 <p>There is a method <strong class="command">diff</strong> for objects of class
 <code class="docutils literal notranslate"><span class="pre">POSIXt</span></code> featuring a statement:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">&lt;-</span> <span class="nf">if </span><span class="p">(</span><span class="nf">inherits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;POSIXlt&quot;</span><span class="p">))</span> <span class="nf">as.POSIXct</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">else</span> <span class="n">x</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="nf">inherits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;POSIXlt&quot;</span><span class="p">))</span><span class="w"> </span><span class="nf">as.POSIXct</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="n">x</span>
 </pre></div>
 </div>
 <p>This way, we can be handling both <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> and <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> instances
@@ -1074,7 +1075,7 @@ simply <code class="docutils literal notranslate"><span class="pre">POSIXct</spa
 or even <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;POSIXt&quot;,</span> <span class="pre">&quot;POSIXct&quot;)</span></code> (in this very order).</p>
 </section>
 <section id="operator-overloading">
-<span id="sec-operator-overloading-s3"></span><h3><span class="section-number">10.2.6. </span>Operator Overloading<a class="headerlink" href="#operator-overloading" title="Permalink to this heading"></a></h3>
+<span id="sec-operator-overloading-s3"></span><h3><span class="section-number">10.2.6. </span>Operator Overloading<a class="headerlink" href="#operator-overloading" title="Permalink to this heading">¶</a></h3>
 <p>Operators are ordinary functions (<a class="reference internal" href="210-design.html#sec-operfun"><span class="std std-numref">Section 9.4.5</span></a>).
 Even though what follows can partially be implied by what we
 have said above, as usual in R, there will be some oddities.</p>
@@ -1084,44 +1085,44 @@ Looking at <strong class="command">help</strong><code class="code docutils liter
 has two arguments: <code class="docutils literal notranslate"><span class="pre">x</span></code> (the <code class="docutils literal notranslate"><span class="pre">categorical</span></code> object being sliced)
 and <code class="docutils literal notranslate"><span class="pre">i</span></code> (the indexer).
 Ours will have the same interface then:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[.categorical`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[.categorical`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nf">structure</span><span class="p">(</span>
-        <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>  <span class="c1"># `[`(unclass(x), i)</span>
-        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
-        <span class="n">levels</span><span class="o">=</span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span>  <span class="c1"># the same levels as input</span>
-    <span class="p">)</span>
+<span class="w">    </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span><span class="w">  </span><span class="c1"># `[`(unclass(x), i)</span>
+<span class="w">        </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">levels</span><span class="o">=</span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># the same levels as input</span>
+<span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>We can also introduce the replacement version of this operator:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[&lt;-.categorical`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[&lt;-.categorical`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">levels</span> <span class="o">&lt;-</span> <span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span>
-    <span class="n">codes</span> <span class="o">&lt;-</span> <span class="nf">match</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">levels</span><span class="p">)</span>  <span class="c1"># integer codes corresponding to levels</span>
-    <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="n">codes</span>  <span class="c1"># default method for the replacement version of `[`</span>
-    <span class="nf">structure</span><span class="p">(</span>
-        <span class="n">x</span><span class="p">,</span>
-        <span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
-        <span class="n">levels</span><span class="o">=</span><span class="n">levels</span>  <span class="c1"># same levels as input</span>
-    <span class="p">)</span>
+<span class="w">    </span><span class="n">levels</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">codes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="p">)</span><span class="w">  </span><span class="c1"># integer codes corresponding to levels</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">codes</span><span class="w">  </span><span class="c1"># default method for the replacement version of `[`</span>
+<span class="w">    </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">        </span><span class="n">x</span><span class="p">,</span>
+<span class="w">        </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="w">  </span><span class="c1"># same levels as input</span>
+<span class="w">    </span><span class="p">)</span>
 
-    <span class="c1"># # or, equivalently:</span>
-    <span class="c1"># structure(</span>
-    <span class="c1">#     `[&lt;-`(unclass(x), i, value=match(value, attr(x, &quot;levels&quot;))),</span>
-    <span class="c1">#     class=&quot;categorical&quot;,</span>
-    <span class="c1">#     levels=attr(x, &quot;levels&quot;)</span>
-    <span class="c1"># )</span>
+<span class="w">    </span><span class="c1"># # or, equivalently:</span>
+<span class="w">    </span><span class="c1"># structure(</span>
+<span class="w">    </span><span class="c1">#     `[&lt;-`(unclass(x), i, value=match(value, attr(x, &quot;levels&quot;))),</span>
+<span class="w">    </span><span class="c1">#     class=&quot;categorical&quot;,</span>
+<span class="w">    </span><span class="c1">#     levels=attr(x, &quot;levels&quot;)</span>
+<span class="w">    </span><span class="c1"># )</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Testing:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
 <span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">]</span>
 <span class="c1">## [1] &quot;3&quot; &quot;6&quot; &quot;4&quot; NA </span>
 <span class="c1">## Categories: 3, 4, 6, 9</span>
-<span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;6&quot;</span><span class="p">,</span> <span class="s">&quot;7&quot;</span><span class="p">)</span>
+<span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7&quot;</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;6&quot; NA  &quot;6&quot; NA  &quot;9&quot; &quot;9&quot; &quot;6&quot; NA  &quot;3&quot;</span>
 <span class="c1">## Categories: 3, 4, 6, 9</span>
@@ -1143,8 +1144,8 @@ Why is that/is that not the case?</p>
 Assume<a class="footnote-reference brackets" href="#footcatcmp" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a> that we would like two <code class="docutils literal notranslate"><span class="pre">categorical</span></code> objects
 be compared based on the actual labels they encode, in an elementwise
 manner:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.categorical`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
-    <span class="nf">as.character</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span> <span class="o">==</span> <span class="nf">as.character</span><span class="p">(</span><span class="n">e2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.categorical`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">as.character</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">e2</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We are feeling lucky: by not performing any type checking,
@@ -1155,11 +1156,11 @@ returns an object of type character,
 we dispatch to the default method for `<strong class="command">==</strong>`
 (which handles atomic vectors).</p>
 <p>Some examples:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="o">==</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE  TRUE</span>
-<span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="o">==</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+<span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE  TRUE</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="o">==</span> <span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE  TRUE</span>
 </pre></div>
 </div>
@@ -1173,9 +1174,9 @@ of whether the classed object is the first or the second operand.
 If two operands are classed and different methods are
 overloaded for both of them, a warning will be generated
 and the default internal method will be called.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.A`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="s">&quot;A&quot;</span>
-<span class="n">`==.B`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="s">&quot;B&quot;</span>
-<span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;A&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;B&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.A`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;A&quot;</span>
+<span class="n">`==.B`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;B&quot;</span>
+<span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;A&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;B&quot;</span><span class="p">)</span>
 <span class="c1">## Warning: Incompatible methods (&quot;==.A&quot;, &quot;==.B&quot;) for &quot;==&quot;</span>
 <span class="c1">## [1] FALSE    NA  TRUE</span>
 </pre></div>
@@ -1183,7 +1184,7 @@ and the default internal method will be called.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>, we will mention
+<p>In <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.3.10</span></a>, we will mention
 that operators as well as certain groups of functions
 (including <strong class="command">min</strong>, <strong class="command">sum</strong>, and <strong class="command">all</strong>
 or <strong class="command">abs</strong>, <strong class="command">log</strong>, and <strong class="command">round</strong>)
@@ -1192,7 +1193,7 @@ can be overloaded all at once; see also <strong class="command">help</strong><co
 </section>
 </section>
 <section id="common-built-in-s3-classes">
-<h2><span class="section-number">10.3. </span>Common Built-in S3 Classes<a class="headerlink" href="#common-built-in-s3-classes" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">10.3. </span>Common Built-in S3 Classes<a class="headerlink" href="#common-built-in-s3-classes" title="Permalink to this heading">¶</a></h2>
 <p>Let us discuss some noteworthy built-in classes,
 including the ones that represent date/time information and
 factors (ordered or not).</p>
@@ -1204,10 +1205,10 @@ and data frames in <a class="reference internal" href="240-data-frame.html#chap-
 <p>The inspecting of other<a class="footnote-reference brackets" href="#foototherclasses" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></a> interesting classes is left
 as a simple exercise to the kind reader.</p>
 <section id="date-time-etc">
-<span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, Time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading"></a></h3>
+<span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, Time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-01-18&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
+<span class="c1">## [1] &quot;2023-02-09&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
@@ -1216,30 +1217,30 @@ as a simple exercise to the kind reader.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19375    -1     0    NA</span>
+<span class="c1">## [1] 19397    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the so called UNIX epoch,
 1970-01-01T00:00:00+0000 (midnight GMT/UTC).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-01-18 09:42:09 AEDT&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
+<span class="c1">## [1] &quot;2023-02-09 12:31:03 AEDT&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1.674e+09</span>
+<span class="c1">## [1] 1675906264</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
 By default, whilst printing, the current default timezone
 is used (see <strong class="command">Sys.timezone</strong>).
 However, such objects can be equipped with the <code class="docutils literal notranslate"><span class="pre">tzone</span></code> attribute.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span> <span class="s">&quot;POSIXt&quot;</span><span class="p">))</span>  <span class="c1"># using current default timezone</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;POSIXt&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># using current default timezone</span>
 <span class="c1">## [1] &quot;1970-01-01 10:00:01 AEST&quot;</span>
-<span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span> <span class="s">&quot;POSIXt&quot;</span><span class="p">),</span> <span class="n">tzone</span><span class="o">=</span><span class="s">&quot;UTC&quot;</span><span class="p">)</span>
+<span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;POSIXt&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">tzone</span><span class="o">=</span><span class="s">&quot;UTC&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;1970-01-01 00:00:01 UTC&quot;</span>
 </pre></div>
 </div>
@@ -1256,14 +1257,14 @@ In the former, it is displayed in the current local timezone, though
 midnights are displayed in different timezones.</p>
 </div></div><p>There is also the <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> (local time) class,
 which is represented using a list of atomic vectors<a class="footnote-reference brackets" href="#footposixlt" id="id25" role="doc-noteref"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></a>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.POSIXlt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&quot;1970-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s">&quot;2030-12-31 23:59:59&quot;</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.POSIXlt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&quot;1970-01-01 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="s">&quot;2030-12-31 23:59:59&quot;</span><span class="p">)))</span>
 <span class="c1">##                          a                          b </span>
 <span class="c1">## &quot;1970-01-01 00:00:00 AEST&quot; &quot;2030-12-31 23:59:59 AEDT&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXlt&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;list&quot;</span>
-<span class="nf">str</span><span class="p">(</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># calling str instead of print to make display more compact</span>
+<span class="nf">str</span><span class="p">(</span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># calling str instead of print to make display more compact</span>
 <span class="c1">## List of 11</span>
 <span class="c1">##  $ sec   : num [1:2] 0 59</span>
 <span class="c1">##  $ min   : int [1:2] 0 59</span>
@@ -1320,9 +1321,9 @@ subtracted from a date or time, respectively.
 However, <strong class="command">-</strong> (see also <strong class="command">diff</strong>)
 can also be applied on two date-time objects,
 which yields an object of class <code class="docutils literal notranslate"><span class="pre">difftime</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Sys.Date</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="nf">Sys.Date</span><span class="p">()</span> <span class="o">-</span> <span class="m">1</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Sys.Date</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## Time difference of 1 days</span>
-<span class="nf">Sys.time</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="nf">Sys.time</span><span class="p">()</span> <span class="o">-</span> <span class="m">1</span><span class="p">)</span>
+<span class="nf">Sys.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="nf">Sys.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## Time difference of 1 secs</span>
 </pre></div>
 </div>
@@ -1344,7 +1345,7 @@ and methods such as <strong class="command">sort</strong> and <strong class="com
         <span class="proof-type">Exercise 10.20</span>
         
     </div><div class="proof-content">
-<p>Check out the <strong class="program">stringx</strong> package <span id="id28">[<a class="reference internal" href="999-bibliography.html#id52" title="Gagolewski, M. (2023).  stringx: Drop-in replacements for base R string functions powered by stringi. URL: https://stringx.gagolewski.com.">22</a>]</span>
+<p>Check out the <strong class="program">stringx</strong> package <span id="id28">[<a class="reference internal" href="999-bibliography.html#id4" title="Gagolewski, M. (2023).  stringx: Drop-in replacements for base R string functions powered by stringi. URL: https://stringx.gagolewski.com.">23</a>]</span>
 which replaces the base R date-time processing functions with
 their more portable counterparts.</p>
 </div></div><div class="proof proof-type-exercise" id="id61">
@@ -1353,23 +1354,25 @@ their more portable counterparts.</p>
         <span class="proof-type">Exercise 10.21</span>
         
     </div><div class="proof-content">
-<p><strong class="command">system.time</strong> can be used to measure the time
+<p><strong class="command">proc.time</strong> can be used to measure the time
 to execute a given expression:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">system.time</span><span class="p">({</span>
-    <span class="nf">sum</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1e7</span><span class="p">))</span>  <span class="c1"># whatever, just testing</span>
-<span class="p">})</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">()</span><span class="w">  </span><span class="c1"># timer start</span>
+<span class="c1"># ... to do - something time-consuming ...</span>
+<span class="nf">sum</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1e7</span><span class="p">))</span><span class="w">  </span><span class="c1"># whatever, just testing</span>
+<span class="c1">## [1] 4999488</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.225   0.019   0.245</span>
+<span class="c1">##   0.251   0.008   0.259</span>
 </pre></div>
 </div>
 <p>The function returns an object of class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
 Inspect how it is represented internally.</p>
 </div></div></section>
 <section id="formulas">
-<span id="sec-formula-intro"></span><h3><span class="section-number">10.3.2. </span>Formulas (*)<a class="headerlink" href="#formulas" title="Permalink to this heading"></a></h3>
+<span id="sec-formula-intro"></span><h3><span class="section-number">10.3.2. </span>Formulas (*)<a class="headerlink" href="#formulas" title="Permalink to this heading">¶</a></h3>
 <p>Formulas (created by means of `<strong class="command">~</strong>`)
 are quite advanced language constructs and hence they will be discussed
-much further: in <a class="reference internal" href="340-environment.html#sec-formula"><span class="std std-numref">Section 16.5</span></a>.</p>
+much further: in <a class="reference internal" href="340-environment.html#sec-formula"><span class="std std-numref">Section 16.4</span></a>.</p>
 <p>Some R users refer to them in functions such as
 <strong class="command">lm</strong>, <strong class="command">aggregate</strong>, <strong class="command">t.test</strong>,
 <strong class="command">boxplot</strong>, or <strong class="command">plot</strong> to specify models or queries
@@ -1384,14 +1387,14 @@ yours truly discourages<a class="footnote-reference brackets" href="#footagainst
 their use (especially by beginners).</p>
 </section>
 <section id="factors">
-<span id="sec-factor"></span><h3><span class="section-number">10.3.3. </span>Factors<a class="headerlink" href="#factors" title="Permalink to this heading"></a></h3>
+<span id="sec-factor"></span><h3><span class="section-number">10.3.3. </span>Factors<a class="headerlink" href="#factors" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">factor</span></code> class is often used to represent categorical (qualitative) data,
 e.g., species, groups, types.
 In fact, the example <code class="docutils literal notranslate"><span class="pre">categorical</span></code> class that we played with above has been
 inspired by the built-in <code class="docutils literal notranslate"><span class="pre">factor</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;spam&quot;    &quot;spam&quot;    &quot;bacon&quot;   &quot;sausage&quot; &quot;spam&quot;    &quot;bacon&quot;</span>
-<span class="p">(</span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
 <span class="c1">## Levels: bacon sausage spam</span>
 </pre></div>
@@ -1410,14 +1413,14 @@ attribute being a character vector of length <em>k</em><a class="footnote-refere
 <span class="c1">## [1] 3 3 1 2 3 1</span>
 <span class="c1">## attr(,&quot;levels&quot;)</span>
 <span class="c1">## [1] &quot;bacon&quot;   &quot;sausage&quot; &quot;spam&quot;</span>
-<span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span>  <span class="c1"># also: levels(f)</span>
+<span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># also: levels(f)</span>
 <span class="c1">## [1] &quot;bacon&quot;   &quot;sausage&quot; &quot;spam&quot;</span>
 </pre></div>
 </div>
 <p>Factors are often  used instead of
 character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id31" role="doc-noteref"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></a>,
 where there is a need to manipulate their levels easily.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&quot;levels&quot;</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>  <span class="c1"># also levels(f) &lt;- c(....new...)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># also levels(f) &lt;- c(....new...)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="c1">## [1] c c a b c a</span>
 <span class="c1">## Levels: a b c</span>
@@ -1470,12 +1473,12 @@ used: it returns the underlying integer codes as-is.
 This can surprise the unaware users when they play with
 factors that feature levels consisting of strings representing
 integer numbers:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">g</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">11</span><span class="p">,</span> <span class="m">15</span><span class="p">,</span> <span class="m">16</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">13</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">15</span><span class="p">)))</span>  <span class="c1"># converts numbers to strings</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">g</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">)))</span><span class="w">  </span><span class="c1"># converts numbers to strings</span>
 <span class="c1">## [1] 11 15 16 11 13 4  15</span>
 <span class="c1">## Levels: 4 11 13 15 16</span>
-<span class="nf">as.numeric</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>  <span class="c1"># the underlying codes</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="w">  </span><span class="c1"># the underlying codes</span>
 <span class="c1">## [1] 2 4 5 2 3 1 4</span>
-<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>  <span class="c1"># to get the numbers en-coded</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">g</span><span class="p">))</span><span class="w">  </span><span class="c1"># to get the numbers en-coded</span>
 <span class="c1">## [1] 11 15 16 11 13  4 15</span>
 </pre></div>
 </div>
@@ -1490,13 +1493,13 @@ of methods for factor objects might have no effect.</p>
 <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code>
 (indexing by labels, using the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute). Instead,
 we get <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code> (the underlying codes will determine the positions).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">))</span>
-<span class="nf">levels</span><span class="p">(</span><span class="n">h</span><span class="p">)[</span><span class="n">h</span><span class="p">]</span>  <span class="c1"># the same as c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)[c(1, 2, 1, 3, 1, 3)]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">))</span>
+<span class="nf">levels</span><span class="p">(</span><span class="n">h</span><span class="p">)[</span><span class="n">h</span><span class="p">]</span><span class="w">  </span><span class="c1"># the same as c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)[c(1, 2, 1, 3, 1, 3)]</span>
 <span class="c1">## [1] &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;c&quot; &quot;a&quot; &quot;c&quot;</span>
-<span class="nf">c</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="s">&quot;z&quot;</span><span class="p">)[</span><span class="n">h</span><span class="p">]</span>  <span class="c1"># names are not used whilst indexing</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="s">&quot;z&quot;</span><span class="p">)[</span><span class="n">h</span><span class="p">]</span><span class="w">  </span><span class="c1"># names are not used whilst indexing</span>
 <span class="c1">##   b   c   b   a   b   a </span>
 <span class="c1">## &quot;x&quot; &quot;y&quot; &quot;x&quot; &quot;z&quot; &quot;x&quot; &quot;z&quot;</span>
-<span class="nf">c</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="s">&quot;z&quot;</span><span class="p">)[</span><span class="nf">as.character</span><span class="p">(</span><span class="n">h</span><span class="p">)]</span>  <span class="c1"># names are used now</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="s">&quot;z&quot;</span><span class="p">)[</span><span class="nf">as.character</span><span class="p">(</span><span class="n">h</span><span class="p">)]</span><span class="w">  </span><span class="c1"># names are used now</span>
 <span class="c1">##   a   b   a   c   a   c </span>
 <span class="c1">## &quot;z&quot; &quot;x&quot; &quot;z&quot; &quot;y&quot; &quot;z&quot; &quot;y&quot;</span>
 </pre></div>
@@ -1505,7 +1508,7 @@ we get <code class="docutils literal notranslate"><span class="pre">x[</span></c
 leading to our being slightly puzzled. In particular,
 factors look much like character vectors when they are featured
 in data frames:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">A</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">),</span> <span class="n">B</span><span class="o">=</span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">))))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">A</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">B</span><span class="o">=</span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">))))</span>
 <span class="c1">##   A B</span>
 <span class="c1">## 1 x x</span>
 <span class="c1">## 2 y y</span>
@@ -1532,10 +1535,10 @@ the built-in <code class="docutils literal notranslate"><span class="pre">iris</
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Be careful when combining factors and not-factors:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="s">&quot;A&quot;</span><span class="p">))</span>
-<span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;C&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A&quot;</span><span class="p">))</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;1&quot; &quot;2&quot; &quot;1&quot; &quot;C&quot;</span>
-<span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">factor</span><span class="p">(</span><span class="s">&quot;C&quot;</span><span class="p">))</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="s">&quot;C&quot;</span><span class="p">))</span>
 <span class="c1">## [1] A B A C</span>
 <span class="c1">## Levels: A B C</span>
 </pre></div>
@@ -1549,9 +1552,15 @@ the built-in <code class="docutils literal notranslate"><span class="pre">iris</
     </div><div class="proof-content">
 <p>Note that when subsetting a factor object,
 the result will have the <code class="docutils literal notranslate"><span class="pre">levels</span></code> attribute inherited as-is.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)]</span><span class="w">  </span><span class="c1"># drop=FALSE</span>
 <span class="c1">## [1] c c</span>
 <span class="c1">## Levels: a b c</span>
+</pre></div>
+</div>
+<p>However:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">]</span>
+<span class="c1">## [1] c c</span>
+<span class="c1">## Levels: c</span>
 </pre></div>
 </div>
 <p>Implement your own version of the <strong class="command">droplevels</strong> function
@@ -1564,8 +1573,8 @@ which removes the unused attributes.</p>
     </div><div class="proof-content">
 <p>The replacement version of the index operator does not automatically
 add new levels to the modified object:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="s">&quot;A&quot;</span><span class="p">))</span>
-<span class="nf">`[&lt;-`</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;C&quot;</span><span class="p">)</span>  <span class="c1"># like in x[4] &lt;- &quot;C&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A&quot;</span><span class="p">))</span>
+<span class="nf">`[&lt;-`</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="o">=</span><span class="s">&quot;C&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># like in x[4] &lt;- &quot;C&quot;</span>
 <span class="c1">## Warning in `[&lt;-.factor`(x, 4, value = &quot;C&quot;): invalid factor level, NA</span>
 <span class="c1">## generated</span>
 <span class="c1">## [1] A    B    A    &lt;NA&gt;</span>
@@ -1576,18 +1585,18 @@ add new levels to the modified object:</p>
 is capable of doing so.</p>
 </div></div></section>
 <section id="ordered-factors">
-<h3><span class="section-number">10.3.4. </span>Ordered Factors<a class="headerlink" href="#ordered-factors" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">10.3.4. </span>Ordered Factors<a class="headerlink" href="#ordered-factors" title="Permalink to this heading">¶</a></h3>
 <p>Note that when creating factors, we can enforce a particular ordering
 and the number of levels:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">)</span>
-<span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">)</span>
+<span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">))</span>
 <span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
 <span class="c1">## Levels: eggs bacon sausage spam</span>
 </pre></div>
 </div>
 <p>If we want the arrangement of the levels to define a linear ordering
 relation over set of the labels, we can call:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">),</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">ordered</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 <span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
 <span class="c1">## Levels: eggs &lt; bacon &lt; sausage &lt; spam</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -1595,7 +1604,7 @@ relation over set of the labels, we can call:</p>
 </pre></div>
 </div>
 <p>This yields an ordered factor, which enables comparisons like:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="n">f</span> <span class="o">&gt;=</span> <span class="s">&quot;bacon&quot;</span><span class="p">]</span>  <span class="c1"># what&#39;s not worse than bacon?</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="n">f</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">]</span><span class="w">  </span><span class="c1"># what&#39;s not worse than bacon?</span>
 <span class="c1">## [1] spam    spam    bacon   sausage spam    bacon  </span>
 <span class="c1">## Levels: eggs &lt; bacon &lt; sausage &lt; spam</span>
 </pre></div>
@@ -1606,7 +1615,7 @@ implemented a comparison operator for objects of class <code class="docutils lit
 </section>
 </section>
 <section id="argument-checking-revisited">
-<span id="sec-arg-check-s3"></span><h2><span class="section-number">10.4. </span>Argument Checking Revisited<a class="headerlink" href="#argument-checking-revisited" title="Permalink to this heading"></a></h2>
+<span id="sec-arg-check-s3"></span><h2><span class="section-number">10.4. </span>Argument Checking Revisited<a class="headerlink" href="#argument-checking-revisited" title="Permalink to this heading">¶</a></h2>
 <p>Recall that anything can be passed as a function’s input.
 Here are some additions to the topic we touched upon in
 <a class="reference internal" href="210-design.html#sec-arg-check"><span class="std std-numref">Section 9.2.1</span></a>.</p>
@@ -1640,15 +1649,15 @@ to every possible situation.</p>
 <p>As an illustration, here is a function that counts the number
 of occurrences of items in a <em>numerised</em> (digitised?) version
 of a given object:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">numtable</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">numtable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># two generics!</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># two generics!</span>
 
-    <span class="n">u</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="nf">structure</span><span class="p">(</span>
-        <span class="nf">tabulate</span><span class="p">(</span><span class="nf">match</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span>
-        <span class="n">names</span><span class="o">=</span><span class="nf">as.character</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-    <span class="p">)</span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">unique</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">tabulate</span><span class="p">(</span><span class="nf">match</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)),</span>
+<span class="w">        </span><span class="n">names</span><span class="o">=</span><span class="nf">as.character</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1657,20 +1666,20 @@ documentation page) that <code class="docutils literal notranslate"><span class=
 (as in <code class="code docutils literal notranslate"><span class="pre">is.numeric</span></code>) or an object coercible to
 (by means of <code class="code docutils literal notranslate"><span class="pre">as.numeric</span></code>).</p>
 <p>The callers will be stress-testing our function in many different ways:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">))</span>
 <span class="c1">## 1 3 5 </span>
 <span class="c1">## 2 1 3</span>
 </pre></div>
 </div>
 <p>This is an intended behaviour.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="s">&quot;3&quot;</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;5&quot;</span><span class="p">))</span>
 <span class="c1">## 1 3 5 </span>
 <span class="c1">## 2 1 3</span>
 </pre></div>
 </div>
 <p>This makes sense too, a character vector consisting of
 number-strings has been fed on input.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">))</span>
 <span class="c1">## Warning in numtable(c(&quot;a&quot;, &quot;e&quot;, &quot;z&quot;, &quot;z&quot;, &quot;a&quot;, &quot;z&quot;)): NAs introduced by</span>
 <span class="c1">## coercion</span>
 <span class="c1">## &lt;NA&gt; </span>
@@ -1682,7 +1691,7 @@ they have just passed something not easily coercible
 to a numeric vector. Note the warning that suggests
 there is something wrong. The user needs to correct
 their possible mistake by themself.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## Error in numtable(list(1, 2, 3:10, 2)): &#39;list&#39; object cannot be coerced to type &#39;double&#39;</span>
 </pre></div>
 </div>
@@ -1691,7 +1700,7 @@ apply <strong class="command">unlist</strong> automatically’ – well, if
 you want such a behaviour, why don’t you
 call <strong class="command">numtable</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">unlist</strong><code class="code docutils literal notranslate"><span class="pre">(...))</span></code>
 yourself? It is not so difficult.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)))</span>
 <span class="c1">## 1 2 3 </span>
 <span class="c1">## 2 1 3</span>
 </pre></div>
@@ -1705,14 +1714,14 @@ that in this case, <strong class="command">as.character</strong> should rather b
 behaviours, especially related to boundary cases we have not been
 considerate enough to inspect. We are of course the ones to blame for
 the following:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">numeric</span><span class="p">(</span><span class="m">0</span><span class="p">))</span>  <span class="c1"># bug: this should be corrected</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">numeric</span><span class="p">(</span><span class="m">0</span><span class="p">))</span><span class="w">  </span><span class="c1"># bug: this should be corrected</span>
 <span class="c1">## &lt;NA&gt; </span>
 <span class="c1">##    0</span>
 </pre></div>
 </div>
 </div></div></section>
 <section id="over-using-the-forward-pipe-operator">
-<span id="sec-pipe"></span><h2><span class="section-number">10.5. </span>(Over)using the Forward-pipe Operator, `<strong class="command">|&gt;</strong>` (*)<a class="headerlink" href="#over-using-the-forward-pipe-operator" title="Permalink to this heading"></a></h2>
+<span id="sec-pipe"></span><h2><span class="section-number">10.5. </span>(Over)using the Forward-pipe Operator, `<strong class="command">|&gt;</strong>` (*)<a class="headerlink" href="#over-using-the-forward-pipe-operator" title="Permalink to this heading">¶</a></h2>
 <p>The object-oriented programming paradigm is useful when we wish
 to define a new data type, perhaps even a hierarchy of types.
 Many development teams find it an efficient tool to organise larger
@@ -1775,9 +1784,9 @@ that calls <strong class="command">mean</strong>).</p></li>
 <p>The specifics do not really matter now, let us just
 consider the notation we use when the operations are chained:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># select a few rows and columns from the `iris` data frame:</span>
-<span class="n">iris_subset</span> <span class="o">&lt;-</span> <span class="n">iris</span><span class="p">[</span><span class="m">51</span><span class="o">:</span><span class="m">150</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">,</span> <span class="s">&quot;Petal.Length&quot;</span><span class="p">,</span> <span class="s">&quot;Species&quot;</span><span class="p">)]</span>
+<span class="n">iris_subset</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="m">51</span><span class="o">:</span><span class="m">150</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Petal.Length&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">)]</span>
 <span class="c1"># compute the averages of all variables grouped by Species:</span>
-<span class="nf">mean</span><span class="p">(</span><span class="nf">group_by</span><span class="p">(</span><span class="n">iris_subset</span><span class="p">,</span> <span class="s">&quot;Species&quot;</span><span class="p">))</span>
+<span class="nf">mean</span><span class="p">(</span><span class="nf">group_by</span><span class="p">(</span><span class="n">iris_subset</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">))</span>
 <span class="c1">##      Species            x  Mean</span>
 <span class="c1">## 1 versicolor  Sepal.Width 2.770</span>
 <span class="c1">## 2 versicolor Petal.Length 4.260</span>
@@ -1808,12 +1817,12 @@ then call <strong class="command">method2</strong> on the result.</p>
 which is merely a syntactic sugar for
 translating between the message-passing and function-centric notion.
 In a nutshell, writing:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">|&gt;</span> <span class="nf">f</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="nf">g</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">h</span><span class="p">()</span>
-<span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">square</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="nf">mean</span><span class="p">()</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">h</span><span class="p">()</span>
+<span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">square</span><span class="p">()</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>is equivalent to:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">h</span><span class="p">(</span><span class="nf">g</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">h</span><span class="p">(</span><span class="nf">g</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">))</span>
 <span class="nf">mean</span><span class="p">(</span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1829,7 +1838,7 @@ function-centric form and perhaps a few auxiliary variables.</p>
     </div><div class="proof-content">
 <p>In the above example, a pipe operator version
 of the <code class="docutils literal notranslate"><span class="pre">iris</span></code> aggregation exercise would look like:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris_subset</span> <span class="o">|&gt;</span> <span class="nf">group_by</span><span class="p">(</span><span class="s">&quot;Species&quot;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">mean</span><span class="p">()</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris_subset</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">group_by</span><span class="p">(</span><span class="s">&quot;Species&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nf">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div></div><p>This book is minimalist by design and there is nothing that
@@ -1845,9 +1854,9 @@ in an intermediate variable, and then continue on in the next line
 (possibly referring to that auxiliary value more than once).
 In the long run, multiplying entities without necessity is unsustainable.</p>
 <p>For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="p">[,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">,</span> <span class="s">&quot;Petal.Length&quot;</span><span class="p">,</span> <span class="s">&quot;Species&quot;</span><span class="p">)]</span> <span class="o">-&gt;</span> <span class="n">.</span>
-<span class="n">.</span><span class="p">[</span> <span class="n">.</span><span class="p">[,</span> <span class="s">&quot;Species&quot;</span><span class="p">]</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;versicolor&quot;</span><span class="p">,</span> <span class="s">&quot;virginica&quot;</span><span class="p">),</span> <span class="p">]</span> <span class="o">-&gt;</span> <span class="n">.</span>
-<span class="nf">mean</span><span class="p">(</span><span class="nf">group_by</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="s">&quot;Species&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="p">[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Petal.Length&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">)]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">.</span>
+<span class="n">.</span><span class="p">[</span><span class="w"> </span><span class="n">.</span><span class="p">[,</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;versicolor&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;virginica&quot;</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">.</span>
+<span class="nf">mean</span><span class="p">(</span><span class="nf">group_by</span><span class="p">(</span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">))</span>
 <span class="c1">##      Species            x  Mean</span>
 <span class="c1">## 1 versicolor  Sepal.Width 2.770</span>
 <span class="c1">## 2 versicolor Petal.Length 4.260</span>
@@ -1859,7 +1868,7 @@ In the long run, multiplying entities without necessity is unsustainable.</p>
 </div>
 </section>
 <section id="exercises">
-<h2><span class="section-number">10.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">10.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
 <div class="proof proof-type-exercise" id="id70">
 
     <div class="proof-title">
@@ -1889,7 +1898,7 @@ is <code class="docutils literal notranslate"><span class="pre">x[f]</span></cod
         
     </div><div class="proof-content">
 <p>A user calls:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">log</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="w"> </span><span class="n">log</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are numeric vectors. Consult <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;plot&quot;)</span></code>
@@ -1903,10 +1912,10 @@ Was that straightforward?</p>
     </div><div class="proof-content">
 <p>Explain why the two following calls yield significantly different
 results and present a workaround:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span> <span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-01-18&quot; &quot;1970-01-01&quot;</span>
-<span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span> <span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19375&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;2023-02-09&quot; &quot;1970-01-01&quot;</span>
+<span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.Date</span><span class="p">())</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19397&quot;</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id73">
@@ -1926,7 +1935,7 @@ for our example <code class="docutils literal notranslate"><span class="pre">cat
 <p>(*) Write an R package that defines S3 class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
 and a couple of methods therefor.
 Note the need for the use of the <code class="docutils literal notranslate"><span class="pre">S3method</span></code> directive  <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code>;
-see <span id="id38">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">47</a>]</span>.</p>
+see <span id="id38">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span>.</p>
 </div></div><div class="proof proof-type-exercise" id="id75">
 
     <div class="proof-title">
@@ -2040,7 +2049,7 @@ and other ones proposed by third-party packages</p>
 <aside class="footnote brackets" id="footsexptype" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
 <p>Their list is hardcoded at the C language level;
-compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id39">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">50</a>]</span> and
+compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id39">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">51</a>]</span> and
 see also <a class="reference internal" href="320-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footexternalptr" role="note">
@@ -2095,7 +2104,7 @@ but still: we are not fans thereof.</p>
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">12</a><span class="fn-bracket">]</span></span>
 <p>See also
 <code class="docutils literal notranslate"><span class="pre">.knownS3Generics</span></code> and <code class="docutils literal notranslate"><span class="pre">.S3_methods_table</span></code> which are related
-to the advanced topics we cover in <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
+to the advanced topics we cover in <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.3.9</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footpuzzle" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">13</a><span class="fn-bracket">]</span></span>
@@ -2149,7 +2158,7 @@ in order for <strong class="command">class</strong> to return a sensible answer)
 <aside class="footnote brackets" id="footlookup" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">18</a><span class="fn-bracket">]</span></span>
 <p>For more details on S3 method lookup;
-see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
+see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.3.9</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footdefaultsubst" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">19</a><span class="fn-bracket">]</span></span>
@@ -2158,12 +2167,13 @@ see <a class="reference internal" href="340-environment.html#sec-use-method"><sp
 Therefore,     we cannot refer to it directly (but <strong class="command">unclass</strong>
 does the trick).
 Also note that we can also call <strong class="command">NextMethod</strong> here;
-see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.5</span></a>.</p>
+see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.3.9</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footcatcmp" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">20</a><span class="fn-bracket">]</span></span>
 <p>There are of course many possible ways to implement
-the `<strong class="command">==</strong>` operator. For instance, it may return
+the `<strong class="command">==</strong>` operator for the discussed objects.
+For instance, it may return
 either a single <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> depending if two objects are
 identical (although probably overloading <strong class="command">all.equal</strong>
 would be a better idea). We could also be comparing the
@@ -2191,7 +2201,7 @@ in <code class="docutils literal notranslate"><span class="pre">&lt;time.h&gt;</
 <p>The overloaded group generic <code class="docutils literal notranslate"><span class="pre">Ops</span></code>
 prevents us from adding or multiplying two dates
 and defines the meaning of the comparison operators;
-see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.6</span></a>.</p>
+see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.3.10</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footdatextfrm" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">25</a><span class="fn-bracket">]</span></span>
@@ -2207,7 +2217,7 @@ the user knows that all model variables are not magical
 </aside>
 <aside class="footnote brackets" id="footfactorint" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id30">27</a><span class="fn-bracket">]</span></span>
-<p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id8" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">51</a>]</span> states: <em>Factors are currently
+<p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span> states: <em>Factors are currently
 implemented using an integer
 array to specify the actual levels and a second array of names that are
 mapped to the integers. Rather unfortunately users often make use of the
@@ -2296,7 +2306,7 @@ to understand it anyway.</p>
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-18T09:57:43+1100.
+        Last updated on 2023-02-09T13:06:20+1100.
       </span>
 
 

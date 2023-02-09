@@ -72,6 +72,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/proof.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -279,7 +280,7 @@
            <div itemprop="articleBody">
             
   <section class="tex2jax_ignore mathjax_ignore" id="flow-of-execution">
-<span id="chap-flow"></span><h1><span class="section-number">8. </span>Flow of Execution<a class="headerlink" href="#flow-of-execution" title="Permalink to this heading"></a></h1>
+<span id="chap-flow"></span><h1><span class="section-number">8. </span>Flow of Execution<a class="headerlink" href="#flow-of-execution" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -294,7 +295,7 @@ are appreciated.</strong>
 <em>Although available online, it is a whole course;
 it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
-<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
 </div></blockquote>
 <p>The <strong class="command">ifelse</strong> and <strong class="command">Map</strong> functions are very powerful,
 but they allow us to process only the consecutive elements
@@ -308,34 +309,34 @@ that we have managed to do without them for such a long time –
 and the data processing exercises we learnt to solve
 were far from trivial.</p>
 <section id="conditional-evaluation">
-<span id="sec-if"></span><h2><span class="section-number">8.1. </span>Conditional Evaluation<a class="headerlink" href="#conditional-evaluation" title="Permalink to this heading"></a></h2>
+<span id="sec-if"></span><h2><span class="section-number">8.1. </span>Conditional Evaluation<a class="headerlink" href="#conditional-evaluation" title="Permalink to this heading">¶</a></h2>
 <p>Life is full of surprises, so we would be nice if we were able to adapt to
 whatever the circumstances are going to be.</p>
 <p>The following evaluates a given <code class="docutils literal notranslate"><span class="pre">expression</span></code> <em>if and only if</em>
 a logical <code class="docutils literal notranslate"><span class="pre">condition</span></code> is true.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="w"> </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>When performing some <code class="docutils literal notranslate"><span class="pre">other_expression</span></code> is preferred
 rather than doing nothing in the case of the <code class="docutils literal notranslate"><span class="pre">condition</span></code>’s being false,
 we can write:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="n">expression</span> <span class="n">else</span> <span class="n">other_expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="w"> </span><span class="n">expression</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="n">other_expression</span>
 </pre></div>
 </div>
 <p>For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>  <span class="c1"># to spice things up</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># to spice things up</span>
 <span class="c1">## [1] 0.28758</span>
-<span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span> <span class="n">else</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
+<span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
 <span class="c1">## tail</span>
 </pre></div>
 </div>
 <p>Many expressions can of course be grouped with curly braces, “<code class="docutils literal notranslate"><span class="pre">{</span></code>”</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span>
-<span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
 <span class="p">}</span>
 <span class="c1">## tail</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -355,44 +356,44 @@ and then, separately, a <em>dangling</em> <strong class="command">else</strong> 
 <p>This does not happen when a conditional statement is part
 of an expression group, because the latter is read in its entirety.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function </span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="p">{</span>  <span class="c1"># opening bracket – start</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span>
-    <span class="n">else</span>              <span class="c1"># not dandling, because {...} is read as a whole</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
-<span class="p">}</span>  <span class="c1"># closing bracket – expression ends</span>
+<span class="p">{</span><span class="w">  </span><span class="c1"># opening bracket – start</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;head&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">else</span><span class="w">              </span><span class="c1"># not dandling, because {...} is read as a whole</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;tail&quot;</span><span class="p">)</span>
+<span class="p">}</span><span class="w">  </span><span class="c1"># closing bracket – expression ends</span>
 </pre></div>
 </div>
 <p>As an exercise, try removing the curly braces and see what happens.</p>
 </div>
 <section id="return-value">
-<h3><span class="section-number">8.1.1. </span>Return Value<a class="headerlink" href="#return-value" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">8.1.1. </span>Return Value<a class="headerlink" href="#return-value" title="Permalink to this heading">¶</a></h3>
 <p>`<strong class="command">if</strong>` is a function (compare <a class="reference internal" href="210-design.html#sec-syntactic-sugar"><span class="std std-numref">Section 9.4</span></a>),
 hence has a return value – the result of evaluating the
 conditional expression.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1] 0.28758</span>
-<span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="s">&quot;head&quot;</span>  <span class="c1"># no else</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;head&quot;</span><span class="w">  </span><span class="c1"># no else</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="c1">## NULL</span>
-<span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="s">&quot;head&quot;</span> <span class="n">else</span> <span class="s">&quot;tail&quot;</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;head&quot;</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="s">&quot;tail&quot;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="c1">## [1] &quot;tail&quot;</span>
 </pre></div>
 </div>
 <p>This is particularly useful when a call to `<strong class="command">if</strong>`
 is the last expression in the code block constituting a function’s body.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mint</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span>  <span class="c1"># the last expression (actually, the only one)</span>
-        <span class="s">&quot;head&quot;</span>        <span class="c1"># this can be the return value...</span>
-    <span class="n">else</span>
-        <span class="s">&quot;tail&quot;</span>        <span class="c1"># or this one, depending on the condition</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w">  </span><span class="c1"># the last expression (actually, the only one)</span>
+<span class="w">        </span><span class="s">&quot;head&quot;</span><span class="w">        </span><span class="c1"># this can be the return value...</span>
+<span class="w">    </span><span class="n">else</span>
+<span class="w">        </span><span class="s">&quot;tail&quot;</span><span class="w">        </span><span class="c1"># or this one, depending on the condition</span>
 <span class="p">}</span>
 
 <span class="nf">mint</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;tail&quot;</span>
-<span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mint</span><span class="p">,</span> <span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span>
+<span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mint</span><span class="p">,</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span>
 <span class="c1">## [1] &quot;tail&quot; &quot;head&quot; &quot;tail&quot; &quot;head&quot; &quot;head&quot;</span>
 </pre></div>
 </div>
@@ -409,29 +410,29 @@ it on the search list; see <code class="xref std std-numref docutils literal not
 <p>Instead, it returns a logical value indicating if the package is available
 for use. This can be useful inside other functions where the availability
 of some additional features depends on the user environment’s configuration:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">process_data</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">process_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;some_extension_package&quot;</span><span class="p">,</span> <span class="n">quietly</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
-        <span class="n">some_extension_package</span><span class="o">::</span><span class="nf">very_fast_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">else</span>
-        <span class="nf">normal_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;some_extension_package&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quietly</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="w">        </span><span class="n">some_extension_package</span><span class="o">::</span><span class="nf">very_fast_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="n">else</span>
+<span class="w">        </span><span class="nf">normal_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div></div></section>
 <section id="nested-ifs">
-<h3><span class="section-number">8.1.2. </span>Nested <strong class="command">if</strong>s<a class="headerlink" href="#nested-ifs" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">8.1.2. </span>Nested <strong class="command">if</strong>s<a class="headerlink" href="#nested-ifs" title="Permalink to this heading">¶</a></h3>
 <p>If more than two test cases are possible, i.e.,
 when we need to go beyond either <code class="docutils literal notranslate"><span class="pre">condition</span></code> or
 <code class="docutils literal notranslate"><span class="pre">!condition</span></code>, then we can use the following construction:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">expression_a</span>
-<span class="p">}</span> <span class="n">else</span> <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">expression_b</span>
-<span class="p">}</span> <span class="n">else</span> <span class="nf">if </span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">expression_c</span>
-<span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
-    <span class="n">expression_else</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expression_a</span>
+<span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expression_b</span>
+<span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expression_c</span>
+<span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expression_else</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -440,18 +441,18 @@ until the first positive case is found,
 and then executes the corresponding <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
 <p>Note that the above is nothing else than a series of nested
 <strong class="command">if</strong> statements:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">expression_a</span>
-<span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">expression_b</span>
-    <span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
-        <span class="nf">if </span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">expression_c</span>
-        <span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
-            <span class="n">expression_else</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expression_a</span>
+<span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expression_b</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nf">if </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">expression_c</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">expression_else</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -466,20 +467,20 @@ and then executes the corresponding <code class="docutils literal notranslate"><
 if a given numeric value is <code class="docutils literal notranslate"><span class="pre">&quot;positive&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;negative&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;zero&quot;</span></code>.</p>
 </div></div></section>
 <section id="condition-either-true-of-false">
-<h3><span class="section-number">8.1.3. </span>Condition: Either True of False<a class="headerlink" href="#condition-either-true-of-false" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">8.1.3. </span>Condition: Either True of False<a class="headerlink" href="#condition-either-true-of-false" title="Permalink to this heading">¶</a></h3>
 <p><strong class="command">if</strong> expects a <code class="docutils literal notranslate"><span class="pre">condition</span></code> that is a single, well-defined logical
 value, either <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.
 Thence, problems may arise when this is not the case.</p>
 <p>If the <code class="docutils literal notranslate"><span class="pre">condition</span></code> is of length not equal to one,
 we get an error:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
 <span class="c1">## Error in if (c(TRUE, FALSE)) cat(&quot;spam&quot;): the condition has length &gt; 1</span>
-<span class="nf">if </span><span class="p">(</span><span class="nf">logical</span><span class="p">(</span><span class="m">0</span><span class="p">))</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;bacon&quot;</span><span class="p">)</span>
+<span class="nf">if </span><span class="p">(</span><span class="nf">logical</span><span class="p">(</span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;bacon&quot;</span><span class="p">)</span>
 <span class="c1">## Error in if (logical(0)) cat(&quot;bacon&quot;): argument is of length zero</span>
 </pre></div>
 </div>
 <p>We cannot pass a missing value either:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="kc">NA</span><span class="p">)</span> <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="kc">NA</span><span class="p">)</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">)</span>
 <span class="c1">## Error in if (NA) cat(&quot;ham&quot;): missing value where TRUE/FALSE needed</span>
 </pre></div>
 </div>
@@ -489,14 +490,14 @@ we get an error:</p>
 code violating the above constraints, just we
 wait until the <code class="docutils literal notranslate"><span class="pre">condition</span></code> becomes a function of data
 for which there is no sanity-checking in place.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mint</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="s">&quot;H&quot;</span> <span class="n">else</span> <span class="s">&quot;T&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;H&quot;</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="s">&quot;T&quot;</span>
 
 <span class="nf">mint</span><span class="p">(</span><span class="m">0.25</span><span class="p">)</span>
 <span class="c1">## [1] &quot;T&quot;</span>
 <span class="nf">mint</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">))</span>
 <span class="c1">## Error in if (x &gt; 0.5) &quot;H&quot; else &quot;T&quot;: the condition has length &gt; 1</span>
-<span class="nf">mint</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span>  <span class="c1"># not obvious, only triggered sometimes</span>
+<span class="nf">mint</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span><span class="w">  </span><span class="c1"># not obvious, only triggered sometimes</span>
 <span class="c1">## Warning in log(rnorm(1)): NaNs produced</span>
 <span class="c1">## Error in if (x &gt; 0.5) &quot;H&quot; else &quot;T&quot;: missing value where TRUE/FALSE needed</span>
 </pre></div>
@@ -510,9 +511,9 @@ Alternatively, we had rather test whether
 </div>
 <p>Interestingly, objects other that logical are accepted: they will be coerced
 if needed.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span>
-<span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># i.e., length(x) != 0, but way less readable</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;length is not zero&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span>
+<span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># i.e., length(x) != 0, but way less readable</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;length is not zero&quot;</span><span class="p">)</span>
 <span class="c1">## length is not zero</span>
 </pre></div>
 </div>
@@ -520,14 +521,14 @@ if needed.</p>
 only if the original value is zero.</p>
 </section>
 <section id="short-circuit-evaluation">
-<span id="sec-short-circuit-ops"></span><h3><span class="section-number">8.1.4. </span>Short-Circuit Evaluation<a class="headerlink" href="#short-circuit-evaluation" title="Permalink to this heading"></a></h3>
+<span id="sec-short-circuit-ops"></span><h3><span class="section-number">8.1.4. </span>Short-Circuit Evaluation<a class="headerlink" href="#short-circuit-evaluation" title="Permalink to this heading">¶</a></h3>
 <p>Specially for formulating logical conditions
 in <strong class="command">if</strong> and <strong class="command">while</strong> (see below),
 we have the <em>scalar</em> `<strong class="command">||</strong>` (alternative) and
 `<strong class="command">&amp;&amp;</strong>` (conjunction) operators.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="kc">FALSE</span> <span class="o">||</span> <span class="kc">TRUE</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="kc">FALSE</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">TRUE</span>
 <span class="c1">## [1] TRUE</span>
-<span class="kc">NA</span> <span class="o">||</span> <span class="kc">TRUE</span>
+<span class="kc">NA</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">TRUE</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
@@ -538,28 +539,28 @@ that they evaluate the first operand and then determine if the computing
 of the second one is necessary
 (because, e.g., <code class="docutils literal notranslate"><span class="pre">FALSE</span> <span class="pre">&amp;&amp;</span> <span class="pre">whatever</span></code> is always <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> anyway).</p>
 <p>Therefore,</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="p">)</span>
-    <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>is equivalent to:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>  <span class="c1"># compute b only if a is TRUE</span>
-        <span class="n">expression</span>
-    <span class="p">}</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1"># compute b only if a is TRUE</span>
+<span class="w">        </span><span class="n">expression</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>and:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span> <span class="o">||</span> <span class="n">b</span><span class="p">)</span>
-    <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>corresponds to:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">expression</span>
-<span class="p">}</span> <span class="n">else</span> <span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>  <span class="c1"># compute b only if a is FALSE</span>
-    <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expression</span>
+<span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1"># compute b only if a is FALSE</span>
+<span class="w">    </span><span class="n">expression</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -570,10 +571,10 @@ are not non-empty vectors.</p>
 <p>Some other examples (recall that the expressions
 within the curly braces are evaluated one after another
 and that the result is determined by the last value in the series):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">);</span> <span class="kc">FALSE</span><span class="p">}</span> <span class="o">||</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">);</span> <span class="kc">TRUE</span><span class="p">}</span> <span class="o">||</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;cherries&quot;</span><span class="p">);</span> <span class="kc">FALSE</span><span class="p">}</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;cherries&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">}</span>
 <span class="c1">## spamham</span>
 <span class="c1">## [1] TRUE</span>
-<span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">);</span> <span class="kc">TRUE</span><span class="p">}</span> <span class="o">&amp;&amp;</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">);</span> <span class="kc">FALSE</span><span class="p">}</span> <span class="o">&amp;&amp;</span> <span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;cherries&quot;</span><span class="p">);</span> <span class="kc">TRUE</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">}</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">}</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;cherries&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">}</span>
 <span class="c1">## spamham</span>
 <span class="c1">## [1] FALSE</span>
 </pre></div>
@@ -591,7 +592,7 @@ formulating the conditions within the <strong class="command">if</strong> expres
 </div></div></section>
 </section>
 <section id="exception-handling">
-<span id="sec-exceptions"></span><h2><span class="section-number">8.2. </span>Exception Handling<a class="headerlink" href="#exception-handling" title="Permalink to this heading"></a></h2>
+<span id="sec-exceptions"></span><h2><span class="section-number">8.2. </span>Exception Handling<a class="headerlink" href="#exception-handling" title="Permalink to this heading">¶</a></h2>
 <p>Exceptions are exceptional, but they may happen and break things.
 For instance, when we try to download a file and the internet
 connection drops. Or an optimisation algorithm fails to converge.
@@ -613,17 +614,17 @@ Or we just have a bug in our code. Or:</p>
 <strong class="command">stop</strong>, <strong class="command">warning</strong>, and <strong class="command">message</strong> functions.</p>
 <p>Errors (but warnings too) can be handled by means of the
 <strong class="command">tryCatch</strong> function, amongst others.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">tryCatch</span><span class="p">({</span>           <span class="c1"># block of expressions to execute, until an error occurs</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;a\n&quot;</span><span class="p">)</span>
-        <span class="nf">stop</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">)</span>    <span class="c1"># error – breaks the linear control flow</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;c\n&quot;</span><span class="p">)</span>
-    <span class="p">},</span>
-    <span class="n">error</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>  <span class="c1"># executed immediately upon an error</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;error: %s\n&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">[[</span><span class="s">&quot;message&quot;</span><span class="p">]]))</span>
-    <span class="p">},</span>
-    <span class="n">finally</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># always executed at the end, regardless of error occurrence</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;finally!\n&quot;</span><span class="p">)</span>
-    <span class="p">}</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">tryCatch</span><span class="p">({</span><span class="w">           </span><span class="c1"># block of expressions to execute, until an error occurs</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;a\n&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">stop</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">)</span><span class="w">    </span><span class="c1"># error – breaks the linear control flow</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;c\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1"># executed immediately upon an error</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;error: %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">[[</span><span class="s">&quot;message&quot;</span><span class="p">]]))</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="n">finally</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1"># always executed at the end, regardless of error occurrence</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;finally!\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
 <span class="c1">## a</span>
 <span class="c1">## error: b</span>
@@ -636,7 +637,7 @@ Or we just have a bug in our code. Or:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="m">-1</span><span class="p">)</span>
 <span class="c1">## Warning in log(-1): NaNs produced</span>
 <span class="c1">## [1] NaN</span>
-<span class="nf">suppressWarnings</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="m">-1</span><span class="p">))</span>  <span class="c1"># yeah, yeah, we know what we&#39;re doing</span>
+<span class="nf">suppressWarnings</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="m">-1</span><span class="p">))</span><span class="w">  </span><span class="c1"># yeah, yeah, we know what we&#39;re doing</span>
 <span class="c1">## [1] NaN</span>
 </pre></div>
 </div>
@@ -658,7 +659,7 @@ in <code class="xref std std-numref docutils literal notranslate"><span class="p
 for some code debugging tips.</p>
 </section>
 <section id="repeated-evaluation">
-<span id="sec-loops"></span><h2><span class="section-number">8.3. </span>Repeated Evaluation<a class="headerlink" href="#repeated-evaluation" title="Permalink to this heading"></a></h2>
+<span id="sec-loops"></span><h2><span class="section-number">8.3. </span>Repeated Evaluation<a class="headerlink" href="#repeated-evaluation" title="Permalink to this heading">¶</a></h2>
 <p>And now for something completely different…
 time for the elephant in the room!</p>
 <p>We have been able to do without loops so far
@@ -681,35 +682,35 @@ for instance, when processing chunks of data streams.
 Also, an explicitly “looped” algorithm may occasionally
 have better<a class="footnote-reference brackets" href="#footcpp" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> time or memory complexity.</p>
 <section id="while">
-<h3><span class="section-number">8.3.1. </span><strong class="command">while</strong><a class="headerlink" href="#while" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">8.3.1. </span><strong class="command">while</strong><a class="headerlink" href="#while" title="Permalink to this heading">¶</a></h3>
 <p><strong class="command">if</strong> considers a given logical condition and thus determines
 whether to execute a given statement.
 On the other hand,</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">while </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>  <span class="c1"># single TRUE or FALSE, as in `if`</span>
-    <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">while </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="w">  </span><span class="c1"># single TRUE or FALSE, as in `if`</span>
+<span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>evaluates a given <code class="docutils literal notranslate"><span class="pre">expression</span></code> <em>as long as</em> the logical <code class="docutils literal notranslate"><span class="pre">condition</span></code> is true.
 Therefore, it is advisable to make the <code class="docutils literal notranslate"><span class="pre">condition</span></code> dependent upon
 some variable that can be modified by the <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">&lt;-</span> <span class="m">1</span>
-<span class="nf">while </span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d, &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
-    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span>
 <span class="p">}</span>
 <span class="c1">## 1, 2, 3,</span>
 </pre></div>
 </div>
 <p>Nested loops are of course possible too:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">&lt;-</span> <span class="m">1</span>
-<span class="nf">while </span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">j</span> <span class="o">&lt;-</span> <span class="m">1</span>
-    <span class="nf">while </span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d %d, &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
-        <span class="n">j</span> <span class="o">&lt;-</span> <span class="n">j</span> <span class="o">+</span> <span class="m">1</span>
-    <span class="p">}</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
-    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="m">1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="nf">while </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d %d, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">))</span>
+<span class="w">        </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span>
 <span class="p">}</span>
 <span class="c1">## 1 1, 1 2, 1 3, </span>
 <span class="c1">## 2 1, 2 2, 2 3,</span>
@@ -736,32 +737,32 @@ In particular, after some number of operations <span class="math notranslate noh
 we will find a cycle such that <span class="math notranslate nohighlight">\(X_k=X_1, X_{k+1}=X_2, \dots\)</span>.</p>
 </div></div></section>
 <section id="for">
-<h3><span class="section-number">8.3.2. </span><strong class="command">for</strong><a class="headerlink" href="#for" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">8.3.2. </span><strong class="command">for</strong><a class="headerlink" href="#for" title="Permalink to this heading">¶</a></h3>
 <p>The for-each loop:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">name</span> <span class="n">in</span> <span class="n">vector</span><span class="p">)</span>
-    <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vector</span><span class="p">)</span>
+<span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>takes each element, from the beginning to the end,
 in a given <code class="docutils literal notranslate"><span class="pre">vector</span></code>, assigns it some <code class="docutils literal notranslate"><span class="pre">name</span></code>, and evaluates the <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
 <p>Example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fridge</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;eggs&quot;</span><span class="p">)</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">food</span> <span class="n">in</span> <span class="n">fridge</span><span class="p">)</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s, &quot;</span><span class="p">,</span> <span class="n">food</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fridge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">food</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">fridge</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">food</span><span class="p">))</span>
 <span class="c1">## spam, spam, bacon, eggs,</span>
 </pre></div>
 </div>
 <p>One more:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">fridge</span><span class="p">))</span>  <span class="c1"># better: seq_along(fridge), see below</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s, &quot;</span><span class="p">,</span> <span class="n">fridge</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">fridge</span><span class="p">))</span><span class="w">  </span><span class="c1"># better: seq_along(fridge), see below</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fridge</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 <span class="c1">## spam, spam, bacon, eggs,</span>
 </pre></div>
 </div>
 <p>Just one more, promise:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">for </span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
-        <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d %d, &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%d %d, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">## 1 1, 1 2, 1 3, </span>
 <span class="c1">## 2 1, 2 2, 2 3,</span>
@@ -777,13 +778,13 @@ in a given <code class="docutils literal notranslate"><span class="pre">vector</
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Writing:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>is not necessarily safe, because if <code class="docutils literal notranslate"><span class="pre">x</span></code> is an empty vector, then:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">logical</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">logical</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 <span class="c1">## [1] NA</span>
 <span class="c1">## logical(0)</span>
 </pre></div>
@@ -800,13 +801,13 @@ wherever possible.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The model <strong class="command">for</strong> loop above is roughly equivalent to:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
-<span class="n">tmp_vector</span> <span class="o">&lt;-</span> <span class="n">vector</span>
-<span class="n">tmp_iter</span> <span class="o">&lt;-</span> <span class="m">1</span>
-<span class="nf">while </span><span class="p">(</span><span class="n">tmp_iter</span> <span class="o">&lt;=</span> <span class="nf">length</span><span class="p">(</span><span class="n">tmp_vector</span><span class="p">))</span> <span class="p">{</span>
-    <span class="n">name</span> <span class="o">&lt;-</span> <span class="n">tmp_vector</span><span class="p">[[</span><span class="n">tmp_iter</span><span class="p">]]</span>
-    <span class="n">expression</span>
-    <span class="n">tmp_iter</span> <span class="o">&lt;-</span> <span class="n">tmp_iter</span> <span class="o">+</span> <span class="m">1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span>
+<span class="n">tmp_vector</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vector</span>
+<span class="n">tmp_iter</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">tmp_iter</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">tmp_vector</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tmp_vector</span><span class="p">[[</span><span class="n">tmp_iter</span><span class="p">]]</span>
+<span class="w">    </span><span class="n">expression</span>
+<span class="w">    </span><span class="n">tmp_iter</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tmp_iter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -824,10 +825,10 @@ the loop can be applied on lists as well.</p>
 <p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> be a list and <strong class="command">f</strong> be a function.
 The following code generates the same result
 as <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x)</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">ret</span> <span class="o">&lt;-</span> <span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># a new list of length `n`</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-    <span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">]])</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w">  </span><span class="c1"># a new list of length `n`</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">    </span><span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">]])</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-example" id="id13">
@@ -840,12 +841,12 @@ as <strong class="command">Map</strong><code class="code docutils literal notran
 Here is the most basic version of
 <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">y)</span></code>.
 Note that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> might be of different lengths.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">ny</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">max</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
-<span class="n">ret</span> <span class="o">&lt;-</span> <span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-    <span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">nx</span><span class="p">)</span><span class="m">+1</span><span class="p">]],</span> <span class="n">y</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">ny</span><span class="p">)</span><span class="m">+1</span><span class="p">]])</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ny</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="w"> </span><span class="n">ny</span><span class="p">)</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">    </span><span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">nx</span><span class="p">)</span><span class="m">+1</span><span class="p">]],</span><span class="w"> </span><span class="n">y</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">ny</span><span class="p">)</span><span class="m">+1</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>Feel free to upgrade the above by adding a warning like
@@ -853,23 +854,23 @@ Note that <code class="docutils literal notranslate"><span class="pre">x</span><
 Also, rewrite it without the use of the modulo operators, `<strong class="command">%%</strong>`.</p>
 </div></div></section>
 <section id="break-and-next">
-<h3><span class="section-number">8.3.3. </span><strong class="command">break</strong> and <strong class="command">next</strong><a class="headerlink" href="#break-and-next" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">8.3.3. </span><strong class="command">break</strong> and <strong class="command">next</strong><a class="headerlink" href="#break-and-next" title="Permalink to this heading">¶</a></h3>
 <p><strong class="command">break</strong> can be used to escape the current loop.
 <strong class="command">next</strong> skips the remaining expressions and advances
 to the next iteration (to where the testing of
 the logical condition occurs).</p>
 <p>Here is a rather random example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span>
-<span class="n">s</span> <span class="o">&lt;-</span> <span class="m">0</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">e</span> <span class="o">&gt;</span> <span class="m">0.1</span><span class="p">)</span>
-        <span class="n">next</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span>
+<span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span>
+<span class="w">        </span><span class="n">next</span>
 
-    <span class="nf">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">e</span> <span class="o">&lt;</span> <span class="m">0.01</span><span class="p">)</span>
-        <span class="n">break</span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.01</span><span class="p">)</span>
+<span class="w">        </span><span class="n">break</span>
 
-    <span class="n">s</span> <span class="o">&lt;-</span> <span class="n">s</span> <span class="o">+</span> <span class="n">e</span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span>
 <span class="p">}</span>
 <span class="c1">## [1] 0.045556</span>
 <span class="c1">## [1] 0.04206</span>
@@ -885,19 +886,19 @@ the logical condition occurs).</p>
 that are less than or equal to 0.1 from the beginning,
 stopping at the first element less than 0.01.</p>
 <p>Note that we have used the frequently occurring design pattern:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
-        <span class="n">next</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+<span class="w">        </span><span class="n">next</span>
 
-    <span class="n">many_statements...</span>
+<span class="w">    </span><span class="n">many_statements...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>which is equivalent to:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="n">condition</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">many_statements...</span>
-    <span class="p">}</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="n">condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">many_statements...</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -907,23 +908,23 @@ stopping at the first element less than 0.01.</p>
 <p>(*)
 There is a third loop type,</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span>
-    <span class="n">expression</span>
+<span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>which is a shorthand for</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">while </span><span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span>
-    <span class="n">expression</span>
+<span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>i.e., it is a possibly infinite loop.
 Such loops are useful when implementing situations such as
 <em>do</em>-stuff-<em>until</em>-a-thing-happens,
 e.g., when we want to execute a command at least once.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">&lt;-</span> <span class="m">1</span>
-<span class="n">repeat</span> <span class="p">{</span>  <span class="c1"># while (TRUE)</span>
-    <span class="c1"># simulate dice casting until we throw &quot;1&quot;</span>
-    <span class="nf">if </span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span> <span class="n">break</span>  <span class="c1"># not an infinite loop after all</span>
-    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span><span class="m">+1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="n">repeat</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1"># while (TRUE)</span>
+<span class="w">    </span><span class="c1"># simulate dice casting until we throw &quot;1&quot;</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span><span class="w"> </span><span class="n">break</span><span class="w">  </span><span class="c1"># not an infinite loop after all</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="m">+1</span>
 <span class="p">}</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="c1">## [1] 6</span>
@@ -937,11 +938,11 @@ e.g., when we want to execute a command at least once.</p>
         
     </div><div class="proof-content">
 <p>What is wrong with the following code?</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">j</span> <span class="o">&lt;-</span> <span class="m">1</span>
-<span class="nf">while </span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">j</span> <span class="o">%%</span> <span class="m">2</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="n">next</span>
-    <span class="nf">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-    <span class="n">j</span> <span class="o">&lt;-</span> <span class="n">j</span> <span class="o">+</span> <span class="m">1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">j</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">%%</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="n">next</span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="w">    </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -952,32 +953,32 @@ e.g., when we want to execute a command at least once.</p>
         
     </div><div class="proof-content">
 <p>What about this one?</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">j</span> <span class="o">&lt;-</span> <span class="m">1</span>
-<span class="nf">while </span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">);</span>
-    <span class="n">j</span> <span class="o">&lt;-</span> <span class="n">j</span> <span class="o">+</span> <span class="m">1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">j</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="nf">while </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">10</span><span class="p">);</span>
+<span class="w">    </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
 </div></div></section>
 <section id="return">
-<h3><span class="section-number">8.3.4. </span><strong class="command">return</strong><a class="headerlink" href="#return" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">8.3.4. </span><strong class="command">return</strong><a class="headerlink" href="#return" title="Permalink to this heading">¶</a></h3>
 <p><strong class="command">return</strong>, when called from within a function,
 immediately yields a specified value and goes back to the caller.</p>
 <p>For example, here is a simple recursive function
 that flattens a given list:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">my_unlist</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">my_unlist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nf">if </span><span class="p">(</span><span class="nf">is.atomic</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="nf">return</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="nf">is.atomic</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="w">        </span><span class="nf">return</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-    <span class="c1"># so if we are here, x is definitely not atomic</span>
-    <span class="n">out</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
-    <span class="nf">for </span><span class="p">(</span><span class="n">e</span> <span class="n">in</span> <span class="n">x</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nf">my_unlist</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+<span class="w">    </span><span class="c1"># so if we are here, x is definitely not atomic</span>
+<span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span>
+<span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="w">        </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="nf">my_unlist</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
-    <span class="n">out</span>  <span class="c1"># or return(out); it&#39;s the last expression anyway, so not necessary</span>
+<span class="w">    </span><span class="n">out</span><span class="w">  </span><span class="c1"># or return(out); it&#39;s the last expression anyway, so not necessary</span>
 <span class="p">}</span>
 
-<span class="nf">my_unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="m">3</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="m">7</span><span class="o">:</span><span class="m">10</span><span class="p">)))))</span>
+<span class="nf">my_unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="o">:</span><span class="m">10</span><span class="p">)))))</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
 </pre></div>
 </div>
@@ -985,8 +986,8 @@ that flattens a given list:</p>
 are obligatory,</p>
 </section>
 <section id="a-note-on-time-and-space-complexity-of-algorithms">
-<span id="sec-time-complexity"></span><h3><span class="section-number">8.3.5. </span>A Note on Time and Space Complexity of Algorithms (*)<a class="headerlink" href="#a-note-on-time-and-space-complexity-of-algorithms" title="Permalink to this heading"></a></h3>
-<p>Analysis of algorithms (e.g., <span id="id4">[<a class="reference internal" href="999-bibliography.html#id58" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">9</a>, <a class="reference internal" href="999-bibliography.html#id29" title="Knuth, D.E. (1997).  The Art of Computer Programming I: Fundamental Algorithms. Addison-Wesley.">35</a>]</span>),
+<span id="sec-time-complexity"></span><h3><span class="section-number">8.3.5. </span>A Note on Time and Space Complexity of Algorithms (*)<a class="headerlink" href="#a-note-on-time-and-space-complexity-of-algorithms" title="Permalink to this heading">¶</a></h3>
+<p>Analysis of algorithms (e.g., <span id="id4">[<a class="reference internal" href="999-bibliography.html#id58" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">10</a>, <a class="reference internal" href="999-bibliography.html#id31" title="Knuth, D.E. (1997).  The Art of Computer Programming I: Fundamental Algorithms. Addison-Wesley.">36</a>]</span>),
 can give us a rough estimate of their run times
 or memory consumption as a function of the input data size,
 especially for <em>big</em> data.</p>
@@ -1038,14 +1039,14 @@ see, e.g., <strong class="command">help</strong><code class="code docutils liter
 will give us plenty of opportunities to implement many algorithms ourselves.
 This way, we can gain a lot of insights and intuitions.</p>
 <p>For instance, this is a <span class="math notranslate nohighlight">\(O(n)\)</span>-time algorithm:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-    <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>and this is one runs in <span class="math notranslate nohighlight">\(O(n^2)\)</span> time:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-    <span class="nf">for </span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-        <span class="n">expression</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">        </span><span class="n">expression</span>
 </pre></div>
 </div>
 <p>as long as, of course, the <code class="docutils literal notranslate"><span class="pre">expression</span></code> is rather primitive (e.g.,
@@ -1054,15 +1055,15 @@ operations on scalar variables).</p>
 quite complex and  lengthy operations can look pretty innocent
 (it is a glue language for rapid prototyping, after all).</p>
 <p>For example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-    <span class="nf">for </span><span class="p">(</span><span class="n">j</span> <span class="n">in</span> <span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-        <span class="n">z</span> <span class="o">&lt;-</span> <span class="n">z</span> <span class="o">+</span> <span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[[</span><span class="n">j</span><span class="p">]]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">[[</span><span class="n">j</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>can be seen as <span class="math notranslate nohighlight">\(O(n^3)\)</span> if each element in the lists <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>
 as well as <code class="docutils literal notranslate"><span class="pre">z</span></code> itself are atomic vectors of length <em>n</em>.</p>
 <p>Similarly,</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>is <span class="math notranslate nohighlight">\(O(n^2)\)</span> if <code class="docutils literal notranslate"><span class="pre">x</span></code> is a list of <em>n</em> atomic vectors each of length <em>n</em>.</p>
@@ -1070,16 +1071,16 @@ as well as <code class="docutils literal notranslate"><span class="pre">z</span>
 <p class="admonition-title">Note</p>
 <p>A quite common statistical scenario
 involves the generation of a data buffer of a fixed size:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ret</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">()</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="n">n</span><span class="p">)</span>
-    <span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="nf">generate_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># here: ret[[length(ret)+1]] &lt;- ...</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">()</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="w">    </span><span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">generate_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">  </span><span class="c1"># here: ret[[length(ret)+1]] &lt;- ...</span>
 </pre></div>
 </div>
 <p>This notation, however, involves the growing of the <code class="docutils literal notranslate"><span class="pre">ret</span></code> array
 in each iteration. Luckily, since R version 3.4.0,
 each such size extension has amortised <span class="math notranslate nohighlight">\(O(1)\)</span> time
 due to the fact that some more memory is internally reserved for its
-prospective growth (see, e.g., Chapter 17 of <span id="id5">[<a class="reference internal" href="999-bibliography.html#id58" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">9</a>]</span>).</p>
+prospective growth (dynamic arrays; see, e.g., Chapter 17 of <span id="id5">[<a class="reference internal" href="999-bibliography.html#id58" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">10</a>]</span>).</p>
 <p>However, it would still be better to pre-allocate the output vector
 and grant it the desired, final size already upon creation.</p>
 <p>Note that we can construct vectors of specific lengths and types
@@ -1092,9 +1093,9 @@ in an efficient way (more efficient than with <strong class="command">rep</stron
 <span class="c1">## [1] FALSE FALSE FALSE FALSE FALSE</span>
 <span class="nf">character</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] &quot;&quot; &quot;&quot;</span>
-<span class="nf">vector</span><span class="p">(</span><span class="s">&quot;numeric&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">)</span>
+<span class="nf">vector</span><span class="p">(</span><span class="s">&quot;numeric&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">)</span>
 <span class="c1">## [1] 0 0 0 0 0 0 0 0</span>
-<span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+<span class="nf">vector</span><span class="p">(</span><span class="s">&quot;list&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## NULL</span>
 <span class="c1">## </span>
@@ -1110,16 +1111,16 @@ start installing Apache Hadoop and Spark immediately.
 Some datasets can be processed on a chunk-by-chunk basis.</p>
 <p>R enables data stream handling (some can be of infinite length)
 through file connections, for example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">file</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://raw.githubusercontent.com/gagolews/teaching-data/&quot;</span><span class="p">,</span>
-    <span class="s">&quot;master/README.md&quot;</span><span class="p">),</span> <span class="n">open</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">)</span>  <span class="c1"># a big file, the biggest file ever</span>
-<span class="n">i</span> <span class="o">&lt;-</span> <span class="m">0</span>
-<span class="nf">while </span><span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">few_lines</span> <span class="o">&lt;-</span> <span class="nf">readLines</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>  <span class="c1"># read only four lines at a time</span>
-    <span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">few_lines</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="n">break</span>
-    <span class="n">i</span> <span class="o">&lt;-</span> <span class="n">i</span> <span class="o">+</span> <span class="nf">length</span><span class="p">(</span><span class="n">few_lines</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://raw.githubusercontent.com/gagolews/teaching-data/&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;master/README.md&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">open</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># a big file, the biggest file ever</span>
+<span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
+<span class="nf">while </span><span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">few_lines</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">readLines</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w">  </span><span class="c1"># read only four lines at a time</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">few_lines</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="n">break</span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">few_lines</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="nf">close</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># the number of lines</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">  </span><span class="c1"># the number of lines</span>
 <span class="c1">## [1] 93</span>
 </pre></div>
 </div>
@@ -1140,7 +1141,7 @@ to interact with such sources/targets.</p>
 </section>
 </section>
 <section id="exercises">
-<h2><span class="section-number">8.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">8.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
 <p>Note that, from now on, we should stay alert.
 Many, if not all, of the following tasks can still be implemented
 without the explicit use of the R loops, but
@@ -1168,6 +1169,7 @@ are lazy? What are their use cases?</p></li>
 <li><p>What is the difference between `<strong class="command">&amp;&amp;</strong>` and `<strong class="command">&amp;</strong>`?</p></li>
 <li><p>Can <strong class="command">while</strong> always be replaced with <strong class="command">for</strong>?
 What about the other way around?</p></li>
+<li><p>What is wrong with “<strong class="command">return</strong><code class="code docutils literal notranslate"> <span class="pre">(1+2)*3</span></code>”?</p></li>
 </ul>
 </div></div><div class="proof proof-type-exercise" id="id19">
 
@@ -1194,10 +1196,10 @@ in order to make them valid.</p>
     </div><div class="proof-content">
 <p>What can go wrong in the following code chunk, depending on
 the type and form of <code class="docutils literal notranslate"><span class="pre">x</span></code>? Consider as many scenarios as possible.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">&lt;-</span> <span class="m">0</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">)</span>
-        <span class="n">count</span> <span class="o">&lt;-</span> <span class="n">count</span> <span class="o">+</span> <span class="m">1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">count</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">count</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id21">
@@ -1290,7 +1292,7 @@ especially benefit from a rewrite in C or C++
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-18T09:57:43+1100.
+        Last updated on 2023-02-09T13:06:20+1100.
       </span>
 
 

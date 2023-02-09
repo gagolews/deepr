@@ -72,6 +72,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/proof.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -156,7 +157,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3. Logical Vectors</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#creating-logical-vectors">3.1. Creating Logical Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comparing-elements">3.2. Comparing Elements</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#vectorised-comparison-operators">3.2.1. Vectorised Comparison Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vectorised-relational-operators">3.2.1. Vectorised Relational Operators</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#testing-for-na-nan-and-inf">3.2.2. Testing for <code class="docutils literal notranslate"><span class="pre">NA</span></code>, <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, and <code class="docutils literal notranslate"><span class="pre">Inf</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dealing-with-floating-point-round-off-errors">3.2.3. Dealing with Floating Point Round-Off Errors (*)</a></li>
 </ul>
@@ -279,7 +280,7 @@
            <div itemprop="articleBody">
             
   <section class="tex2jax_ignore mathjax_ignore" id="logical-vectors">
-<span id="chap-logical"></span><h1><span class="section-number">3. </span>Logical Vectors<a class="headerlink" href="#logical-vectors" title="Permalink to this heading"></a></h1>
+<span id="chap-logical"></span><h1><span class="section-number">3. </span>Logical Vectors<a class="headerlink" href="#logical-vectors" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -294,22 +295,22 @@ are appreciated.</strong>
 <em>Although available online, it is a whole course;
 it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
-<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
 </div></blockquote>
 <p>There are three logical constants in R. Wait… how many?</p>
 <section id="creating-logical-vectors">
-<h2><span class="section-number">3.1. </span>Creating Logical Vectors<a class="headerlink" href="#creating-logical-vectors" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1. </span>Creating Logical Vectors<a class="headerlink" href="#creating-logical-vectors" title="Permalink to this heading">¶</a></h2>
 <p>R defines three logical constants:
 <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, and <code class="docutils literal notranslate"><span class="pre">NA</span></code> – meant to represent
 “yes”, “no”, and “???”, respectively.
 Each of them, when instantiated, is an atomic vector of length one.</p>
 <p>Some of the functions we introduced in the previous chapter can be used
 to generate logical vectors as well:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE FALSE FALSE    NA  TRUE FALSE</span>
-<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w"> </span><span class="n">each</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE FALSE    NA    NA</span>
-<span class="nf">sample</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">),</span> <span class="m">10</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0.8</span><span class="p">,</span> <span class="m">0.2</span><span class="p">))</span>
+<span class="nf">sample</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">),</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0.8</span><span class="p">,</span><span class="w"> </span><span class="m">0.2</span><span class="p">))</span>
 <span class="c1">##  [1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE</span>
 </pre></div>
 </div>
@@ -329,9 +330,9 @@ for discussion.</p>
 </div>
 </section>
 <section id="comparing-elements">
-<h2><span class="section-number">3.2. </span>Comparing Elements<a class="headerlink" href="#comparing-elements" title="Permalink to this heading"></a></h2>
-<section id="vectorised-comparison-operators">
-<h3><span class="section-number">3.2.1. </span>Vectorised Comparison Operators<a class="headerlink" href="#vectorised-comparison-operators" title="Permalink to this heading"></a></h3>
+<h2><span class="section-number">3.2. </span>Comparing Elements<a class="headerlink" href="#comparing-elements" title="Permalink to this heading">¶</a></h2>
+<section id="vectorised-relational-operators">
+<h3><span class="section-number">3.2.1. </span>Vectorised Relational Operators<a class="headerlink" href="#vectorised-relational-operators" title="Permalink to this heading">¶</a></h3>
 <p>Logical vectors frequently come into being
 as results of various <em>testing</em> activities.</p>
 <p>In particular, the binary operators:</p>
@@ -345,19 +346,19 @@ as results of various <em>testing</em> activities.</p>
 </ul>
 <p>compare the <em>corresponding</em> elements of two numeric vectors
 and output a logical vector.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1</span> <span class="o">&lt;</span> <span class="m">3</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">3</span>
 <span class="c1">## [1] TRUE</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="o">==</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">8</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">)</span>
 <span class="c1">## [1] FALSE  TRUE  TRUE FALSE</span>
-<span class="m">1</span><span class="o">:</span><span class="m">10</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="o">:</span><span class="m">1</span>
+<span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">10</span><span class="o">:</span><span class="m">1</span>
 <span class="c1">##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE</span>
 </pre></div>
 </div>
 <p>Thus, they operate in an elementwise manner. Moreover, the
 recycling rule is applied if necessary:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">3</span> <span class="o">&lt;</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span>  <span class="c1"># c(3, 3, 3, 3, 3) &lt; c(1, 2, 3, 4, 5)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">3</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="w">  </span><span class="c1"># c(3, 3, 3, 3, 3) &lt; c(1, 2, 3, 4, 5)</span>
 <span class="c1">## [1] FALSE FALSE FALSE  TRUE  TRUE</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="o">==</span> <span class="m">1</span><span class="o">:</span><span class="m">4</span>  <span class="c1"># c(1, 4, 1, 4) == c(1, 2, 3, 4)</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="w">  </span><span class="c1"># c(1, 4, 1, 4) == c(1, 2, 3, 4)</span>
 <span class="c1">## [1]  TRUE FALSE FALSE  TRUE</span>
 </pre></div>
 </div>
@@ -366,23 +367,23 @@ as the arithmetic operators `<strong class="command">+</strong>`, `<strong class
 compare <a class="reference internal" href="120-numeric.html#sec-op-arith"><span class="std std-numref">Section 2.4.1</span></a>.</p>
 </section>
 <section id="testing-for-na-nan-and-inf">
-<h3><span class="section-number">3.2.2. </span>Testing for <code class="docutils literal notranslate"><span class="pre">NA</span></code>, <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, and <code class="docutils literal notranslate"><span class="pre">Inf</span></code><a class="headerlink" href="#testing-for-na-nan-and-inf" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">3.2.2. </span>Testing for <code class="docutils literal notranslate"><span class="pre">NA</span></code>, <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, and <code class="docutils literal notranslate"><span class="pre">Inf</span></code><a class="headerlink" href="#testing-for-na-nan-and-inf" title="Permalink to this heading">¶</a></h3>
 <p>Comparisons against missing values and not-numbers yield <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.
 Therefore, instead of the incorrect <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">NA_reals_</span></code> or <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">NaN</span></code>,
 testing for missingness should rather
 be performed via a call to the vectorised <strong class="command">is.na</strong>
 function.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span> <span class="kc">Inf</span><span class="p">,</span> <span class="o">-</span><span class="kc">Inf</span><span class="p">,</span> <span class="kc">NaN</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
-<span class="nf">is.nan</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span> <span class="kc">Inf</span><span class="p">,</span> <span class="o">-</span><span class="kc">Inf</span><span class="p">,</span> <span class="kc">NaN</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<span class="nf">is.nan</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
-<span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">))</span>  <span class="c1"># works for logical vectors too</span>
+<span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># works for logical vectors too</span>
 <span class="c1">## [1] FALSE FALSE  TRUE FALSE</span>
 </pre></div>
 </div>
 <p>Moreover, <strong class="command">is.finite</strong> is noteworthy,
 because it returns <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> on <code class="docutils literal notranslate"><span class="pre">Inf</span></code>s, <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>s and <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">is.finite</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span> <span class="kc">Inf</span><span class="p">,</span> <span class="o">-</span><span class="kc">Inf</span><span class="p">,</span> <span class="kc">NaN</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">is.finite</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</span>
 </pre></div>
 </div>
@@ -390,7 +391,7 @@ because it returns <code class="docutils literal notranslate"><span class="pre">
 <strong class="command">is.nan</strong> and <strong class="command">is.infinite</strong>.</p>
 </section>
 <section id="dealing-with-floating-point-round-off-errors">
-<span id="sec-fp"></span><h3><span class="section-number">3.2.3. </span>Dealing with Floating Point Round-Off Errors (*)<a class="headerlink" href="#dealing-with-floating-point-round-off-errors" title="Permalink to this heading"></a></h3>
+<span id="sec-fp"></span><h3><span class="section-number">3.2.3. </span>Dealing with Floating Point Round-Off Errors (*)<a class="headerlink" href="#dealing-with-floating-point-round-off-errors" title="Permalink to this heading">¶</a></h3>
 <p>In mathematics, real numbers are merely an idealisation.
 In practice, however, it is impossible to store them with
 infinite precision (think <span class="math notranslate nohighlight">\(\pi=3.1415926535897932384626433...\)</span>):
@@ -421,7 +422,7 @@ are both acceptable.</p>
 </div>
 <p>Every numeric value takes 8 bytes (or equivalently 64 bits) of memory.
 We are, however, able to store only <em>about</em> 15-17 decimal digits:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="m">0.12345678901234567890123456789012345678901234</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="m">22</span><span class="p">)</span>  <span class="c1"># 22 is max</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="m">0.12345678901234567890123456789012345678901234</span><span class="p">,</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">22</span><span class="p">)</span><span class="w">  </span><span class="c1"># 22 is max</span>
 <span class="c1">## [1] 0.1234567890123456773699</span>
 </pre></div>
 </div>
@@ -435,19 +436,19 @@ being written in the computer-friendly <em>binary</em>, not human-aligned
 as a finite series of reciprocals of powers of 2
 (it holds <span class="math notranslate nohighlight">\(0.1=2^{-4}+2^{-5}+2^{-8}+2^{-9}+\dots\)</span>).
 This leads to surprising results such as:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0.1</span> <span class="o">+</span> <span class="m">0.1</span> <span class="o">+</span> <span class="m">0.1</span> <span class="o">==</span> <span class="m">0.3</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0.3</span>
 <span></span><span class="c1">## [1] FALSE</span>
 </pre></div>
 </div>
 <p>Despite the fact that what follows does not <em>show</em> anything
 suspicious:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.1</span> <span class="o">+</span> <span class="m">0.1</span> <span class="o">+</span> <span class="m">0.1</span><span class="p">,</span> <span class="m">0.3</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">)</span>
 <span></span><span class="c1">## [1] 0.1 0.3 0.3</span>
 </pre></div>
 </div>
 <p>Printing involves rounding, hence, in the above context, is misleading.
 Above, we have something more like:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.1</span> <span class="o">+</span> <span class="m">0.1</span> <span class="o">+</span> <span class="m">0.1</span><span class="p">,</span> <span class="m">0.3</span><span class="p">),</span> <span class="n">digits</span><span class="o">=</span><span class="m">22</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">22</span><span class="p">)</span>
 <span></span><span class="c1">## [1] 0.1000000000000000055511 0.3000000000000000444089</span>
 <span class="c1">## [3] 0.2999999999999999888978</span>
 </pre></div>
@@ -456,7 +457,7 @@ Above, we have something more like:</p>
 <li><p>All integers between <span class="math notranslate nohighlight">\(-2^{53}\)</span> and <span class="math notranslate nohighlight">\(2^{53}\)</span> all stored
 exactly – this is good news.
 However, the next integer is beyond the representable range:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">2</span><span class="o">^</span><span class="m">53</span> <span class="o">+</span> <span class="m">1</span> <span class="o">==</span> <span class="m">2</span><span class="o">^</span><span class="m">53</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span>
 <span></span><span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
@@ -465,16 +466,16 @@ However, the next integer is beyond the representable range:</p>
 operations may matter, in particular, the associativity
 property may be violated when dealing with numbers of different orders
 of magnitude:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">2</span><span class="o">^</span><span class="m">53</span> <span class="o">+</span> <span class="m">2</span><span class="o">^</span><span class="m">-53</span> <span class="o">-</span> <span class="m">2</span><span class="o">^</span><span class="m">53</span> <span class="o">-</span> <span class="m">2</span><span class="o">^</span><span class="m">-53</span>  <span class="c1"># should be == 0.0</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">-53</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">-53</span><span class="w">  </span><span class="c1"># should be == 0.0</span>
 <span></span><span class="c1">## [1] -1.1102e-16</span>
 </pre></div>
 </div>
 </li>
 <li><p>Some numbers may just be just too large, too small, or too close to zero
 to be represented exactly:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="p">((</span><span class="m">1023-52</span><span class="p">)</span><span class="o">:</span><span class="m">1023</span><span class="p">)),</span> <span class="nf">sum</span><span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="p">((</span><span class="m">1023-53</span><span class="p">)</span><span class="o">:</span><span class="m">1023</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="p">((</span><span class="m">1023-52</span><span class="p">)</span><span class="o">:</span><span class="m">1023</span><span class="p">)),</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="p">((</span><span class="m">1023-53</span><span class="p">)</span><span class="o">:</span><span class="m">1023</span><span class="p">)))</span>
 <span></span><span class="c1">## [1] 1.7977e+308         Inf</span>
-<span></span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="p">(</span><span class="m">-1022-52</span><span class="p">),</span> <span class="m">2</span><span class="o">^</span><span class="p">(</span><span class="m">-1022-53</span><span class="p">))</span>
+<span></span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="p">(</span><span class="m">-1022-52</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="p">(</span><span class="m">-1022-53</span><span class="p">))</span>
 <span></span><span class="c1">## [1] 4.9407e-324  0.0000e+00</span>
 </pre></div>
 </div>
@@ -485,8 +486,8 @@ to be represented exactly:</p>
 <p>The double-precision floating point format (IEEE 754)
 is not specific to R: it is used by most other computing environments,
 including Python and C++.</p>
-<p>For discussion, see <span id="id2">[<a class="reference internal" href="999-bibliography.html#id35" title="Goldberg, D. (1991).  What every computer scientist should know about floating-point arithmetic. ACM Computing Surveys, 21(1):5–48. URL: https://perso.ens-lyon.fr/jean-michel.muller/goldberg.pdf.">27</a>, <a class="reference internal" href="999-bibliography.html#id34" title="Higham, N.J. (2002).  Accuracy and Stability of Numerical Algorithms. SIAM, Philadelphia, PA. DOI: 10.1137/1.9780898718027.">30</a>, <a class="reference internal" href="999-bibliography.html#id30" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">34</a>]</span>
-(<span id="id3">[<a class="reference internal" href="999-bibliography.html#id37" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">26</a>]</span> can be of particular interest
+<p>For discussion, see <span id="id2">[<a class="reference internal" href="999-bibliography.html#id37" title="Goldberg, D. (1991).  What every computer scientist should know about floating-point arithmetic. ACM Computing Surveys, 21(1):5–48. URL: https://perso.ens-lyon.fr/jean-michel.muller/goldberg.pdf.">28</a>, <a class="reference internal" href="999-bibliography.html#id36" title="Higham, N.J. (2002).  Accuracy and Stability of Numerical Algorithms. SIAM, Philadelphia, PA. DOI: 10.1137/1.9780898718027.">31</a>, <a class="reference internal" href="999-bibliography.html#id32" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">35</a>]</span>
+(<span id="id3">[<a class="reference internal" href="999-bibliography.html#id39" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">27</a>]</span> can be of particular interest
 to the general statistical/data analysis audience).</p>
 </div>
 <p>Can we do anything about these issues?</p>
@@ -500,7 +501,7 @@ careful with comparisons, especially involving testing for
 equality, `<strong class="command">==</strong>`.</p>
 <p>The sole fact that <span class="math notranslate nohighlight">\(\sin \pi = 0\)</span>, mathematically speaking,
 does not mean that we should expect that:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>
 <span class="c1">## [1] FALSE</span>
 </pre></div>
 </div>
@@ -517,7 +518,7 @@ but obviously cannot be applied if <span class="math notranslate nohighlight">\(
 <p>and determining if these are less than some assumed error margin,
 <span class="math notranslate nohighlight">\(\varepsilon&gt;0\)</span>, say, <span class="math notranslate nohighlight">\(10^{-8}\)</span> or <span class="math notranslate nohighlight">\(2^{-26}\)</span>.</p>
 <p>For example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">abs</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">)</span> <span class="o">-</span> <span class="m">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="m">2</span><span class="o">^</span><span class="m">-26</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">abs</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">-26</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
@@ -525,7 +526,7 @@ but obviously cannot be applied if <span class="math notranslate nohighlight">\(
 <p class="admonition-title">Note</p>
 <p>Note that rounding can sometimes have a similar effect as testing for
 almost-equality in terms of the absolute error.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">round</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">),</span> <span class="m">8</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">round</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">),</span><span class="w"> </span><span class="m">8</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
@@ -543,10 +544,10 @@ pinpoint the <em>exact</em> solution.</p>
 </section>
 </section>
 <section id="logical-operations">
-<h2><span class="section-number">3.3. </span>Logical Operations<a class="headerlink" href="#logical-operations" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.3. </span>Logical Operations<a class="headerlink" href="#logical-operations" title="Permalink to this heading">¶</a></h2>
 <section id="vectorised-logical-operators">
-<h3><span class="section-number">3.3.1. </span>Vectorised Logical Operators<a class="headerlink" href="#vectorised-logical-operators" title="Permalink to this heading"></a></h3>
-<p>The comparison operators such as `<strong class="command">==</strong>` and `<strong class="command">&gt;</strong>`
+<h3><span class="section-number">3.3.1. </span>Vectorised Logical Operators<a class="headerlink" href="#vectorised-logical-operators" title="Permalink to this heading">¶</a></h3>
+<p>The relational operators such as `<strong class="command">==</strong>` and `<strong class="command">&gt;</strong>`
 accept only <em>two</em> arguments. Their chaining is forbidden;
 a test which we would mathematically write
 as <span class="math notranslate nohighlight">\(0 \le x \le 1\)</span> (or <span class="math notranslate nohighlight">\(x\in[0,1]\)</span>) cannot be expressed
@@ -564,14 +565,14 @@ is one and only one of the predicates true?).</p></li>
 </ul>
 <p>They again act elementwisely and implement the recycling rule if necessary
 (and applicable).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">-0.25</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">100</span><span class="p">)</span>
-<span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="m">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="m">1</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">-0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE</span>
-<span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">1</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE</span>
-<span class="o">!</span><span class="p">((</span><span class="n">x</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">1</span><span class="p">))</span>
+<span class="o">!</span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE</span>
-<span class="nf">xor</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="m">-1</span><span class="p">,</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="m">1</span><span class="p">)</span>
+<span class="nf">xor</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE</span>
 </pre></div>
 </div>
@@ -584,7 +585,7 @@ which we discuss in <a class="reference internal" href="180-flow.html#sec-short-
 </div>
 </section>
 <section id="operator-precedence-revisited">
-<h3><span class="section-number">3.3.2. </span>Operator Precedence Revisited<a class="headerlink" href="#operator-precedence-revisited" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">3.3.2. </span>Operator Precedence Revisited<a class="headerlink" href="#operator-precedence-revisited" title="Permalink to this heading">¶</a></h3>
 <p>The operators introduced in this chapter have lower precedence than the
 arithmetic ones. In particular, the binary `<strong class="command">+</strong>`
 and `<strong class="command">-</strong>`. Calling <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Syntax&quot;)</span></code> reveals
@@ -603,7 +604,7 @@ as follows:</p>
 </ol>
 </section>
 <section id="dealing-with-missingness">
-<h3><span class="section-number">3.3.3. </span>Dealing with Missingness<a class="headerlink" href="#dealing-with-missingness" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">3.3.3. </span>Dealing with Missingness<a class="headerlink" href="#dealing-with-missingness" title="Permalink to this heading">¶</a></h3>
 <p>Operations involving missing values follow the principles
 of the Łukasiewicz’s three-valued logic, which is based on common sense.
 For instance, “<code class="docutils literal notranslate"><span class="pre">NA</span> <span class="pre">|</span> <span class="pre">TRUE</span></code>” is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, because <em>or</em> needs at least one
@@ -612,30 +613,30 @@ On the other hand, “<code class="docutils literal notranslate"><span class="pr
 the result would be different depending on what we substituted <code class="docutils literal notranslate"><span class="pre">NA</span></code> for.</p>
 <p>Let us take a moment to contemplate the operations’ <em>truth tables</em>
 for all the possible combinations of inputs:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span>  <span class="kc">TRUE</span><span class="p">,</span>  <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span>    <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
-<span class="n">v</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span>   <span class="kc">NA</span><span class="p">,</span>    <span class="kc">NA</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w">  </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">  </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w">    </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
+<span class="n">v</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w">   </span><span class="kc">NA</span><span class="p">,</span><span class="w">    </span><span class="kc">NA</span><span class="p">)</span>
 <span class="o">!</span><span class="n">u</span>
 <span class="c1">## [1] FALSE  TRUE    NA FALSE  TRUE    NA FALSE  TRUE    NA</span>
-<span class="n">u</span> <span class="o">&amp;</span> <span class="n">v</span>
+<span class="n">u</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">v</span>
 <span class="c1">## [1]  TRUE FALSE    NA FALSE FALSE FALSE    NA FALSE    NA</span>
-<span class="n">u</span> <span class="o">|</span> <span class="n">v</span>
+<span class="n">u</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">v</span>
 <span class="c1">## [1]  TRUE  TRUE  TRUE  TRUE FALSE    NA  TRUE    NA    NA</span>
-<span class="nf">xor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="nf">xor</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
 <span class="c1">## [1] FALSE  TRUE    NA  TRUE FALSE    NA    NA    NA    NA</span>
 </pre></div>
 </div>
 </section>
 <section id="aggregating-with-all-any-and-sum">
-<h3><span class="section-number">3.3.4. </span>Aggregating with <strong class="command">all</strong>, <strong class="command">any</strong>, and <strong class="command">sum</strong><a class="headerlink" href="#aggregating-with-all-any-and-sum" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">3.3.4. </span>Aggregating with <strong class="command">all</strong>, <strong class="command">any</strong>, and <strong class="command">sum</strong><a class="headerlink" href="#aggregating-with-all-any-and-sum" title="Permalink to this heading">¶</a></h3>
 <p>Just like in the case of numeric vectors,
 we can summarise the contents of logical sequences.</p>
 <p><strong class="command">all</strong> tests whether every element in a logical vector
 is equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and <strong class="command">any</strong> determines if there exists
 an element that is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">10000</span><span class="p">)</span>
-<span class="nf">all</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="m">0.2</span><span class="p">)</span>  <span class="c1"># are all values in x &lt;= 0.2?</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">10000</span><span class="p">)</span>
+<span class="nf">all</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span><span class="w">  </span><span class="c1"># are all values in x &lt;= 0.2?</span>
 <span class="c1">## [1] FALSE</span>
-<span class="nf">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="m">0.2</span><span class="p">)</span>  <span class="c1"># is there at least one element in x that is &lt;= 0.2?</span>
+<span class="nf">any</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span><span class="w">  </span><span class="c1"># is there at least one element in x that is &lt;= 0.2?</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
@@ -645,20 +646,20 @@ an element that is <code class="docutils literal notranslate"><span class="pre">
 with “<code class="docutils literal notranslate"><span class="pre">==</span></code>”. This is because the latter, as we have said above,
 is itself vectorised: it does <em>not</em> test whether a vector <em>as a whole</em>
 is equal to another one.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">==</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span>  <span class="c1"># elementwise equal</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span>
+<span class="n">z</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="w">  </span><span class="c1"># elementwise equal</span>
 <span class="c1">## [1] TRUE TRUE TRUE</span>
-<span class="nf">all</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>  <span class="c1"># elementwise equal summarised</span>
+<span class="nf">all</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># elementwise equal summarised</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
 <p>However, let us keep in mind the warning about the testing for <em>exact</em>
 equality of floating-point numbers stated in <a class="reference internal" href="#sec-fp"><span class="std std-numref">Section 3.2.3</span></a>.
 Sometimes, considering absolute or relative errors might be more appropriate.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">sin</span><span class="p">((</span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="p">)</span><span class="o">*</span><span class="kc">pi</span><span class="p">)</span>  <span class="c1"># sin(0), sin(pi), sin(2*pi), ..., sin(10*pi)</span>
-<span class="nf">all</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="m">0.0</span><span class="p">)</span>  <span class="c1"># danger zone! please don&#39;t...</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sin</span><span class="p">((</span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="p">)</span><span class="o">*</span><span class="kc">pi</span><span class="p">)</span><span class="w">  </span><span class="c1"># sin(0), sin(pi), sin(2*pi), ..., sin(10*pi)</span>
+<span class="nf">all</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0.0</span><span class="p">)</span><span class="w">  </span><span class="c1"># danger zone! please don&#39;t...</span>
 <span class="c1">## [1] FALSE</span>
-<span class="nf">all</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="m">0.0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="m">1e-9</span><span class="p">)</span>  <span class="c1"># are the absolute errors negligible?</span>
+<span class="nf">all</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1e-9</span><span class="p">)</span><span class="w">  </span><span class="c1"># are the absolute errors negligible?</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
@@ -667,14 +668,14 @@ Sometimes, considering absolute or relative errors might be more appropriate.</p
 Taken into account that it interprets <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> as numeric <code class="docutils literal notranslate"><span class="pre">1</span></code>
 and <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> as <code class="docutils literal notranslate"><span class="pre">0</span></code> (more on this in <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a>),
 it will give us the number of elements equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="m">0.2</span><span class="p">)</span>  <span class="c1"># how many elements in x are &lt;= 0.2?</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span><span class="w">  </span><span class="c1"># how many elements in x are &lt;= 0.2?</span>
 <span class="c1">## [1] 1998</span>
 </pre></div>
 </div>
 <p>Also, by computing <strong class="command">sum</strong><code class="code docutils literal notranslate"><span class="pre">(x)/</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>,
 we can obtain the proportion (fraction) of values equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> in <code class="docutils literal notranslate"><span class="pre">x</span></code>.
 Equivalently:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="m">0.2</span><span class="p">)</span>  <span class="c1"># proportion of elements &lt;= 0.2</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span><span class="w">  </span><span class="c1"># proportion of elements &lt;= 0.2</span>
 <span class="c1">## [1] 0.1998</span>
 </pre></div>
 </div>
@@ -683,7 +684,7 @@ Equivalently:</p>
 0.2 (20%), but with randomness we can never be sure.</p>
 </section>
 <section id="simplifying-predicates">
-<h3><span class="section-number">3.3.5. </span>Simplifying Predicates<a class="headerlink" href="#simplifying-predicates" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">3.3.5. </span>Simplifying Predicates<a class="headerlink" href="#simplifying-predicates" title="Permalink to this heading">¶</a></h3>
 <p>Each aspiring programmer needs to become fluent with the rules
 governing the transformations of logical conditions,
 for example, that the negation of “<code class="docutils literal notranslate"><span class="pre">(x</span> <span class="pre">&gt;=</span> <span class="pre">0)</span> <span class="pre">&amp;</span> <span class="pre">(x</span> <span class="pre">&lt;</span> <span class="pre">1)</span></code>”
@@ -729,7 +730,7 @@ simplify the following expressions:</p>
 </div></div></section>
 </section>
 <section id="choosing-elements-with-ifelse">
-<h2><span class="section-number">3.4. </span>Choosing Elements with <strong class="command">ifelse</strong><a class="headerlink" href="#choosing-elements-with-ifelse" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.4. </span>Choosing Elements with <strong class="command">ifelse</strong><a class="headerlink" href="#choosing-elements-with-ifelse" title="Permalink to this heading">¶</a></h2>
 <p>The <strong class="command">ifelse</strong> function is a vectorised version
 of the scalar <strong class="command">if</strong>…<strong class="command">else</strong> conditional statement
 which we will do without for as long as until <a class="reference internal" href="180-flow.html#chap-flow"><span class="std std-numref">Chapter 8</span></a>.</p>
@@ -749,24 +750,24 @@ f_i &amp; \text{if } l_i \text{ is FALSE }. \\
 <p>In other words, the <span class="math notranslate nohighlight">\(i\)</span>-th element of the result vector
 is equal to <span class="math notranslate nohighlight">\(t_i\)</span> if <span class="math notranslate nohighlight">\(l_i\)</span> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and to <span class="math notranslate nohighlight">\(f_i\)</span> otherwise.</p>
 <p>For example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">6</span><span class="p">))</span>  <span class="c1"># example vector</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">6</span><span class="p">))</span><span class="w">  </span><span class="c1"># example vector</span>
 <span class="c1">## [1] -0.560476 -0.230177  1.558708  0.070508  0.129288  1.715065</span>
-<span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="m">0</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">-</span><span class="n">z</span><span class="p">)</span>  <span class="c1"># like abs(z)</span>
+<span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">z</span><span class="p">)</span><span class="w">  </span><span class="c1"># like abs(z)</span>
 <span class="c1">## [1] 0.560476 0.230177 1.558708 0.070508 0.129288 1.715065</span>
 </pre></div>
 </div>
 <p>or:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">6</span><span class="p">))</span>  <span class="c1"># example vector</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">6</span><span class="p">))</span><span class="w">  </span><span class="c1"># example vector</span>
 <span class="c1">## [1]  0.46092 -1.26506 -0.68685 -0.44566  1.22408  0.35981</span>
-<span class="p">(</span><span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">6</span><span class="p">))</span>  <span class="c1"># example vector</span>
+<span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">6</span><span class="p">))</span><span class="w">  </span><span class="c1"># example vector</span>
 <span class="c1">## [1]  0.40077  0.11068 -0.55584  1.78691  0.49785 -1.96662</span>
-<span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>   <span class="c1"># like pmax(x, y)</span>
+<span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">   </span><span class="c1"># like pmax(x, y)</span>
 <span class="c1">## [1]  0.46092  0.11068 -0.55584  1.78691  1.22408  0.35981</span>
 </pre></div>
 </div>
 <p>By now, we should not be surprised that the recycling rule is fired up
 if necessary:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">,</span> <span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>  <span class="c1"># squares of positive xs and 0 otherwise</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">  </span><span class="c1"># squares of positive xs and 0 otherwise</span>
 <span class="c1">## [1] 0.21244 0.00000 0.00000 0.00000 1.49838 0.12947</span>
 </pre></div>
 </div>
@@ -775,7 +776,7 @@ if necessary:</p>
 <p>Keep in mind that all arguments are evaluated in their entirety before
 deciding on which element should be selected.
 Therefore, the following call will generate a warning:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="m">0</span><span class="p">,</span> <span class="nf">log</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="kc">NA_real_</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">z</span><span class="p">),</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">)</span>
 <span class="c1">## Warning in log(z): NaNs produced</span>
 <span class="c1">## [1]       NA       NA  0.44386 -2.65202 -2.04571  0.53945</span>
 </pre></div>
@@ -783,7 +784,7 @@ Therefore, the following call will generate a warning:</p>
 <p>This is because with <strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(z)</span></code>,
 we are computing the logarithms of negative values
 anyway. To fix this, we can write:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="m">0</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">))</span>
 <span class="c1">## [1]       NA       NA  0.44386 -2.65202 -2.04571  0.53945</span>
 </pre></div>
 </div>
@@ -799,9 +800,9 @@ expression.</p>
     </div><div class="proof-content">
 <p>A version of
 <strong class="command">pmax</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">pmax</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y),</span> <span class="pre">z)</span></code> can be written as:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">,</span>
-    <span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
-    <span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span>
+<span class="w">    </span><span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">),</span>
+<span class="w">    </span><span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="c1">## [1] 0.46092 0.11068 1.55871 1.78691 1.22408 1.71506</span>
 </pre></div>
@@ -809,8 +810,8 @@ expression.</p>
 <p>However, determining the three intermediate logical vectors is not necessary;
 we can save one call to `<strong class="command">&gt;=</strong>` by introducing an auxiliary
 variable:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xy</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="n">xy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">xy</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">xy</span><span class="p">)</span>
 <span class="c1">## [1] 0.46092 0.11068 1.55871 1.78691 1.22408 1.71506</span>
 </pre></div>
 </div>
@@ -823,15 +824,15 @@ variable:</p>
 <p><a class="reference internal" href="#fig-ex-mixture"><span class="std std-numref">Figure 3.1</span></a>  depicts a realisation of the mixture <span class="math notranslate nohighlight">\(Z=0.2 X + 0.8 Y\)</span>
 of two normal distributions <span class="math notranslate nohighlight">\(X\sim\mathrm{N}(-2, 0.5)\)</span>
 and <span class="math notranslate nohighlight">\(Y\sim\mathrm{N}(3, 1)\)</span>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&lt;-</span> <span class="m">100000</span>
-<span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="m">0.2</span><span class="p">,</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">-2</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
-<span class="nf">hist</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">breaks</span><span class="o">=</span><span class="m">101</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100000</span>
+<span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ifelse</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="m">101</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id9">
 <span id="fig-ex-mixture"></span><img alt="../_images/ex-mixture-1.png" src="../_images/ex-mixture-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 3.1 </span><span class="caption-text">A mixture of two Gaussians generated with <strong class="command">ifelse</strong></span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Figure 3.1 </span><span class="caption-text">A mixture of two Gaussians generated with <strong class="command">ifelse</strong></span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>In other words, we generated a variate from
@@ -848,13 +849,13 @@ and <span class="math notranslate nohighlight">\(Y\sim\mathrm{N}(116, 8)\)</span
 then the scaled-shifted <span class="math notranslate nohighlight">\(\sigma X+\mu\)</span> is distributed
 <span class="math notranslate nohighlight">\(\mathrm{N}(\mu, \sigma)\)</span>,
 the above can be equivalently written as:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="m">0.2</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span><span class="o">*</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="o">+</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="m">-2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span>
+<span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="o">*</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></div></section>
 <section id="exercises">
-<h2><span class="section-number">3.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
 <div class="proof proof-type-exercise" id="id10">
 
     <div class="proof-title">
@@ -883,7 +884,7 @@ How to fix this?</p></li>
 <li><p>What is the purpose of very specific functions such as
 <strong class="command">log1p</strong> and <strong class="command">expm1</strong> (see their
 help page) and many other ones listed in, e.g., the GNU GSL library
-<span id="id5">[<a class="reference internal" href="999-bibliography.html#id27" title="Galassi, M., Theiler, J., et al. (2021).  GNU Scientific Library Reference Manual. URL: http://www.gnu.org/software/gsl/.">23</a>]</span>?
+<span id="id5">[<a class="reference internal" href="999-bibliography.html#id29" title="Galassi, M., Theiler, J., et al. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">24</a>]</span>?
 Is our referring to them a violation of the beloved
 “let us be minimalist” approach?</p></li>
 <li><p>If we know that <span class="math notranslate nohighlight">\(x\)</span> may be subject to error,
@@ -894,6 +895,15 @@ how to test whether <span class="math notranslate nohighlight">\(x&gt;0\)</span>
 
     <div class="proof-title">
         <span class="proof-type">Exercise 3.5</span>
+        
+    </div><div class="proof-content">
+<p>What is the difference between <strong class="command">all</strong> and <strong class="command">isTRUE</strong>?
+What about `<strong class="command">==</strong>`, <strong class="command">identical</strong>,
+and <strong class="command">all.equal</strong>? Is the last one properly vectorised?</p>
+</div></div><div class="proof proof-type-exercise" id="id12">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 3.6</span>
         
     </div><div class="proof-content">
 <p>Compute the cross-entropy loss between a numeric vector <span class="math notranslate nohighlight">\(\boldsymbol{p}\)</span> with values in the interval <span class="math notranslate nohighlight">\((0, 1)\)</span>
@@ -968,7 +978,7 @@ operation chains.</p>
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-18T09:57:43+1100.
+        Last updated on 2023-02-09T13:06:20+1100.
       </span>
 
 

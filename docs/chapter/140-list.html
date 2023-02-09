@@ -72,6 +72,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/proof.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -282,7 +283,7 @@
            <div itemprop="articleBody">
             
   <section class="tex2jax_ignore mathjax_ignore" id="lists-and-attributes">
-<span id="chap-list"></span><h1><span class="section-number">4. </span>Lists and Attributes<a class="headerlink" href="#lists-and-attributes" title="Permalink to this heading"></a></h1>
+<span id="chap-list"></span><h1><span class="section-number">4. </span>Lists and Attributes<a class="headerlink" href="#lists-and-attributes" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -297,7 +298,7 @@ are appreciated.</strong>
 <em>Although available online, it is a whole course;
 it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
-<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
 </div></blockquote>
 <p>After two brain-teasing chapters, it is time to cool it down a little.
 In this more technical part, we will introduce lists, which serve
@@ -307,7 +308,7 @@ with a number of optional attributes, thanks to which we will not only
 be able to label elements in any vector, but also – later – introduce
 new complex data types such as matrices and data frames.</p>
 <section id="type-hierarchy-and-conversion">
-<span id="sec-type-hierarchy"></span><h2><span class="section-number">4.1. </span>Type Hierarchy and Conversion<a class="headerlink" href="#type-hierarchy-and-conversion" title="Permalink to this heading"></a></h2>
+<span id="sec-type-hierarchy"></span><h2><span class="section-number">4.1. </span>Type Hierarchy and Conversion<a class="headerlink" href="#type-hierarchy-and-conversion" title="Permalink to this heading">¶</a></h2>
 <p>So far, we were dealing with three types of atomic vectors:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">logical</span></code> (<a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>),</p></li>
@@ -318,11 +319,11 @@ rest assured that they will be covered in detail very soon; see
 </ol>
 <p>To determine the type of an object programmatically,
 we can call the <strong class="command">typeof</strong> function.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
 <span class="c1">## [1] &quot;double&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span>
 <span class="c1">## [1] &quot;logical&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bacon&quot;</span><span class="p">,</span> <span class="s">&quot;gluten-free spam&quot;</span><span class="p">))</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gluten-free spam&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;character&quot;</span>
 </pre></div>
 </div>
@@ -341,13 +342,13 @@ In most practical cases, this is a technical detail which
 we can safely ignore; compare also the <strong class="command">mode</strong> function.</p>
 </div>
 <section id="explicit-type-casting">
-<h3><span class="section-number">4.1.1. </span>Explicit Type Casting<a class="headerlink" href="#explicit-type-casting" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.1.1. </span>Explicit Type Casting<a class="headerlink" href="#explicit-type-casting" title="Permalink to this heading">¶</a></h3>
 <p>We can use functions such as <strong class="command">as.logical</strong>,
 <strong class="command">as.numeric</strong>, and <strong class="command">as.character</strong> to <em>coerce</em> (convert)
 given objects to the corresponding types.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
 <span class="c1">## [1]  1  0 NA  1 NA  0</span>
-<span class="nf">as.logical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="o">-</span><span class="kc">Inf</span><span class="p">,</span> <span class="kc">NaN</span><span class="p">))</span>
+<span class="nf">as.logical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">))</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE    NA  TRUE    NA</span>
 </pre></div>
 </div>
@@ -369,32 +370,32 @@ given objects to the corresponding types.</p>
 is commonly applied in other programming languages as well.</p>
 </div>
 <p>Moreover, in the case of the conversion involving character strings, we have:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.character</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.character</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
 <span class="c1">## [1] &quot;TRUE&quot;  &quot;FALSE&quot; NA      &quot;TRUE&quot;  NA      &quot;FALSE&quot;</span>
-<span class="nf">as.character</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="o">-</span><span class="kc">Inf</span><span class="p">,</span> <span class="kc">NaN</span><span class="p">))</span>
+<span class="nf">as.character</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">))</span>
 <span class="c1">## [1] &quot;-2&quot;   &quot;-1&quot;   &quot;0&quot;    &quot;1&quot;    &quot;2&quot;    &quot;3&quot;    NA     &quot;-Inf&quot; &quot;NaN&quot;</span>
-<span class="nf">as.logical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;TRUE&quot;</span><span class="p">,</span> <span class="s">&quot;True&quot;</span><span class="p">,</span> <span class="s">&quot;true&quot;</span><span class="p">,</span> <span class="s">&quot;T&quot;</span><span class="p">,</span>
-             <span class="s">&quot;FALSE&quot;</span><span class="p">,</span> <span class="s">&quot;False&quot;</span><span class="p">,</span> <span class="s">&quot;false&quot;</span><span class="p">,</span> <span class="s">&quot;F&quot;</span><span class="p">,</span>
-             <span class="s">&quot;anything other than these&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">))</span>
+<span class="nf">as.logical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;TRUE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;True&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;T&quot;</span><span class="p">,</span>
+<span class="w">             </span><span class="s">&quot;FALSE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;False&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;F&quot;</span><span class="p">,</span>
+<span class="w">             </span><span class="s">&quot;anything other than these&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span><span class="p">))</span>
 <span class="c1">##  [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE    NA    NA</span>
-<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="s">&quot;-1.23e4&quot;</span><span class="p">,</span> <span class="s">&quot;pi&quot;</span><span class="p">,</span> <span class="s">&quot;2+2&quot;</span><span class="p">,</span> <span class="s">&quot;NaN&quot;</span><span class="p">,</span> <span class="s">&quot;-Inf&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">))</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-1.23e4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pi&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2+2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;NaN&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-Inf&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span><span class="p">))</span>
 <span class="c1">## Warning: NAs introduced by coercion</span>
 <span class="c1">## [1]      0 -12300     NA     NA    NaN   -Inf     NA</span>
 </pre></div>
 </div>
 </section>
 <section id="implicit-conversion-coercion">
-<h3><span class="section-number">4.1.2. </span>Implicit Conversion (Coercion)<a class="headerlink" href="#implicit-conversion-coercion" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.1.2. </span>Implicit Conversion (Coercion)<a class="headerlink" href="#implicit-conversion-coercion" title="Permalink to this heading">¶</a></h3>
 <p>Recall that we referred to the three vector types as <em>atomic</em> ones:
 they can only be used to store elements of the <em>same type</em>.</p>
 <p>If we make an attempt at composing an object of mixed types with <strong class="command">c</strong>,
 the common type will be determined in such a way that storing
 the data is done without information loss:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="s">&quot;three&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;three&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
 <span class="c1">## [1] &quot;-1&quot;    &quot;FALSE&quot; &quot;TRUE&quot;  &quot;2&quot;     &quot;three&quot; NA</span>
-<span class="nf">c</span><span class="p">(</span><span class="s">&quot;zero&quot;</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="s">&quot;zero&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
 <span class="c1">## [1] &quot;zero&quot; &quot;TRUE&quot; NA</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
 <span class="c1">## [1] -1  0  1  2 NA</span>
 </pre></div>
 </div>
@@ -413,15 +414,15 @@ a long numeric vector, instead of a logical one.</p>
 </div>
 <p>Some functions that expect vectors of specific types
 can apply coercion by themselves (or act as if they do so):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">+</span> <span class="m">10</span> <span class="c1"># implicit conversion logical -&gt; numeric</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="c1"># implicit conversion logical -&gt; numeric</span>
 <span class="c1">## [1] NA 10 11</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="kc">TRUE</span>  <span class="c1"># implicit conversion numeric -&gt; logical</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">  </span><span class="c1"># implicit conversion numeric -&gt; logical</span>
 <span class="c1">## [1]  TRUE FALSE  TRUE</span>
-<span class="nf">sum</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>  <span class="c1"># same as sum(as.numeric(...))</span>
+<span class="nf">sum</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span><span class="w">  </span><span class="c1"># same as sum(as.numeric(...))</span>
 <span class="c1">## [1] 3</span>
-<span class="nf">cumsum</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>
+<span class="nf">cumsum</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
 <span class="c1">## [1] 1 2 2 3 3</span>
-<span class="nf">cummin</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">))</span>
+<span class="nf">cummin</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
 <span class="c1">## [1] 1 1 0 0 0</span>
 </pre></div>
 </div>
@@ -450,17 +451,17 @@ where we let <span class="math notranslate nohighlight">\(1-y_i\)</span> mean th
 </div></div></section>
 </section>
 <section id="lists">
-<h2><span class="section-number">4.2. </span>Lists<a class="headerlink" href="#lists" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.2. </span>Lists<a class="headerlink" href="#lists" title="Permalink to this heading">¶</a></h2>
 <p><em>Lists</em> are <em>generalised</em> vectors.
 They can be comprised of R objects of any kind, also other lists.
 This is why we classify them as <em>recursive</em> (and not atomic) objects.
 They are especially useful wherever there is a need to
 handle some <em>multitude</em> as a single entity.</p>
 <section id="creating-lists">
-<h3><span class="section-number">4.2.1. </span>Creating Lists<a class="headerlink" href="#creating-lists" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.2.1. </span>Creating Lists<a class="headerlink" href="#creating-lists" title="Permalink to this heading">¶</a></h3>
 <p>The most straightforward way to create a list is by means
 of the <strong class="command">list</strong> function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">## </span>
@@ -474,7 +475,7 @@ of the <strong class="command">list</strong> function:</p>
 <p>Notice that the above is not the same as “<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>”.
 We got a sequence that wraps three numeric vectors, each of length one.
 Also, how overly talkative R is when printing out lists!</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="m">4</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">),</span> <span class="s">&quot;and so forth&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;and so forth&quot;</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1 2 3</span>
 <span class="c1">## </span>
@@ -486,7 +487,7 @@ Also, how overly talkative R is when printing out lists!</p>
 <span class="c1">## </span>
 <span class="c1">## [[4]]</span>
 <span class="c1">## [1] &quot;and so forth&quot;</span>
-<span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">),</span> <span class="kc">letters</span><span class="p">),</span> <span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">))</span>  <span class="c1"># a list of lists</span>
+<span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="kc">letters</span><span class="p">),</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">))</span><span class="w">  </span><span class="c1"># a list of lists</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [[1]][[1]]</span>
 <span class="c1">## [1]  TRUE FALSE    NA  TRUE</span>
@@ -502,7 +503,7 @@ Also, how overly talkative R is when printing out lists!</p>
 </div>
 <p>However, the <strong class="command">str</strong> function can be used to print R objects
 in a more concise fashion:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">),</span> <span class="kc">letters</span><span class="p">),</span> <span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="kc">letters</span><span class="p">),</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ :List of 2</span>
 <span class="c1">##   ..$ : logi [1:4] TRUE FALSE NA TRUE</span>
@@ -517,7 +518,7 @@ when fed with arguments of mixed types, tries to determine
 the common type that retains the sense of data.
 If a coercion to an atomic vector is not possible, the result
 will be a list.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s">&quot;two&quot;</span><span class="p">,</span> <span class="n">sd</span><span class="p">)</span>  <span class="c1"># `sd` is an object of type `function`</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="p">)</span><span class="w">  </span><span class="c1"># `sd` is an object of type `function`</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">## </span>
@@ -528,13 +529,13 @@ will be a list.</p>
 <span class="c1">## function (x, na.rm = FALSE) </span>
 <span class="c1">## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), </span>
 <span class="c1">##     na.rm = na.rm))</span>
-<span class="c1">## &lt;bytecode: 0x5565ec404b28&gt;</span>
+<span class="c1">## &lt;bytecode: 0x561a93064e78&gt;</span>
 <span class="c1">## &lt;environment: namespace:stats&gt;</span>
 </pre></div>
 </div>
 </div>
 <p>Thus, the <strong class="command">c</strong> function can also be used to concatenate lists:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">2</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>  <span class="c1"># 3 lists -&gt; 1 list</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># 3 lists -&gt; 1 list</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">## </span>
@@ -546,7 +547,7 @@ will be a list.</p>
 </pre></div>
 </div>
 <p>Lists can be repeated using <strong class="command">rep</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">11</span><span class="p">,</span> <span class="kc">LETTERS</span><span class="p">),</span> <span class="m">2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="kc">LETTERS</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10 11</span>
 <span class="c1">## </span>
@@ -564,10 +565,10 @@ will be a list.</p>
 </div>
 </section>
 <section id="coercing-to-and-from-lists">
-<h3><span class="section-number">4.2.2. </span>Coercing to and from Lists<a class="headerlink" href="#coercing-to-and-from-lists" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.2.2. </span>Coercing to and from Lists<a class="headerlink" href="#coercing-to-and-from-lists" title="Permalink to this heading">¶</a></h3>
 <p>The conversion of an atomic vector to a list of length-1 vectors can
 be done via a call to <strong class="command">as.list</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>  <span class="c1"># vector of length 3 -&gt; list of 3 length-1 vectors</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># vector of length 3 -&gt; list of 3 length-1 vectors</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">## </span>
@@ -583,9 +584,9 @@ comprised of numeric vectors only) will result in an error.
 However, we can try to flatten
 a list to an atomic vector, provided that it is possible,
 by calling <strong class="command">unlist</strong>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="o">:</span><span class="m">8</span><span class="p">)),</span> <span class="m">9</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="o">:</span><span class="m">8</span><span class="p">)),</span><span class="w"> </span><span class="m">9</span><span class="p">))</span>
 <span class="c1">## [1] 1 2 3 4 5 6 7 8 9</span>
-<span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="o">:</span><span class="m">8</span><span class="p">)),</span> <span class="s">&quot;spam&quot;</span><span class="p">))</span>
+<span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="o">:</span><span class="m">8</span><span class="p">)),</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;1&quot;    &quot;2&quot;    &quot;3&quot;    &quot;4&quot;    &quot;5&quot;    &quot;6&quot;    &quot;7&quot;    &quot;8&quot;    &quot;spam&quot;</span>
 </pre></div>
 </div>
@@ -599,11 +600,11 @@ in a way that can sometimes result in a matrix.</p>
 </section>
 </section>
 <section id="null">
-<h2><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">NULL</span></code><a class="headerlink" href="#null" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">NULL</span></code><a class="headerlink" href="#null" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">NULL</span></code> object (the one and only object of type “<code class="docutils literal notranslate"><span class="pre">NULL</span></code>”)
 can be used as a placeholder for any other R object
 or designate the absence of such.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">month.name</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">month.name</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## NULL</span>
 <span class="c1">## </span>
@@ -626,7 +627,7 @@ Also, <strong class="command">c</strong> called with no arguments returns <code 
 <p class="admonition-title">Important</p>
 <p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> is not alike <code class="docutils literal notranslate"><span class="pre">NA</span></code>  (or it is other-typed variants);
 the latter can be emplaced in an atomic vector.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="kc">NULL</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>  <span class="c1"># NULL behaves as a 0-length vector here</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">  </span><span class="c1"># NULL behaves as a 0-length vector here</span>
 <span class="c1">## [1]  1 NA  3  5</span>
 </pre></div>
 </div>
@@ -640,7 +641,7 @@ because of their side effects (printing and plotting).</p>
 (e.g., when subsetting a list) will actually result in its removal.</p>
 </section>
 <section id="object-attributes">
-<span id="sec-attribute"></span><h2><span class="section-number">4.4. </span>Object Attributes<a class="headerlink" href="#object-attributes" title="Permalink to this heading"></a></h2>
+<span id="sec-attribute"></span><h2><span class="section-number">4.4. </span>Object Attributes<a class="headerlink" href="#object-attributes" title="Permalink to this heading">¶</a></h2>
 <p>Lists can be used to wrap many objects and form a single,
 ordered collection thereof.</p>
 <p>Attributes, on the other hand, give means
@@ -650,16 +651,16 @@ where <code class="docutils literal notranslate"><span class="pre">key</span></c
 and <code class="docutils literal notranslate"><span class="pre">value</span></code> is any R object except <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.
 They can be introduced by calling, amongst others<a class="footnote-reference brackets" href="#attr1" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, the
 <strong class="command">structure</strong> function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x_simple</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span>
-    <span class="n">x_simple</span><span class="p">,</span>  <span class="c1"># the object to be equipped with attributes</span>
-    <span class="n">attribute1</span><span class="o">=</span><span class="s">&quot;value1&quot;</span><span class="p">,</span>
-    <span class="n">attribute2</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">324</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x_simple</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">10</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x_simple</span><span class="p">,</span><span class="w">  </span><span class="c1"># the object to be equipped with attributes</span>
+<span class="w">    </span><span class="n">attribute1</span><span class="o">=</span><span class="s">&quot;value1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">attribute2</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">324</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <section id="developing-perceptual-indifference-to-most-attributes">
-<h3><span class="section-number">4.4.1. </span>Developing Perceptual Indifference to Most Attributes<a class="headerlink" href="#developing-perceptual-indifference-to-most-attributes" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.4.1. </span>Developing Perceptual Indifference to Most Attributes<a class="headerlink" href="#developing-perceptual-indifference-to-most-attributes" title="Permalink to this heading">¶</a></h3>
 <p>Let us see how the above <code class="docutils literal notranslate"><span class="pre">x</span></code> is reported on the console:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
@@ -678,9 +679,9 @@ in tiny font.</p>
 For example, the above <code class="docutils literal notranslate"><span class="pre">x</span></code>, despite featuring some extra data (metadata),
 is still treated as an ordinary sequence of numbers by
 most functions:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># the same as sum(1:10), sum() does not care about any attributes</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">   </span><span class="c1"># the same as sum(1:10), sum() does not care about any attributes</span>
 <span class="c1">## [1] 55</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># just a numeric vector, but with some perks</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># just a numeric vector, but with some perks</span>
 <span class="c1">## [1] &quot;integer&quot;</span>
 </pre></div>
 </div>
@@ -691,14 +692,14 @@ specifically been programmed to pay attention to them.</p>
 </div>
 </section>
 <section id="but-there-are-some-use-cases">
-<span id="sec-list-use-cases"></span><h3><span class="section-number">4.4.2. </span>But There Are Some Use Cases<a class="headerlink" href="#but-there-are-some-use-cases" title="Permalink to this heading"></a></h3>
+<span id="sec-list-use-cases"></span><h3><span class="section-number">4.4.2. </span>But There Are Some Use Cases<a class="headerlink" href="#but-there-are-some-use-cases" title="Permalink to this heading">¶</a></h3>
 <p>Some R functions add attributes to the return value
 to sneak extra information that <em>might</em> be useful,
 just in case.</p>
 <p>For instance, <strong class="command">na.omit</strong>, whose main aim is to remove missing values from
 an atomic vector, yields:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">40</span><span class="p">,</span> <span class="m">50</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">70</span><span class="p">)</span>
-<span class="p">(</span><span class="n">y_na_free</span> <span class="o">&lt;-</span> <span class="nf">na.omit</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">70</span><span class="p">)</span>
+<span class="p">(</span><span class="n">y_na_free</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">na.omit</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
 <span class="c1">## [1] 10 20 40 50 70</span>
 <span class="c1">## attr(,&quot;na.action&quot;)</span>
 <span class="c1">## [1] 3 6</span>
@@ -714,7 +715,7 @@ further computations:</p>
 </div>
 <p>However, the <code class="docutils literal notranslate"><span class="pre">na.action</span></code> attribute (we ignore the <code class="docutils literal notranslate"><span class="pre">class</span></code> part until
 <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>) tells us <em>where</em> the missing observations were:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">y_na_free</span><span class="p">,</span> <span class="s">&quot;na.action&quot;</span><span class="p">)</span>  <span class="c1"># read the attribute value</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">y_na_free</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;na.action&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># read the attribute value</span>
 <span class="c1">## [1] 3 6</span>
 <span class="c1">## attr(,&quot;class&quot;)</span>
 <span class="c1">## [1] &quot;omit&quot;</span>
@@ -723,9 +724,9 @@ further computations:</p>
 <p>As another example, <strong class="command">gregexpr</strong> can be used to search for a given
 pattern in a character vector (for more details,
 see <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">needle</span> <span class="o">&lt;-</span> <span class="s">&quot;spam|gluten&quot;</span>  <span class="c1"># pattern to search for: spam OR gluten</span>
-<span class="n">haystack</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam, spam, bacon, and gluten-free spam&quot;</span><span class="p">,</span> <span class="s">&quot;spammer&quot;</span><span class="p">)</span>  <span class="c1"># text</span>
-<span class="p">(</span><span class="n">pos</span> <span class="o">&lt;-</span> <span class="nf">gregexpr</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span> <span class="n">haystack</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">needle</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam|gluten&quot;</span><span class="w">  </span><span class="c1"># pattern to search for: spam OR gluten</span>
+<span class="n">haystack</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam, spam, bacon, and gluten-free spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spammer&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># text</span>
+<span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span><span class="w"> </span><span class="n">haystack</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1]  1  7 24 36</span>
 <span class="c1">## attr(,&quot;match.length&quot;)</span>
@@ -784,7 +785,7 @@ in a few separate variables (other vectors), but then it would
 not be as convenient to use as the above representation.</p>
 </div></div></section>
 <section id="special-attributes">
-<span id="sec-special-attributes"></span><h3><span class="section-number">4.4.3. </span>Special Attributes<a class="headerlink" href="#special-attributes" title="Permalink to this heading"></a></h3>
+<span id="sec-special-attributes"></span><h3><span class="section-number">4.4.3. </span>Special Attributes<a class="headerlink" href="#special-attributes" title="Permalink to this heading">¶</a></h3>
 <p>Attributes have a great potential which is somewhat wasted
 by R users due to their rarely knowing:</p>
 <ul class="simple">
@@ -844,10 +845,10 @@ see, e.g., <a class="reference internal" href="230-matrix.html#sec-matrix-repres
 </div>
 </section>
 <section id="labelling-vector-elements-with-the-names-attribute">
-<h3><span class="section-number">4.4.4. </span>Labelling Vector Elements with the <code class="docutils literal notranslate"><span class="pre">names</span></code> Attribute<a class="headerlink" href="#labelling-vector-elements-with-the-names-attribute" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.4.4. </span>Labelling Vector Elements with the <code class="docutils literal notranslate"><span class="pre">names</span></code> Attribute<a class="headerlink" href="#labelling-vector-elements-with-the-names-attribute" title="Permalink to this heading">¶</a></h3>
 <p>A special attribute called <code class="docutils literal notranslate"><span class="pre">names</span></code> can be used to label
 the elements of atomic vectors and lists.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">13</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">6</span><span class="p">),</span> <span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;sausage&quot;</span><span class="p">,</span> <span class="s">&quot;celery&quot;</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;celery&quot;</span><span class="p">)))</span>
 <span class="c1">##    spam sausage  celery </span>
 <span class="c1">##      13       2       6</span>
 </pre></div>
@@ -888,24 +889,24 @@ Non-special attributes are still printed in a standard way.</p>
 attribute.</p>
 </div>
 <p>This attribute can be read by calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;names&quot;</span><span class="p">)</span>  <span class="c1"># just like any other attribute</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;names&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># just like any other attribute</span>
 <span class="c1">## [1] &quot;spam&quot;    &quot;sausage&quot; &quot;celery&quot;</span>
-<span class="nf">names</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># because it is so special</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># because it is so special</span>
 <span class="c1">## [1] &quot;spam&quot;    &quot;sausage&quot; &quot;celery&quot;</span>
 </pre></div>
 </div>
 <p>Named vectors can be easily created with the <strong class="command">c</strong>
 and <strong class="command">list</strong> functions as well:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## a b </span>
 <span class="c1">## 1 2</span>
-<span class="nf">list</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">list</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## $a</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">## </span>
 <span class="c1">## $b</span>
 <span class="c1">## [1] 2</span>
-<span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">),</span> <span class="n">b</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">4</span><span class="p">))</span>  <span class="c1"># this is smart</span>
+<span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">4</span><span class="p">))</span><span class="w">  </span><span class="c1"># this is smart</span>
 <span class="c1">## a.x a.y   b c.z </span>
 <span class="c1">##   1   2   3   4</span>
 </pre></div>
@@ -939,7 +940,7 @@ However, let us just mention here that
 each data frame is in fact a generic vector
 (see <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>): each column thereof corresponds
 to a named list element:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">head</span><span class="p">(</span><span class="n">iris</span><span class="p">))</span>  <span class="c1"># some data frame</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="n">iris</span><span class="p">))</span><span class="w">  </span><span class="c1"># some data frame</span>
 <span class="c1">##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="c1">## 1          5.1         3.5          1.4         0.2  setosa</span>
 <span class="c1">## 2          4.9         3.0          1.4         0.2  setosa</span>
@@ -947,9 +948,9 @@ to a named list element:</p>
 <span class="c1">## 4          4.6         3.1          1.5         0.2  setosa</span>
 <span class="c1">## 5          5.0         3.6          1.4         0.2  setosa</span>
 <span class="c1">## 6          5.4         3.9          1.7         0.4  setosa</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># it is just a list (with extras that&#39;ll be discussed later)</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">  </span><span class="c1"># it is just a list (with extras that&#39;ll be discussed later)</span>
 <span class="c1">## [1] &quot;list&quot;</span>
-<span class="nf">unclass</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># how it is represented exactly (without the extras)</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">  </span><span class="c1"># how it is represented exactly (without the extras)</span>
 <span class="c1">## $Sepal.Length</span>
 <span class="c1">## [1] 5.1 4.9 4.7 4.6 5.0 5.4</span>
 <span class="c1">## </span>
@@ -975,11 +976,11 @@ are of use in the processing of such structured data as well.</p>
 </div>
 </section>
 <section id="altering-and-removing-attributes">
-<h3><span class="section-number">4.4.5. </span>Altering and Removing Attributes<a class="headerlink" href="#altering-and-removing-attributes" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">4.4.5. </span>Altering and Removing Attributes<a class="headerlink" href="#altering-and-removing-attributes" title="Permalink to this heading">¶</a></h3>
 <p>We know that a single attribute can be read by calling <strong class="command">attr</strong>.
 Their whole list is generated with a call to <strong class="command">attributes</strong>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;some&quot;</span><span class="p">,</span> <span class="s">&quot;object&quot;</span><span class="p">),</span> <span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">,</span> <span class="s">&quot;Y&quot;</span><span class="p">),</span>
-    <span class="n">attribute1</span><span class="o">=</span><span class="s">&quot;value1&quot;</span><span class="p">,</span> <span class="n">attribute2</span><span class="o">=</span><span class="s">&quot;value2&quot;</span><span class="p">,</span> <span class="n">attribute3</span><span class="o">=</span><span class="s">&quot;value3&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;some&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">attribute1</span><span class="o">=</span><span class="s">&quot;value1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">attribute2</span><span class="o">=</span><span class="s">&quot;value2&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">attribute3</span><span class="o">=</span><span class="s">&quot;value3&quot;</span><span class="p">))</span>
 <span class="c1">##        X        Y </span>
 <span class="c1">##   &quot;some&quot; &quot;object&quot; </span>
 <span class="c1">## attr(,&quot;attribute1&quot;)</span>
@@ -988,9 +989,9 @@ Their whole list is generated with a call to <strong class="command">attributes<
 <span class="c1">## [1] &quot;value2&quot;</span>
 <span class="c1">## attr(,&quot;attribute3&quot;)</span>
 <span class="c1">## [1] &quot;value3&quot;</span>
-<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;attribute1&quot;</span><span class="p">)</span>  <span class="c1"># reads a single attribute, returns NULL if unset</span>
+<span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;attribute1&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># reads a single attribute, returns NULL if unset</span>
 <span class="c1">## [1] &quot;value1&quot;</span>
-<span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># returns a named list with all attributes of an object</span>
+<span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># returns a named list with all attributes of an object</span>
 <span class="c1">## $names</span>
 <span class="c1">## [1] &quot;X&quot; &quot;Y&quot;</span>
 <span class="c1">## </span>
@@ -1007,7 +1008,7 @@ Their whole list is generated with a call to <strong class="command">attributes<
 <p>We can alter an attribute’s value or add further attributes,
 by referring to the <strong class="command">structure</strong> function once again.
 Moreover setting an attribute’s value to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> gets rid of it completely.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attribute1</span><span class="o">=</span><span class="kc">NULL</span><span class="p">,</span> <span class="n">attribute4</span><span class="o">=</span><span class="s">&quot;added&quot;</span><span class="p">,</span> <span class="n">attribute3</span><span class="o">=</span><span class="s">&quot;modified&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">attribute1</span><span class="o">=</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">attribute4</span><span class="o">=</span><span class="s">&quot;added&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">attribute3</span><span class="o">=</span><span class="s">&quot;modified&quot;</span><span class="p">)</span>
 <span class="c1">##        X        Y </span>
 <span class="c1">##   &quot;some&quot; &quot;object&quot; </span>
 <span class="c1">## attr(,&quot;attribute2&quot;)</span>
@@ -1041,7 +1042,7 @@ given as their inputs.</p>
 </section>
 </section>
 <section id="exercises">
-<h2><span class="section-number">4.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
 <div class="proof proof-type-exercise" id="id8">
 
     <div class="proof-title">
@@ -1067,6 +1068,7 @@ What about “<strong class="command">as.logical</strong><code class="code docut
 “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> </code><strong class="command">quantile</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(100))</span></code>”.
 What is the result of “<code class="docutils literal notranslate"><span class="pre">2*x</span></code>”, “<strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>”,
 and <strong class="command">round</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">2)</span></code>?</p></li>
+<li><p>What is the meaning of <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">NULL</span></code>?</p></li>
 <li><p>Give two ways to create a named character vector.</p></li>
 <li><p>Give two ways (discussed above; there are more) to remove the
 <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute from an object.</p></li>
@@ -1080,17 +1082,17 @@ and <strong class="command">round</strong><code class="code docutils literal not
 <p>There are a few peculiarities when joining or coercing lists. Compare
 the results generated by the following pairs of expressions:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1)</span>
-<span class="nf">as.character</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span> <span class="m">5</span><span class="p">))</span>
-<span class="nf">as.character</span><span class="p">(</span><span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span> <span class="m">5</span><span class="p">)))</span>
+<span class="nf">as.character</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="m">5</span><span class="p">))</span>
+<span class="nf">as.character</span><span class="p">(</span><span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="m">5</span><span class="p">)))</span>
 <span class="c1"># 2)</span>
-<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span> <span class="m">5</span><span class="p">))</span>
-<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span> <span class="m">5</span><span class="p">)))</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="m">5</span><span class="p">))</span>
+<span class="nf">as.numeric</span><span class="p">(</span><span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="m">5</span><span class="p">)))</span>
 <span class="c1"># 3)</span>
-<span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="n">sd</span><span class="p">))</span>
-<span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="n">sd</span><span class="p">)</span>
+<span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">sd</span><span class="p">))</span>
+<span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="p">)</span>
 <span class="c1"># 4)</span>
-<span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="m">3</span><span class="p">),</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
-<span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="m">3</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+<span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span>
+<span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">))</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id10">
@@ -1175,7 +1177,7 @@ see <a class="reference internal" href="210-design.html#sec-replacementfun"><spa
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-18T09:57:43+1100.
+        Last updated on 2023-02-09T13:06:20+1100.
       </span>
 
 

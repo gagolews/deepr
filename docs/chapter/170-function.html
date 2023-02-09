@@ -72,6 +72,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/proof.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -288,7 +289,7 @@
            <div itemprop="articleBody">
             
   <section class="tex2jax_ignore mathjax_ignore" id="functions">
-<span id="chap-function"></span><h1><span class="section-number">7. </span>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h1>
+<span id="chap-function"></span><h1><span class="section-number">7. </span>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -303,7 +304,7 @@ are appreciated.</strong>
 <em>Although available online, it is a whole course;
 it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
-<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">20</a>]</span>.</em></p>
+<em>Also, check out my other book, <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a> <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
 </div></blockquote>
 <p>R is a <em>functional language</em>, where functions play first fiddle.
 Each action we perform reduces itself to a call to some function,
@@ -315,7 +316,7 @@ They constitute the essential vocabulary that everyone
 <p>Any operation, be it <strong class="command">sum</strong>, <strong class="command">sqrt</strong>,
 or <strong class="command">paste</strong>, when fed with a number of arguments,
 generates some (hopefully useful) return value.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span>  <span class="c1"># invoking `sum` on a specific argument</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># invoking `sum` on a specific argument</span>
 <span class="c1">## [1] 55</span>
 </pre></div>
 </div>
@@ -340,9 +341,9 @@ to be propagated thereover.</p>
         
     </div><div class="proof-content">
 <p>Given some objects (whatever):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
-<span class="n">x2</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">32</span><span class="p">)</span>
-<span class="n">x3</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="m">64</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
+<span class="n">x2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">32</span><span class="p">)</span>
+<span class="n">x3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">64</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>when we want to apply the same action on different data,
@@ -350,16 +351,16 @@ say, compute the root mean square, instead of re-typing almost identical
 expressions (or a bunch of them) over and over again:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x1</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## [1] 0.6545</span>
-<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x2</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>  <span class="c1"># the same second time - borderline okay</span>
+<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x2</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># the same second time - borderline okay</span>
 <span class="c1">## [1] 0.56203</span>
-<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x3</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>  <span class="c1"># tedious, barbarous, and error-prone</span>
+<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x3</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># tedious, barbarous, and error-prone</span>
 <span class="c1">## [1] 0.57206</span>
 </pre></div>
 </div>
 <p>we can <em>generalise</em> the operation to any object like <code class="docutils literal notranslate"><span class="pre">x</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">rms</span> <span class="o">&lt;-</span>                   <span class="c1"># bound what follows to name `rms`</span>
-    <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1"># a function that takes one parameter, `x`</span>
-        <span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>  <span class="c1"># expression to transform the input to yield output</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">rms</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">                   </span><span class="c1"># bound what follows to name `rms`</span>
+<span class="w">    </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">          </span><span class="c1"># a function that takes one parameter, `x`</span>
+<span class="w">        </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># expression to transform the input to yield output</span>
 </pre></div>
 </div>
 <p>and then re-use it on different <em>concrete</em> data instances:</p>
@@ -372,7 +373,7 @@ expressions (or a bunch of them) over and over again:</p>
 </pre></div>
 </div>
 <p>or even combine it with other function calls:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rms</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)))</span><span class="o">^</span><span class="m">2</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rms</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">x3</span><span class="p">)))</span><span class="o">^</span><span class="m">2</span>
 <span class="c1">## [1] 0.50824</span>
 </pre></div>
 </div>
@@ -394,11 +395,11 @@ We are advocating for minimalism here, remember?</p>
 will be reflected upon in <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>.</p>
 </div>
 <section id="creating-and-invoking-functions">
-<h2><span class="section-number">7.1. </span>Creating and Invoking Functions<a class="headerlink" href="#creating-and-invoking-functions" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">7.1. </span>Creating and Invoking Functions<a class="headerlink" href="#creating-and-invoking-functions" title="Permalink to this heading">¶</a></h2>
 <section id="anonymous-functions">
-<h3><span class="section-number">7.1.1. </span>Anonymous Functions<a class="headerlink" href="#anonymous-functions" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.1.1. </span>Anonymous Functions<a class="headerlink" href="#anonymous-functions" title="Permalink to this heading">¶</a></h3>
 <p>Functions are usually created by means of the following notation:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="n">body</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="n">body</span>
 </pre></div>
 </div>
 <p>First, <code class="docutils literal notranslate"><span class="pre">args</span></code> is a (possibly empty) list of comma-separated parameter
@@ -409,7 +410,7 @@ The value that this expression yields will constitute the function’s
 output.</p>
 <p>For example, here is a definition of a function which takes
 no inputs and generates a constant output:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function</span><span class="p">()</span> <span class="m">1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="m">1</span>
 <span class="c1">## function() 1</span>
 </pre></div>
 </div>
@@ -420,7 +421,7 @@ i.e., evaluated on concrete data, by
 using the notation <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(arg1,</span> <span class="pre">...,</span> <span class="pre">argn)</span></code>,
 where “<code class="docutils literal notranslate"><span class="pre">arg1,</span> <span class="pre">...,</span> <span class="pre">argn</span></code>” are the arguments
 to be passed to <strong class="command">f</strong>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">function</span><span class="p">()</span> <span class="m">1</span><span class="p">)()</span>  <span class="c1"># invoking f like f(); here, no arguments are expected</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="m">1</span><span class="p">)()</span><span class="w">  </span><span class="c1"># invoking f like f(); here, no arguments are expected</span>
 <span class="c1">## [1] 1</span>
 </pre></div>
 </div>
@@ -433,17 +434,17 @@ Calling <strong class="command">typeof</strong> on a function object will report
 <code class="docutils literal notranslate"><span class="pre">&quot;builtin&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;primitive&quot;</span></code> (for some built-in, base ones),
 for the reasons that we explain in more detail<a class="footnote-reference brackets" href="#footenv" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
 in <a class="reference internal" href="210-design.html#sec-closures"><span class="std std-numref">Section 9.5.3</span></a>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="nf">function</span><span class="p">()</span> <span class="m">1</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## [1] &quot;closure&quot;</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="named-functions">
-<h3><span class="section-number">7.1.2. </span>Named Functions<a class="headerlink" href="#named-functions" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.1.2. </span>Named Functions<a class="headerlink" href="#named-functions" title="Permalink to this heading">¶</a></h3>
 <p>Function objects can be bound with names so that they can be
 referred to multiple times:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">one</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">()</span> <span class="m">1</span>  <span class="c1"># one &lt;- (function() 1)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">one</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># one &lt;- (function() 1)</span>
 </pre></div>
 </div>
 <p>We created an object named <strong class="command">one</strong>
@@ -453,21 +454,21 @@ We are very familiar with such a notation, as not since yesterday we
 are used to writing “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">1</span></code>” etc.</p>
 <p>Invoking <strong class="command">one</strong>, which can be done by writing
 <strong class="command">one</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>, will yield a return value:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">one</span><span class="p">()</span>  <span class="c1"># (function() 1)()</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">one</span><span class="p">()</span><span class="w">  </span><span class="c1"># (function() 1)()</span>
 <span class="c1">## [1] 1</span>
 </pre></div>
 </div>
 <p>This output can be used in further computations, for instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0</span><span class="o">:</span><span class="m">2</span> <span class="o">-</span> <span class="nf">one</span><span class="p">()</span>  <span class="c1"># 0:2 - (function() 1)(), i.e., 0:2 - 1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0</span><span class="o">:</span><span class="m">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">one</span><span class="p">()</span><span class="w">  </span><span class="c1"># 0:2 - (function() 1)(), i.e., 0:2 - 1</span>
 <span class="c1">## [1] -1  0  1</span>
 </pre></div>
 </div>
 </section>
 <section id="passing-arguments-to-functions">
-<h3><span class="section-number">7.1.3. </span>Passing Arguments To Functions<a class="headerlink" href="#passing-arguments-to-functions" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.1.3. </span>Passing Arguments To Functions<a class="headerlink" href="#passing-arguments-to-functions" title="Permalink to this heading">¶</a></h3>
 <p>Functions with no arguments are kind of boring, thus let us distil
 a more serious operation:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">concat</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="nf">paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">concat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Here we have created a mapping whose aim is to concatenate
@@ -479,8 +480,8 @@ Yet, ‘tis merely an illustration.</p>
 <p>The <strong class="command">concat</strong> function has two <em>parameters</em>, “<code class="docutils literal notranslate"><span class="pre">x</span></code>” and “<code class="docutils literal notranslate"><span class="pre">y</span></code>”.
 Hence, calling it will require the provision of two <em>arguments</em>,
 which we put within round brackets and separate from each other by commas.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span>
-<span class="nf">concat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>  <span class="c1"># i.e., concat(x=&quot;spam&quot;, y=1:5)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span>
+<span class="nf">concat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w">  </span><span class="c1"># i.e., concat(x=&quot;spam&quot;, y=1:5)</span>
 <span class="c1">## [1] &quot;spam1&quot; &quot;spam2&quot; &quot;spam3&quot; &quot;spam4&quot; &quot;spam5&quot;</span>
 </pre></div>
 </div>
@@ -495,13 +496,13 @@ are concrete, specific, and real.</p>
 precisely <code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span></code>, and nothing else.
 Also, the <code class="docutils literal notranslate"><span class="pre">u</span></code> object from the caller’s environment
 is seen under the name <code class="docutils literal notranslate"><span class="pre">y</span></code> there.
-Most of the time (however, see <a class="reference internal" href="340-environment.html#sec-eval-fun"><span class="std std-numref">Section 16.4</span></a>),
+Most of the time (however, see <a class="reference internal" href="340-environment.html#sec-eval-fun"><span class="std std-numref">Section 16.3</span></a>),
 it is best to think of the function as being fed not with <code class="docutils literal notranslate"><span class="pre">u</span></code> per se,
 but the value that <code class="docutils literal notranslate"><span class="pre">u</span></code> is bound to, i.e., “<code class="docutils literal notranslate"><span class="pre">1:5</span></code>”.</p>
 <p>Also:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">5</span>
-<span class="n">y</span> <span class="o">&lt;-</span> <span class="s">&quot;spam&quot;</span>
-<span class="nf">concat</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># concat(x=&quot;spam&quot;, y=1:5)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span>
+<span class="nf">concat</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># concat(x=&quot;spam&quot;, y=1:5)</span>
 <span class="c1">## [1] &quot;spam1&quot; &quot;spam2&quot; &quot;spam3&quot; &quot;spam4&quot; &quot;spam5&quot;</span>
 </pre></div>
 </div>
@@ -528,12 +529,12 @@ and then divide it by the standard deviation.</p>
 <p>Recall from <a class="reference internal" href="120-numeric.html#sec-rep"><span class="std std-numref">Section 2.1.3</span></a> that, syntactically speaking,
 the following are perfectly valid alternatives to the positionally-matched
 call <strong class="command">concat</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;spam&quot;,</span> <span class="pre">u)</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
-<span class="nf">concat</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
-<span class="nf">concat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
-<span class="nf">concat</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
-<span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
-<span class="nf">concat</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
+<span class="nf">concat</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<span class="nf">concat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
+<span class="nf">concat</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span>
+<span class="nf">concat</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>However, the last two should particularly be avoided,
@@ -546,7 +547,7 @@ operator, `<strong class="command">|&gt;</strong>`, which enables the above to b
 </div>
 </section>
 <section id="grouping-expressions-with-curly-braces">
-<h3><span class="section-number">7.1.4. </span>Grouping Expressions with Curly Braces, `<strong class="command">{</strong>`<a class="headerlink" href="#grouping-expressions-with-curly-braces" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.1.4. </span>Grouping Expressions with Curly Braces, `<strong class="command">{</strong>`<a class="headerlink" href="#grouping-expressions-with-curly-braces" title="Permalink to this heading">¶</a></h3>
 <p>We have been informed that a function’s body is a <em>single</em> R expression
 whose evaluated value is passed to the user as its output.
 This may sound restrictive and contrast with what we have
@@ -559,10 +560,10 @@ we can use curly braces to group many calls
 that are to be evaluated one after another.</p>
 <p>For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;first expression\n&quot;</span><span class="p">)</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;second expression\n&quot;</span><span class="p">)</span>
-    <span class="c1"># ...</span>
-    <span class="nf">cat</span><span class="p">(</span><span class="s">&quot;last expression\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;first expression\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;second expression\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="c1"># ...</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;last expression\n&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">## first expression</span>
 <span class="c1">## second expression</span>
@@ -578,10 +579,10 @@ of a function’s body.</p>
 <p class="admonition-title">Important</p>
 <p>The last expression evaluated in a curly-braces delimited block
 will be considered its the output value.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="p">{</span>
-    <span class="m">1</span>
-    <span class="m">2</span>
-    <span class="m">3</span>  <span class="c1"># &lt;--- last expression: will be taken as the output value</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="m">1</span>
+<span class="w">    </span><span class="m">2</span>
+<span class="w">    </span><span class="m">3</span><span class="w">  </span><span class="c1"># &lt;--- last expression: will be taken as the output value</span>
 <span class="p">}</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] 3</span>
@@ -594,7 +595,7 @@ will be considered its the output value.</p>
 The above code block can also be written more concisely
 by replacing newlines with semicolons, although with perhaps some
 loss in readability:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="m">1</span><span class="p">;</span> <span class="m">2</span><span class="p">;</span> <span class="m">3</span><span class="p">}</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="m">3</span><span class="p">}</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
@@ -610,20 +611,20 @@ about `<strong class="command">{</strong>`.</p>
 <p>Here is a version of the above <strong class="command">concat</strong> function
 which takes care of a more <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>-style
 missing values’ propagation:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">concat</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">concat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">z</span><span class="p">[</span><span class="nf">is.na</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">|</span> <span class="nf">is.na</span><span class="p">(</span><span class="n">b</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="kc">NA_character_</span>
-    <span class="n">z</span>  <span class="c1"># last expression in the block – return value</span>
+<span class="w">    </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">z</span><span class="p">[</span><span class="nf">is.na</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">b</span><span class="p">)]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NA_character_</span>
+<span class="w">    </span><span class="n">z</span><span class="w">  </span><span class="c1"># last expression in the block – return value</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Example calls:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">concat</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">concat</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;a1&quot; &quot;a2&quot; &quot;a3&quot;</span>
-<span class="nf">concat</span><span class="p">(</span><span class="kc">NA_character_</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">concat</span><span class="p">(</span><span class="kc">NA_character_</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] NA NA NA</span>
-<span class="nf">concat</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">))</span>
+<span class="nf">concat</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;1a&quot; NA   &quot;3c&quot; &quot;4a&quot; NA   &quot;6c&quot;</span>
 </pre></div>
 </div>
@@ -664,7 +665,7 @@ This applies both to functions that we have authored ourselves:</p>
 <span class="c1">##     z[is.na(a) | is.na(b)] &lt;- NA_character_</span>
 <span class="c1">##     z  # last expression in the block – return value</span>
 <span class="c1">## }</span>
-<span class="c1">## &lt;bytecode: 0x55f963fbb130&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55e62c08b130&gt;</span>
 </pre></div>
 </div>
 <p>and to the routines that are part of base R or any other
@@ -676,7 +677,7 @@ extension packages:</p>
 <span class="c1">##     v &lt;- as.vector(y)</span>
 <span class="c1">##     unique(c(u, v))</span>
 <span class="c1">## }</span>
-<span class="c1">## &lt;bytecode: 0x55f9652d01a8&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55e62d3a01a8&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
@@ -692,7 +693,7 @@ the underlying source code; see
 </section>
 </section>
 <section id="functional-programming">
-<span id="sec-fun-prog"></span><h2><span class="section-number">7.2. </span>Functional Programming<a class="headerlink" href="#functional-programming" title="Permalink to this heading"></a></h2>
+<span id="sec-fun-prog"></span><h2><span class="section-number">7.2. </span>Functional Programming<a class="headerlink" href="#functional-programming" title="Permalink to this heading">¶</a></h2>
 <p>R is a <em>functional</em> programming language.
 As such, it shares a number of common
 features with other languages that emphasise on the role
@@ -700,7 +701,7 @@ of function manipulation in software development
 (e.g., Common Lisp, Scheme, OCaml, Haskell, Clojure, F#).
 Let us explore them now.</p>
 <section id="functions-are-objects">
-<h3><span class="section-number">7.2.1. </span>Functions are Objects<a class="headerlink" href="#functions-are-objects" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.2.1. </span>Functions are Objects<a class="headerlink" href="#functions-are-objects" title="Permalink to this heading">¶</a></h3>
 <p>R functions were given the right to a <em>fair go</em>;
 they are what we refer to as <em>first-class citizens</em>.
 In other words, our interaction with them is not limited
@@ -708,17 +709,17 @@ to their invocation; we treat them as any other language objects.
 Namely, they can be:</p>
 <ul>
 <li><p>stored inside list objects:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">nrow</span><span class="p">,</span> <span class="n">sum</span><span class="p">)</span>  <span class="c1"># a list with three elements of type function</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">)</span><span class="w">  </span><span class="c1"># a list with three elements of type function</span>
 <span></span><span class="c1">## [[1]]</span>
 <span class="c1">## function (x) </span>
 <span class="c1">## x</span>
-<span class="c1">## &lt;bytecode: 0x55f963829560&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55e62b8f9560&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 <span class="c1">## </span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## function (x) </span>
 <span class="c1">## dim(x)[1L]</span>
-<span class="c1">## &lt;bytecode: 0x55f964915fc0&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55e62c9e5fc0&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 <span class="c1">## </span>
 <span class="c1">## [[3]]</span>
@@ -729,13 +730,13 @@ Namely, they can be:</p>
 that lists, as we recall, can embrace R objects of <em>any</em> kind.</p>
 </li>
 <li><p>created and then called inside another function’s body:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">euclidean_distance</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">euclidean_distance</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">square</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="n">z</span><span class="o">^</span><span class="m">2</span>  <span class="c1"># auxiliary/internal/helper function</span>
-    <span class="nf">sqrt</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)))</span>     <span class="c1"># square root of the sum of squares</span>
+<span class="w">    </span><span class="n">square</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="n">z</span><span class="o">^</span><span class="m">2</span><span class="w">  </span><span class="c1"># auxiliary/internal/helper function</span>
+<span class="w">    </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)))</span><span class="w">     </span><span class="c1"># square root of the sum of squares</span>
 <span class="p">}</span>
 
-<span class="nf">euclidean_distance</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>  <span class="c1"># example call</span>
+<span class="nf">euclidean_distance</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w">  </span><span class="c1"># example call</span>
 <span></span><span class="c1">## [1] 1.4142</span>
 </pre></div>
 </div>
@@ -745,17 +746,17 @@ of <em>recursive</em> types (compare <strong class="command">is.recursive</stron
 <li><p>passed as arguments to other operations:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replaces missing values with a given aggregate</span>
 <span class="c1"># of all non-missing elements:</span>
-<span class="n">fill_na</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filler_fun</span><span class="p">)</span>
+<span class="n">fill_na</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">filler_fun</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">missing_ones</span> <span class="o">&lt;-</span> <span class="nf">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># otherwise, we&#39;d call is.na twice</span>
-    <span class="n">replacement_value</span> <span class="o">&lt;-</span> <span class="nf">filler_fun</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">!</span><span class="n">missing_ones</span><span class="p">])</span>
-    <span class="n">x</span><span class="p">[</span><span class="n">missing_ones</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="n">replacement_value</span>
-    <span class="n">x</span>
+<span class="w">    </span><span class="n">missing_ones</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># otherwise, we&#39;d call is.na twice</span>
+<span class="w">    </span><span class="n">replacement_value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filler_fun</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">!</span><span class="n">missing_ones</span><span class="p">])</span>
+<span class="w">    </span><span class="n">x</span><span class="p">[</span><span class="n">missing_ones</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">replacement_value</span>
+<span class="w">    </span><span class="n">x</span>
 <span class="p">}</span>
 
-<span class="nf">fill_na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">),</span> <span class="n">mean</span><span class="p">)</span>
+<span class="nf">fill_na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span>
 <span></span><span class="c1">## [1] 0 3 3 2 3 7 3</span>
-<span></span><span class="nf">fill_na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">),</span> <span class="n">median</span><span class="p">)</span>
+<span></span><span class="nf">fill_na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">),</span><span class="w"> </span><span class="n">median</span><span class="p">)</span>
 <span></span><span class="c1">## [1] 0.0 2.5 2.5 2.0 3.0 7.0 2.5</span>
 </pre></div>
 </div>
@@ -780,7 +781,7 @@ Many other ones will be introduced in due course or are
 left as an educative exercise.</p>
 </section>
 <section id="calling-on-precomputed-arguments-with-do-call">
-<span id="sec-do-call-intro"></span><h3><span class="section-number">7.2.2. </span>Calling on Precomputed Arguments with <strong class="command">do.call</strong><a class="headerlink" href="#calling-on-precomputed-arguments-with-do-call" title="Permalink to this heading"></a></h3>
+<span id="sec-do-call-intro"></span><h3><span class="section-number">7.2.2. </span>Calling on Precomputed Arguments with <strong class="command">do.call</strong><a class="headerlink" href="#calling-on-precomputed-arguments-with-do-call" title="Permalink to this heading">¶</a></h3>
 <p>The notation like <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(arg1,</span> <span class="pre">...,</span> <span class="pre">argn)</span></code>
 has no monopoly over how  we are supposed to call a function
 on a specific sequence of comma-delimited arguments:
@@ -790,19 +791,19 @@ We can first prepare a number  of objects to be passed
 as <strong class="command">f</strong>’s inputs, wrap them in a list <code class="docutils literal notranslate"><span class="pre">l</span></code>,
 and then invoke <strong class="command">do.call</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">l)</span></code>
 to get the same result.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">words</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span>
-    <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span>      <span class="s">&quot;bacon&quot;</span><span class="p">,</span>  <span class="s">&quot;eggs&quot;</span><span class="p">),</span>
-    <span class="nf">c</span><span class="p">(</span><span class="s">&quot;buckwheat&quot;</span><span class="p">,</span> <span class="s">&quot;quinoa&quot;</span><span class="p">,</span> <span class="s">&quot;barley&quot;</span><span class="p">),</span>
-    <span class="nf">c</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">,</span>       <span class="s">&quot;spam&quot;</span><span class="p">,</span>   <span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w">      </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;eggs&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;buckwheat&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;quinoa&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;barley&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">,</span><span class="w">       </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w">   </span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
 <span class="p">)</span>
-<span class="nf">do.call</span><span class="p">(</span><span class="n">paste</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>  <span class="c1"># paste(words[[1]], words[[2]], words[[3]])</span>
+<span class="nf">do.call</span><span class="p">(</span><span class="n">paste</span><span class="p">,</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w">  </span><span class="c1"># paste(words[[1]], words[[2]], words[[3]])</span>
 <span class="c1">## [1] &quot;spam buckwheat ham&quot; &quot;bacon quinoa spam&quot;  &quot;eggs barley spam&quot;</span>
-<span class="nf">do.call</span><span class="p">(</span><span class="n">cbind</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>  <span class="c1"># column-bind; returns a matrix (explained later)</span>
+<span class="nf">do.call</span><span class="p">(</span><span class="n">cbind</span><span class="p">,</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w">  </span><span class="c1"># column-bind; returns a matrix (explained later)</span>
 <span class="c1">##      [,1]    [,2]        [,3]  </span>
 <span class="c1">## [1,] &quot;spam&quot;  &quot;buckwheat&quot; &quot;ham&quot; </span>
 <span class="c1">## [2,] &quot;bacon&quot; &quot;quinoa&quot;    &quot;spam&quot;</span>
 <span class="c1">## [3,] &quot;eggs&quot;  &quot;barley&quot;    &quot;spam&quot;</span>
-<span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>  <span class="c1"># row-bind (explained later)</span>
+<span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w">  </span><span class="c1"># row-bind (explained later)</span>
 <span class="c1">##      [,1]        [,2]     [,3]    </span>
 <span class="c1">## [1,] &quot;spam&quot;      &quot;bacon&quot;  &quot;eggs&quot;  </span>
 <span class="c1">## [2,] &quot;buckwheat&quot; &quot;quinoa&quot; &quot;barley&quot;</span>
@@ -818,9 +819,9 @@ ways to concatenate a list of data frames
 into a single data frame.</p>
 <p>If elements of the list are named, they will be matched
 to the corresponding keyword arguments.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="o">^</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">101</span><span class="p">))</span>
-<span class="n">plot_opts</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">)</span>
-<span class="nf">do.call</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">log2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;log2(x)&quot;</span><span class="p">),</span> <span class="n">plot_opts</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">101</span><span class="p">))</span>
+<span class="n">plot_opts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">)</span>
+<span class="nf">do.call</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">log2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;log2(x)&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">plot_opts</span><span class="p">))</span>
 <span class="c1">## (the displaying of the plot has been suppressed)</span>
 </pre></div>
 </div>
@@ -829,7 +830,7 @@ calls to graphical functions. This is very convenient as it avoids
 repetitions.</p>
 </section>
 <section id="common-higher-order-functions">
-<h3><span class="section-number">7.2.3. </span>Common Higher-Order Functions<a class="headerlink" href="#common-higher-order-functions" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.2.3. </span>Common Higher-Order Functions<a class="headerlink" href="#common-higher-order-functions" title="Permalink to this heading">¶</a></h3>
 <p>There is an important class of higher-order functions
 that allow us to apply custom operations on consecutive elements
 of sequences without relying on loop-like statements, at least explicitly.
@@ -870,7 +871,7 @@ This is because, oftentimes, we can be better-off with their more
 R-ish versions (e.g., using the subsetting operator, `<strong class="command">[</strong>`).</p>
 </section>
 <section id="vectorising-functions-with-map">
-<span id="sec-map"></span><h3><span class="section-number">7.2.4. </span>Vectorising Functions with <strong class="command">Map</strong><a class="headerlink" href="#vectorising-functions-with-map" title="Permalink to this heading"></a></h3>
+<span id="sec-map"></span><h3><span class="section-number">7.2.4. </span>Vectorising Functions with <strong class="command">Map</strong><a class="headerlink" href="#vectorising-functions-with-map" title="Permalink to this heading">¶</a></h3>
 <p>In data-centric computing, we are frequently faced with tasks that
 involve processing each and every element in a sequence
 independently, one after another. Such use cases can benefit
@@ -899,12 +900,12 @@ yields a list whose <em>i</em>-th element is equal to
 <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x[[i]])</span></code>
 (recall that `<strong class="command">[[</strong>` works on atomic vectors too).</p>
 <p>For example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span>  <span class="c1"># an example named list</span>
-    <span class="n">x1</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span>
-    <span class="n">x2</span><span class="o">=</span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="m">0.25</span><span class="p">),</span>
-    <span class="n">x3</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="kc">NA_real_</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">  </span><span class="c1"># an example named list</span>
+<span class="w">    </span><span class="n">x1</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span>
+<span class="w">    </span><span class="n">x2</span><span class="o">=</span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="m">0.25</span><span class="p">),</span>
+<span class="w">    </span><span class="n">x3</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">)</span>
 <span class="p">)</span>
-<span class="nf">Map</span><span class="p">(</span><span class="n">sqrt</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># x is named, hence the result will be named too</span>
+<span class="nf">Map</span><span class="p">(</span><span class="n">sqrt</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># x is named, hence the result will be named too</span>
 <span class="c1">## $x1</span>
 <span class="c1">## [1] 1.0000 1.4142 1.7321</span>
 <span class="c1">## </span>
@@ -913,7 +914,7 @@ yields a list whose <em>i</em>-th element is equal to
 <span class="c1">## </span>
 <span class="c1">## $x3</span>
 <span class="c1">## [1]  1  0 NA  0  0  1 NA</span>
-<span class="nf">Map</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nf">Map</span><span class="p">(</span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## $x1</span>
 <span class="c1">## [1] 3</span>
 <span class="c1">## </span>
@@ -922,10 +923,10 @@ yields a list whose <em>i</em>-th element is equal to
 <span class="c1">## </span>
 <span class="c1">## $x3</span>
 <span class="c1">## [1] 7</span>
-<span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>  <span class="c1"># compute three aggregates, convert to an atomic vector</span>
+<span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># compute three aggregates, convert to an atomic vector</span>
 <span class="c1">##  x1  x2  x3 </span>
 <span class="c1">## 2.0 0.5  NA</span>
-<span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="nf">round</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="m">1</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">6</span><span class="p">))</span>  <span class="c1"># x is atomic now</span>
+<span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">))</span><span class="w">  </span><span class="c1"># x is atomic now</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 0.4 0.8</span>
 <span class="c1">## </span>
@@ -945,7 +946,7 @@ Just like in case of, e.g., <strong class="command">paste</strong>,
 recycling rule will be applied if necessary.</p>
 <p>For example, the following generates
 <strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">6),</span> </code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(11,</span> <span class="pre">13),</span> </code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(21,</span> <span class="pre">29))</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">21</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="m">13</span><span class="p">,</span> <span class="m">29</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">29</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1 2 3 4 5 6</span>
 <span class="c1">## </span>
@@ -958,7 +959,7 @@ recycling rule will be applied if necessary.</p>
 </div>
 <p>Moreover, we can get
 <strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">40,</span> <span class="pre">length.out=10),</span> </code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(11,</span> <span class="pre">40,</span> <span class="pre">length.out=5),</span> </code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(21,</span> <span class="pre">40,</span> <span class="pre">length.out=10),</span> </code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(31,</span> <span class="pre">40,</span> <span class="pre">length.out=5))</span></code> by calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">21</span><span class="p">,</span> <span class="m">31</span><span class="p">),</span> <span class="m">40</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">),</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1]  1.0000  5.3333  9.6667 14.0000 18.3333 22.6667 27.0000 31.3333</span>
 <span class="c1">##  [9] 35.6667 40.0000</span>
@@ -980,13 +981,13 @@ the function applied (which the function does not have to be vectorised
 over), we can wrap them inside a separate list
 and toss it via the <code class="docutils literal notranslate"><span class="pre">MoreArgs</span></code> argument
 (à la <strong class="command">do.call</strong>).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">MoreArgs</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span>  <span class="c1"># mean(..., na.rm=TRUE)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">MoreArgs</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span><span class="w">  </span><span class="c1"># mean(..., na.rm=TRUE)</span>
 <span class="c1">##  x1  x2  x3 </span>
 <span class="c1">## 2.0 0.5 0.4</span>
 </pre></div>
 </div>
 <p>Alternatively, we can always construct a custom anonymous function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="nf">mean</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
 <span class="c1">##  x1  x2  x3 </span>
 <span class="c1">## 2.0 0.5 0.4</span>
 </pre></div>
@@ -1000,10 +1001,10 @@ and toss it via the <code class="docutils literal notranslate"><span class="pre"
     </div><div class="proof-content">
 <p>Here is an example list of files
 (see <a class="reference external" href="https://github.com/gagolews/teaching-data/tree/master/marek">our teaching data repository</a>) with daily Forex rates:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">file_names</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span>
-    <span class="s">&quot;euraud-20200101-20200630.csv&quot;</span><span class="p">,</span>
-    <span class="s">&quot;eurgbp-20200101-20200630.csv&quot;</span><span class="p">,</span>
-    <span class="s">&quot;eurusd-20200101-20200630.csv&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">file_names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;euraud-20200101-20200630.csv&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;eurgbp-20200101-20200630.csv&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;eurusd-20200101-20200630.csv&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1021,7 +1022,7 @@ function based on a call to <strong class="command">Map</strong>.</p>
 </div></div></section>
 </section>
 <section id="accessing-third-party-functions">
-<h2><span class="section-number">7.3. </span>Accessing Third-Party Functions<a class="headerlink" href="#accessing-third-party-functions" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">7.3. </span>Accessing Third-Party Functions<a class="headerlink" href="#accessing-third-party-functions" title="Permalink to this heading">¶</a></h2>
 <p>When we indulge in the writing of a software piece,
 a few questions naturally arise.
 Is the problem we are facing fairly complex?
@@ -1033,7 +1034,7 @@ to stand on the shoulders to cry on.
 Let us explore some ways in which we can reuse the existing
 function libraries.</p>
 <section id="using-r-packages">
-<span id="sec-packages"></span><h3><span class="section-number">7.3.1. </span>Using R Packages<a class="headerlink" href="#using-r-packages" title="Permalink to this heading"></a></h3>
+<span id="sec-packages"></span><h3><span class="section-number">7.3.1. </span>Using R Packages<a class="headerlink" href="#using-r-packages" title="Permalink to this heading">¶</a></h3>
 <p>Most contributed R extensions come in the form of the so-called
 <em>add-on packages</em>, which can include:</p>
 <ul class="simple">
@@ -1042,7 +1043,7 @@ function libraries.</p>
 <li><p>documentation (manuals, vignettes, etc.);</p></li>
 </ul>
 <p>see <a class="reference internal" href="210-design.html#sec-own-packages"><span class="std std-numref">Section 9.3.2</span></a> for some more
-and <span id="id5">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">47</a>]</span> for all the details.</p>
+and <span id="id5">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span> for all the details.</p>
 <p>Most packages are published in the
 moderated repository that is part of the <em>Comprehensive R Archive Network</em>
 (<a class="reference external" href="https://cloud.r-project.org/">CRAN</a>).
@@ -1059,8 +1060,8 @@ see <code class="xref std std-numref docutils literal notranslate"><span class="
 <p>For instance, in one of the previous chapters,
 we have mentioned the <strong class="program">gsl</strong> package:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># call install.packages(&quot;gsl&quot;) first</span>
-<span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span>  <span class="c1"># load the package</span>
-<span class="nf">poch</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">3</span><span class="o">:</span><span class="m">6</span><span class="p">)</span>   <span class="c1"># calls gsl_sf_poch() from GNU GSL</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># load the package</span>
+<span class="nf">poch</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="o">:</span><span class="m">6</span><span class="p">)</span><span class="w">   </span><span class="c1"># calls gsl_sf_poch() from GNU GSL</span>
 <span class="c1">## [1]    1320   17160  240240 3603600</span>
 </pre></div>
 </div>
@@ -1090,7 +1091,7 @@ can be found in these objects’ manual pages.</p>
 <p>For more information about any R extension, call
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;pkg&quot;)</span></code>.
 Also, it is a good idea to visit the package’s CRAN entry
-at an address like <a class="reference external" href="https://CRAN.R-project.org/package=pkg">https://CRAN.R-project.org/package=pkg</a>
+at an address like <em>https://CRAN.R-project.org/package=pkg</em>
 to access some additional information (e.g.,
 vignettes; see also <strong class="command">vignette</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;pkg&quot;)</span></code>).
 Why waste our time and energy by querying a web search engine
@@ -1120,7 +1121,7 @@ Some readers will become one of them someday (when they will come
 up with something useful for our community).</p>
 </div>
 <section id="default-packages">
-<h4><span class="section-number">7.3.1.1. </span>Default Packages<a class="headerlink" href="#default-packages" title="Permalink to this heading"></a></h4>
+<h4><span class="section-number">7.3.1.1. </span>Default Packages<a class="headerlink" href="#default-packages" title="Permalink to this heading">¶</a></h4>
 <p>Note that the always-on package <strong class="program">base</strong> is a must-have that provides
 us with the most crucial functions (vector addition, <strong class="command">c</strong>,
 <strong class="command">Map</strong>, <strong class="command">library</strong>).
@@ -1146,7 +1147,7 @@ Functions from <strong class="program">utils</strong>, <strong class="program">g
 on the other hand, already appeared here and there.</p>
 </section>
 <section id="source-vs-binary-packages">
-<h4><span class="section-number">7.3.1.2. </span>Source vs Binary Packages (*)<a class="headerlink" href="#source-vs-binary-packages" title="Permalink to this heading"></a></h4>
+<h4><span class="section-number">7.3.1.2. </span>Source vs Binary Packages (*)<a class="headerlink" href="#source-vs-binary-packages" title="Permalink to this heading">¶</a></h4>
 <p>R is a free and open project, therefore
 its packages are published primarily
 in the source form – so that anyone can study how they work
@@ -1164,7 +1165,7 @@ see <strong class="command">getOption</strong><code class="code docutils literal
 This is because these two might require additional build tools
 to be present in the system, especially if a package features
 C, C++, or Fortran code; see <a class="reference internal" href="320-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>
-and Section C.3 of <span id="id6">[<a class="reference internal" href="999-bibliography.html#id9" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">49</a>]</span>:</p>
+and Section C.3 of <span id="id6">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">50</a>]</span>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> on W****ws,</p></li>
 <li><p><a class="reference external" href="https://developer.apple.com/xcode/resources/">Xcode Command Line Tools</a>
@@ -1191,20 +1192,20 @@ At the time of writing this, the relevant links were, respectively:</p>
 <p>For example, to download the contents of
 the <em>master</em> branch in the repository <em>rpackagedemo</em>
 owned by <em>gagolews</em>, we can call:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">tempfile</span><span class="p">()</span>  <span class="c1"># temporary file name - download destination</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tempfile</span><span class="p">()</span><span class="w">  </span><span class="c1"># temporary file name - download destination</span>
 <span class="nf">download.file</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/rpackagedemo/archive/master.zip&quot;</span><span class="p">,</span>
-    <span class="n">destfile</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
+<span class="w">    </span><span class="n">destfile</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Next, the contents can be extracted with <strong class="command">unzip</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">&lt;-</span> <span class="nf">tempdir</span><span class="p">()</span>  <span class="c1"># temporary directory to extract the files to</span>
-<span class="p">(</span><span class="n">d</span> <span class="o">&lt;-</span> <span class="nf">unzip</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">exdir</span><span class="o">=</span><span class="n">t</span><span class="p">))</span>  <span class="c1"># returns extracted file paths</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tempdir</span><span class="p">()</span><span class="w">  </span><span class="c1"># temporary directory to extract the files to</span>
+<span class="p">(</span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">unzip</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">exdir</span><span class="o">=</span><span class="n">t</span><span class="p">))</span><span class="w">  </span><span class="c1"># returns extracted file paths</span>
 </pre></div>
 </div>
 <p>The path where the files were extracted
 can be passed to <strong class="command">install.packages</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="nf">dirname</span><span class="p">(</span><span class="n">d</span><span class="p">)[</span><span class="m">1</span><span class="p">],</span> <span class="n">repos</span><span class="o">=</span><span class="kc">NULL</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;source&quot;</span><span class="p">)</span>
-<span class="nf">file.remove</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>  <span class="c1"># clean up</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="nf">dirname</span><span class="p">(</span><span class="n">d</span><span class="p">)[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">repos</span><span class="o">=</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;source&quot;</span><span class="p">)</span>
+<span class="nf">file.remove</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">))</span><span class="w">  </span><span class="c1"># clean up</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id16">
@@ -1220,7 +1221,7 @@ R session.</p>
 </div></div></section>
 </section>
 <section id="managing-dependencies">
-<h3><span class="section-number">7.3.2. </span>Managing Dependencies (*)<a class="headerlink" href="#managing-dependencies" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.3.2. </span>Managing Dependencies (*)<a class="headerlink" href="#managing-dependencies" title="Permalink to this heading">¶</a></h3>
 <p>The currently-installed add-on packages
 may be upgraded to their most recent versions
 available on CRAN (or other indicated repository)
@@ -1263,17 +1264,17 @@ directories, see its <code class="docutils literal notranslate"><span class="pre
 on the user’s machine. Therefore, it might be a good idea
 to set the following directories (via the corresponding
 environment variables) as relative to the current project:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span> <span class="s">&quot;data&quot;</span><span class="p">)</span>   <span class="c1"># R_USER_DATA_DIR</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1"># R_USER_DATA_DIR</span>
 <span class="c1">## [1] &quot;/home/gagolews/.local/share/R/pkg&quot;</span>
-<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span> <span class="s">&quot;config&quot;</span><span class="p">)</span> <span class="c1"># R_USER_CONFIG_DIR</span>
+<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;config&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># R_USER_CONFIG_DIR</span>
 <span class="c1">## [1] &quot;/home/gagolews/.config/R/pkg&quot;</span>
-<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span> <span class="s">&quot;cache&quot;</span><span class="p">)</span>  <span class="c1"># R_USER_CACHE_DIR</span>
+<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cache&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># R_USER_CACHE_DIR</span>
 <span class="c1">## [1] &quot;/home/gagolews/.cache/R/pkg&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="calling-external-programs">
-<span id="sec-external-programs"></span><h3><span class="section-number">7.3.3. </span>Calling External Programs<a class="headerlink" href="#calling-external-programs" title="Permalink to this heading"></a></h3>
+<span id="sec-external-programs"></span><h3><span class="section-number">7.3.3. </span>Calling External Programs<a class="headerlink" href="#calling-external-programs" title="Permalink to this heading">¶</a></h3>
 <p>Many tasks can naturally be accomplished by calling external programs.
 Such an approach is particularly natural on Unix-like systems,
 which classically follow a modular, minimalist design patterns:
@@ -1311,14 +1312,14 @@ Communication between such programs can be done by means of,
 e.g., intermediate text, JSON, CSV, XML, or any other files.
 The <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> arguments can be used to control the
 redirection of the standard I/O streams.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">system2</span><span class="p">(</span><span class="s">&quot;pandoc&quot;</span><span class="p">,</span> <span class="s">&quot;-s input.md -o output.html&quot;</span><span class="p">)</span>
-<span class="nf">system2</span><span class="p">(</span><span class="s">&quot;bash&quot;</span><span class="p">,</span> <span class="s">&quot;-c &#39;for i in `seq 1 2 10`; do echo $i; done&#39;&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">system2</span><span class="p">(</span><span class="s">&quot;pandoc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-s input.md -o output.html&quot;</span><span class="p">)</span>
+<span class="nf">system2</span><span class="p">(</span><span class="s">&quot;bash&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-c &#39;for i in `seq 1 2 10`; do echo $i; done&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stdout</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] &quot;1&quot; &quot;3&quot; &quot;5&quot; &quot;7&quot; &quot;9&quot;</span>
-<span class="nf">system2</span><span class="p">(</span><span class="s">&quot;python3&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
-    <span class="n">input</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span>
-    <span class="s">&quot;import numpy as np&quot;</span><span class="p">,</span>
-    <span class="s">&quot;print(repr(np.arange(5)))&quot;</span>
-    <span class="p">))</span>
+<span class="nf">system2</span><span class="p">(</span><span class="s">&quot;python3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stdout</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">input</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;import numpy as np&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;print(repr(np.arange(5)))&quot;</span>
+<span class="w">    </span><span class="p">))</span>
 <span class="c1">## [1] &quot;array([0, 1, 2, 3, 4])&quot;</span>
 </pre></div>
 </div>
@@ -1340,7 +1341,7 @@ user-loving, reliable, ethical, and sustainable.</p>
 </div>
 </section>
 <section id="a-note-on-interfacing-c-c-python-java-etc">
-<h3><span class="section-number">7.3.4. </span>A Note on Interfacing C, C++, Python, Java, etc. (*)<a class="headerlink" href="#a-note-on-interfacing-c-c-python-java-etc" title="Permalink to this heading"></a></h3>
+<h3><span class="section-number">7.3.4. </span>A Note on Interfacing C, C++, Python, Java, etc. (*)<a class="headerlink" href="#a-note-on-interfacing-c-c-python-java-etc" title="Permalink to this heading">¶</a></h3>
 <p>Most stand-alone data processing algorithms are implemented
 in compiled, slightly lower-level programming languages.
 This usually makes them faster and more re-usable in other
@@ -1374,7 +1375,7 @@ in the right direction.</p>
 </section>
 </section>
 <section id="exercises">
-<h2><span class="section-number">7.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">7.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
 <div class="proof proof-type-exercise" id="id17">
 
     <div class="proof-title">
@@ -1434,12 +1435,12 @@ the arguments and handles missing data correctly.</p>
     </div><div class="proof-content">
 <p>Write your own version of the <strong class="command">strrep</strong> function
 called <strong class="command">dup</strong>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">dup</span> <span class="o">&lt;-</span> <span class="n">...to.do...</span>
-<span class="nf">dup</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">dup</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
+<span class="nf">dup</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">))</span>
 <span class="c1">## [1] &quot;a&quot;     &quot;bbb&quot;   &quot;ccccc&quot;</span>
-<span class="nf">dup</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">dup</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;a&quot;   &quot;aa&quot;  &quot;aaa&quot;</span>
-<span class="nf">dup</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span>
+<span class="nf">dup</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
 <span class="c1">## [1] &quot;aaaa&quot; &quot;bbbb&quot; &quot;cccc&quot;</span>
 </pre></div>
 </div>
@@ -1493,11 +1494,11 @@ that computes, using <strong class="command">Map</strong>,
 a given aggregate <strong class="command">f</strong>
 of each <em>k</em> consecutive elements in <code class="docutils literal notranslate"><span class="pre">x</span></code>.
 For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">movstat</span> <span class="o">&lt;-</span> <span class="n">...to.do...</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">-25</span><span class="p">)</span>  <span class="c1"># example data</span>
-<span class="nf">movstat</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>           <span class="c1"># 3-moving mean</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">movstat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">-25</span><span class="p">)</span><span class="w">  </span><span class="c1"># example data</span>
+<span class="nf">movstat</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">           </span><span class="c1"># 3-moving mean</span>
 <span class="c1">## [1]  3.0000  6.0000 13.3333  3.3333</span>
-<span class="nf">movstat</span><span class="p">(</span><span class="n">median</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>         <span class="c1"># 3-moving median</span>
+<span class="nf">movstat</span><span class="p">(</span><span class="n">median</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">         </span><span class="c1"># 3-moving median</span>
 <span class="c1">## [1]  3.0000  6.0000 13.3333  3.3333</span>
 </pre></div>
 </div>
@@ -1521,10 +1522,10 @@ character vectors. For examples,
 to a vector where each unique code is assigned a positive integer
 from 1 to <em>k</em>.
 Example calls and the corresponding expected results:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">recode</span> <span class="o">&lt;-</span> <span class="n">...to.do...</span>
-<span class="nf">recode</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">recode</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
+<span class="nf">recode</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">))</span>
 <span class="c1">## [1] 1 1 1 2 2</span>
-<span class="nf">recode</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">))</span>
+<span class="nf">recode</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">))</span>
 <span class="c1">## [1] 1 3 2 1 2 1</span>
 </pre></div>
 </div>
@@ -1537,11 +1538,11 @@ Example calls and the corresponding expected results:</p>
 <p>Implement a function that returns the number of occurrences of
 each unique element in a given atomic vector. The return value
 should be a numeric vector equipped with a <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">&lt;-</span> <span class="n">...to.do...</span>
-<span class="nf">count</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">42</span><span class="p">,</span> <span class="m">42</span><span class="p">,</span> <span class="m">954</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">count</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
+<span class="nf">count</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">954</span><span class="p">))</span>
 <span class="c1">##   5  42 954 </span>
 <span class="c1">##   4   2   1</span>
-<span class="nf">count</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="kc">NA_character_</span><span class="p">))</span>
+<span class="nf">count</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span><span class="p">))</span>
 <span class="c1">##    w    x    y    z &lt;NA&gt; </span>
 <span class="c1">##    1    5    3    1    1</span>
 </pre></div>
@@ -1556,10 +1557,10 @@ should be a numeric vector equipped with a <code class="docutils literal notrans
 <p>Implement a function that extends upon the built-in <strong class="command">duplicated</strong>,
 indicating which occurrence (starting from the beginning of the vector)
 of a repeated value a given value constitutes.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">duplicatedn</span> <span class="o">&lt;-</span> <span class="n">...to.do...</span>
-<span class="nf">duplicatedn</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">duplicatedn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
+<span class="nf">duplicatedn</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">))</span>
 <span class="c1">## [1] 1 2 3 1 2</span>
-<span class="nf">duplicatedn</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;z&quot;</span><span class="p">))</span>
+<span class="nf">duplicatedn</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">))</span>
 <span class="c1">##  [1] 1 1 1 2 2 3 1 4 5 3 2</span>
 </pre></div>
 </div>
@@ -1681,7 +1682,7 @@ is equivalent to <strong class="command">Map</strong><code class="code docutils 
     and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
     theme.
       <span class="lastupdated">
-        Last updated on 2023-01-18T09:57:43+1100.
+        Last updated on 2023-02-09T13:06:20+1100.
       </span>
 
 
