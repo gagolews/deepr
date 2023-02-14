@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-
-
-<html class="writer-html5" lang="en" >
-<!-- Copyright (C) 2020-2022, Marek Gagolewski <https://www.gagolewski.com> -->
-
-<head>
-  <meta charset="utf-8" />
-
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <meta content="Deep R Programming" name="citation_title" />
 <meta content="Marek Gagolewski" name="citation_author" />
 <meta content="2023" name="citation_date" />
 <meta content="2023" name="citation_publication_date" />
 <meta content="https://deepr.gagolewski.com/deepr.pdf" name="citation_pdf_url" />
-<meta content="https://deepr.gagolewski.com/" name="citation_public_url" />
+<meta content="https://deepr.gagolewski.com" name="citation_public_url" />
 <meta content="10.5281/zenodo.7490464" name="citation_doi" />
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="citation_abstract" />
 <meta content="summary" name="twitter:card" />
@@ -22,121 +17,176 @@
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="twitter:description" />
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="og:description" />
 <meta content="gagolews/deepr" name="og:site_name" />
-<meta content="https://deepr.gagolewski.com/" name="og:url" />
+<meta content="https://deepr.gagolewski.com" name="og:url" />
 <meta content="https://deepr.gagolewski.com/_images/cover.png" name="twitter:image" />
 <meta content="https://deepr.gagolewski.com/_images/cover.png" name="og:image" />
-<meta content="https://deepr.gagolewski.com/" name="DC.identifier" />
+<meta content="https://deepr.gagolewski.com" name="DC.identifier" />
 <meta content="Marek Gagolewski" name="DC.publisher" />
 <meta content="INDEX,FOLLOW" name="robots" />
 <meta content="book" name="og:type" />
 <meta content="9780645571929" name="og:book:isbn" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="13. 🚧🚧 Graphics" href="310-graphics.html" /><link rel="prev" title="11. Matrices and Other Arrays" href="230-matrix.html" />
+        <link rel="canonical" href="https://deepr.gagolewski.com/chapter/240-data-frame.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>12. Data Frames &mdash; Deep R Programming by Marek Gagolewski</title>
-  
-
-  
-  
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/proof.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.png"/>
-  
-
-  
-  
-
-  
-    <link rel="canonical" href="https://deepr.gagolewski.com/chapter/240-data-frame.html" />
-
-  
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
+    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+        <title>12. Data Frames - Deep R Programming by Marek Gagolewski</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/proof.js"></script>
     
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --admonition-font-size: 95%;
+  --admonition-title-font-size: 95%;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="13. 🚧🚧 Graphics" href="310-graphics.html" />
-    <link rel="prev" title="11. Matrices and Other Arrays" href="230-matrix.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
-   
-  <div class="wy-grid-for-nav">
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="../index.html"> Deep R Programming
-          
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          </a>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
-          <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.13.9001 (draft)
-          </div>
 
-<!--
-          
-            
-            
-              <div class="version">
-                by Marek Gagolewski
-              </div>
-            
-          
--->
 
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search phrase..." />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Deep R Programming by Marek Gagolewski</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto colour theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky">
+
+<span class="sidebar-brand-text">
+<a class="sidebar-brand" href="../index.html">Deep R Programming</a>
+</span>
+<div class="sidebar-brand">
+An open-access textbook<br />
+by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
+v0.1.13.9001 (draft)
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul>
+<form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">This Book in PDF</a></li>
@@ -164,37 +214,7 @@
 <li class="toctree-l1"><a class="reference internal" href="210-design.html">9. Designing Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="220-s3.html">10. S3 Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and Other Arrays</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">12. Data Frames</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#creating-data-frames">12.1. Creating Data Frames</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#data-frame-and-as-data-frame">12.1.1. <strong class="command">data.frame</strong> and <strong class="command">as.data.frame</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cbind-data-frame-and-rbind-data-frame">12.1.2. <strong class="command">cbind.data.frame</strong> and <strong class="command">rbind.data.frame</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reading-data-frames">12.1.3. Reading Data Frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#interfacing-relational-databases-and-querying-with-sql">12.1.4. Interfacing Relational Databases and Querying with SQL (*)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#strings-as-factors">12.1.5. Strings as Factors?</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#internal-representation">12.1.6. Internal Representation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#data-frame-subsetting">12.2. Data Frame Subsetting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#data-frames-are-lists">12.2.1. Data Frames are Lists</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-frames-are-matrix-like">12.2.2. Data Frames are Matrix-like</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#common-operations">12.3. Common Operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ordering-rows">12.3.1. Ordering Rows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#handling-duplicated-rows">12.3.2. Handling Duplicated Rows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#joining-merging-data-frames">12.3.3. Joining (Merging) Data Frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aggregating-and-transforming-columns">12.3.4. Aggregating and Transforming Columns</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#handling-missing-values">12.3.5. Handling Missing Values</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reshaping-data-frames">12.3.6. Reshaping Data Frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aggregating-data-in-groups">12.3.7. Aggregating Data in Groups</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#transforming-data-in-groups">12.3.8. Transforming Data in Groups</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#metaprogramming-based-techniques">12.3.9. Metaprogramming-Based Techniques (*)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#a-note-on-the-dplyr-tidyverse-and-data-table-packages">12.3.10. A Note on the <strong class="program">dplyr</strong> (<strong class="program">tidyverse</strong>) and <strong class="program">data.table</strong> Packages (*)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#exercises">12.4. Exercises</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">12. Data Frames</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul>
@@ -209,87 +229,47 @@
 <li class="toctree-l1"><a class="reference internal" href="999-bibliography.html">References</a></li>
 </ul>
 
-            
-          
-        </div>
-        
+</div></div>
+
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Deep R Programming</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content style-external-links">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li><span class="section-number">12. </span>Data Frames</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-
-        
-        
-        <a class="github-button" href="https://github.com/gagolews/deepr" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star gagolews/deepr on GitHub">GitHub</a>
-        
-
-
-        
-      </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="310-graphics.html" class="btn btn-neutral float-right" title="13. 🚧🚧 Graphics" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
-        <a href="230-matrix.html" class="btn btn-neutral float-left" title="11. Matrices and Other Arrays" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
-  </div>
-  
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="data-frames">
-<span id="chap-data-frame"></span><h1><span class="section-number">12. </span>Data Frames<a class="headerlink" href="#data-frames" title="Permalink to this heading">¶</a></h1>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/gagolews/deepr/issues/" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto colour theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="data-frames">
+<span id="chap-data-frame"></span><h1><span class="section-number">12. </span>Data Frames<a class="headerlink" href="#data-frames" title="Permalink to this heading">#</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -347,9 +327,9 @@ to pop in here by accident or driven by “but I need to know <em>now</em>”.
 Good morning.</p>
 </div>
 <section id="creating-data-frames">
-<h2><span class="section-number">12.1. </span>Creating Data Frames<a class="headerlink" href="#creating-data-frames" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">12.1. </span>Creating Data Frames<a class="headerlink" href="#creating-data-frames" title="Permalink to this heading">#</a></h2>
 <section id="data-frame-and-as-data-frame">
-<h3><span class="section-number">12.1.1. </span><strong class="command">data.frame</strong> and <strong class="command">as.data.frame</strong><a class="headerlink" href="#data-frame-and-as-data-frame" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.1.1. </span><strong class="command">data.frame</strong> and <strong class="command">as.data.frame</strong><a class="headerlink" href="#data-frame-and-as-data-frame" title="Permalink to this heading">#</a></h3>
 <p>Most frequently, we create data frames based on a series of logical,
 numeric, or characters vectors of identical lengths.
 The <strong class="command">data.frame</strong> function is particularly useful
@@ -542,7 +522,7 @@ an S3 class <code class="docutils literal notranslate"><span class="pre">spam</s
 </div>
 </div></div></section>
 <section id="cbind-data-frame-and-rbind-data-frame">
-<span id="sec-cbind-data-frame"></span><h3><span class="section-number">12.1.2. </span><strong class="command">cbind.data.frame</strong> and <strong class="command">rbind.data.frame</strong><a class="headerlink" href="#cbind-data-frame-and-rbind-data-frame" title="Permalink to this heading">¶</a></h3>
+<span id="sec-cbind-data-frame"></span><h3><span class="section-number">12.1.2. </span><strong class="command">cbind.data.frame</strong> and <strong class="command">rbind.data.frame</strong><a class="headerlink" href="#cbind-data-frame-and-rbind-data-frame" title="Permalink to this heading">#</a></h3>
 <p>There are data frame-specific versions of
 <strong class="command">cbind</strong> or <strong class="command">rbind</strong> (which we discussed
 in the context of stacking matrices in <a class="reference internal" href="230-matrix.html#sec-cbind-matrix"><span class="std std-numref">Section 11.1.2</span></a>).
@@ -673,7 +653,7 @@ a particularly friendly object type:</p>
 </div>
 </section>
 <section id="reading-data-frames">
-<h3><span class="section-number">12.1.3. </span>Reading Data Frames<a class="headerlink" href="#reading-data-frames" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.1.3. </span>Reading Data Frames<a class="headerlink" href="#reading-data-frames" title="Permalink to this heading">#</a></h3>
 <p>Structured data can be imported from external sources, such as CSV/TSV
 (comma/tab-separated values) or HDF5 files,
 relational databases supporting SQL (see <a class="reference internal" href="#sec-sql"><span class="std std-numref">Section 12.1.4</span></a>)
@@ -731,7 +711,7 @@ which is beneficial especially when data do not fit into memory
 </div>
 </section>
 <section id="interfacing-relational-databases-and-querying-with-sql">
-<span id="sec-sql"></span><h3><span class="section-number">12.1.4. </span>Interfacing Relational Databases and Querying with SQL (*)<a class="headerlink" href="#interfacing-relational-databases-and-querying-with-sql" title="Permalink to this heading">¶</a></h3>
+<span id="sec-sql"></span><h3><span class="section-number">12.1.4. </span>Interfacing Relational Databases and Querying with SQL (*)<a class="headerlink" href="#interfacing-relational-databases-and-querying-with-sql" title="Permalink to this heading">#</a></h3>
 <p>The <strong class="program">DBI</strong> package provides a universal interface
 for particular database management systems
 whose drivers are implemented in additional add-ons such as
@@ -799,7 +779,7 @@ a platform-independent command-line utility).</p></li>
 </ul>
 </div></div></section>
 <section id="strings-as-factors">
-<span id="sec-stringsasfactors"></span><h3><span class="section-number">12.1.5. </span>Strings as Factors?<a class="headerlink" href="#strings-as-factors" title="Permalink to this heading">¶</a></h3>
+<span id="sec-stringsasfactors"></span><h3><span class="section-number">12.1.5. </span>Strings as Factors?<a class="headerlink" href="#strings-as-factors" title="Permalink to this heading">#</a></h3>
 <p>The following is so critical that we will devote a separate subsection
 to discuss it, so that we always remain vigilant (such is life:
 maintaining some level of mindfulness is often a good idea).</p>
@@ -870,7 +850,7 @@ Thence, adding a new variety might be oblique:</p>
 to <code class="docutils literal notranslate"><span class="pre">character</span></code>.</p>
 </section>
 <section id="internal-representation">
-<span id="sec-df-representation"></span><h3><span class="section-number">12.1.6. </span>Internal Representation<a class="headerlink" href="#internal-representation" title="Permalink to this heading">¶</a></h3>
+<span id="sec-df-representation"></span><h3><span class="section-number">12.1.6. </span>Internal Representation<a class="headerlink" href="#internal-representation" title="Permalink to this heading">#</a></h3>
 <p>Objects of S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> are built upon lists
 of vectors of the same length or matrices with identical row counts,
 which define consecutive columns thereof.
@@ -1003,9 +983,9 @@ should be equivalent to
 </div></div></section>
 </section>
 <section id="data-frame-subsetting">
-<span id="sec-df-idx"></span><h2><span class="section-number">12.2. </span>Data Frame Subsetting<a class="headerlink" href="#data-frame-subsetting" title="Permalink to this heading">¶</a></h2>
+<span id="sec-df-idx"></span><h2><span class="section-number">12.2. </span>Data Frame Subsetting<a class="headerlink" href="#data-frame-subsetting" title="Permalink to this heading">#</a></h2>
 <section id="data-frames-are-lists">
-<h3><span class="section-number">12.2.1. </span>Data Frames are Lists<a class="headerlink" href="#data-frames-are-lists" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.2.1. </span>Data Frames are Lists<a class="headerlink" href="#data-frames-are-lists" title="Permalink to this heading">#</a></h3>
 <p>Data frames are named lists, where each element represents an individual
 column. Therefore<a class="footnote-reference brackets" href="#footnotedflist" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>, <strong class="command">length</strong> yields the number of
 columns and <strong class="command">names</strong> gives their respective labels.</p>
@@ -1148,7 +1128,7 @@ given in a <code class="docutils literal notranslate"><span class="pre">from=to<
 </div>
 </div></div></section>
 <section id="data-frames-are-matrix-like">
-<h3><span class="section-number">12.2.2. </span>Data Frames are Matrix-like<a class="headerlink" href="#data-frames-are-matrix-like" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.2.2. </span>Data Frames are Matrix-like<a class="headerlink" href="#data-frames-are-matrix-like" title="Permalink to this heading">#</a></h3>
 <p>Data frames can be considered “generalised” matrices. They store data
 of any kind (possibly mixed) organised in a tabular fashion.
 Some functions mentioned in the previous chapter will hence
@@ -1328,7 +1308,7 @@ a standalone column of a given name, for instance:</p>
 </div></div></section>
 </section>
 <section id="common-operations">
-<span id="sec-df-ops"></span><h2><span class="section-number">12.3. </span>Common Operations<a class="headerlink" href="#common-operations" title="Permalink to this heading">¶</a></h2>
+<span id="sec-df-ops"></span><h2><span class="section-number">12.3. </span>Common Operations<a class="headerlink" href="#common-operations" title="Permalink to this heading">#</a></h2>
 <p>Below we review the most commonly applied operations
 related to data frame wrangling.
 We have a few dedicated functions or methods overloaded
@@ -1339,7 +1319,7 @@ in particular involving the solving of the exercises
 in the preceding chapters.
 Let us repeat: data frames are just lists exhibiting matrix-like behaviour.</p>
 <section id="ordering-rows">
-<span id="sec-df-order"></span><h3><span class="section-number">12.3.1. </span>Ordering Rows<a class="headerlink" href="#ordering-rows" title="Permalink to this heading">¶</a></h3>
+<span id="sec-df-order"></span><h3><span class="section-number">12.3.1. </span>Ordering Rows<a class="headerlink" href="#ordering-rows" title="Permalink to this heading">#</a></h3>
 <p>Ordering rows in a data frame with respect to different
 criteria can be easily achieved by means of the <strong class="command">order</strong> function
 and the two-argument version of `<strong class="command">[</strong>`.</p>
@@ -1454,7 +1434,7 @@ be placed as the second method argument is imposed by the
 <strong class="command">sort</strong> S3 generic.</p>
 </div></div></section>
 <section id="handling-duplicated-rows">
-<h3><span class="section-number">12.3.2. </span>Handling Duplicated Rows<a class="headerlink" href="#handling-duplicated-rows" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.3.2. </span>Handling Duplicated Rows<a class="headerlink" href="#handling-duplicated-rows" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">duplicated</strong>, <strong class="command">anyDuplicated</strong>, and <strong class="command">unique</strong>
 have methods overloaded for the <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> class.
 They can be used to indicate, get rid of, or replace
@@ -1468,7 +1448,7 @@ the repeating rows.</p>
 </div>
 </section>
 <section id="joining-merging-data-frames">
-<h3><span class="section-number">12.3.3. </span>Joining (Merging) Data Frames<a class="headerlink" href="#joining-merging-data-frames" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.3.3. </span>Joining (Merging) Data Frames<a class="headerlink" href="#joining-merging-data-frames" title="Permalink to this heading">#</a></h3>
 <p>The <strong class="command">merge</strong> function can perform the JOIN operation
 that some readers might know from SQL<a class="footnote-reference brackets" href="#footjoin" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>. It matches the items in
 the columns that two given data frames somewhat share,
@@ -1553,7 +1533,7 @@ data frame will be included in the result:</p>
 implement a very basic version of <strong class="command">merge</strong>.</p>
 </div></div></section>
 <section id="aggregating-and-transforming-columns">
-<h3><span class="section-number">12.3.4. </span>Aggregating and Transforming Columns<a class="headerlink" href="#aggregating-and-transforming-columns" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.3.4. </span>Aggregating and Transforming Columns<a class="headerlink" href="#aggregating-and-transforming-columns" title="Permalink to this heading">#</a></h3>
 <p>Let us discuss how to perform data aggregation or
 engineer features.
 Despite the fact that we already know how to access individual
@@ -1637,7 +1617,7 @@ can be performed, e.g., via a call:</p>
 </div>
 </div></div></section>
 <section id="handling-missing-values">
-<h3><span class="section-number">12.3.5. </span>Handling Missing Values<a class="headerlink" href="#handling-missing-values" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">12.3.5. </span>Handling Missing Values<a class="headerlink" href="#handling-missing-values" title="Permalink to this heading">#</a></h3>
 <p>The <strong class="command">is.na</strong> method for objects of class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>
 returns a logical matrix of the same dimensionality<a class="footnote-reference brackets" href="#footnotmatrix" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>
 indicating whether the corresponding items are missing or not.
@@ -1670,7 +1650,7 @@ be filled so as to obtain
 </ol>
 </div></div></section>
 <section id="reshaping-data-frames">
-<span id="sec-reshape"></span><h3><span class="section-number">12.3.6. </span>Reshaping Data Frames<a class="headerlink" href="#reshaping-data-frames" title="Permalink to this heading">¶</a></h3>
+<span id="sec-reshape"></span><h3><span class="section-number">12.3.6. </span>Reshaping Data Frames<a class="headerlink" href="#reshaping-data-frames" title="Permalink to this heading">#</a></h3>
 <p>Consider an example matrix:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">,</span>
 <span class="w">    </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span>
@@ -1818,7 +1798,7 @@ Also, write a function to that does the opposite: one that groups all
 columns with similar prefixes and turns them into matrices.</p>
 </div></div></section>
 <section id="aggregating-data-in-groups">
-<span id="sec-df-group-by"></span><h3><span class="section-number">12.3.7. </span>Aggregating Data in Groups<a class="headerlink" href="#aggregating-data-in-groups" title="Permalink to this heading">¶</a></h3>
+<span id="sec-df-group-by"></span><h3><span class="section-number">12.3.7. </span>Aggregating Data in Groups<a class="headerlink" href="#aggregating-data-in-groups" title="Permalink to this heading">#</a></h3>
 <p>We can straightforwardly apply various transforms on data groups determined
 by a factor-like variable or a combination thereof
 thanks to the <strong class="command">split.data.frame</strong> method,
@@ -2242,7 +2222,7 @@ function being a specialised version of the above:</p>
 </div>
 </div></div></section>
 <section id="transforming-data-in-groups">
-<span id="sec-df-group-by-transform"></span><h3><span class="section-number">12.3.8. </span>Transforming Data in Groups<a class="headerlink" href="#transforming-data-in-groups" title="Permalink to this heading">¶</a></h3>
+<span id="sec-df-group-by-transform"></span><h3><span class="section-number">12.3.8. </span>Transforming Data in Groups<a class="headerlink" href="#transforming-data-in-groups" title="Permalink to this heading">#</a></h3>
 <p>Some variables will sometimes need to be transformed relative to what is
 happening in subsets of a dataset. This is the case, e.g., where we decide
 that missing values should be replaced by the corresponding
@@ -2388,7 +2368,7 @@ permutation. Hence, we can call:</p>
 et voilà.</p>
 </div></div></section>
 <section id="metaprogramming-based-techniques">
-<span id="sec-metaprogramming-df"></span><h3><span class="section-number">12.3.9. </span>Metaprogramming-Based Techniques (*)<a class="headerlink" href="#metaprogramming-based-techniques" title="Permalink to this heading">¶</a></h3>
+<span id="sec-metaprogramming-df"></span><h3><span class="section-number">12.3.9. </span>Metaprogramming-Based Techniques (*)<a class="headerlink" href="#metaprogramming-based-techniques" title="Permalink to this heading">#</a></h3>
 <p>In <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>, we have mentioned that
 due to R’s being equipped with the ability
 to write programs that manipulate unevaluated expressions,
@@ -2558,7 +2538,7 @@ explain them here.</p>
 is due to which method being overloaded?</p>
 </div></div></section>
 <section id="a-note-on-the-dplyr-tidyverse-and-data-table-packages">
-<span id="sec-tidyverse"></span><h3><span class="section-number">12.3.10. </span>A Note on the <strong class="program">dplyr</strong> (<strong class="program">tidyverse</strong>) and <strong class="program">data.table</strong> Packages (*)<a class="headerlink" href="#a-note-on-the-dplyr-tidyverse-and-data-table-packages" title="Permalink to this heading">¶</a></h3>
+<span id="sec-tidyverse"></span><h3><span class="section-number">12.3.10. </span>A Note on the <strong class="program">dplyr</strong> (<strong class="program">tidyverse</strong>) and <strong class="program">data.table</strong> Packages (*)<a class="headerlink" href="#a-note-on-the-dplyr-tidyverse-and-data-table-packages" title="Permalink to this heading">#</a></h3>
 <p>The popular third-party packages <strong class="program">data.table</strong> and
 <strong class="program">dplyr</strong> implement the most common data frame wrangling procedures.
 Moreover, some of the operations may be much faster for
@@ -2604,7 +2584,7 @@ something of interest in the current analysis context.</p>
 </section>
 </section>
 <section id="exercises">
-<h2><span class="section-number">12.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">12.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <div class="proof proof-type-exercise" id="id54">
 
     <div class="proof-title">
@@ -3022,50 +3002,109 @@ or summarised (e.g., binned) somehow first.</p>
 </section>
 </section>
 
-
-           </div>
-           
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="310-graphics.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">13. </span>🚧🚧 Graphics</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="230-matrix.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">11. </span>Matrices and Other Arrays</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+              
+              
+              Copyright &#169; 2022–2023 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>.
+              Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
+              Built with <a href="https://sphinx-doc.org/">Sphinx</a>
+              and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
+              Last updated on 2023-02-14T17:12:08+1100.
+              This site will never display any ads: it is a non-profit project.
+              It does not collect any data.
+            </div>
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="310-graphics.html" class="btn btn-neutral float-right" title="13. 🚧🚧 Graphics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="230-matrix.html" class="btn btn-neutral float-left" title="11. Matrices and Other Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            In this chapter
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">12. Data Frames</a><ul>
+<li><a class="reference internal" href="#creating-data-frames">12.1. Creating Data Frames</a><ul>
+<li><a class="reference internal" href="#data-frame-and-as-data-frame">12.1.1. <strong class="command">data.frame</strong> and <strong class="command">as.data.frame</strong></a></li>
+<li><a class="reference internal" href="#cbind-data-frame-and-rbind-data-frame">12.1.2. <strong class="command">cbind.data.frame</strong> and <strong class="command">rbind.data.frame</strong></a></li>
+<li><a class="reference internal" href="#reading-data-frames">12.1.3. Reading Data Frames</a></li>
+<li><a class="reference internal" href="#interfacing-relational-databases-and-querying-with-sql">12.1.4. Interfacing Relational Databases and Querying with SQL (*)</a></li>
+<li><a class="reference internal" href="#strings-as-factors">12.1.5. Strings as Factors?</a></li>
+<li><a class="reference internal" href="#internal-representation">12.1.6. Internal Representation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-frame-subsetting">12.2. Data Frame Subsetting</a><ul>
+<li><a class="reference internal" href="#data-frames-are-lists">12.2.1. Data Frames are Lists</a></li>
+<li><a class="reference internal" href="#data-frames-are-matrix-like">12.2.2. Data Frames are Matrix-like</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-operations">12.3. Common Operations</a><ul>
+<li><a class="reference internal" href="#ordering-rows">12.3.1. Ordering Rows</a></li>
+<li><a class="reference internal" href="#handling-duplicated-rows">12.3.2. Handling Duplicated Rows</a></li>
+<li><a class="reference internal" href="#joining-merging-data-frames">12.3.3. Joining (Merging) Data Frames</a></li>
+<li><a class="reference internal" href="#aggregating-and-transforming-columns">12.3.4. Aggregating and Transforming Columns</a></li>
+<li><a class="reference internal" href="#handling-missing-values">12.3.5. Handling Missing Values</a></li>
+<li><a class="reference internal" href="#reshaping-data-frames">12.3.6. Reshaping Data Frames</a></li>
+<li><a class="reference internal" href="#aggregating-data-in-groups">12.3.7. Aggregating Data in Groups</a></li>
+<li><a class="reference internal" href="#transforming-data-in-groups">12.3.8. Transforming Data in Groups</a></li>
+<li><a class="reference internal" href="#metaprogramming-based-techniques">12.3.9. Metaprogramming-Based Techniques (*)</a></li>
+<li><a class="reference internal" href="#a-note-on-the-dplyr-tidyverse-and-data-table-packages">12.3.10. A Note on the <strong class="program">dplyr</strong> (<strong class="program">tidyverse</strong>) and <strong class="program">data.table</strong> Packages (*)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercises">12.4. Exercises</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        Copyright &#169; 2022–2023 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>. Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
-
-    Built with <a href="https://sphinx-doc.org/">Sphinx</a>
-    and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
-    theme.
-      <span class="lastupdated">
-        Last updated on 2023-02-09T13:06:20+1100.
-      </span>
-
-
-    This site will never display any ads: it is a non-profit project.
-    It does not collect any data.
-
-    </p>
-  </div> 
-
-</footer>
+          </div>
         </div>
       </div>
-
-    </section>
-
+      
+      
+    </aside>
   </div>
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/proof.js"></script>
+    </body>
 </html>

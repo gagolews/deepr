@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-
-
-<html class="writer-html5" lang="en" >
-<!-- Copyright (C) 2020-2022, Marek Gagolewski <https://www.gagolewski.com> -->
-
-<head>
-  <meta charset="utf-8" />
-
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <meta content="Deep R Programming" name="citation_title" />
 <meta content="Marek Gagolewski" name="citation_author" />
 <meta content="2023" name="citation_date" />
 <meta content="2023" name="citation_publication_date" />
 <meta content="https://deepr.gagolewski.com/deepr.pdf" name="citation_pdf_url" />
-<meta content="https://deepr.gagolewski.com/" name="citation_public_url" />
+<meta content="https://deepr.gagolewski.com" name="citation_public_url" />
 <meta content="10.5281/zenodo.7490464" name="citation_doi" />
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="citation_abstract" />
 <meta content="summary" name="twitter:card" />
@@ -22,123 +17,176 @@
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="twitter:description" />
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="og:description" />
 <meta content="gagolews/deepr" name="og:site_name" />
-<meta content="https://deepr.gagolewski.com/" name="og:url" />
+<meta content="https://deepr.gagolewski.com" name="og:url" />
 <meta content="https://deepr.gagolewski.com/_images/cover.png" name="twitter:image" />
 <meta content="https://deepr.gagolewski.com/_images/cover.png" name="og:image" />
-<meta content="https://deepr.gagolewski.com/" name="DC.identifier" />
+<meta content="https://deepr.gagolewski.com" name="DC.identifier" />
 <meta content="Marek Gagolewski" name="DC.publisher" />
 <meta content="INDEX,FOLLOW" name="robots" />
 <meta content="book" name="og:type" />
 <meta content="9780645571929" name="og:book:isbn" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="998-changelog.html" /><link rel="prev" title="15. 🚧 Unevaluated Expressions (**)" href="330-language.html" />
+        <link rel="canonical" href="https://deepr.gagolewski.com/chapter/340-environment.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>16. 🚧🚧 Environments and Evaluation (**) &mdash; Deep R Programming by Marek Gagolewski</title>
-  
-
-  
-  
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/proof.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.png"/>
-  
-
-  
-  
-
-  
-    <link rel="canonical" href="https://deepr.gagolewski.com/chapter/340-environment.html" />
-
-  
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
+    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+        <title>16. 🚧🚧 Environments and Evaluation (**) - Deep R Programming by Marek Gagolewski</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/proof.js"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --admonition-font-size: 95%;
+  --admonition-title-font-size: 95%;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Changelog" href="998-changelog.html" />
-    <link rel="prev" title="15. 🚧 Unevaluated Expressions (**)" href="330-language.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
-   
-  <div class="wy-grid-for-nav">
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="../index.html"> Deep R Programming
-          
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          </a>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
-          <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.13.9001 (draft)
-          </div>
 
-<!--
-          
-            
-            
-              <div class="version">
-                by Marek Gagolewski
-              </div>
-            
-          
--->
 
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search phrase..." />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Deep R Programming by Marek Gagolewski</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto colour theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky">
+
+<span class="sidebar-brand-text">
+<a class="sidebar-brand" href="../index.html">Deep R Programming</a>
+</span>
+<div class="sidebar-brand">
+An open-access textbook<br />
+by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
+v0.1.13.9001 (draft)
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul>
+<form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">This Book in PDF</a></li>
@@ -173,45 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="310-graphics.html">13. 🚧🚧 Graphics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="320-compiled.html">14. 🚧🚧 Interfacing Compiled Code (*)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="330-language.html">15. 🚧 Unevaluated Expressions (**)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">16. 🚧🚧 Environments and Evaluation (**)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#frames-environments-as-object-containers">16.1. Frames: Environments as Object Containers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#printing">16.1.1. Printing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#environments-vs-named-lists">16.1.2. Environments vs Named Lists</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hash-maps-fast-element-look-up-by-name">16.1.3. Hash Maps: Fast Element Look-up by Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pass-by-value-copy-on-demand-not-for-environments">16.1.4. Pass-by-Value, Copy on Demand – Not for Environments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#a-note-on-reference-classes">16.1.5. 🚧 A Note on Reference Classes (*)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#the-environment-model-of-evaluation">16.2. The Environment Model of Evaluation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#getting-the-current-environment">16.2.1. 🚧 Getting the Current Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#enclosures-enclosures-thereof-etc">16.2.2. 🚧 Enclosures, Enclosures Thereof, etc.</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#enclosing-environments">16.2.2.1. 🚧 Enclosing Environments</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#inspecting-the-search-path">16.2.2.2. 🚧 Inspecting the Search Path</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#package-namespaces">16.2.2.3. 🚧 Package Namespaces</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#attaching-and-detaching-from-the-search-path">16.2.2.4. 🚧 Attaching and Detaching from the Search Path</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#evaluating-functions">16.3. 🚧 Evaluating Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#local-environment">16.3.1. 🚧 Local  Environment (?)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lexical-scope">16.3.2. 🚧 Lexical Scope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#application-function-factories">16.3.3. 🚧 Application: Function Factories</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#not-all-arguments-need-to-be-evaluated-immediately">16.3.4. 🚧 Not All Arguments Need to Be Evaluated (Immediately)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#evaluation-of-default-arguments">16.3.5. 🚧 Evaluation of Default Arguments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#matching-of-argument-names-todo-move">16.3.6. 🚧 Matching of Argument Names (TODO: MOVE)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ellipsis-revisited">16.3.7. 🚧 Ellipsis Revisited</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#on-exit">16.3.8. 🚧 <strong class="command">on.exit</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#s3-method-lookup-by-usemethod">16.3.9. 🚧 S3 Method Lookup by <strong class="command">UseMethod</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#overloading-s3-group-generics">16.3.10. 🚧 Overloading S3 Group Generics</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#formulas">16.4. 🚧 Formulas, `<strong class="command">~</strong>` (*)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#exercises">16.5. 🚧 Exercises</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id15">16.6. Exercises</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#outro">16.7. 🚧 Outro</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">16. 🚧🚧 Environments and Evaluation (**)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -219,87 +229,47 @@
 <li class="toctree-l1"><a class="reference internal" href="999-bibliography.html">References</a></li>
 </ul>
 
-            
-          
-        </div>
-        
+</div></div>
+
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Deep R Programming</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content style-external-links">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li><span class="section-number">16. </span>🚧🚧 Environments and Evaluation (**)</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-
-        
-        
-        <a class="github-button" href="https://github.com/gagolews/deepr" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star gagolews/deepr on GitHub">GitHub</a>
-        
-
-
-        
-      </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="998-changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
-        <a href="330-language.html" class="btn btn-neutral float-left" title="15. 🚧 Unevaluated Expressions (**)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
-  </div>
-  
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="environments-and-evaluation">
-<span id="chap-environment"></span><h1><span class="section-number">16. </span>🚧🚧 Environments and Evaluation (**)<a class="headerlink" href="#environments-and-evaluation" title="Permalink to this heading">¶</a></h1>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/gagolews/deepr/issues/" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto colour theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="environments-and-evaluation">
+<span id="chap-environment"></span><h1><span class="section-number">16. </span>🚧🚧 Environments and Evaluation (**)<a class="headerlink" href="#environments-and-evaluation" title="Permalink to this heading">#</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -344,7 +314,7 @@ which governs how expressions are computed (<a class="reference internal" href="
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
 <section id="frames-environments-as-object-containers">
-<span id="sec-frame-env"></span><h2><span class="section-number">16.1. </span>Frames: Environments as Object Containers<a class="headerlink" href="#frames-environments-as-object-containers" title="Permalink to this heading">¶</a></h2>
+<span id="sec-frame-env"></span><h2><span class="section-number">16.1. </span>Frames: Environments as Object Containers<a class="headerlink" href="#frames-environments-as-object-containers" title="Permalink to this heading">#</a></h2>
 <p>To create a new, empty environment,
 we can call the <strong class="command">new.env</strong> function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">()</span>
@@ -371,7 +341,7 @@ also in the case of element extraction:</p>
 </pre></div>
 </div>
 <section id="printing">
-<h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Permalink to this heading">#</a></h3>
 <p>Let us note that the printing of an environment is quite awkward:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span><span class="w">  </span><span class="c1"># same with str(e1)</span>
 <span class="c1">## &lt;environment: 0x5624bf7f67c0&gt;</span>
@@ -396,7 +366,7 @@ within the container using <strong class="command">names</strong><a class="footn
 <p>gives the number of objects in the container.</p>
 </section>
 <section id="environments-vs-named-lists">
-<h3><span class="section-number">16.1.2. </span>Environments vs Named Lists<a class="headerlink" href="#environments-vs-named-lists" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.1.2. </span>Environments vs Named Lists<a class="headerlink" href="#environments-vs-named-lists" title="Permalink to this heading">#</a></h3>
 <p>Environment frames, in some sense, can be thought of
 as named lists, but the set of admissible operations is severely restricted.
 In particular, we cannot extract more than one element
@@ -442,7 +412,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 </div>
 </section>
 <section id="hash-maps-fast-element-look-up-by-name">
-<h3><span class="section-number">16.1.3. </span>Hash Maps: Fast Element Look-up by Name<a class="headerlink" href="#hash-maps-fast-element-look-up-by-name" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.1.3. </span>Hash Maps: Fast Element Look-up by Name<a class="headerlink" href="#hash-maps-fast-element-look-up-by-name" title="Permalink to this heading">#</a></h3>
 <p>Environment frames are internally implemented
 using hash tables (hash maps; see, e.g., <span id="id6">[<a class="reference internal" href="999-bibliography.html#id58" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">10</a>, <a class="reference internal" href="999-bibliography.html#id33" title="Knuth, D.E. (1997).  The Art of Computer Programming III: Sorting and Searching. Addison-Wesley.">34</a>]</span>)
 with string keys.</p>
@@ -516,7 +486,7 @@ but the file itself does not).
 Also, determine the five most frequently occurring text lines.</p>
 </div></div></section>
 <section id="pass-by-value-copy-on-demand-not-for-environments">
-<span id="sec-copy-on-demand"></span><h3><span class="section-number">16.1.4. </span>Pass-by-Value, Copy on Demand – Not for Environments<a class="headerlink" href="#pass-by-value-copy-on-demand-not-for-environments" title="Permalink to this heading">¶</a></h3>
+<span id="sec-copy-on-demand"></span><h3><span class="section-number">16.1.4. </span>Pass-by-Value, Copy on Demand – Not for Environments<a class="headerlink" href="#pass-by-value-copy-on-demand-not-for-environments" title="Permalink to this heading">#</a></h3>
 <p>Given any R object, say, <code class="docutils literal notranslate"><span class="pre">x</span></code>,
 when we issue:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span>
@@ -650,11 +620,11 @@ This is when they need to be separated.</p>
 </div>
 </section>
 <section id="a-note-on-reference-classes">
-<span id="sec-refclass"></span><h3><span class="section-number">16.1.5. </span>🚧 A Note on Reference Classes (*)<a class="headerlink" href="#a-note-on-reference-classes" title="Permalink to this heading">¶</a></h3>
+<span id="sec-refclass"></span><h3><span class="section-number">16.1.5. </span>🚧 A Note on Reference Classes (*)<a class="headerlink" href="#a-note-on-reference-classes" title="Permalink to this heading">#</a></h3>
 </section>
 </section>
 <section id="the-environment-model-of-evaluation">
-<span id="sec-env-mod-eval"></span><h2><span class="section-number">16.2. </span>The Environment Model of Evaluation<a class="headerlink" href="#the-environment-model-of-evaluation" title="Permalink to this heading">¶</a></h2>
+<span id="sec-env-mod-eval"></span><h2><span class="section-number">16.2. </span>The Environment Model of Evaluation<a class="headerlink" href="#the-environment-model-of-evaluation" title="Permalink to this heading">#</a></h2>
 <p>Recall that in the previous chapter, we have said that
 there are three types of expressions: constants  (e.g., <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span></code>),
 names (e.g., <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">spam</span></code>), and calls (like <code class="docutils literal notranslate"><span class="pre">f(x,</span> <span class="pre">1)</span></code>).</p>
@@ -689,7 +659,7 @@ in which <em>environment</em> we <em>evaluate</em> the said sentence).</p>
 <p>We call the above the <em>environment model of evaluation</em>
 (see Sec. 3.2 in <span id="id11">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> and Sec. 6 in <span id="id12">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span>).</p>
 <section id="getting-the-current-environment">
-<h3><span class="section-number">16.2.1. </span>🚧 Getting the Current Environment<a class="headerlink" href="#getting-the-current-environment" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.2.1. </span>🚧 Getting the Current Environment<a class="headerlink" href="#getting-the-current-environment" title="Permalink to this heading">#</a></h3>
 <p>By default, the expressions are evaluated in the <em>current</em> environment,
 which we can fetch by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sys.frame</span><span class="p">(</span><span class="nf">sys.nframe</span><span class="p">())</span><span class="w">  </span><span class="c1"># get the current environment</span>
@@ -723,7 +693,7 @@ environment, which we can access anywhere by calling <strong class="command">glo
 </div>
 </section>
 <section id="enclosures-enclosures-thereof-etc">
-<h3><span class="section-number">16.2.2. </span>🚧 Enclosures, Enclosures Thereof, etc.<a class="headerlink" href="#enclosures-enclosures-thereof-etc" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.2.2. </span>🚧 Enclosures, Enclosures Thereof, etc.<a class="headerlink" href="#enclosures-enclosures-thereof-etc" title="Permalink to this heading">#</a></h3>
 <p>To show that there is much more to the environment model
 of evaluation than what we mentioned above,
 let us try to evaluate an expression featuring two names:</p>
@@ -757,7 +727,7 @@ It is certainly not included in <code class="docutils literal notranslate"><span
 Why is it <em>visible</em> when evaluating an expression within <code class="docutils literal notranslate"><span class="pre">e3</span></code> but not
 in <code class="docutils literal notranslate"><span class="pre">e2</span></code>?</p>
 <section id="enclosing-environments">
-<span id="sec-enclos-env"></span><h4><span class="section-number">16.2.2.1. </span>🚧 Enclosing Environments<a class="headerlink" href="#enclosing-environments" title="Permalink to this heading">¶</a></h4>
+<span id="sec-enclos-env"></span><h4><span class="section-number">16.2.2.1. </span>🚧 Enclosing Environments<a class="headerlink" href="#enclosing-environments" title="Permalink to this heading">#</a></h4>
 <p>Studying<a class="footnote-reference brackets" href="#footlazystudent" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> the manual of `<strong class="command">[[</strong>`
 (<em>Environments</em> section), we discover that
 <code class="docutils literal notranslate"><span class="pre">e3[[&quot;&lt;&quot;]]</span></code> is equivalent to a call to
@@ -784,7 +754,7 @@ using the <strong class="command">parent.env</strong> function.</p>
 <figure class="align-default" id="id25">
 <span id="fig-envirs1"></span><img alt="../_images/envirs1.png" src="../_images/envirs1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 16.1 </span><span class="caption-text">Example environments and their enclosures (before the change made)</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Figure 16.1 </span><span class="caption-text">Example environments and their enclosures (before the change made)</span><a class="headerlink" href="#id25" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>…</p>
@@ -845,7 +815,7 @@ are synonymous but the former is only valid if
 it is a syntactically valid name</p>
 </section>
 <section id="inspecting-the-search-path">
-<h4><span class="section-number">16.2.2.2. </span>🚧 Inspecting the Search Path<a class="headerlink" href="#inspecting-the-search-path" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">16.2.2.2. </span>🚧 Inspecting the Search Path<a class="headerlink" href="#inspecting-the-search-path" title="Permalink to this heading">#</a></h4>
 <p>…</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e3</span><span class="p">[[</span><span class="s">&quot;x&quot;</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span>
 <span class="nf">eval</span><span class="p">(</span><span class="nf">quote</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">envir</span><span class="o">=</span><span class="n">e3</span><span class="p">)</span>
@@ -899,7 +869,7 @@ by default</p>
 <p>.Random.seed</p>
 </section>
 <section id="package-namespaces">
-<h4><span class="section-number">16.2.2.3. </span>🚧 Package Namespaces<a class="headerlink" href="#package-namespaces" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">16.2.2.3. </span>🚧 Package Namespaces<a class="headerlink" href="#package-namespaces" title="Permalink to this heading">#</a></h4>
 <p>package:pkg
 namespace:pkg</p>
 <p>ls(“package:pkg”)</p>
@@ -941,7 +911,7 @@ environment <code class="docutils literal notranslate"><span class="pre">eb</spa
 R will get stuck in an infinite loop.</p>
 </section>
 <section id="attaching-and-detaching-from-the-search-path">
-<h4><span class="section-number">16.2.2.4. </span>🚧 Attaching and Detaching from the Search Path<a class="headerlink" href="#attaching-and-detaching-from-the-search-path" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">16.2.2.4. </span>🚧 Attaching and Detaching from the Search Path<a class="headerlink" href="#attaching-and-detaching-from-the-search-path" title="Permalink to this heading">#</a></h4>
 <p>…</p>
 <p><strong class="command">library</strong>
 <strong class="command">require</strong>
@@ -968,10 +938,10 @@ well, the <code class="docutils literal notranslate"><span class="pre">enclos</s
 </section>
 </section>
 <section id="evaluating-functions">
-<span id="sec-eval-fun"></span><h2><span class="section-number">16.3. </span>🚧 Evaluating Functions<a class="headerlink" href="#evaluating-functions" title="Permalink to this heading">¶</a></h2>
+<span id="sec-eval-fun"></span><h2><span class="section-number">16.3. </span>🚧 Evaluating Functions<a class="headerlink" href="#evaluating-functions" title="Permalink to this heading">#</a></h2>
 <p>…</p>
 <section id="local-environment">
-<h3><span class="section-number">16.3.1. </span>🚧 Local  Environment (?)<a class="headerlink" href="#local-environment" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.3.1. </span>🚧 Local  Environment (?)<a class="headerlink" href="#local-environment" title="Permalink to this heading">#</a></h3>
 <p>primitive (=internal?) functions: special/builtin e.g., <code class="docutils literal notranslate"><span class="pre">quote</span></code> vs <code class="docutils literal notranslate"><span class="pre">sum</span></code></p>
 <p>special - internal function that does not evaluate its arguments
 e.g., switch, if, quote</p>
@@ -1025,7 +995,7 @@ and arguments passed to the function.</p>
 variables.</p>
 </section>
 <section id="lexical-scope">
-<h3><span class="section-number">16.3.2. </span>🚧 Lexical Scope<a class="headerlink" href="#lexical-scope" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.3.2. </span>🚧 Lexical Scope<a class="headerlink" href="#lexical-scope" title="Permalink to this heading">#</a></h3>
 <p>What is the enclosing environment of the current/local environment (?)</p>
 <p>exercise: check out the <strong class="command">local</strong> function</p>
 <p>The fact that we have access to <strong class="command">print</strong>
@@ -1041,7 +1011,7 @@ from which the function was called, quite confusingly referred
 to as the parent frame</p>
 </section>
 <section id="application-function-factories">
-<h3><span class="section-number">16.3.3. </span>🚧 Application: Function Factories<a class="headerlink" href="#application-function-factories" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">16.3.3. </span>🚧 Application: Function Factories<a class="headerlink" href="#application-function-factories" title="Permalink to this heading">#</a></h3>
 <p>A function factory: a function returning a function
 with its non-local variables given by the enclosing environment</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">genpower</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
@@ -1081,7 +1051,7 @@ function(…) !f(…)
 }</p>
 </section>
 <section id="not-all-arguments-need-to-be-evaluated-immediately">
-<span id="sec-not-all-args-eval"></span><h3><span class="section-number">16.3.4. </span>🚧 Not All Arguments Need to Be Evaluated (Immediately)<a class="headerlink" href="#not-all-arguments-need-to-be-evaluated-immediately" title="Permalink to this heading">¶</a></h3>
+<span id="sec-not-all-args-eval"></span><h3><span class="section-number">16.3.4. </span>🚧 Not All Arguments Need to Be Evaluated (Immediately)<a class="headerlink" href="#not-all-arguments-need-to-be-evaluated-immediately" title="Permalink to this heading">#</a></h3>
 <p>Calls such as
 `<strong class="command">if</strong>`<code class="code docutils literal notranslate"><span class="pre">(test,</span> <span class="pre">ifyes,</span> <span class="pre">ifno)</span></code>
 or `<strong class="command">&amp;&amp;</strong>`<code class="code docutils literal notranslate"><span class="pre">(mustbe,</span> <span class="pre">maybe)</span></code>
@@ -1178,16 +1148,16 @@ and promises are created</p>
 </div>
 </section>
 <section id="evaluation-of-default-arguments">
-<span id="sec-default-args-eval"></span><h3><span class="section-number">16.3.5. </span>🚧 Evaluation of Default Arguments<a class="headerlink" href="#evaluation-of-default-arguments" title="Permalink to this heading">¶</a></h3>
+<span id="sec-default-args-eval"></span><h3><span class="section-number">16.3.5. </span>🚧 Evaluation of Default Arguments<a class="headerlink" href="#evaluation-of-default-arguments" title="Permalink to this heading">#</a></h3>
 </section>
 <section id="matching-of-argument-names-todo-move">
-<span id="sec-pmatch"></span><h3><span class="section-number">16.3.6. </span>🚧 Matching of Argument Names (TODO: MOVE)<a class="headerlink" href="#matching-of-argument-names-todo-move" title="Permalink to this heading">¶</a></h3>
+<span id="sec-pmatch"></span><h3><span class="section-number">16.3.6. </span>🚧 Matching of Argument Names (TODO: MOVE)<a class="headerlink" href="#matching-of-argument-names-todo-move" title="Permalink to this heading">#</a></h3>
 </section>
 <section id="ellipsis-revisited">
-<span id="sec-ellipsis-eval"></span><h3><span class="section-number">16.3.7. </span>🚧 Ellipsis Revisited<a class="headerlink" href="#ellipsis-revisited" title="Permalink to this heading">¶</a></h3>
+<span id="sec-ellipsis-eval"></span><h3><span class="section-number">16.3.7. </span>🚧 Ellipsis Revisited<a class="headerlink" href="#ellipsis-revisited" title="Permalink to this heading">#</a></h3>
 </section>
 <section id="on-exit">
-<span id="sec-on-exit"></span><h3><span class="section-number">16.3.8. </span>🚧 <strong class="command">on.exit</strong><a class="headerlink" href="#on-exit" title="Permalink to this heading">¶</a></h3>
+<span id="sec-on-exit"></span><h3><span class="section-number">16.3.8. </span>🚧 <strong class="command">on.exit</strong><a class="headerlink" href="#on-exit" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">on.exit</strong> registers an expression to be evaluated
 at the very end of a function call. It might be used to
 reset  graphical parameters (<strong class="command">par</strong>) and system options
@@ -1251,17 +1221,17 @@ expressions?</p>
 </div>
 </div></div></section>
 <section id="s3-method-lookup-by-usemethod">
-<span id="sec-use-method"></span><h3><span class="section-number">16.3.9. </span>🚧 S3 Method Lookup by <strong class="command">UseMethod</strong><a class="headerlink" href="#s3-method-lookup-by-usemethod" title="Permalink to this heading">¶</a></h3>
+<span id="sec-use-method"></span><h3><span class="section-number">16.3.9. </span>🚧 S3 Method Lookup by <strong class="command">UseMethod</strong><a class="headerlink" href="#s3-method-lookup-by-usemethod" title="Permalink to this heading">#</a></h3>
 </section>
 <section id="overloading-s3-group-generics">
-<span id="sec-group-generics"></span><h3><span class="section-number">16.3.10. </span>🚧 Overloading S3 Group Generics<a class="headerlink" href="#overloading-s3-group-generics" title="Permalink to this heading">¶</a></h3>
+<span id="sec-group-generics"></span><h3><span class="section-number">16.3.10. </span>🚧 Overloading S3 Group Generics<a class="headerlink" href="#overloading-s3-group-generics" title="Permalink to this heading">#</a></h3>
 </section>
 </section>
 <section id="formulas">
-<span id="sec-formula"></span><h2><span class="section-number">16.4. </span>🚧 Formulas, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#formulas" title="Permalink to this heading">¶</a></h2>
+<span id="sec-formula"></span><h2><span class="section-number">16.4. </span>🚧 Formulas, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#formulas" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="exercises">
-<h2><span class="section-number">16.5. </span>🚧 Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">16.5. </span>🚧 Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <div class="proof proof-type-exercise" id="id30">
 
     <div class="proof-title">
@@ -1300,7 +1270,7 @@ to R functions?</p></li>
 <p>This will be much faster using an environment.</p>
 </div></div></section>
 <section id="id15">
-<h2><span class="section-number">16.6. </span>Exercises<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">16.6. </span>Exercises<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h2>
 <div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
@@ -1345,7 +1315,7 @@ commandArgs
 ……………………</p>
 </section>
 <section id="outro">
-<h2><span class="section-number">16.7. </span>🚧 Outro<a class="headerlink" href="#outro" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">16.7. </span>🚧 Outro<a class="headerlink" href="#outro" title="Permalink to this heading">#</a></h2>
 <p>This is the end.</p>
 <p>Recall our first approximation to the classification of R Data Types
 that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.</p>
@@ -1354,7 +1324,7 @@ that we presented in the <a class="reference internal" href="000-preface.html#ch
 <figure class="align-default" id="id34">
 <span id="fig-data-types-full"></span><img alt="../_images/data-types-full.png" src="../_images/data-types-full.png" />
 <figcaption>
-<p><span class="caption-number">Figure 16.2 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id34" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Figure 16.2 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id34" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Now that we have reached the end of this course,
@@ -1431,50 +1401,119 @@ but most likely we did not.</p>
 </section>
 </section>
 
-
-           </div>
-           
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="998-changelog.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Changelog</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="330-language.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">15. </span>🚧 Unevaluated Expressions (**)</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+              
+              
+              Copyright &#169; 2022–2023 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>.
+              Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
+              Built with <a href="https://sphinx-doc.org/">Sphinx</a>
+              and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
+              Last updated on 2023-02-14T17:12:08+1100.
+              This site will never display any ads: it is a non-profit project.
+              It does not collect any data.
+            </div>
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="998-changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="330-language.html" class="btn btn-neutral float-left" title="15. 🚧 Unevaluated Expressions (**)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            In this chapter
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">16. 🚧🚧 Environments and Evaluation (**)</a><ul>
+<li><a class="reference internal" href="#frames-environments-as-object-containers">16.1. Frames: Environments as Object Containers</a><ul>
+<li><a class="reference internal" href="#printing">16.1.1. Printing</a></li>
+<li><a class="reference internal" href="#environments-vs-named-lists">16.1.2. Environments vs Named Lists</a></li>
+<li><a class="reference internal" href="#hash-maps-fast-element-look-up-by-name">16.1.3. Hash Maps: Fast Element Look-up by Name</a></li>
+<li><a class="reference internal" href="#pass-by-value-copy-on-demand-not-for-environments">16.1.4. Pass-by-Value, Copy on Demand – Not for Environments</a></li>
+<li><a class="reference internal" href="#a-note-on-reference-classes">16.1.5. 🚧 A Note on Reference Classes (*)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-environment-model-of-evaluation">16.2. The Environment Model of Evaluation</a><ul>
+<li><a class="reference internal" href="#getting-the-current-environment">16.2.1. 🚧 Getting the Current Environment</a></li>
+<li><a class="reference internal" href="#enclosures-enclosures-thereof-etc">16.2.2. 🚧 Enclosures, Enclosures Thereof, etc.</a><ul>
+<li><a class="reference internal" href="#enclosing-environments">16.2.2.1. 🚧 Enclosing Environments</a></li>
+<li><a class="reference internal" href="#inspecting-the-search-path">16.2.2.2. 🚧 Inspecting the Search Path</a></li>
+<li><a class="reference internal" href="#package-namespaces">16.2.2.3. 🚧 Package Namespaces</a></li>
+<li><a class="reference internal" href="#attaching-and-detaching-from-the-search-path">16.2.2.4. 🚧 Attaching and Detaching from the Search Path</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#evaluating-functions">16.3. 🚧 Evaluating Functions</a><ul>
+<li><a class="reference internal" href="#local-environment">16.3.1. 🚧 Local  Environment (?)</a></li>
+<li><a class="reference internal" href="#lexical-scope">16.3.2. 🚧 Lexical Scope</a></li>
+<li><a class="reference internal" href="#application-function-factories">16.3.3. 🚧 Application: Function Factories</a></li>
+<li><a class="reference internal" href="#not-all-arguments-need-to-be-evaluated-immediately">16.3.4. 🚧 Not All Arguments Need to Be Evaluated (Immediately)</a></li>
+<li><a class="reference internal" href="#evaluation-of-default-arguments">16.3.5. 🚧 Evaluation of Default Arguments</a></li>
+<li><a class="reference internal" href="#matching-of-argument-names-todo-move">16.3.6. 🚧 Matching of Argument Names (TODO: MOVE)</a></li>
+<li><a class="reference internal" href="#ellipsis-revisited">16.3.7. 🚧 Ellipsis Revisited</a></li>
+<li><a class="reference internal" href="#on-exit">16.3.8. 🚧 <strong class="command">on.exit</strong></a></li>
+<li><a class="reference internal" href="#s3-method-lookup-by-usemethod">16.3.9. 🚧 S3 Method Lookup by <strong class="command">UseMethod</strong></a></li>
+<li><a class="reference internal" href="#overloading-s3-group-generics">16.3.10. 🚧 Overloading S3 Group Generics</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#formulas">16.4. 🚧 Formulas, `<strong class="command">~</strong>` (*)</a></li>
+<li><a class="reference internal" href="#exercises">16.5. 🚧 Exercises</a></li>
+<li><a class="reference internal" href="#id15">16.6. Exercises</a></li>
+<li><a class="reference internal" href="#outro">16.7. 🚧 Outro</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        Copyright &#169; 2022–2023 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>. Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
-
-    Built with <a href="https://sphinx-doc.org/">Sphinx</a>
-    and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
-    theme.
-      <span class="lastupdated">
-        Last updated on 2023-02-09T13:06:20+1100.
-      </span>
-
-
-    This site will never display any ads: it is a non-profit project.
-    It does not collect any data.
-
-    </p>
-  </div> 
-
-</footer>
+          </div>
         </div>
       </div>
-
-    </section>
-
+      
+      
+    </aside>
   </div>
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/proof.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
 </html>

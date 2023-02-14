@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-
-
-<html class="writer-html5" lang="en" >
-<!-- Copyright (C) 2020-2022, Marek Gagolewski <https://www.gagolewski.com> -->
-
-<head>
-  <meta charset="utf-8" />
-
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <meta content="Deep R Programming" name="citation_title" />
 <meta content="Marek Gagolewski" name="citation_author" />
 <meta content="2023" name="citation_date" />
 <meta content="2023" name="citation_publication_date" />
 <meta content="https://deepr.gagolewski.com/deepr.pdf" name="citation_pdf_url" />
-<meta content="https://deepr.gagolewski.com/" name="citation_public_url" />
+<meta content="https://deepr.gagolewski.com" name="citation_public_url" />
 <meta content="10.5281/zenodo.7490464" name="citation_doi" />
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="citation_abstract" />
 <meta content="summary" name="twitter:card" />
@@ -22,123 +17,176 @@
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="twitter:description" />
 <meta content="Deep R Programming is comprehensive course on one of the most popular languages in data science (statistical computing, graphics, machine learning, data wrangling and analytics). It introduces the base language in-depth and is aimed at ambitious students, practitioners, and researchers who would like to become independent users of this powerful environment. This textbook is a non-profit project. Its online and PDF versions are freely available at https://deepr.gagolewski.com/." name="og:description" />
 <meta content="gagolews/deepr" name="og:site_name" />
-<meta content="https://deepr.gagolewski.com/" name="og:url" />
+<meta content="https://deepr.gagolewski.com" name="og:url" />
 <meta content="https://deepr.gagolewski.com/_images/cover.png" name="twitter:image" />
 <meta content="https://deepr.gagolewski.com/_images/cover.png" name="og:image" />
-<meta content="https://deepr.gagolewski.com/" name="DC.identifier" />
+<meta content="https://deepr.gagolewski.com" name="DC.identifier" />
 <meta content="Marek Gagolewski" name="DC.publisher" />
 <meta content="INDEX,FOLLOW" name="robots" />
 <meta content="book" name="og:type" />
 <meta content="9780645571929" name="og:book:isbn" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="10. S3 Classes" href="220-s3.html" /><link rel="prev" title="8. Flow of Execution" href="180-flow.html" />
+        <link rel="canonical" href="https://deepr.gagolewski.com/chapter/210-design.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>9. Designing Functions &mdash; Deep R Programming by Marek Gagolewski</title>
-  
-
-  
-  
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/proof.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.png"/>
-  
-
-  
-  
-
-  
-    <link rel="canonical" href="https://deepr.gagolewski.com/chapter/210-design.html" />
-
-  
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
+    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+        <title>9. Designing Functions - Deep R Programming by Marek Gagolewski</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/proof.js"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --admonition-font-size: 95%;
+  --admonition-title-font-size: 95%;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="10. S3 Classes" href="220-s3.html" />
-    <link rel="prev" title="8. Flow of Execution" href="180-flow.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
-   
-  <div class="wy-grid-for-nav">
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="../index.html"> Deep R Programming
-          
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          </a>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
-          <div class="version">
-          An Open-Access Textbook<br />    by <a style="color: inherit" href="https://www.gagolewski.com">Marek     Gagolewski</a><br />    v0.1.13.9001 (draft)
-          </div>
 
-<!--
-          
-            
-            
-              <div class="version">
-                by Marek Gagolewski
-              </div>
-            
-          
--->
 
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search phrase..." />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Deep R Programming by Marek Gagolewski</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto colour theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky">
+
+<span class="sidebar-brand-text">
+<a class="sidebar-brand" href="../index.html">Deep R Programming</a>
+</span>
+<div class="sidebar-brand">
+An open-access textbook<br />
+by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
+v0.1.13.9001 (draft)
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul>
+<form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">About</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://www.gagolewski.com/">Author</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">This Book in PDF</a></li>
@@ -163,63 +211,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deeper</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">9. Designing Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#principles-of-sustainable-design">9.1. Principles of Sustainable Design</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#to-write-or-to-abstain">9.1.1. To Write or to Abstain</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#to-pamper-or-to-challenge">9.1.2. To Pamper or to Challenge</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#to-build-or-to-reuse">9.1.3. To Build or to Reuse</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#managing-data-flow">9.2. Managing Data Flow</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#checking-input-data-integrity-and-argument-handling">9.2.1. Checking Input Data Integrity and Argument Handling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#putting-outputs-into-context">9.2.2. Putting Outputs into Context</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#organising-and-maintaining-functions">9.3. Organising and Maintaining Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#function-libraries">9.3.1. Function Libraries</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#writing-r-packages">9.3.2. Writing R Packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#documenting-r-packages">9.3.3. Documenting R Packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assuring-quality-code">9.3.4. Assuring Quality Code</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#managing-changes-and-working-collaboratively">9.3.4.1. Managing Changes and Working Collaboratively</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test-driven-development-and-continuous-integration">9.3.4.2. Test-driven Development and Continuous Integration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#debugging">9.3.4.3. Debugging</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#profiling">9.3.4.4. Profiling</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#special-functions-syntactic-sugar">9.4. Special Functions: Syntactic Sugar</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#a-note-on-backticks">9.4.1. A Note on Backticks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dollar">9.4.2. Dollar, `<strong class="command">$</strong>` (*)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#curly-braces">9.4.3. Curly Braces,  `<strong class="command">{</strong>`</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#if">9.4.4. `<strong class="command">if</strong>`</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#operators-are-functions-too">9.4.5. Operators are Functions Too</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#calling-built-in-operators-as-functions">9.4.5.1. Calling Built-in Operators as Functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#creating-own-binary-operators">9.4.5.2. Creating Own Binary Operators</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#replacement-functions">9.4.6. Replacement Functions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#creating-own-replacement-functions">9.4.6.1. Creating Own Replacement Functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#substituting-parts-of-vectors">9.4.6.2. Substituting Parts of Vectors</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#replacing-attributes">9.4.6.3. Replacing Attributes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#compositions-of-replacement-functions">9.4.6.4. Compositions of Replacement Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#arguments-and-local-variables">9.5. Arguments and Local Variables</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#pass-by-value">9.5.1. Pass by “Value”</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#variable-scope">9.5.2. Variable Scope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#closures">9.5.3. Closures (*)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#default-arguments">9.5.4. Default Arguments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lazy-evaluation">9.5.5. Lazy Evaluation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ellipsis">9.5.6. Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#metaprogramming">9.5.7. Metaprogramming (*)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#exercises">9.6. Exercises</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">9. Designing Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="220-s3.html">10. S3 Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and Other Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="240-data-frame.html">12. Data Frames</a></li>
@@ -237,87 +229,47 @@
 <li class="toctree-l1"><a class="reference internal" href="999-bibliography.html">References</a></li>
 </ul>
 
-            
-          
-        </div>
-        
+</div></div>
+
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Deep R Programming</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content style-external-links">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li><span class="section-number">9. </span>Designing Functions</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-
-        
-        
-        <a class="github-button" href="https://github.com/gagolews/deepr" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star gagolews/deepr on GitHub">GitHub</a>
-        
-
-
-        
-      </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="220-s3.html" class="btn btn-neutral float-right" title="10. S3 Classes" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-      
-      
-        <a href="180-flow.html" class="btn btn-neutral float-left" title="8. Flow of Execution" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-      
-  </div>
-  
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="designing-functions">
-<span id="chap-design"></span><h1><span class="section-number">9. </span>Designing Functions<a class="headerlink" href="#designing-functions" title="Permalink to this heading">¶</a></h1>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/gagolews/deepr/issues/" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto colour theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="designing-functions">
+<span id="chap-design"></span><h1><span class="section-number">9. </span>Designing Functions<a class="headerlink" href="#designing-functions" title="Permalink to this heading">#</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -344,7 +296,7 @@ We also provide some more technical details which were not of the highest
 importance upon our first exposure to this topic,
 but which our crucial to our better understanding of how R works.</p>
 <section id="principles-of-sustainable-design">
-<h2><span class="section-number">9.1. </span>Principles of Sustainable Design<a class="headerlink" href="#principles-of-sustainable-design" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.1. </span>Principles of Sustainable Design<a class="headerlink" href="#principles-of-sustainable-design" title="Permalink to this heading">#</a></h2>
 <p>Good design is more art than science.
 As usual in real life, we will need to make
 many compromises. This is because
@@ -354,7 +306,7 @@ worse with respect to other aspects<a class="footnote-reference brackets" href="
 Also, not everything that counts can and will be counted.
 Below are some observations, ideas, and food for thought.</p>
 <section id="to-write-or-to-abstain">
-<h3><span class="section-number">9.1.1. </span>To Write or to Abstain<a class="headerlink" href="#to-write-or-to-abstain" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.1.1. </span>To Write or to Abstain<a class="headerlink" href="#to-write-or-to-abstain" title="Permalink to this heading">#</a></h3>
 <p>Functions that we write ourselves can oftentimes be considered
 merely creative combinations of the building blocks available in base R
 or a few high-quality add-on packages<a class="footnote-reference brackets" href="#footfunc" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Some are simpler than
@@ -375,7 +327,7 @@ This might <em>seem</em> like a good idea, but let us not take it for granted:
 being tired might be an indication of our body and mind
 needing a rest; being lazy can be a call for more self-discipline
 (not an overly popular word these days, but still, a precious trait).</p>
-<div class="proof proof-type-example" id="id25">
+<div class="proof proof-type-example" id="id23">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.1</span>
@@ -395,7 +347,7 @@ with <code class="docutils literal notranslate"><span class="pre">sep</span></co
 informing the users that the old version is deprecated and
 to be removed in, say, two years? Or maybe one year is better? Or five?</p></li>
 </ul>
-</div></div><div class="proof proof-type-example" id="id26">
+</div></div><div class="proof proof-type-example" id="id24">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.2</span>
@@ -406,7 +358,7 @@ a combination of <strong class="command">deparse</strong> (see below) and <stron
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">deparse1</span><span class="p">)</span>
 <span class="c1">## function (expr, collapse = &quot; &quot;, width.cutoff = 500L, ...) </span>
 <span class="c1">## paste(deparse(expr, width.cutoff, ...), collapse = collapse)</span>
-<span class="c1">## &lt;bytecode: 0x55f5dda94ee8&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55db3e3a9768&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
@@ -420,14 +372,14 @@ Had we done bad design choices resulting in our API’s being bloated,
 we can always clean up those that no longer spark joy.</p>
 </section>
 <section id="to-pamper-or-to-challenge">
-<h3><span class="section-number">9.1.2. </span>To Pamper or to Challenge<a class="headerlink" href="#to-pamper-or-to-challenge" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.1.2. </span>To Pamper or to Challenge<a class="headerlink" href="#to-pamper-or-to-challenge" title="Permalink to this heading">#</a></h3>
 <p>Think about the kind of audience we would like to serve: is it our team only,
 students, professionals, certain client groups, etc.? Do they have
 mathematical, programming, engineering, or scientific background?
 Not everything that is appropriate for one cohort, will be valuable for
 another. And not everything that is good for some <em>now</em>, will be beneficial
 for them in the long run. People (their skills, attitudes, etc.) change.</p>
-<div class="proof proof-type-example" id="id27">
+<div class="proof proof-type-example" id="id25">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.3</span>
@@ -467,7 +419,7 @@ by presenting them with overly simplified solutions
 that keep their hands tied when something more ambitious needs to be done.</p>
 </section>
 <section id="to-build-or-to-reuse">
-<h3><span class="section-number">9.1.3. </span>To Build or to Reuse<a class="headerlink" href="#to-build-or-to-reuse" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.1.3. </span>To Build or to Reuse<a class="headerlink" href="#to-build-or-to-reuse" title="Permalink to this heading">#</a></h3>
 <p>In the short term, the <em>fail fast</em> philosophy encourages
 us to build our applications using prefabricated components.
 This is fantastic at the early stage of its life cycle.
@@ -491,7 +443,7 @@ working anymore,</p></li>
 behaviours.</p></li>
 </ul>
 <p>Hence, it might be a good idea to rewrite some parts from scratch on our own.</p>
-<div class="proof proof-type-exercise" id="id28">
+<div class="proof proof-type-exercise" id="id26">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.4</span>
@@ -521,14 +473,14 @@ e.g., when working from the command line.</p>
 </section>
 </section>
 <section id="managing-data-flow">
-<span id="sec-fun-io"></span><h2><span class="section-number">9.2. </span>Managing Data Flow<a class="headerlink" href="#managing-data-flow" title="Permalink to this heading">¶</a></h2>
+<span id="sec-fun-io"></span><h2><span class="section-number">9.2. </span>Managing Data Flow<a class="headerlink" href="#managing-data-flow" title="Permalink to this heading">#</a></h2>
 <p>A function, most of the time, can and should be treated as a black box:
 its callers do not have to care what it hides inside.
 After all, they are supposed to <em>use</em> it: given some <em>inputs</em>,
 they expect a well-defined (read: explained in very detail
 in the function’s manual; see <a class="reference internal" href="#sec-doc-packages"><span class="std std-numref">Section 9.3.3</span></a>) <em>outputs</em>.</p>
 <section id="checking-input-data-integrity-and-argument-handling">
-<span id="sec-arg-check"></span><h3><span class="section-number">9.2.1. </span>Checking Input Data Integrity and Argument Handling<a class="headerlink" href="#checking-input-data-integrity-and-argument-handling" title="Permalink to this heading">¶</a></h3>
+<span id="sec-arg-check"></span><h3><span class="section-number">9.2.1. </span>Checking Input Data Integrity and Argument Handling<a class="headerlink" href="#checking-input-data-integrity-and-argument-handling" title="Permalink to this heading">#</a></h3>
 <p>A function takes R objects of any kind as arguments, but it does not mean
 that feeding it with every- or any-thing is healthy for its guts.</p>
 <p>When designing functions, it is best to handle the inputs
@@ -551,7 +503,7 @@ functions, they are simply easier to remember.</p>
 <p>Consider the following case study, illustrating that even the extremely
 simple scenario where we deal with a single positive integer,
 is not necessarily straightforward.</p>
-<div class="proof proof-type-exercise" id="id29">
+<div class="proof proof-type-exercise" id="id27">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.5</span>
@@ -590,7 +542,7 @@ on different inputs, noting how differently they handle such
 atypical arguments.</p>
 </div></div><p>Sometimes we will rely on other functions to handle the data
 integrity checking for us.</p>
-<div class="proof proof-type-example" id="id30">
+<div class="proof proof-type-example" id="id28">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.6</span>
@@ -635,7 +587,7 @@ where some other function generates a value that we did not expect
 and this value is used as input to our function.
 In our case, this would correspond to the said <em>n</em> or <em>d</em> being
 determined programmatically.</p>
-<div class="proof proof-type-example" id="id31">
+<div class="proof proof-type-example" id="id29">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.7</span>
@@ -677,7 +629,7 @@ is more or less equivalent to:</p>
 <p>Thus, if all the elements in the given logical vectors are <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>,
 nothing happens and we can safely move on.</p>
 </div>
-<div class="proof proof-type-example" id="id32">
+<div class="proof proof-type-example" id="id30">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.8</span>
@@ -707,7 +659,7 @@ nothing happens and we can safely move on.</p>
 <p>This implements the strictest test for “a single positive integer”
 possible. In the case of any violation of the underlying condition,
 we get a very informative error message.</p>
-</div></div><div class="proof proof-type-example" id="id33">
+</div></div><div class="proof proof-type-example" id="id31">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.9</span>
@@ -744,7 +696,7 @@ handling of arguments in different domains include the <strong class="program">v
 and <strong class="program">stringx</strong> packages<a class="footnote-reference brackets" href="#footstringx" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.
 Can these contributions be justified?</p>
 </div>
-<div class="proof proof-type-exercise" id="id34">
+<div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.10</span>
@@ -770,14 +722,14 @@ but not the second (why such a restriction? when?).</p></li>
 <p>Find a few functions that match each case.</p>
 </div></div></section>
 <section id="putting-outputs-into-context">
-<h3><span class="section-number">9.2.2. </span>Putting Outputs into Context<a class="headerlink" href="#putting-outputs-into-context" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.2.2. </span>Putting Outputs into Context<a class="headerlink" href="#putting-outputs-into-context" title="Permalink to this heading">#</a></h3>
 <p>The functions we write do not exist in a vacuum.
 We should put them into a much wider context: how are they going to be used
 when combined with other tools?</p>
 <p>As a general rule, our functions should generate outputs of <em>predictable</em>
 kind, so that when we write and read the code chunks that utilise them,
 we can easily deduce what is going to happen.</p>
-<div class="proof proof-type-example" id="id35">
+<div class="proof proof-type-example" id="id33">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.11</span>
@@ -831,7 +783,7 @@ to call a simplifier explicitly.</p>
 if it is unable to neaten the object or at least
 apply some brute force solution (e.g., or “fill the gaps” somehow
 itself, possibly with a warning).</p>
-<div class="proof proof-type-example" id="id36">
+<div class="proof proof-type-example" id="id34">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.12</span>
@@ -851,7 +803,7 @@ itself, possibly with a warning).</p>
 If a function tends to generate objects of different kinds,
 depending on the arguments provided, maybe it is better to write two
 functions instead?</p>
-<div class="proof proof-type-exercise" id="id37">
+<div class="proof proof-type-exercise" id="id35">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.13</span>
@@ -903,16 +855,16 @@ will be suppressed.</p>
 </section>
 </section>
 <section id="organising-and-maintaining-functions">
-<span id="sec-own-functions-design"></span><h2><span class="section-number">9.3. </span>Organising and Maintaining Functions<a class="headerlink" href="#organising-and-maintaining-functions" title="Permalink to this heading">¶</a></h2>
+<span id="sec-own-functions-design"></span><h2><span class="section-number">9.3. </span>Organising and Maintaining Functions<a class="headerlink" href="#organising-and-maintaining-functions" title="Permalink to this heading">#</a></h2>
 <section id="function-libraries">
-<h3><span class="section-number">9.3.1. </span>Function Libraries<a class="headerlink" href="#function-libraries" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.3.1. </span>Function Libraries<a class="headerlink" href="#function-libraries" title="Permalink to this heading">#</a></h3>
 <p>Definitions of frequently-used functions or datasets can be emplaced
 in separate source files (.R extension) for further reference.</p>
 <p>Such libraries can be executed by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">source</span><span class="p">(</span><span class="s">&quot;path_to_file.R&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id38">
+<div class="proof proof-type-exercise" id="id36">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.14</span>
@@ -929,7 +881,7 @@ and then write a few lines of code where you test <strong class="command">nlarge
 on some example inputs.</p>
 </div></div></section>
 <section id="writing-r-packages">
-<span id="sec-own-packages"></span><h3><span class="section-number">9.3.2. </span>Writing R Packages<a class="headerlink" href="#writing-r-packages" title="Permalink to this heading">¶</a></h3>
+<span id="sec-own-packages"></span><h3><span class="section-number">9.3.2. </span>Writing R Packages<a class="headerlink" href="#writing-r-packages" title="Permalink to this heading">#</a></h3>
 <p>When a function library grows substantially, or when there is a need for
 equipping it with the relevant manual pages<a class="footnote-reference brackets" href="#footalwaysdocument" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>
 (<a class="reference internal" href="#sec-doc-packages"><span class="std std-numref">Section 9.3.3</span></a>) or compiled code (<a class="reference internal" href="320-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>),
@@ -973,7 +925,7 @@ In particular, it can be loaded and attached via a call to:</p>
 <p>This makes all the objects listed in its <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file available
 to the user.</p>
 </div>
-<div class="proof proof-type-exercise" id="id39">
+<div class="proof proof-type-exercise" id="id37">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.15</span>
@@ -1010,7 +962,7 @@ of building, testing, checking, etc.</p>
 </div>
 </section>
 <section id="documenting-r-packages">
-<span id="sec-doc-packages"></span><h3><span class="section-number">9.3.3. </span>Documenting R Packages<a class="headerlink" href="#documenting-r-packages" title="Permalink to this heading">¶</a></h3>
+<span id="sec-doc-packages"></span><h3><span class="section-number">9.3.3. </span>Documenting R Packages<a class="headerlink" href="#documenting-r-packages" title="Permalink to this heading">#</a></h3>
 <p>Documenting functions and commenting code thoroughly
 is critical, even if we just write for ourselves.
 Most programmers sooner or later will note that they find it
@@ -1043,7 +995,7 @@ because it really makes the developers’ lives easier.
 Most importantly, it allows for documentation to be specified alongside
 the functions’ definitions, which is much more natural.</p>
 </div>
-<div class="proof proof-type-exercise" id="id40">
+<div class="proof proof-type-exercise" id="id38">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.16</span>
@@ -1052,7 +1004,7 @@ the functions’ definitions, which is much more natural.</p>
 <p>Add a few manual pages to your example R package.</p>
 </div></div></section>
 <section id="assuring-quality-code">
-<span id="sec-code-quality"></span><h3><span class="section-number">9.3.4. </span>Assuring Quality Code<a class="headerlink" href="#assuring-quality-code" title="Permalink to this heading">¶</a></h3>
+<span id="sec-code-quality"></span><h3><span class="section-number">9.3.4. </span>Assuring Quality Code<a class="headerlink" href="#assuring-quality-code" title="Permalink to this heading">#</a></h3>
 <p>Below we mention some good development practices
 related to maintaining quality code.
 This is an important topic, but writing about them is tedious
@@ -1062,7 +1014,7 @@ After all, these are some heuristics that are learnt best by observing
 and mimicking what the others are doing (and hence
 the exercises below will encourage to do so).</p>
 <section id="managing-changes-and-working-collaboratively">
-<h4><span class="section-number">9.3.4.1. </span>Managing Changes and Working Collaboratively<a class="headerlink" href="#managing-changes-and-working-collaboratively" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.3.4.1. </span>Managing Changes and Working Collaboratively<a class="headerlink" href="#managing-changes-and-working-collaboratively" title="Permalink to this heading">#</a></h4>
 <p>It is a good idea to employ some source code version control system
 such as <strong class="program">git</strong> to keep track of the changes made to the software.</p>
 <div class="admonition note">
@@ -1077,7 +1029,7 @@ open-source software developers.</p>
 <p>Not only do they support working collaboratively on the projects,
 but also are equipped with additional tools for reporting bugs,
 suggesting feature requests, etc.</p>
-<div class="proof proof-type-exercise" id="id41">
+<div class="proof proof-type-exercise" id="id39">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.17</span>
@@ -1091,10 +1043,10 @@ Note that each community is different and is governed by different
 guidelines: after all, we are from all over the world.</p>
 </div></div></section>
 <section id="test-driven-development-and-continuous-integration">
-<span id="sec-testing"></span><h4><span class="section-number">9.3.4.2. </span>Test-driven Development and Continuous Integration<a class="headerlink" href="#test-driven-development-and-continuous-integration" title="Permalink to this heading">¶</a></h4>
+<span id="sec-testing"></span><h4><span class="section-number">9.3.4.2. </span>Test-driven Development and Continuous Integration<a class="headerlink" href="#test-driven-development-and-continuous-integration" title="Permalink to this heading">#</a></h4>
 <p>It is often hygienic to include some principles of
 test-driven development when writing own functions.</p>
-<div class="proof proof-type-exercise" id="id42">
+<div class="proof proof-type-exercise" id="id40">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.18</span>
@@ -1116,7 +1068,7 @@ move forward quietly.</p>
 </pre></div>
 </div>
 <p>Write a function <strong class="command">rms</strong> that fulfils the above assertions.</p>
-</div></div><div class="proof proof-type-exercise" id="id43">
+</div></div><div class="proof proof-type-exercise" id="id41">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.19</span>
@@ -1132,7 +1084,7 @@ a lighter-weight version of the former),
 <strong class="program">RUnit</strong>, or <strong class="program">realtest</strong>.
 However, in the most typical use cases, relying
 on <strong class="command">stopifnot</strong> is powerful enough.</p>
-<div class="proof proof-type-exercise" id="id44">
+<div class="proof proof-type-exercise" id="id42">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.20</span>
@@ -1159,7 +1111,7 @@ checking the package on a range of different platforms.</p>
 </div>
 </section>
 <section id="debugging">
-<h4><span class="section-number">9.3.4.3. </span>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.3.4.3. </span>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">#</a></h4>
 <p>For all his life, the current author has been debugging all his programs
 mostly by manually printing the state of suspected
 variables (<strong class="command">printf</strong> and the like) in different areas of the code.
@@ -1170,7 +1122,7 @@ Also, refer to Section 9 of <span id="id14">[<a class="reference internal" href=
 their corresponding documentation.</p>
 </section>
 <section id="profiling">
-<h4><span class="section-number">9.3.4.4. </span>Profiling<a class="headerlink" href="#profiling" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.3.4.4. </span>Profiling<a class="headerlink" href="#profiling" title="Permalink to this heading">#</a></h4>
 <p>Typically, a program spends relatively
 long time executing only a small portion of code.
 The <strong class="command">Rprof</strong> function can be a helpful tool to identify which chunks
@@ -1184,7 +1136,7 @@ printing messages, on the console, querying Web APIs, etc.).</p>
 </section>
 </section>
 <section id="special-functions-syntactic-sugar">
-<span id="sec-syntactic-sugar"></span><h2><span class="section-number">9.4. </span>Special Functions: Syntactic Sugar<a class="headerlink" href="#special-functions-syntactic-sugar" title="Permalink to this heading">¶</a></h2>
+<span id="sec-syntactic-sugar"></span><h2><span class="section-number">9.4. </span>Special Functions: Syntactic Sugar<a class="headerlink" href="#special-functions-syntactic-sugar" title="Permalink to this heading">#</a></h2>
 <p>Some functions, such as `<strong class="command">*</strong>`, are somewhat special.
 They can be referred to using an alternative syntax which for some
 reason most of us accepted as the default one.
@@ -1195,7 +1147,7 @@ that “<code class="docutils literal notranslate"><span class="pre">5</span> <s
 </pre></div>
 </div>
 <section id="a-note-on-backticks">
-<span id="sec-backtick"></span><h3><span class="section-number">9.4.1. </span>A Note on Backticks<a class="headerlink" href="#a-note-on-backticks" title="Permalink to this heading">¶</a></h3>
+<span id="sec-backtick"></span><h3><span class="section-number">9.4.1. </span>A Note on Backticks<a class="headerlink" href="#a-note-on-backticks" title="Permalink to this heading">#</a></h3>
 <p>In <a class="reference internal" href="120-numeric.html#sec-assign"><span class="std std-numref">Section 2.2</span></a>, we have mentioned that
 we can assign (as in `<strong class="command">&lt;-</strong>`)
 <em>syntactically valid names</em> to  our objects. Most identifiers comprised
@@ -1214,7 +1166,7 @@ enclosed in backticks (back quotes, grave accents):</p>
 backticks let us refer to them in any context.</p>
 </section>
 <section id="dollar">
-<span id="sec-dollar"></span><h3><span class="section-number">9.4.2. </span>Dollar, `<strong class="command">$</strong>` (*)<a class="headerlink" href="#dollar" title="Permalink to this heading">¶</a></h3>
+<span id="sec-dollar"></span><h3><span class="section-number">9.4.2. </span>Dollar, `<strong class="command">$</strong>` (*)<a class="headerlink" href="#dollar" title="Permalink to this heading">#</a></h3>
 <p>The dollar operator, `<strong class="command">$</strong>`, can be used as an alternative
 accessor to a single element in a named list<a class="footnote-reference brackets" href="#footdollar" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">label</span></code> is a syntactically valid name, then <code class="docutils literal notranslate"><span class="pre">x$label</span></code>
@@ -1268,7 +1220,7 @@ which – sadly – is not the default.</p>
 </div>
 </section>
 <section id="curly-braces">
-<h3><span class="section-number">9.4.3. </span>Curly Braces,  `<strong class="command">{</strong>`<a class="headerlink" href="#curly-braces" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.4.3. </span>Curly Braces,  `<strong class="command">{</strong>`<a class="headerlink" href="#curly-braces" title="Permalink to this heading">#</a></h3>
 <p>A block of statements grouped with curly braces,
 `<strong class="command">{</strong>`, corresponds to a function call.
 When we write:</p>
@@ -1293,7 +1245,7 @@ When we write:</p>
 is evaluated and then the last value is returned in result of that call.</p>
 </section>
 <section id="if">
-<h3><span class="section-number">9.4.4. </span>`<strong class="command">if</strong>`<a class="headerlink" href="#if" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.4.4. </span>`<strong class="command">if</strong>`<a class="headerlink" href="#if" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">if</strong> is a function too; as mentioned in <a class="reference internal" href="180-flow.html#sec-if"><span class="std std-numref">Section 8.1</span></a>,
 it returns the value corresponding
 to the expression evaluated conditionally. Hence, we may write:</p>
@@ -1317,9 +1269,9 @@ can also be called that way, but they return
 <strong class="command">invisible</strong><code class="code docutils literal notranslate"><span class="pre">(NULL)</span></code>.</p>
 </section>
 <section id="operators-are-functions-too">
-<span id="sec-operfun"></span><h3><span class="section-number">9.4.5. </span>Operators are Functions Too<a class="headerlink" href="#operators-are-functions-too" title="Permalink to this heading">¶</a></h3>
+<span id="sec-operfun"></span><h3><span class="section-number">9.4.5. </span>Operators are Functions Too<a class="headerlink" href="#operators-are-functions-too" title="Permalink to this heading">#</a></h3>
 <section id="calling-built-in-operators-as-functions">
-<h4><span class="section-number">9.4.5.1. </span>Calling Built-in Operators as Functions<a class="headerlink" href="#calling-built-in-operators-as-functions" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.4.5.1. </span>Calling Built-in Operators as Functions<a class="headerlink" href="#calling-built-in-operators-as-functions" title="Permalink to this heading">#</a></h4>
 <p>Every arithmetic, logical, and relational operator
 is translated to a call to the corresponding function.
 For instance:</p>
@@ -1373,7 +1325,7 @@ This is efficient both time- and memory-wise.</p>
 </div>
 </section>
 <section id="creating-own-binary-operators">
-<h4><span class="section-number">9.4.5.2. </span>Creating Own Binary Operators<a class="headerlink" href="#creating-own-binary-operators" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.4.5.2. </span>Creating Own Binary Operators<a class="headerlink" href="#creating-own-binary-operators" title="Permalink to this heading">#</a></h4>
 <p>We can also introduce our own binary operators
 named like `<strong class="command">%myopname%</strong>`:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`%:)%`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">e1</span><span class="o">+</span><span class="n">e2</span><span class="p">)</span><span class="o">/</span><span class="m">2</span>
@@ -1396,7 +1348,7 @@ of different types.</p>
 </section>
 </section>
 <section id="replacement-functions">
-<span id="sec-replacementfun"></span><h3><span class="section-number">9.4.6. </span>Replacement Functions<a class="headerlink" href="#replacement-functions" title="Permalink to this heading">¶</a></h3>
+<span id="sec-replacementfun"></span><h3><span class="section-number">9.4.6. </span>Replacement Functions<a class="headerlink" href="#replacement-functions" title="Permalink to this heading">#</a></h3>
 <p>Functions generally do not change the state
 of their arguments. However, there is some syntactic sugar
 that allows us to replace objects or parts thereof with new content.
@@ -1413,7 +1365,7 @@ the input <code class="docutils literal notranslate"><span class="pre">x</span><
 </pre></div>
 </div>
 <section id="creating-own-replacement-functions">
-<h4><span class="section-number">9.4.6.1. </span>Creating Own Replacement Functions<a class="headerlink" href="#creating-own-replacement-functions" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.4.6.1. </span>Creating Own Replacement Functions<a class="headerlink" href="#creating-own-replacement-functions" title="Permalink to this heading">#</a></h4>
 <p>A replacement function is a mapping named like `<strong class="command">name&lt;-</strong>` with
 at least two parameters:</p>
 <ul class="simple">
@@ -1471,7 +1423,7 @@ we could get away with it otherwise).</p>
 </div>
 </section>
 <section id="substituting-parts-of-vectors">
-<h4><span class="section-number">9.4.6.2. </span>Substituting Parts of Vectors<a class="headerlink" href="#substituting-parts-of-vectors" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.4.6.2. </span>Substituting Parts of Vectors<a class="headerlink" href="#substituting-parts-of-vectors" title="Permalink to this heading">#</a></h4>
 <p>The replacement versions of the subsetting operators
 are named as follows:</p>
 <ul class="simple">
@@ -1507,7 +1459,7 @@ vector (a modified version of the original one),
 we may luckily expect some performance optimisations happening
 behind our back (reference counting, modification in-place;
 see <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:to-do</span></code>).</p>
-<div class="proof proof-type-exercise" id="id45">
+<div class="proof proof-type-exercise" id="id43">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.21</span>
@@ -1528,7 +1480,7 @@ at the end of a given vector, modifying it in place.</p>
 </div>
 </div></div></section>
 <section id="replacing-attributes">
-<h4><span class="section-number">9.4.6.3. </span>Replacing Attributes<a class="headerlink" href="#replacing-attributes" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.4.6.3. </span>Replacing Attributes<a class="headerlink" href="#replacing-attributes" title="Permalink to this heading">#</a></h4>
 <p>Many replacement functions deal with the re-setting of objects’
 attributes (<a class="reference internal" href="140-list.html#sec-attribute"><span class="std std-numref">Section 4.4</span></a>).</p>
 <p>In particular, for each special attribute,
@@ -1589,7 +1541,7 @@ in its removal:</p>
 metadata removed.</p>
 </section>
 <section id="compositions-of-replacement-functions">
-<h4><span class="section-number">9.4.6.4. </span>Compositions of Replacement Functions<a class="headerlink" href="#compositions-of-replacement-functions" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">9.4.6.4. </span>Compositions of Replacement Functions<a class="headerlink" href="#compositions-of-replacement-functions" title="Permalink to this heading">#</a></h4>
 <p>Updating only selected names like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 <span class="nf">names</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span>
@@ -1615,7 +1567,7 @@ yields a result equivalent to
 Note that both <strong class="command">f</strong> and `<strong class="command">f&lt;-</strong>` need to be defined,
 but having <strong class="command">g</strong> is not necessary.</p>
 </div>
-<div class="proof proof-type-exercise" id="id46">
+<div class="proof proof-type-exercise" id="id44">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.22</span>
@@ -1624,7 +1576,7 @@ but having <strong class="command">g</strong> is not necessary.</p>
 <p>(*) What is
 “<strong class="command">h</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">g</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">a),</span> <span class="pre">b),</span> <span class="pre">c)</span> <span class="pre">&lt;-</span> <span class="pre">y</span></code>”
 equivalent to?</p>
-</div></div><div class="proof proof-type-exercise" id="id47">
+</div></div><div class="proof proof-type-exercise" id="id45">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.23</span>
@@ -1659,7 +1611,7 @@ e.g., all <code class="docutils literal notranslate"><span class="pre">eggs</spa
 <span class="c1">## [1] &quot;spam&quot;     &quot;eggs&quot;     &quot;broccoli&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id48">
+</div></div><div class="proof proof-type-exercise" id="id46">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.24</span>
@@ -1693,7 +1645,7 @@ a recoded copy of:</p>
 <li><p><strong class="command">dimnames</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id49">
+</div></div><div class="proof proof-type-exercise" id="id47">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.25</span>
@@ -1726,9 +1678,9 @@ an altered copy of:</p>
 </section>
 </section>
 <section id="arguments-and-local-variables">
-<h2><span class="section-number">9.5. </span>Arguments and Local Variables<a class="headerlink" href="#arguments-and-local-variables" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">9.5. </span>Arguments and Local Variables<a class="headerlink" href="#arguments-and-local-variables" title="Permalink to this heading">#</a></h2>
 <section id="pass-by-value">
-<span id="sec-pass-by-value"></span><h3><span class="section-number">9.5.1. </span>Pass by “Value”<a class="headerlink" href="#pass-by-value" title="Permalink to this heading">¶</a></h3>
+<span id="sec-pass-by-value"></span><h3><span class="section-number">9.5.1. </span>Pass by “Value”<a class="headerlink" href="#pass-by-value" title="Permalink to this heading">#</a></h3>
 <p>As a general rule, functions cannot change the state of their
 arguments<a class="footnote-reference brackets" href="#footchgenvir" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>. We can think of them as being passed
 by <em>value</em>, i.e., as if their copy was made.</p>
@@ -1749,7 +1701,7 @@ by <em>value</em>, i.e., as if their copy was made.</p>
 changed after the call.</p>
 </section>
 <section id="variable-scope">
-<h3><span class="section-number">9.5.2. </span>Variable Scope<a class="headerlink" href="#variable-scope" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.5.2. </span>Variable Scope<a class="headerlink" href="#variable-scope" title="Permalink to this heading">#</a></h3>
 <p>Function arguments as well as any other variables we create
 inside a function’s body are <em>relative</em> to each call to that function.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test_change</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1790,7 +1742,7 @@ it is an ordinary named object created alongside <code class="docutils literal n
 </div>
 </section>
 <section id="closures">
-<span id="sec-closures"></span><h3><span class="section-number">9.5.3. </span>Closures (*)<a class="headerlink" href="#closures" title="Permalink to this heading">¶</a></h3>
+<span id="sec-closures"></span><h3><span class="section-number">9.5.3. </span>Closures (*)<a class="headerlink" href="#closures" title="Permalink to this heading">#</a></h3>
 <p>Most user-defined functions are in fact representatives
 of the so-called <em>closures</em>; see <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:to-do</span></code> and <span id="id19">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span>.
 They not only consist of an R expression to evaluate,
@@ -1813,13 +1765,13 @@ a corresponding <span class="math notranslate nohighlight">\(y\)</span> can be d
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v) </span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;bytecode: 0x55f5db713bf0&gt;</span>
-<span class="c1">## &lt;environment: 0x55f5db7108b0&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55db3c04cdf0&gt;</span>
+<span class="c1">## &lt;environment: 0x55db3c04dd78&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v) </span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;bytecode: 0x55f5db713bf0&gt;</span>
-<span class="c1">## &lt;environment: 0x55f5db29a4e0&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55db3c04cdf0&gt;</span>
+<span class="c1">## &lt;environment: 0x55db3bbd5d98&gt;</span>
 </pre></div>
 </div>
 <p>we might wonder how can they produce different results — it is
@@ -1836,7 +1788,7 @@ data that is referred to upon their calls:</p>
 of this book.</p>
 </section>
 <section id="default-arguments">
-<h3><span class="section-number">9.5.4. </span>Default Arguments<a class="headerlink" href="#default-arguments" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">9.5.4. </span>Default Arguments<a class="headerlink" href="#default-arguments" title="Permalink to this heading">#</a></h3>
 <p>We have already mentioned above that, when designing functions
 that perform complex tasks, we will sometimes be
 faced with a design problem: how to find a sweet spot between
@@ -1854,7 +1806,7 @@ by default the natural ones.</p>
 <span class="c1">## [1] 2</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id50">
+<div class="proof proof-type-exercise" id="id48">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.26</span>
@@ -1885,7 +1837,7 @@ and the end of the parameter list, but see
 for a well-justified exception.</p>
 </section>
 <section id="lazy-evaluation">
-<span id="sec-lazy-eval"></span><h3><span class="section-number">9.5.5. </span>Lazy Evaluation<a class="headerlink" href="#lazy-evaluation" title="Permalink to this heading">¶</a></h3>
+<span id="sec-lazy-eval"></span><h3><span class="section-number">9.5.5. </span>Lazy Evaluation<a class="headerlink" href="#lazy-evaluation" title="Permalink to this heading">#</a></h3>
 <p>In some languages, function arguments are always evaluated
 prior to a call. In R, though, they are only computed when actually needed.
 We call it <em>lazy</em> or <em>delayed</em> evaluation.
@@ -1893,7 +1845,7 @@ Recall that in <a class="reference internal" href="180-flow.html#sec-short-circu
 the short-circuit evaluation operators `<strong class="command">||</strong>` (or) and
 `<strong class="command">&amp;&amp;</strong>` (and). They are able to do their job precisely
 thanks to this mechanism.</p>
-<div class="proof proof-type-example" id="id51">
+<div class="proof proof-type-example" id="id49">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.27</span>
@@ -1907,7 +1859,7 @@ thanks to this mechanism.</p>
 </pre></div>
 </div>
 <p>Otherwise, we would see a message being printed out on the console.</p>
-</div></div><div class="proof proof-type-example" id="id52">
+</div></div><div class="proof proof-type-example" id="id50">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.28</span>
@@ -1932,9 +1884,9 @@ for further reference. If that was not the case,
 we would see two messages like <code class="docutils literal notranslate"><span class="pre">and</span> <span class="pre">now...</span></code>.</p>
 </div></div></section>
 <section id="ellipsis">
-<span id="sec-ellipsis"></span><h3><span class="section-number">9.5.6. </span>Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`<a class="headerlink" href="#ellipsis" title="Permalink to this heading">¶</a></h3>
+<span id="sec-ellipsis"></span><h3><span class="section-number">9.5.6. </span>Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`<a class="headerlink" href="#ellipsis" title="Permalink to this heading">#</a></h3>
 <p>Let us start with an exercise.</p>
-<div class="proof proof-type-exercise" id="id53">
+<div class="proof proof-type-exercise" id="id51">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.29</span>
@@ -2021,7 +1973,7 @@ Still, there are two major use cases of the ellipsis<a class="footnote-reference
 </div>
 </li>
 </ul>
-<div class="proof proof-type-example" id="id54">
+<div class="proof proof-type-example" id="id52">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.30</span>
@@ -2036,7 +1988,7 @@ Hence, if we denote the <em>i</em>-th element of a vector <code class="docutils 
 <code class="docutils literal notranslate"><span class="pre">X[[i]]</span></code>, calling <strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">FUN,</span> <span class="pre">...)</span></code>
 will return a list whose <em>i</em>-th element will be equal to
 <strong class="command">FUN</strong><code class="code docutils literal notranslate"><span class="pre">(X[[i]],</span> <span class="pre">...)</span></code>.</p>
-</div></div><div class="proof proof-type-exercise" id="id55">
+</div></div><div class="proof proof-type-exercise" id="id53">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.31</span>
@@ -2048,7 +2000,7 @@ drawn from the uniform distribution on the unit interval.
 Then, upgrade your code to get numbers sampled form the interval <span class="math notranslate nohighlight">\([-1, 1]\)</span>.</p>
 </div></div></section>
 <section id="metaprogramming">
-<span id="sec-metaprogramming-intro"></span><h3><span class="section-number">9.5.7. </span>Metaprogramming (*)<a class="headerlink" href="#metaprogramming" title="Permalink to this heading">¶</a></h3>
+<span id="sec-metaprogramming-intro"></span><h3><span class="section-number">9.5.7. </span>Metaprogramming (*)<a class="headerlink" href="#metaprogramming" title="Permalink to this heading">#</a></h3>
 <p>Under the hood, lazy evaluation is a quite complicated mechanism
 that relies upon the storing of unevaluated R expressions
 and special <em>promises</em> to instantiate them<a class="footnote-reference brackets" href="#footevalmodel" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>.</p>
@@ -2065,7 +2017,7 @@ to a character vector:</p>
 <span class="c1">## [1] &quot;spam &amp; spam^2 &amp; bacon | grilled(spam)&quot;</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id56">
+<div class="proof proof-type-exercise" id="id54">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.32</span>
@@ -2083,7 +2035,7 @@ designed so that their users can express them much more compactly.
 This is certainly (in theory) a very powerful tool but from practice
 we know many instances where it has been over/misused and made
 the use of R confusing.</p>
-<div class="proof proof-type-example" id="id57">
+<div class="proof proof-type-example" id="id55">
 
     <div class="proof-title">
         <span class="proof-type">Example 9.33</span>
@@ -2171,8 +2123,8 @@ or <strong class="command">transform</strong>, etc.).</p>
 </section>
 </section>
 <section id="exercises">
-<h2><span class="section-number">9.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">¶</a></h2>
-<div class="proof proof-type-exercise" id="id58">
+<h2><span class="section-number">9.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<div class="proof proof-type-exercise" id="id56">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.34</span>
@@ -2200,9 +2152,9 @@ does not necessarily have to be a bad idea?</p></li>
 “<strong class="command">names</strong><code class="code docutils literal notranslate"><span class="pre">(x)[1]</span> <span class="pre">&lt;-</span> <span class="pre">&quot;new</span> <span class="pre">name&quot;</span></code>” and
 “<strong class="command">names</strong><code class="code docutils literal notranslate"><span class="pre">(x[1])</span> <span class="pre">&lt;-</span> <span class="pre">&quot;new</span> <span class="pre">name&quot;</span></code>”?</p></li>
 <li><p>What might be the form of <code class="docutils literal notranslate"><span class="pre">x</span></code> if it is legit to
-call it like <a href="#id22"><span class="problematic" id="id23">x[[c(1, 2)]]()()()[[1]]()()</span></a>?</p></li>
+call it like <strong class="command">x[[c(1, 2)]]()()()[[1]]()()</strong>?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id59">
+</div></div><div class="proof proof-type-exercise" id="id57">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.35</span>
@@ -2222,7 +2174,7 @@ call it like <a href="#id22"><span class="problematic" id="id23">x[[c(1, 2)]]()(
 <strong class="command">invisible</strong><code class="code docutils literal notranslate"><span class="pre">(NULL)</span></code>,
 <code class="docutils literal notranslate"><span class="pre">x[[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)]]</span></code>, or
 <strong class="command">invisible</strong><code class="code docutils literal notranslate"><span class="pre">(x[[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)]])</span></code>?</p>
-</div></div><div class="proof proof-type-exercise" id="id60">
+</div></div><div class="proof proof-type-exercise" id="id58">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.36</span>
@@ -2230,7 +2182,7 @@ call it like <a href="#id22"><span class="problematic" id="id23">x[[c(1, 2)]]()(
     </div><div class="proof-content">
 <p>The <strong class="command">split</strong> function also has its replacement version.
 Study its documentation to learn how it works.</p>
-</div></div><div class="proof proof-type-exercise" id="id61">
+</div></div><div class="proof proof-type-exercise" id="id59">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.37</span>
@@ -2246,7 +2198,7 @@ List the names corresponding to some replacement functions.</p>
 when solving the remaining exercises (or those which you have
 skipped intentionally).</p>
 </div>
-<div class="proof proof-type-exercise" id="id62">
+<div class="proof proof-type-exercise" id="id60">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.38</span>
@@ -2256,14 +2208,14 @@ skipped intentionally).</p>
 and <strong class="command">Find</strong> functions.
 Evaluation should stop as soon as the first element
 fulfilling a given predicate has been found.</p>
-</div></div><div class="proof proof-type-exercise" id="id63">
+</div></div><div class="proof proof-type-exercise" id="id61">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.39</span>
         
     </div><div class="proof-content">
 <p>Implement your own version of the <strong class="command">Reduce</strong> function.</p>
-</div></div><div class="proof proof-type-exercise" id="id64">
+</div></div><div class="proof proof-type-exercise" id="id62">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.40</span>
@@ -2280,7 +2232,7 @@ such that <code class="docutils literal notranslate"><span class="pre">y[[i]]</s
 <span class="c1">## [1] 15</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id65">
+</div></div><div class="proof proof-type-exercise" id="id63">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.41</span>
@@ -2291,7 +2243,7 @@ write another function that counts how many
 increasing pairs of numbers are featured in a given numeric
 vector. For instance, in <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0,2,1,1,0,1,6,0)</span></code>
 there are three such pairs: (0,2), (0,1), (1,6).</p>
-</div></div><div class="proof proof-type-exercise" id="id66">
+</div></div><div class="proof proof-type-exercise" id="id64">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 9.42</span>
@@ -2374,57 +2326,144 @@ in a function’s parameter list.</p>
 <aside class="footnote brackets" id="footevalmodel" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">12</a><span class="fn-bracket">]</span></span>
 <p>Such an evaluation model has been heavily inspired
-by Scheme <span id="id24">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R., Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. DOI: 10.1080/10618600.1996.10474713.">32</a>]</span>.
+by Scheme <span id="id22">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R., Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. DOI: 10.1080/10618600.1996.10474713.">32</a>]</span>.
 It will be explained in more detail in <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:to-do</span></code>.</p>
 </aside>
 </aside>
 </section>
 </section>
 
-
-           </div>
-           
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="220-s3.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">10. </span>S3 Classes</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="180-flow.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">8. </span>Flow of Execution</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+              
+              
+              Copyright &#169; 2022–2023 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>.
+              Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
+              Built with <a href="https://sphinx-doc.org/">Sphinx</a>
+              and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
+              Last updated on 2023-02-14T17:12:08+1100.
+              This site will never display any ads: it is a non-profit project.
+              It does not collect any data.
+            </div>
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="220-s3.html" class="btn btn-neutral float-right" title="10. S3 Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="180-flow.html" class="btn btn-neutral float-left" title="8. Flow of Execution" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            In this chapter
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">9. Designing Functions</a><ul>
+<li><a class="reference internal" href="#principles-of-sustainable-design">9.1. Principles of Sustainable Design</a><ul>
+<li><a class="reference internal" href="#to-write-or-to-abstain">9.1.1. To Write or to Abstain</a></li>
+<li><a class="reference internal" href="#to-pamper-or-to-challenge">9.1.2. To Pamper or to Challenge</a></li>
+<li><a class="reference internal" href="#to-build-or-to-reuse">9.1.3. To Build or to Reuse</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#managing-data-flow">9.2. Managing Data Flow</a><ul>
+<li><a class="reference internal" href="#checking-input-data-integrity-and-argument-handling">9.2.1. Checking Input Data Integrity and Argument Handling</a></li>
+<li><a class="reference internal" href="#putting-outputs-into-context">9.2.2. Putting Outputs into Context</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#organising-and-maintaining-functions">9.3. Organising and Maintaining Functions</a><ul>
+<li><a class="reference internal" href="#function-libraries">9.3.1. Function Libraries</a></li>
+<li><a class="reference internal" href="#writing-r-packages">9.3.2. Writing R Packages</a></li>
+<li><a class="reference internal" href="#documenting-r-packages">9.3.3. Documenting R Packages</a></li>
+<li><a class="reference internal" href="#assuring-quality-code">9.3.4. Assuring Quality Code</a><ul>
+<li><a class="reference internal" href="#managing-changes-and-working-collaboratively">9.3.4.1. Managing Changes and Working Collaboratively</a></li>
+<li><a class="reference internal" href="#test-driven-development-and-continuous-integration">9.3.4.2. Test-driven Development and Continuous Integration</a></li>
+<li><a class="reference internal" href="#debugging">9.3.4.3. Debugging</a></li>
+<li><a class="reference internal" href="#profiling">9.3.4.4. Profiling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#special-functions-syntactic-sugar">9.4. Special Functions: Syntactic Sugar</a><ul>
+<li><a class="reference internal" href="#a-note-on-backticks">9.4.1. A Note on Backticks</a></li>
+<li><a class="reference internal" href="#dollar">9.4.2. Dollar, `<strong class="command">$</strong>` (*)</a></li>
+<li><a class="reference internal" href="#curly-braces">9.4.3. Curly Braces,  `<strong class="command">{</strong>`</a></li>
+<li><a class="reference internal" href="#if">9.4.4. `<strong class="command">if</strong>`</a></li>
+<li><a class="reference internal" href="#operators-are-functions-too">9.4.5. Operators are Functions Too</a><ul>
+<li><a class="reference internal" href="#calling-built-in-operators-as-functions">9.4.5.1. Calling Built-in Operators as Functions</a></li>
+<li><a class="reference internal" href="#creating-own-binary-operators">9.4.5.2. Creating Own Binary Operators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#replacement-functions">9.4.6. Replacement Functions</a><ul>
+<li><a class="reference internal" href="#creating-own-replacement-functions">9.4.6.1. Creating Own Replacement Functions</a></li>
+<li><a class="reference internal" href="#substituting-parts-of-vectors">9.4.6.2. Substituting Parts of Vectors</a></li>
+<li><a class="reference internal" href="#replacing-attributes">9.4.6.3. Replacing Attributes</a></li>
+<li><a class="reference internal" href="#compositions-of-replacement-functions">9.4.6.4. Compositions of Replacement Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arguments-and-local-variables">9.5. Arguments and Local Variables</a><ul>
+<li><a class="reference internal" href="#pass-by-value">9.5.1. Pass by “Value”</a></li>
+<li><a class="reference internal" href="#variable-scope">9.5.2. Variable Scope</a></li>
+<li><a class="reference internal" href="#closures">9.5.3. Closures (*)</a></li>
+<li><a class="reference internal" href="#default-arguments">9.5.4. Default Arguments</a></li>
+<li><a class="reference internal" href="#lazy-evaluation">9.5.5. Lazy Evaluation</a></li>
+<li><a class="reference internal" href="#ellipsis">9.5.6. Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`</a></li>
+<li><a class="reference internal" href="#metaprogramming">9.5.7. Metaprogramming (*)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercises">9.6. Exercises</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        Copyright &#169; 2022–2023 by <a href="https://www.gagolewski.com">Marek Gagolewski</a>. Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
-
-    Built with <a href="https://sphinx-doc.org/">Sphinx</a>
-    and a customised <a href="https://github.com/rtfd/sphinx_rtd_theme">rtd</a>
-    theme.
-      <span class="lastupdated">
-        Last updated on 2023-02-09T13:06:20+1100.
-      </span>
-
-
-    This site will never display any ads: it is a non-profit project.
-    It does not collect any data.
-
-    </p>
-  </div> 
-
-</footer>
+          </div>
         </div>
       </div>
-
-    </section>
-
+      
+      
+    </aside>
   </div>
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/proof.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
 </html>
