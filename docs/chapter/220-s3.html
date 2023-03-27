@@ -316,7 +316,7 @@ which objects are hidden behind <code class="docutils literal notranslate"><span
 being able to simply call “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>”
 without having to recall that, yes, <code class="docutils literal notranslate"><span class="pre">y</span></code> is a data frame,
 might seem quite appealing.</p>
-<p>This chapter introduces the so-called S3 classes <span id="id2">[<a class="reference internal" href="999-bibliography.html#id49" title="Chambers, J.M., Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">9</a>]</span>,
+<p>This chapter introduces the so-called S3 classes <span id="id2">[<a class="reference internal" href="999-bibliography.html#id49" title="Chambers, J.M. and Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">9</a>]</span>,
 which provide a lightweight object oriented programming (OOP) approach
 for automated dispatching of calls to <em>generics</em>
 of the type “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>” to concrete <em>methods</em>
@@ -532,7 +532,7 @@ equipped with the <code class="docutils literal notranslate"><span class="pre">d
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">print</span><span class="p">)</span><span class="w">  </span><span class="c1"># sic!</span>
 <span class="c1">## function (x, ...) </span>
 <span class="c1">## UseMethod(&quot;print&quot;)</span>
-<span class="c1">## &lt;bytecode: 0x56456cbae5d0&gt;</span>
+<span class="c1">## &lt;bytecode: 0x55725ea328e0&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
@@ -906,7 +906,7 @@ outcome:</p>
 <ul class="simple">
 <li><p>hardcoded at the C language level
 (for instance, there is no <strong class="command">c.default</strong> defined at all<a class="footnote-reference brackets" href="#footoperoverload" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>),</p></li>
-<li><p>hidden (defined in a package namespace but not exported);
+<li><p>hidden (defined in a package’s namespace but not exported);
 see <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.3.9</span></a>,</p></li>
 <li><p>overloaded as a group; see <a class="reference internal" href="340-environment.html#sec-group-generics"><span class="std std-numref">Section 16.3.10</span></a>.</p></li>
 </ul>
@@ -1000,7 +1000,7 @@ for objects of class <code class="docutils literal notranslate"><span class="pre
 <span class="c1">## Error in eval(expr, envir, enclos): object &#39;print.kmeans&#39; not found</span>
 </pre></div>
 </div>
-<p>Even though the method is hidden in the <strong class="program">stats</strong> package’s
+<p>Even though the method is hidden (internal) in the <strong class="program">stats</strong> package’s
 namespace, from <a class="reference internal" href="340-environment.html#sec-use-method"><span class="std std-numref">Section 16.3.9</span></a> we will learn that
 it can be accessed by calling
 <strong class="command">getS3method</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;,</span> <span class="pre">&quot;kmeans&quot;)</span></code>
@@ -1012,7 +1012,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-03-19 14:35:05 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-03-20 20:21:26 AEDT&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1208,7 +1208,7 @@ as a simple exercise to the kind reader.</p>
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, Time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-03-19&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="c1">## [1] &quot;2023-03-20&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
@@ -1217,7 +1217,7 @@ as a simple exercise to the kind reader.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19435    -1     0    NA</span>
+<span class="c1">## [1] 19436    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the so called UNIX epoch,
@@ -1225,13 +1225,13 @@ as a simple exercise to the kind reader.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-03-19 14:35:05 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-03-20 20:21:27 AEDT&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1679196906</span>
+<span class="c1">## [1] 1679304087</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1362,7 +1362,7 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed </span>
-<span class="c1">##   0.247   0.024   0.271</span>
+<span class="c1">##   0.265   0.008   0.273</span>
 </pre></div>
 </div>
 <p>The function returns an object of class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1913,9 +1913,9 @@ Was that straightforward?</p>
 <p>Explain why the two following calls yield significantly different
 results and present a workaround:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-03-19&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2023-03-20&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19435&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19436&quot;</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id73">
@@ -2321,7 +2321,7 @@ to understand it anyway.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-03-19T16:06:26+1100.
+              Last updated on 2023-03-27T21:59:31+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
