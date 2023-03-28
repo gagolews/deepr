@@ -465,9 +465,7 @@ or a whole R script:</p>
 <span class="s">&quot;</span><span class="p">)</span>
 <span class="c1">## expression(x &lt;- runif(5, -1, 1), print(mean(x) + 2))</span>
 <span class="nf">parse</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;2+&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># syntax error - unfinished business</span>
-<span class="c1">## Error in parse(text = &quot;2+&quot;): &lt;text&gt;:2:0: unexpected end of input</span>
-<span class="c1">## 1: 2+</span>
-<span class="c1">##    ^</span>
+<span class="c1">## Error in parse(text = &quot;2+&quot;): &lt;text&gt;:2:0: unexpected end of input 1: 2+ ^</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -629,7 +627,7 @@ of `<strong class="command">[</strong>` and `<strong class="command">[[</strong>
 <section id="inspecting-function-definitions-and-arguments-thereto">
 <h2><span class="section-number">15.4. </span>Inspecting Function Definitions and Arguments Thereto<a class="headerlink" href="#inspecting-function-definitions-and-arguments-thereto" title="Permalink to this heading">#</a></h2>
 <section id="getting-the-body-and-formal-arguments">
-<h3><span class="section-number">15.4.1. </span>Getting the Body and Formal Arguments<a class="headerlink" href="#getting-the-body-and-formal-arguments" title="Permalink to this heading">#</a></h3>
+<span id="sec-body-formals"></span><h3><span class="section-number">15.4.1. </span>Getting the Body and Formal Arguments<a class="headerlink" href="#getting-the-body-and-formal-arguments" title="Permalink to this heading">#</a></h3>
 <p>Consider the following function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 <span class="w">    </span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="w">  </span><span class="c1"># whatever</span>
@@ -648,7 +646,7 @@ in the form of a named list<a class="footnote-reference brackets" href="#footpai
 </pre></div>
 </div>
 <p>Note that the expressions generating the values of the default arguments
-(compare <a class="reference internal" href="340-environment.html#sec-default-args-eval"><span class="std std-numref">Section 16.3.5</span></a>) are stored as
+(compare <a class="reference internal" href="340-environment.html#sec-default-args-eval"><span class="std std-numref">Section 16.3.6</span></a>) are stored as
 ordinary list elements.</p>
 <p>Furthermore, we can get access to its body:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -656,7 +654,7 @@ ordinary list elements.</p>
 </pre></div>
 </div>
 <p>It is an object of the now-well-known class <code class="docutils literal notranslate"><span class="pre">call</span></code>.</p>
-<p>Thus, we can manipulate it arbitrarily:</p>
+<p>Thus, we can manipulate it freely:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># change from `+` to `*`</span>
 <span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.call</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)),</span><span class="w"> </span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)))</span>
 <span class="n">test</span>
@@ -683,8 +681,9 @@ the expression used to generate a function’s argument:</p>
 <span class="nf">test</span><span class="p">()</span><span class="w">  </span><span class="c1"># it is not an error</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="340-environment.html#sec-not-all-args-eval"><span class="std std-numref">Section 16.3.4</span></a>, we note that arguments are
-evaluated only on demand – <strong class="command">substitute</strong> does not trigger that.
+<p>In <a class="reference internal" href="340-environment.html#sec-not-all-args-eval"><span class="std std-numref">Section 16.3.5</span></a>, we note that arguments are
+evaluated only on demand: <strong class="command">substitute</strong> does not trigger any
+computations.
 Therefore, we are able to write functions that accept gobbledegook
 (as long as it is syntactically correct) and programmatically
 reinterpret it in whichever way we like.
@@ -696,7 +695,8 @@ Please, do not do that. Have mercy on other R users.</p>
         
     </div><div class="proof-content">
 <p><strong class="command">library</strong> (see <a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>) allows specifying the
-name of the package to load both as a string and as a <em>name</em>:</p>
+name of the package to be loaded both in the form of a character string
+and a <em>name</em>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># preferred</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">gsl</span><span class="p">)</span><span class="w">  </span><span class="c1"># discouraged - via as.character(substitute(package))</span>
 </pre></div>
@@ -705,7 +705,8 @@ name of the package to load both as a string and as a <em>name</em>:</p>
 to prepare the package name programmatically before the call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">which_package</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;gsl&quot;</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">which_package</span><span class="p">)</span><span class="w">  </span><span class="c1"># library(&quot;which_package&quot;)</span>
-<span class="c1">## Error in library(which_package): there is no package called &#39;which_package&#39;</span>
+<span class="c1">## Error in library(which_package): there is no package called</span>
+<span class="c1">##     &#39;which_package&#39;</span>
 </pre></div>
 </div>
 <p>In order to make the above possible, we need to
@@ -901,7 +902,7 @@ statistics and Lisp-like languages; see also LISP-STAT
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
 <p>So yes, no formulas; but possibly retaining
 the ability to postpone argument evaluation
-possibly forever; see <a class="reference internal" href="340-environment.html#sec-not-all-args-eval"><span class="std std-numref">Section 16.3.4</span></a>.</p>
+possibly forever; see <a class="reference internal" href="340-environment.html#sec-not-all-args-eval"><span class="std std-numref">Section 16.3.5</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footsugar" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
@@ -961,7 +962,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-03-27T21:59:31+1100.
+              Last updated on 2023-03-28T22:24:08+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
