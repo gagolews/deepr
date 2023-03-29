@@ -657,19 +657,17 @@ This applies both to functions that we have authored ourselves:</p>
 <span class="c1">##     z[is.na(a) | is.na(b)] &lt;- NA_character_</span>
 <span class="c1">##     z  # last expression in the block – return value</span>
 <span class="c1">## }</span>
-<span class="c1">## &lt;bytecode: 0x5598ca432ea0&gt;</span>
 </pre></div>
 </div>
 <p>and to the routines that are part of base R or any other
 extension packages:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">union</span><span class="p">)</span>
-<span class="c1">## function (x, y) </span>
+<span class="c1">## function (x, y)</span>
 <span class="c1">## {</span>
 <span class="c1">##     u &lt;- as.vector(x)</span>
 <span class="c1">##     v &lt;- as.vector(y)</span>
 <span class="c1">##     unique(c(u, v))</span>
 <span class="c1">## }</span>
-<span class="c1">## &lt;bytecode: 0x5598caeb7df8&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
 </pre></div>
 </div>
@@ -703,17 +701,15 @@ Namely, they can be:</p>
 <li><p>stored inside list objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">)</span><span class="w">  </span><span class="c1"># a list with three elements of type function</span>
 <span></span><span class="c1">## [[1]]</span>
-<span class="c1">## function (x) </span>
+<span class="c1">## function (x)</span>
 <span class="c1">## x</span>
-<span class="c1">## &lt;bytecode: 0x5598c93aeb20&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[2]]</span>
-<span class="c1">## function (x) </span>
+<span class="c1">## function (x)</span>
 <span class="c1">## dim(x)[1L]</span>
-<span class="c1">## &lt;bytecode: 0x5598ca49b120&gt;</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[3]]</span>
 <span class="c1">## function (..., na.rm = FALSE)  .Primitive(&quot;sum&quot;)</span>
 </pre></div>
@@ -791,13 +787,13 @@ to get the same result.</p>
 <span class="nf">do.call</span><span class="p">(</span><span class="n">paste</span><span class="p">,</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w">  </span><span class="c1"># paste(words[[1]], words[[2]], words[[3]])</span>
 <span class="c1">## [1] &quot;spam buckwheat ham&quot; &quot;bacon quinoa spam&quot;  &quot;eggs barley spam&quot;</span>
 <span class="nf">do.call</span><span class="p">(</span><span class="n">cbind</span><span class="p">,</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w">  </span><span class="c1"># column-bind; returns a matrix (explained later)</span>
-<span class="c1">##      [,1]    [,2]        [,3]  </span>
-<span class="c1">## [1,] &quot;spam&quot;  &quot;buckwheat&quot; &quot;ham&quot; </span>
+<span class="c1">##      [,1]    [,2]        [,3]</span>
+<span class="c1">## [1,] &quot;spam&quot;  &quot;buckwheat&quot; &quot;ham&quot;</span>
 <span class="c1">## [2,] &quot;bacon&quot; &quot;quinoa&quot;    &quot;spam&quot;</span>
 <span class="c1">## [3,] &quot;eggs&quot;  &quot;barley&quot;    &quot;spam&quot;</span>
 <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w">  </span><span class="c1"># row-bind (explained later)</span>
-<span class="c1">##      [,1]        [,2]     [,3]    </span>
-<span class="c1">## [1,] &quot;spam&quot;      &quot;bacon&quot;  &quot;eggs&quot;  </span>
+<span class="c1">##      [,1]        [,2]     [,3]</span>
+<span class="c1">## [1,] &quot;spam&quot;      &quot;bacon&quot;  &quot;eggs&quot;</span>
 <span class="c1">## [2,] &quot;buckwheat&quot; &quot;quinoa&quot; &quot;barley&quot;</span>
 <span class="c1">## [3,] &quot;ham&quot;       &quot;spam&quot;   &quot;spam&quot;</span>
 </pre></div>
@@ -900,31 +896,31 @@ yields a list whose <em>i</em>-th element is equal to
 <span class="nf">Map</span><span class="p">(</span><span class="n">sqrt</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># x is named, hence the result will be named too</span>
 <span class="c1">## $x1</span>
 <span class="c1">## [1] 1.0000 1.4142 1.7321</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## $x2</span>
 <span class="c1">## [1] 0.00000 0.50000 0.70711 0.86603 1.00000</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## $x3</span>
 <span class="c1">## [1]  1  0 NA  0  0  1 NA</span>
 <span class="nf">Map</span><span class="p">(</span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## $x1</span>
 <span class="c1">## [1] 3</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## $x2</span>
 <span class="c1">## [1] 5</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## $x3</span>
 <span class="c1">## [1] 7</span>
 <span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># compute three aggregates, convert to an atomic vector</span>
-<span class="c1">##  x1  x2  x3 </span>
+<span class="c1">##  x1  x2  x3</span>
 <span class="c1">## 2.0 0.5  NA</span>
 <span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">))</span><span class="w">  </span><span class="c1"># x is atomic now</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 0.4 0.8</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## [1]  0.5  0.8 -0.1 -0.7</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[3]]</span>
 <span class="c1">## [1] -0.3  0.0  0.5  1.0 -0.9 -0.7</span>
 </pre></div>
@@ -941,10 +937,10 @@ recycling rule will be applied if necessary.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">29</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1 2 3 4 5 6</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## [1] 11 12 13</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[3]]</span>
 <span class="c1">## [1] 21 22 23 24 25 26 27 28 29</span>
 </pre></div>
@@ -955,13 +951,13 @@ recycling rule will be applied if necessary.</p>
 <span class="c1">## [[1]]</span>
 <span class="c1">##  [1]  1.0000  5.3333  9.6667 14.0000 18.3333 22.6667 27.0000 31.3333</span>
 <span class="c1">##  [9] 35.6667 40.0000</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## [1] 11.00 18.25 25.50 32.75 40.00</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[3]]</span>
 <span class="c1">##  [1] 21.000 23.111 25.222 27.333 29.444 31.556 33.667 35.778 37.889 40.000</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[4]]</span>
 <span class="c1">## [1] 31.00 33.25 35.50 37.75 40.00</span>
 </pre></div>
@@ -974,13 +970,13 @@ over), we can wrap them inside a separate list
 and toss it via the <code class="docutils literal notranslate"><span class="pre">MoreArgs</span></code> argument
 (à la <strong class="command">do.call</strong>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">MoreArgs</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span><span class="w">  </span><span class="c1"># mean(..., na.rm=TRUE)</span>
-<span class="c1">##  x1  x2  x3 </span>
+<span class="c1">##  x1  x2  x3</span>
 <span class="c1">## 2.0 0.5 0.4</span>
 </pre></div>
 </div>
 <p>Alternatively, we can always construct a custom anonymous function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
-<span class="c1">##  x1  x2  x3 </span>
+<span class="c1">##  x1  x2  x3</span>
 <span class="c1">## 2.0 0.5 0.4</span>
 </pre></div>
 </div>
@@ -1119,7 +1115,7 @@ us with the most crucial functions (vector addition, <strong class="command">c</
 <strong class="command">Map</strong>, <strong class="command">library</strong>).
 Certain other packages are also loaded by default:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">getOption</span><span class="p">(</span><span class="s">&quot;defaultPackages&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;datasets&quot;  &quot;utils&quot;     &quot;grDevices&quot; &quot;graphics&quot;  &quot;stats&quot;    </span>
+<span class="c1">## [1] &quot;datasets&quot;  &quot;utils&quot;     &quot;grDevices&quot; &quot;graphics&quot;  &quot;stats&quot;</span>
 <span class="c1">## [6] &quot;methods&quot;</span>
 </pre></div>
 </div>
@@ -1242,8 +1238,8 @@ the add-ons.</p>
 call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.libPaths</span><span class="p">()</span>
 <span class="c1">## [1] &quot;/home/gagolews/R/x86_64-pc-linux-gnu-library/4.2&quot;</span>
-<span class="c1">## [2] &quot;/usr/local/lib/R/site-library&quot;                   </span>
-<span class="c1">## [3] &quot;/usr/lib/R/site-library&quot;                         </span>
+<span class="c1">## [2] &quot;/usr/local/lib/R/site-library&quot;</span>
+<span class="c1">## [3] &quot;/usr/lib/R/site-library&quot;</span>
 <span class="c1">## [4] &quot;/usr/lib/R/library&quot;</span>
 </pre></div>
 </div>
@@ -1463,13 +1459,13 @@ equal to <code class="docutils literal notranslate"><span class="pre">NULL</span
 like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1 2 3</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## [1] 2 3 4</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[3]]</span>
 <span class="c1">## [1] 3 4 5</span>
-<span class="c1">## </span>
+<span class="c1">##</span>
 <span class="c1">## [[4]]</span>
 <span class="c1">## [1] 4 5 6</span>
 </pre></div>
@@ -1534,10 +1530,10 @@ each unique element in a given atomic vector. The return value
 should be a numeric vector equipped with a <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">count</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
 <span class="nf">count</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">954</span><span class="p">))</span>
-<span class="c1">##   5  42 954 </span>
+<span class="c1">##   5  42 954</span>
 <span class="c1">##   4   2   1</span>
 <span class="nf">count</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span><span class="p">))</span>
-<span class="c1">##    w    x    y    z &lt;NA&gt; </span>
+<span class="c1">##    w    x    y    z &lt;NA&gt;</span>
 <span class="c1">##    1    5    3    1    1</span>
 </pre></div>
 </div>
@@ -1691,7 +1687,7 @@ is equivalent to <strong class="command">Map</strong><code class="code docutils 
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-03-29T11:26:35+1100.
+              Last updated on 2023-03-29T14:19:33+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
