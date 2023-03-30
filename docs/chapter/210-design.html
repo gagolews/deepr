@@ -834,14 +834,15 @@ If this is true, then for the same set of argument values, the output
 is always the same. Furthermore, there are no side effects.
 In R, it is not really the case:</p>
 <ul class="simple">
-<li><p>a call can introduce/modify/delete the variables in other
+<li><p>a call can introduce/modify/delete variables in other
 environments (see <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>), e.g.,
 the state of the random number generator,</p></li>
-<li><p>metaprogramming and lazy evaluation techniques lead to the functions’
-being free to interpret the argument <em>forms</em> (not only: values) freely
+<li><p>metaprogramming and lazy evaluation-based techniques lead to the functions’
+being free to interpret the argument <em>forms</em> (passed expressions,
+i.e., not only: values) in whatever way they like
 (see <a class="reference internal" href="#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>,
 <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>, and
-<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.3.10</span></a>),</p></li>
+<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.3.7</span></a>),</p></li>
 <li><p>printing, plotting, file reading, database access have obvious
 consequences with regard to the state of some external resources.</p></li>
 </ul>
@@ -1786,11 +1787,11 @@ a corresponding <span class="math notranslate nohighlight">\(y\)</span> can be d
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x561158a442a0&gt;</span>
+<span class="c1">## &lt;environment: 0x5583d876ce18&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x561156dd5c58&gt;</span>
+<span class="c1">## &lt;environment: 0x5583d84c7630&gt;</span>
 </pre></div>
 </div>
 <p>we might wonder how can they produce different results — it is
@@ -1849,7 +1850,7 @@ the default values that they define:
 <p>Most often, default arguments are just constants, e.g., <code class="docutils literal notranslate"><span class="pre">1</span></code>.
 However, they can be any R expressions,
 also including a reference to other arguments
-passed to the same function; see more in <a class="reference internal" href="330-environment.html#sec-default-args-eval"><span class="std std-numref">Section 16.3.6</span></a>.</p>
+passed to the same function; see more in <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:default-args-eval</span></code>.</p>
 <p>Note that default arguments will most often appear
 and the end of the parameter list, but see
 <a class="reference internal" href="#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a> (on replacement functions)
@@ -1933,7 +1934,7 @@ see <strong class="command">help</strong><code class="code docutils literal notr
 The ellipsis serves as placeholder for all objects passed to the function
 but not matched by any formal (named) parameters.</p>
 <p>The easiest way to process arguments passed via `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`
-programmatically (see also <a class="reference internal" href="330-environment.html#sec-ellipsis-eval"><span class="std std-numref">Section 16.3.8</span></a>)
+programmatically (see also <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:ellipsis-eval</span></code>)
 is by redirecting them to <strong class="command">list</strong>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test_dots</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">list</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
@@ -2023,9 +2024,9 @@ Then, upgrade your code to get numbers sampled form the interval <span class="ma
 <p>Under the hood, lazy evaluation is a quite complicated mechanism
 that relies upon the storing of unevaluated R expressions
 and special <em>promises</em> to instantiate them<a class="footnote-reference brackets" href="#footevalmodel" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>.</p>
-<p>In <a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a> we will learn that
-we have access to such expressions programmatically.
-In particular, a call to the composition of
+<p>In <a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>, we will learn that
+we have access to expressions passed as functions’ arguments
+programmatically. In particular, a call to the composition of
 <strong class="command">deparse</strong> and <strong class="command">substitute</strong> can convert them
 to a character vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test_deparse_substitute</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -2049,12 +2050,13 @@ Inspect its source code and note a call to the two aforementioned functions.</p>
 <p>Similarly, call
 <strong class="command">shapiro.test</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">rlnorm</strong><code class="code docutils literal notranslate"><span class="pre">(100)))</span></code> and take note of the <code class="docutils literal notranslate"><span class="pre">data:</span></code> field.</p>
 </div></div><p>A function is free to do with such an expression whatever it likes.
-For instance, it can manipulate it and evaluate it in a different context.
-Thanks to such a language feature, certain operations can be
-designed so that their users can express them much more compactly.
-This is certainly (in theory) a very powerful tool but from practice
-we know many instances where it has been over/misused and made
-the use of R confusing.</p>
+For instance, it can change it and then evaluate it in a very
+different context. Thanks to such a language feature,
+certain operations can be designed so that their users can express
+them much more compactly.
+In theory, it is a very powerful tool. Nevertheless,
+it is easy to find many practical examples where it has been
+over/misused and made the learning or using of R confusing.</p>
 <div class="proof proof-type-example" id="id56">
 
     <div class="proof-title">
@@ -2063,8 +2065,9 @@ the use of R confusing.</p>
     </div><div class="proof-content">
 <p>(*)
 The built-in <strong class="command">subset</strong> and <strong class="command">transform</strong>
-use metaprogramming techniques to specify basic
-data frame transformation techniques (see <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>).
+use metaprogramming techniques to specify basic data frame transformation
+techniques  (see <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a> and
+<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.3.7</span></a>).
 For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">transform</span><span class="p">(</span>
 <span class="w">    </span><span class="nf">subset</span><span class="p">(</span>
@@ -2080,7 +2083,7 @@ For instance:</p>
 <span class="c1">## 136 virginica          7.7         3.0            0.77</span>
 </pre></div>
 </div>
-<p>Note that none of the arguments – except <code class="docutils literal notranslate"><span class="pre">iris</span></code> – makes sense
+<p>Note that none of the arguments (except <code class="docutils literal notranslate"><span class="pre">iris</span></code>) makes sense
 outside of the function call contexts.
 In particular, neither <code class="docutils literal notranslate"><span class="pre">Sepal.Length</span></code> nor <code class="docutils literal notranslate"><span class="pre">Sepal.Width</span></code>
 variables exist.</p>
@@ -2136,10 +2139,9 @@ They have introduced a slang/dialect on top of our mother tongue,
 whose meaning is valid only within this function.
 Blame the middleman, not the environment, please.</p>
 </div>
-<p>We generally advocate for avoiding metaprogramming wherever possible.
-We shall elaborate on this in the third part of this book: including
-formulas (`<strong class="command">~</strong>`), built-in functions like <strong class="command">subset</strong>
-or <strong class="command">transform</strong>, etc.</p>
+<p>We generally advocate for avoiding relying on metaprogramming-based
+techniques wherever possible. We shall elaborate on this in the third
+part of this book.</p>
 </section>
 </section>
 <section id="exercises">
@@ -2346,7 +2348,7 @@ in a function’s parameter list.</p>
 <aside class="footnote brackets" id="footevalmodel" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">12</a><span class="fn-bracket">]</span></span>
 <p>Such an evaluation model has been heavily inspired
-by Scheme <span id="id22">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. DOI: 10.1080/10618600.1996.10474713.">32</a>]</span>.
+by Scheme <span id="id22">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">32</a>]</span>.
 It will be explained in more detail in <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.</p>
 </aside>
 </aside>
@@ -2388,7 +2390,7 @@ It will be explained in more detail in <a class="reference internal" href="330-e
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-03-29T19:52:58+1100.
+              Last updated on 2023-03-30T15:10:06+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
