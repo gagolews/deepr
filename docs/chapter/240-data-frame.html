@@ -528,9 +528,9 @@ an S3 class <code class="docutils literal notranslate"><span class="pre">spam</s
 <span class="w">    </span><span class="n">c</span><span class="o">=</span><span class="nf">Sys.Date</span><span class="p">()</span><span class="m">+1</span><span class="o">:</span><span class="m">3</span>
 <span class="p">)</span>
 <span class="c1">##     a     b          c</span>
-<span class="c1">## 1 *a*  spam 2023-03-31</span>
-<span class="c1">## 2 *b* bacon 2023-04-01</span>
-<span class="c1">## 3 *c*  spam 2023-04-02</span>
+<span class="c1">## 1 *a*  spam 2023-04-01</span>
+<span class="c1">## 2 *b* bacon 2023-04-02</span>
+<span class="c1">## 3 *c*  spam 2023-04-03</span>
 </pre></div>
 </div>
 </div></div></section>
@@ -2384,26 +2384,23 @@ et voilà.</p>
 <p>In <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>, we have mentioned that
 due to R’s being equipped with the ability
 to write programs that manipulate unevaluated expressions,
-some functions can provide us with quite weird interfaces
-to a few common operations.
-These include <strong class="command">transform</strong>, <strong class="command">subset</strong>, <strong class="command">with</strong>,
+some functions can provide us with <em>convenient</em><a class="footnote-reference brackets" href="#footdtspeed" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> interfaces
+to a few common operations. These include
+<strong class="command">transform</strong>, {command<code class="docutils literal notranslate"><span class="pre">subset</span></code>, <strong class="command">with</strong>,
 and basically every procedure accepting a formula.
 Also, the popular <strong class="program">data.table</strong> and <strong class="program">dplyr</strong> packages
 that we briefly mention in <a class="reference internal" href="#sec-tidyverse"><span class="std std-numref">Section 12.3.10</span></a>
 fall into this class.</p>
-<p>In some contexts, they all may be found convenient<a class="footnote-reference brackets" href="#footdtspeed" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.</p>
-<p>However, overall, each of such methods must be carefully
-studied separately. This is because they can arbitrarily interpret
+<p>However, we have already noted that each such method must be studied
+separately. This is because they can arbitrarily interpret
 the <em>form</em> of the arguments passed thereto,
-without taking into account their <em>real</em> meaning.</p>
-<p>We try to avoid<a class="footnote-reference brackets" href="#footbaseavoid" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> them in this course, as we can do
-perfectly without them. However, they are not only interesting on their own,
+without taking into account their <em>real</em> meaning.
+This is why we try to avoid<a class="footnote-reference brackets" href="#footbaseavoid" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> them in this course:
+we can do perfectly without them.
+However, they are not only interesting on their own,
 but also quite popular in other users’ code, hence the honourable mention.
 Learning them in more detail is left to the kind reader as an optional
-exercise. In <a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.3.7</span></a>,
-we will return to these functions
-as they will serve as a very interesting illustration of how to implement
-our own procedures that rely on metaprogramming techniques.</p>
+exercise.</p>
 <div class="proof proof-type-example" id="id50">
 
     <div class="proof-title">
@@ -2454,7 +2451,7 @@ something more of the more basic form:</p>
 </div>
 <p>Let us stress again that this is a book on how to become
 a great chef who proudly uses produce from sustainable sources,
-and not how to order ultra-processed food from DeliverNoodles.com.</p>
+and not how to order ultra-processed food from DeliverNoodlesQuickly.com.</p>
 </div></div><div class="proof proof-type-example" id="id51">
 
     <div class="proof-title">
@@ -2503,7 +2500,7 @@ to if writing <code class="docutils literal notranslate"><span class="pre">df[[&
         
     </div><div class="proof-content">
 <p>As mentioned in <a class="reference internal" href="220-s3.html#sec-formula-intro"><span class="std std-numref">Section 10.3.2</span></a>,
-see <a class="reference internal" href="330-environment.html#sec-formula"><span class="std std-numref">Section 16.3.8</span></a> for more details,
+see <a class="reference internal" href="330-environment.html#sec-formula"><span class="std std-numref">Section 16.3.11</span></a> for more details,
 formulas are special objects that consist of two unevaluated
 expressions separated by a tilde (`<strong class="command">~</strong>`).</p>
 <p>Functions can support formulas and do what they please with them,
@@ -2549,7 +2546,10 @@ explain them here.</p>
     </div><div class="proof-content">
 <p>In the last example, the peculiar printing of the last column
 is due to which method’s being overloaded?</p>
-</div></div></section>
+</div></div><p>In the third part of this book, we will return to these functions
+as they will serve as a very interesting illustration of how to implement
+our own procedures that rely on metaprogramming techniques.</p>
+</section>
 <section id="a-note-on-the-dplyr-tidyverse-and-data-table-packages">
 <span id="sec-tidyverse"></span><h3><span class="section-number">12.3.10. </span>A note on the <strong class="program">dplyr</strong> (<strong class="program">tidyverse</strong>) and <strong class="program">data.table</strong> packages (*)<a class="headerlink" href="#a-note-on-the-dplyr-tidyverse-and-data-table-packages" title="Permalink to this heading">#</a></h3>
 <p>The popular third-party packages <strong class="program">data.table</strong> and
@@ -3049,7 +3049,7 @@ or summarised (e.g., binned) somehow first.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-03-30T15:10:06+1100.
+              Last updated on 2023-03-31T15:43:57+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

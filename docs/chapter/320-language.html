@@ -308,8 +308,7 @@ we would expect them to do, if a <em>standard</em> evaluation
 scheme was followed
 (compare <strong class="command">subset</strong> and <strong class="command">transform</strong>
 mentioned in <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>).</p>
-<p>Namely, in <em>normal</em> programming languages,
-when we write something like:</p>
+<p>Namely, in <em>normal</em> programming languages, when we write something like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -322,37 +321,30 @@ the above never means anything else than:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.00</span><span class="p">,</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span><span class="w"> </span><span class="m">0.02</span><span class="p">,</span><span class="w"> </span><span class="m">0.03</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1.0000</span><span class="p">,</span><span class="w"> </span><span class="m">1.0101</span><span class="p">,</span><span class="w"> </span><span class="m">1.0202</span><span class="p">,</span><span class="w"> </span><span class="m">1.0305</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>But R was heavily inspired by a Lisp language dialect called Scheme<a class="footnote-reference brackets" href="#footlisp" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>,
-from whom it has inherited a quite disturbing ability
-to apply a set of techniques referred to as <em>metaprogramming</em>
-(computing on the language).
+<p>But R was heavily inspired by the S language from whom it
+has taken the notion of lazy arguments (<a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.3.5</span></a>).
+This leads to our being equipped with the ability to apply a set of
+techniques referred to as <em>metaprogramming</em> (computing on the language).
 Namely, we may define functions that can peek outside their
-small world and clearly see
-the code used to generate the arguments passed thereto.
-Having access to such <em>unevaluated expressions</em>, we
-can do to them whatever we please: print, modify, subset,
-re-interpret, evaluate on different data,
-or ignore whatsoever.</p>
-<p>In theory, this enables the implementing of many <em>potentially helpful</em>
+small world and clearly see the code used to generate the arguments
+passed thereto. Having access to such <em>unevaluated expressions</em>, we
+can do to them whatever we please: print, modify, subset, re-interpret,
+evaluate on different data, or ignore whatsoever.</p>
+<p>In theory, this enables the implementing of many
+<em>potentially helpful</em><a class="footnote-reference brackets" href="#footlazygood" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>
 beginner-friendly features, which allow us to express certain
-requests in a more concise manner.
-For instance, that the y-axis labels
-in <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a> could be generated automatically
-is exactly due to the fact that <strong class="command">plot</strong>
-was able to see not only
+requests in a more concise manner. For instance, that the y-axis labels
+in <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a> could be generated automatically is exactly
+due to the fact that <strong class="command">plot</strong> was able to see not only
 a vector like <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1.0000,</span> <span class="pre">1.0101,</span> <span class="pre">1.0202,</span> <span class="pre">1.0305,</span> <span class="pre">...)</span></code>,
 but also the expression that generated it, <strong class="command">exp</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>.</p>
-<p>It also can, and did, cause chaos, confusion, and division.</p>
-<p>In the current author’s opinion, R (as a whole,
-in the sense of <a class="reference internal" href="000-preface.html#sec-r-env"><span class="std std-ref">R as a language and an environment</span></a>) would be better-off if metaprogramming
-techniques were not exposed to an ordinary programmer<a class="footnote-reference brackets" href="#footform" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.
-A healthy R user (also yours truly 99% of the time)
-can perfectly do without and thus refrain from using them.
-The fact that we call them “advanced” will not make us “cool”
-if we start horsing around with nonstandard evaluation.
-“Perverse” is perhaps a better label.</p>
-<p>Cursed be us, for we are about to start eating from tree of the knowledge
-of good and evil. But remember: with great power comes great responsibility.</p>
+<p>But, as a form of <em>untamed freedom of expression</em><a class="footnote-reference brackets" href="#footimho" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, it has potential
+to result in chaos, confusion, and division in the user community.
+In particular, we can introduce a microlanguage within our language
+that people outside of our circle will not be able to understand.</p>
+<p>Therefore, cursed be us, for we are about to start eating from tree of the
+knowledge of good and evil. But remember: with great power comes great
+responsibility.</p>
 <section id="expressions-at-a-glance">
 <span id="sec-expr-theory"></span><h2><span class="section-number">15.1. </span>Expressions at a glance<a class="headerlink" href="#expressions-at-a-glance" title="Permalink to this heading">#</a></h2>
 <p>At the most general level, expressions (statements)
@@ -360,7 +352,9 @@ in a language like R can be classified into two groups:</p>
 <ul class="simple">
 <li><p><em>simple expressions</em>:</p>
 <ul>
-<li><p><em>constants</em> (e.g., <code class="docutils literal notranslate"><span class="pre">3.14</span></code>, <code class="docutils literal notranslate"><span class="pre">2i</span></code>, <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;character</span> <span class="pre">string&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">-1.3e-16</span></code>, <code class="docutils literal notranslate"><span class="pre">0x123abc</span></code>),</p></li>
+<li><p><em>constants</em> (e.g., <code class="docutils literal notranslate"><span class="pre">3.14</span></code>, <code class="docutils literal notranslate"><span class="pre">2i</span></code>, <code class="docutils literal notranslate"><span class="pre">42L</span></code>,
+<code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;character</span> <span class="pre">string&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">-1.3e-16</span></code>,
+<code class="docutils literal notranslate"><span class="pre">0x123abc</span></code>),</p></li>
 <li><p><em>names</em> (symbols, identifiers),</p></li>
 </ul>
 </li>
@@ -440,7 +434,7 @@ operators:</p>
 <span class="c1">## mean(x) + 2</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id13">
+<div class="proof proof-type-exercise" id="id12">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.1</span>
@@ -571,7 +565,7 @@ using a series of extractions:</p>
 <span class="c1">## [1] &quot;\n&quot;</span>
 </pre></div>
 </div>
-<div class="proof proof-type-example" id="id14">
+<div class="proof proof-type-example" id="id13">
 
     <div class="proof-title">
         <span class="proof-type">Example 15.2</span>
@@ -646,7 +640,7 @@ in the form of a named list<a class="footnote-reference brackets" href="#footpai
 </pre></div>
 </div>
 <p>Note that the expressions generating the values of the default arguments
-(compare <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:default-args-eval</span></code>) are stored as
+(compare <a class="reference internal" href="330-environment.html#sec-default-args-eval"><span class="std std-numref">Section 16.3.6</span></a>) are stored as
 ordinary list elements.</p>
 <p>Furthermore, we can get access to its body:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -681,7 +675,7 @@ the expression used to generate a function’s argument:</p>
 <span class="nf">test</span><span class="p">()</span><span class="w">  </span><span class="c1"># it is not an error</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="330-environment.html#sec-not-all-args-eval"><span class="std std-numref">Section 16.3.5</span></a>, we note that arguments are
+<p>In <a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.3.5</span></a>, we note that arguments are
 evaluated only on demand: <strong class="command">substitute</strong> does not trigger
 any computations.
 Therefore, often we will have to interact with functions that accept
@@ -689,8 +683,8 @@ gobbledegook on input (as long as it is syntactically correct)
 and programmatically reinterpret it in whichever way they like;
 see <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>,
 <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>, and
-<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.3.7</span></a> for examples.</p>
-<div class="proof proof-type-example" id="id15">
+<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.3.10</span></a> for examples.</p>
+<div class="proof proof-type-example" id="id14">
 
     <div class="proof-title">
         <span class="proof-type">Example 15.3</span>
@@ -716,7 +710,7 @@ alter the <code class="docutils literal notranslate"><span class="pre">character
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">which_package</span><span class="p">,</span><span class="w"> </span><span class="n">character.only</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id16">
+</div></div><div class="proof proof-type-exercise" id="id15">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.4</span>
@@ -747,7 +741,7 @@ was provided at all:</p>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id17">
+<div class="proof proof-type-exercise" id="id16">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.5</span>
@@ -812,7 +806,7 @@ access the call stack much more deeply:</p>
 <span class="c1">## [1] 2</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id18">
+<div class="proof proof-type-exercise" id="id17">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.6</span>
@@ -820,7 +814,7 @@ access the call stack much more deeply:</p>
     </div><div class="proof-content">
 <p>A function can<a class="footnote-reference brackets" href="#footinception" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> see how it has been defined by its maker.
 Call <strong class="command">sys.function</strong> inside its body to reveal that.</p>
-</div></div><div class="proof proof-type-exercise" id="id19">
+</div></div><div class="proof proof-type-exercise" id="id18">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.7</span>
@@ -831,7 +825,7 @@ Call <strong class="command">sys.function</strong> inside its body to reveal tha
 </section>
 <section id="exercises">
 <h2><span class="section-number">15.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id20">
+<div class="proof proof-type-exercise" id="id19">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.8</span>
@@ -853,7 +847,7 @@ Give a few examples of functions that use this technique.</p></li>
 <li><p>What is the difference between
 <strong class="command">sys.call</strong> and <strong class="command">match.call</strong>?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id21">
+</div></div><div class="proof proof-type-exercise" id="id20">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.9</span>
@@ -864,7 +858,7 @@ Using <strong class="command">match.call</strong> (amongst others), determine a 
 of all the expressions passed via `<strong class="command">...</strong>`.
 Note that some of them might be named (just like in one
 of the above examples).</p>
-</div></div><div class="proof proof-type-exercise" id="id22">
+</div></div><div class="proof proof-type-exercise" id="id21">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 15.10</span>
@@ -890,21 +884,28 @@ Give yourself time: you can always come back later.</p>
 <p>Or a reference/pointer to an object that stores the said value,
 whatever.</p>
 </aside>
-<aside class="footnote brackets" id="footlisp" role="note">
+<aside class="footnote brackets" id="footlazygood" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
-<p>That is why everyone <em>serious</em> (not exactly in a good way)
-about R programming should add the
-<em>Structure and Interpretation of Computer Programs</em>
-<span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> to their reading list.
-Also note that R is not the only environment that marries
-statistics and Lisp-like languages; see also LISP-STAT
-<span id="id10">[<a class="reference internal" href="999-bibliography.html#id16" title="Tierney, L. (1990).  LISP-STAT: An Object-Oriented Environment for Statistical Computing and Dynamic Graphics. Wiley.">41</a>]</span>.</p>
+<p>The original authors of R (R. Ihaka and R. Gentleman)
+in <span id="id9">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">32</a>]</span> mention:</p>
+<blockquote>
+<div><p>“A policy of <em>lazy arguments</em> is very useful because it means
+that, in addition to the value of an argument, its symbolic form
+can be made available in the function being called. This
+can be very useful for specifying functions or models in symbolic
+form.”</p>
+</div></blockquote>
 </aside>
-<aside class="footnote brackets" id="footform" role="note">
+<aside class="footnote brackets" id="footimho" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
-<p>So yes, no formulas; but possibly retaining
-the ability to postpone argument evaluation
-possibly forever; see <a class="reference internal" href="330-environment.html#sec-not-all-args-eval"><span class="std std-numref">Section 16.3.5</span></a>.</p>
+<p>In the current author’s opinion, R (as a whole, in the sense of
+<a class="reference internal" href="000-preface.html#sec-r-env"><span class="std std-ref">R as a language and an environment</span></a>) would be better-off if metaprogramming
+techniques were not so easily available to an ordinary programmer.
+A healthy R user (also yours truly 99% of the time)
+can perfectly do without and thus refrain from using them.
+The fact that we call them “advanced” will not make us “cool”
+if we start horsing around with nonstandard evaluation.
+“Perverse” is perhaps a better label.</p>
 </aside>
 <aside class="footnote brackets" id="footsugar" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
@@ -915,8 +916,8 @@ see <a class="reference internal" href="210-design.html#sec-operfun"><span class
 <aside class="footnote brackets" id="footpairlist" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
 <p>Actually, a special internal datatype called
-<code class="docutils literal notranslate"><span class="pre">pairlist</span></code> which is rarely seen in R; see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">51</a>]</span>
-and <span id="id12">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span> for information how to deal with them at the C level.
+<code class="docutils literal notranslate"><span class="pre">pairlist</span></code> which is rarely seen in R; see <span id="id10">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">51</a>]</span>
+and <span id="id11">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span> for information how to deal with them at the C level.
 From this course’s perspective, seeing pairlists
 as named lists is perfectly fine.</p>
 </aside>
@@ -964,7 +965,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-03-30T15:10:06+1100.
+              Last updated on 2023-03-31T15:43:57+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
