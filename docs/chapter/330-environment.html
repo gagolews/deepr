@@ -357,7 +357,7 @@ look-and-feel. This is also the case with element extraction:</p>
 <h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Permalink to this heading">#</a></h3>
 <p>Let us note that the printing of an environment is quite awkward:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span><span class="w">  </span><span class="c1"># same with str(e1)</span>
-<span class="c1">## &lt;environment: 0x56143dcb6000&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534ce7800&gt;</span>
 </pre></div>
 </div>
 <p>This is the address where <code class="docutils literal notranslate"><span class="pre">e1</span></code> is stored
@@ -414,7 +414,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 <span class="c1">## $z</span>
 <span class="c1">## NULL</span>
 <span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="n">whatever</span><span class="o">=</span><span class="s">&quot;it&#39;s not going to be printed anyway&quot;</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x56143d6add18&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534647800&gt;</span>
 <span class="nf">as.list</span><span class="p">(</span><span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="m">3</span><span class="p">)))</span><span class="w">  </span><span class="c1"># no duplicates allowed</span>
 <span class="c1">## $y</span>
 <span class="c1">## [1] 2</span>
@@ -548,9 +548,9 @@ an assign- and pass-by-reference semantics.</p>
 <p>then the names <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are bound with exactly the same object
 in computer’s memory:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x56143d201a40&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534178dd0&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x56143d201a40&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534178dd0&gt;</span>
 </pre></div>
 </div>
 <p>Therefore:</p>
@@ -563,7 +563,7 @@ in computer’s memory:</p>
 </div>
 <p>The same happens when we pass them to a function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># pass-by-reference (`y` is `x`, remember?)</span>
-<span class="c1">## &lt;environment: 0x56143d201a40&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534178dd0&gt;</span>
 <span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span><span class="w">   </span><span class="c1"># `x` has changed (names `y` and `x` are bound to the same object)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
@@ -587,13 +587,13 @@ is only created if absolutely necessary.</p>
 <p>Creation of a new large numeric vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w">                </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.101   0.220   0.321</span>
+<span class="c1">##   0.108   0.196   0.304</span>
 </pre></div>
 </div>
 <p>Creation of a (delayed) copy:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">                         </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.000   0.000   0.001</span>
+<span class="c1">##   0.001   0.000   0.000</span>
 </pre></div>
 </div>
 <p>This was instant. Thus, we definitely did not duplicate the <code class="docutils literal notranslate"><span class="pre">n</span></code> data cells.</p>
@@ -601,23 +601,23 @@ is only created if absolutely necessary.</p>
 compare <a class="reference internal" href="310-compiled.html#sec-memory-management"><span class="std std-numref">Section 14.3</span></a>. That, temporarily,
 <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> point to the same address in memory can be inspected by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># internal function - do not use it</span>
-<span class="c1">## @7f640dd1e010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f1d4c850010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f640dd1e010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7f1d4c850010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 </pre></div>
 </div>
 <p>The real copying is only triggered when we try to modify <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code>.
 This is when they need to be separated.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w">                      </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.138   0.181   0.318</span>
+<span class="c1">##   0.161   0.159   0.320</span>
 </pre></div>
 </div>
 <p>Now <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are different objects.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="c1">## @7f640dd1e010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0…</span>
+<span class="c1">## @7f1d4c850010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0…</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f63de22d010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0…</span>
+<span class="c1">## @7f1d1cd5f010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0…</span>
 </pre></div>
 </div>
 <p>Note that the elapsed time  is similar to that needed to create
@@ -625,7 +625,7 @@ This is when they need to be separated.</p>
 <p>Further modifications will already be quick:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w">                      </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.202   0.176   0.379</span>
+<span class="c1">##   0.160   0.207   0.367</span>
 </pre></div>
 </div>
 </div>
@@ -828,19 +828,19 @@ It can be fetched and set using the <strong class="command">parent.env</strong> 
 let us create two new environments
 whose enclosures are set explicitly as follows:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e4</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e3</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x56143dde3698&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534d10938&gt;</span>
 <span class="p">(</span><span class="n">e5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e4</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x56143dd11be8&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534c31de0&gt;</span>
 </pre></div>
 </div>
 <p>To verify that everything is in order, let us inspect
 the following:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e3</span><span class="p">)</span><span class="w">  </span><span class="c1"># this is the address of e3 by the way</span>
-<span class="c1">## &lt;environment: 0x56143f19ced8&gt;</span>
+<span class="c1">## &lt;environment: 0x55f5360836f0&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e4</span><span class="p">)</span><span class="w">  </span><span class="c1"># e3 is the enclosing environment of e4</span>
-<span class="c1">## &lt;environment: 0x56143f19ced8&gt;</span>
+<span class="c1">## &lt;environment: 0x55f5360836f0&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e5</span><span class="p">)</span><span class="w">  </span><span class="c1"># e4 is the enclosing environment of e5</span>
-<span class="c1">## &lt;environment: 0x56143dde3698&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534d10938&gt;</span>
 </pre></div>
 </div>
 <p>Also, let us bind two different objects with the name `<code class="docutils literal notranslate"><span class="pre">y</span></code>` in <code class="docutils literal notranslate"><span class="pre">e5</span></code>
@@ -991,14 +991,14 @@ the enclosures recursively.</p>
 <span class="w">    </span><span class="n">ecur</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">parent.env</span><span class="p">(</span><span class="n">ecur</span><span class="p">)</span><span class="w">  </span><span class="c1"># advance to its enclosure</span>
 <span class="p">}</span>
 <span class="c1">## &lt;environment: R_GlobalEnv&gt;</span>
-<span class="c1">## &lt;environment: 0x56143d534a10&gt;</span>
+<span class="c1">## &lt;environment: 0x55f534517bd8&gt;</span>
 <span class="c1">## &lt;environment: package:stats&gt;</span>
 <span class="c1">## &lt;environment: package:graphics&gt;</span>
 <span class="c1">## &lt;environment: package:grDevices&gt;</span>
 <span class="c1">## &lt;environment: package:utils&gt;</span>
 <span class="c1">## &lt;environment: package:datasets&gt;</span>
 <span class="c1">## &lt;environment: package:methods&gt;</span>
-<span class="c1">## &lt;environment: 0x56143b5e9a60&gt;</span>
+<span class="c1">## &lt;environment: 0x55f5324c7cf0&gt;</span>
 <span class="c1">## &lt;environment: base&gt;                  `&lt;` found here!</span>
 <span class="c1">## &lt;environment: R_EmptyEnv&gt;</span>
 <span class="c1">## Error in parent.env(ecur): the empty environment has no parent</span>
@@ -1081,7 +1081,7 @@ is to be referred to:</p>
 <p>Here, the <code class="docutils literal notranslate"><span class="pre">iris</span></code> list was converted to an environment,
 and the necessary enclosures were set accordingly:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">()))</span>
-<span class="c1">## &lt;environment: 0x56143b5119a8&gt;</span>
+<span class="c1">## &lt;environment: 0x55f5352c6d68&gt;</span>
 <span class="c1">##  - attr(*, &quot;name&quot;)= chr &quot;iris&quot;</span>
 <span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">())))</span>
 <span class="c1">## &lt;environment: package:tools&gt;</span>
@@ -1229,7 +1229,7 @@ and we go back to the previous environment from the call stack.</p>
 <p>First call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x56143ecbc4d0&gt;</span>
+<span class="c1">## &lt;environment: 0x55f535b8f848&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 4</span>
 <span class="c1">##  $ x: num 2</span>
@@ -1238,7 +1238,7 @@ and we go back to the previous environment from the call stack.</p>
 <p>Second call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x56143ee7cbd8&gt;</span>
+<span class="c1">## &lt;environment: 0x55f535d4be48&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 9</span>
 <span class="c1">##  $ x: num 3</span>
@@ -1352,8 +1352,8 @@ one that also happens to define `<code class="docutils literal notranslate"><spa
 
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span>
 <span class="nf">test</span><span class="p">()</span>
-<span class="c1">## test: current env: &lt;environment: 0x56143c34e6b0&gt;</span>
-<span class="c1">## subtest: enclosing env: &lt;environment: 0x56143c34e6b0&gt;</span>
+<span class="c1">## test: current env: &lt;environment: 0x55f5323b3c98&gt;</span>
+<span class="c1">## subtest: enclosing env: &lt;environment: 0x55f5323b3c98&gt;</span>
 <span class="c1">## x = spam</span>
 <span class="c1">## subtest: enclosing env: &lt;environment: R_GlobalEnv&gt;</span>
 <span class="c1">## x = bacon</span>
@@ -1407,7 +1407,7 @@ To recall:</p>
 <span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x56143e92e3d8&gt;</span>
+<span class="c1">## &lt;environment: 0x55f5357eea30&gt;</span>
 </pre></div>
 </div>
 <p>The variables `<code class="docutils literal notranslate"><span class="pre">x</span></code>`, `<code class="docutils literal notranslate"><span class="pre">y</span></code>`, etc. that <strong class="command">f1</strong>’s source code
@@ -1442,10 +1442,10 @@ used after the call, hence it will not be garbage-collected.</p>
 <p>Example calls:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">square</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x56143ee7f4e0&gt;</span>
+<span class="c1">## &lt;environment: 0x55f535d49da0&gt;</span>
 <span class="p">(</span><span class="n">cube</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x56143ef0fe68&gt;</span>
+<span class="c1">## &lt;environment: 0x55f535dda7d0&gt;</span>
 <span class="nf">cube</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] 8</span>
 <span class="nf">square</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
@@ -1592,7 +1592,7 @@ Therefore, it was not evaluated.</p>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;Using c... &quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">c</span><span class="w">  </span><span class="c1"># evaluate; we don&#39;t even have to be particularly creative</span>
+<span class="w">    </span><span class="n">c</span><span class="w">  </span><span class="c1"># evaluate; we do not even have to be particularly creative</span>
 
 <span class="w">    </span><span class="nf">subtest</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="o">~!~</span><span class="n">b</span><span class="o">*</span><span class="m">2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">headache</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="n">ha</span><span class="o">@</span><span class="n">x</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">*</span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># no evaluation yet!</span>
 <span class="p">}</span>
@@ -1623,7 +1623,7 @@ Therefore, it was not evaluated.</p>
 </pre></div>
 </div>
 <p>On a side note, the `<strong class="command">~</strong>` operator will be discussed
-in <a class="reference internal" href="#sec-formula"><span class="std std-numref">Section 16.3.10</span></a> (formulas).
+in <a class="reference internal" href="#sec-formula"><span class="std std-numref">Section 16.4.4</span></a> (formulas).
 Furthermore, the `<strong class="command">:=</strong>` operator was used
 in an ancient version of R for assignments, but it is still recognised by
 the parser, yet now it has no associated meaning.</p>
@@ -1839,20 +1839,142 @@ What does that mean?</p>
 <p>Study the source code of the <strong class="command">local</strong> function.</p>
 </div></div></section>
 <section id="ellipsis-revisited">
-<span id="sec-ellipsis-eval"></span><h3><span class="section-number">16.3.7. </span>🚧 Ellipsis revisited<a class="headerlink" href="#ellipsis-revisited" title="Permalink to this heading">#</a></h3>
-<p>… to do … working on it …</p>
-<p>Recall that thanks to <strong class="command">match.call</strong> discussed
-in <a class="reference internal" href="320-language.html#sec-sys-call"><span class="std std-numref">Section 15.4.4</span></a>, we can get an expression representing
-the way the current function was called.
-Based on this, we can, for example, call another function with the same or
-similar arguments.</p>
+<span id="sec-ellipsis-eval"></span><h3><span class="section-number">16.3.7. </span>Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`,  revisited<a class="headerlink" href="#ellipsis-revisited" title="Permalink to this heading">#</a></h3>
+<p>If our function features the dot-dot-dot parameter,
+`<code class="code docutils literal notranslate"><span class="pre">...</span></code>`, whatever we pass through it
+is packed into a pairlist of promise expressions. Thus, we can
+enjoy the benefits of lazy evaluation.
+In particular, we can redirect all `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`-fed arguments
+to another call, as-is.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">subtest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;x   = &quot;</span><span class="p">);</span><span class="w"> </span><span class="nf">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;... = &quot;</span><span class="p">);</span><span class="w"> </span><span class="nf">str</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="kc">...</span><span class="p">))</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nf">subtest</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nf">test</span><span class="p">({</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;eggs! &quot;</span><span class="p">);</span><span class="w"> </span><span class="m">1</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam! &quot;</span><span class="p">);</span><span class="w"> </span><span class="m">2</span><span class="p">},</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;rice! &quot;</span><span class="p">);</span><span class="w"> </span><span class="m">3</span><span class="p">})</span>
+<span class="c1">## x   = eggs!  num 1</span>
+<span class="c1">## ... = spam! rice! List of 2</span>
+<span class="c1">##  $  : num 2</span>
+<span class="c1">##  $ z: num 3</span>
+</pre></div>
+</div>
 <div class="proof proof-type-exercise" id="id59">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.21</span>
         
     </div><div class="proof-content">
+<p>In <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;lapply&quot;)</span></code>, we read that this function
+is called like <strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">FUN,</span> <span class="pre">...)</span></code>,
+where `<code class="code docutils literal notranslate"><span class="pre">...</span></code>` are <em>optional arguments to <code class="docutils literal notranslate"><span class="pre">FUN</span></code></em>.
+Verify that whatever is passed via the ellipsis is evaluated
+only once, and not on each application of <code class="docutils literal notranslate"><span class="pre">FUN</span></code> on the elements of <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</div></div><div class="proof proof-type-example" id="id60">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 16.22</span>
+        
+    </div><div class="proof-content">
+<p>We know from <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a> that
+many high-level graphical functions rely on multiple calls to
+more primitive functions that allow for setting a variety of parameters
+(e.g., via <strong class="command">par</strong>).
+A quite common scenario is for the high-level function
+to submit <em>all</em> the passed arguments to the underlying
+basic routines, which then decide by themselves which items
+they are interested in.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">subtest1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="w">    </span><span class="n">subtest2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="n">subtest3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="nf">subtest1</span><span class="p">(</span><span class="kc">...</span><span class="p">),</span><span class="w"> </span><span class="nf">subtest2</span><span class="p">(</span><span class="kc">...</span><span class="p">),</span><span class="w"> </span><span class="nf">subtest3</span><span class="p">(</span><span class="kc">...</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="nf">test</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="s">&quot;B&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="o">=</span><span class="s">&quot;D&quot;</span><span class="p">)</span>
+<span class="c1">##   a   b   c</span>
+<span class="c1">## &quot;A&quot; &quot;B&quot; &quot;3&quot;</span>
+</pre></div>
+</div>
+<p>Here, for instance, <strong class="command">subtest1</strong> only consumes the value of <code class="docutils literal notranslate"><span class="pre">a</span></code>
+and ignores all the other arguments whatsoever.
+<strong class="command">plot.default</strong> (amongst others) relies on such a design pattern.</p>
+</div></div><p><strong class="command">...length</strong> fetches the number of items
+passed via the ellipsis, <strong class="command">...names</strong> retrieves their names
+(in the case they are given as keyword arguments), and
+<strong class="command">...elt(i)</strong> gives the <em>value</em> of the <em>i</em>-th element.
+Furthermore, <code class="docutils literal notranslate"><span class="pre">..1</span></code>, <code class="docutils literal notranslate"><span class="pre">..2</span></code>, … are synonymous with
+<strong class="command">...elt(1)</strong>, <strong class="command">...elt(2)</strong>, etc.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;length:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">...length</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;names: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="nf">...names</span><span class="p">(),</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="nf">...length</span><span class="p">()))</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">...elt</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="nf">...elt</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
+<span class="p">}</span>
+
+<span class="nf">test</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;honey! &quot;</span><span class="p">);</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;gravy! &quot;</span><span class="p">);</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">},</span><span class="w"> </span><span class="n">w</span><span class="o">=</span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;bacon! &quot;</span><span class="p">);</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">})</span>
+<span class="c1">## length: 3</span>
+<span class="c1">## names:  u, , w</span>
+<span class="c1">## honey! 1 : a</span>
+<span class="c1">## gravy! 2 : b</span>
+<span class="c1">## bacon! 3 : c</span>
+<span class="c1">## ...elt(3L)</span>
+</pre></div>
+</div>
+<p>Note that only <code class="docutils literal notranslate"><span class="pre">...elt(i)</span></code> triggers the evaluation of the respective
+argument. Unfortunately, we cannot use <strong class="command">substitute</strong> to
+fetch the underlying expression.
+Instead, we can rely on <strong class="command">match.call</strong> discussed
+in <a class="reference internal" href="320-language.html#sec-sys-call"><span class="std std-numref">Section 15.4.4</span></a>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">e</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">match.call</span><span class="p">()[</span><span class="m">-1</span><span class="p">]</span>
+<span class="w">    </span><span class="nf">as.list</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="o">!</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="nf">formals</span><span class="p">(</span><span class="nf">sys.function</span><span class="p">())))])</span>
+<span class="p">}</span>
+
+<span class="nf">str</span><span class="p">(</span><span class="nf">test</span><span class="p">(</span><span class="m">1+1</span><span class="p">,</span><span class="w"> </span><span class="m">2+2</span><span class="p">,</span><span class="w"> </span><span class="m">3+3</span><span class="p">,</span><span class="w"> </span><span class="m">4+4</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="o">=</span><span class="m">4</span><span class="p">))</span>
+<span class="c1">## List of 4</span>
+<span class="c1">##  $  : language 2 + 2</span>
+<span class="c1">##  $  : language 3 + 3</span>
+<span class="c1">##  $  : language 4 + 4</span>
+<span class="c1">##  $ w: num 4</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(*) Objects passed via `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`, even if they are specified as
+keyword arguments, cannot be referred to by their name,
+as if they were local variables:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="n">zzz</span>
+<span class="nf">test</span><span class="p">(</span><span class="n">zzz</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="c1">## Error in test(zzz = 3): object &#39;zzz&#39; not found</span>
+</pre></div>
+</div>
+<p>In other words, no assignment in the local environment is triggered.</p>
+</div>
+<div class="proof proof-type-exercise" id="id61">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 16.23</span>
+        
+    </div><div class="proof-content">
 <p>Implement your own version of the built-in <strong class="command">switch</strong> function.</p>
+</div></div><div class="proof proof-type-exercise" id="id62">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 16.24</span>
+        
+    </div><div class="proof-content">
+<p>Implement your own version of the <strong class="command">stopifnot</strong> function.</p>
 </div></div></section>
 <section id="on-exit">
 <span id="sec-on-exit"></span><h3><span class="section-number">16.3.8. </span><strong class="command">on.exit</strong><a class="headerlink" href="#on-exit" title="Permalink to this heading">#</a></h3>
@@ -1893,10 +2015,10 @@ or clean up the allocated resources (e.g., closing open files).</p>
 <p>Note that we can always do without <strong class="command">on.exit</strong>,
 e.g., by applying proper exception handling techniques;
 <a class="reference internal" href="180-flow.html#sec-exceptions"><span class="std std-numref">Section 8.2</span></a>.</p>
-<div class="proof proof-type-exercise" id="id60">
+<div class="proof proof-type-exercise" id="id63">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 16.22</span>
+        <span class="proof-type">Exercise 16.25</span>
         
     </div><div class="proof-content">
 <p>Note the call to:</p>
@@ -1905,10 +2027,10 @@ e.g., by applying proper exception handling techniques;
 </div>
 <p>in the definition of <strong class="command">scan</strong>.
 What is its purpose?</p>
-</div></div><div class="proof proof-type-exercise" id="id61">
+</div></div><div class="proof proof-type-exercise" id="id64">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 16.23</span>
+        <span class="proof-type">Exercise 16.26</span>
         
     </div><div class="proof-content">
 <p>Why does <strong class="command">graphics::barplot.default</strong> call the following
@@ -1939,13 +2061,9 @@ Note that thanks to the enclosure’s being set to the calling frame,
 we can successfully refer to the <strong class="command">head</strong> function.</p>
 </div>
 </section>
-<section id="processing-formulas">
-<span id="sec-formula"></span><h3><span class="section-number">16.3.10. </span>🚧 Processing Formulas, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#processing-formulas" title="Permalink to this heading">#</a></h3>
-<p>… to do … working on it …</p>
 </section>
-</section>
-<section id="other-concepts">
-<h2><span class="section-number">16.4. </span>🚧 Other concepts<a class="headerlink" href="#other-concepts" title="Permalink to this heading">#</a></h2>
+<section id="other-topics">
+<h2><span class="section-number">16.4. </span>🚧 Other topics<a class="headerlink" href="#other-topics" title="Permalink to this heading">#</a></h2>
 <p>… to do … working on it …</p>
 <section id="package-namespaces">
 <h3><span class="section-number">16.4.1. </span>🚧 Package namespaces (*)<a class="headerlink" href="#package-namespaces" title="Permalink to this heading">#</a></h3>
@@ -2002,13 +2120,17 @@ for download from <a class="reference external" href="https://github.com/gagolew
 <span id="sec-group-generics"></span><h3><span class="section-number">16.4.3. </span>🚧 Overloading S3 group generics<a class="headerlink" href="#overloading-s3-group-generics" title="Permalink to this heading">#</a></h3>
 <p>… to do … working on it …</p>
 </section>
+<section id="processing-formulas">
+<span id="sec-formula"></span><h3><span class="section-number">16.4.4. </span>🚧 Processing Formulas, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#processing-formulas" title="Permalink to this heading">#</a></h3>
+<p>… to do … working on it …</p>
+</section>
 </section>
 <section id="exercises">
 <h2><span class="section-number">16.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id62">
+<div class="proof proof-type-exercise" id="id65">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 16.24</span>
+        <span class="proof-type">Exercise 16.27</span>
         
     </div><div class="proof-content">
 <p>Asking too many questions is not very charismatic,
@@ -2050,10 +2172,10 @@ discouraged?</p></li>
 to be available directly via the
 standard accessor <strong class="command">fun_name.class_name</strong>?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id63">
+</div></div><div class="proof proof-type-exercise" id="id66">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 16.25</span>
+        <span class="proof-type">Exercise 16.28</span>
         
     </div><div class="proof-content">
 <p>Calling:</p>
@@ -2070,10 +2192,10 @@ on each given package.</p>
 <p>Use an object of type environment (a hast table)
 to map the package names to numeric IDs (indexes). This will greatly
 speed up the processing (compare it to a named list-based implementation).</p>
-</div></div><div class="proof proof-type-exercise" id="id64">
+</div></div><div class="proof proof-type-exercise" id="id67">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 16.26</span>
+        <span class="proof-type">Exercise 16.29</span>
         
     </div><div class="proof-content">
 <p>Given:</p>
@@ -2092,10 +2214,10 @@ speed up the processing (compare it to a named list-based implementation).</p>
 <span class="c1">## [1] &quot;1:5&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id65">
+</div></div><div class="proof proof-type-exercise" id="id68">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 16.27</span>
+        <span class="proof-type">Exercise 16.30</span>
         
     </div><div class="proof-content">
 <p>According to <span id="id29">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span>, compare
@@ -2134,10 +2256,10 @@ also <a class="reference internal" href="210-design.html#sec-replacementfun"><sp
 of R Data Types that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.
 As a summary of what we have covered in this book, let us contemplate
 upon <a class="reference internal" href="#fig-data-types-full"><span class="std std-numref">Figure 16.3</span></a>, which gives a much broader picture.</p>
-<figure class="align-default" id="id66">
+<figure class="align-default" id="id69">
 <span id="fig-data-types-full"></span><img alt="../_images/data-types-full.png" src="../_images/data-types-full.png" />
 <figcaption>
-<p><span class="caption-number">Figure 16.3 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id66" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 16.3 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id69" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>If we omitted something, it was most likely on purpose –
@@ -2317,7 +2439,7 @@ This is certainly true if we are at the top (global) level.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-03-31T22:01:25+1100.
+              Last updated on 2023-04-03T20:15:25+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2364,16 +2486,16 @@ This is certainly true if we are at the top (global) level.</p>
 <li><a class="reference internal" href="#accessing-the-calling-environment">16.3.4. Accessing the calling environment</a></li>
 <li><a class="reference internal" href="#lazy-evaluation-of-arguments">16.3.5. Lazy evaluation of arguments</a></li>
 <li><a class="reference internal" href="#evaluation-of-default-arguments">16.3.6. Evaluation of default arguments</a></li>
-<li><a class="reference internal" href="#ellipsis-revisited">16.3.7. 🚧 Ellipsis revisited</a></li>
+<li><a class="reference internal" href="#ellipsis-revisited">16.3.7. Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`,  revisited</a></li>
 <li><a class="reference internal" href="#on-exit">16.3.8. <strong class="command">on.exit</strong></a></li>
 <li><a class="reference internal" href="#example-functions-relying-on-metaprogramming">16.3.9. 🚧 Example functions relying on metaprogramming (**)</a></li>
-<li><a class="reference internal" href="#processing-formulas">16.3.10. 🚧 Processing Formulas, `<strong class="command">~</strong>` (*)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#other-concepts">16.4. 🚧 Other concepts</a><ul>
+<li><a class="reference internal" href="#other-topics">16.4. 🚧 Other topics</a><ul>
 <li><a class="reference internal" href="#package-namespaces">16.4.1. 🚧 Package namespaces (*)</a></li>
 <li><a class="reference internal" href="#s3-method-lookup-by-usemethod">16.4.2. 🚧 S3 method lookup by <strong class="command">UseMethod</strong></a></li>
 <li><a class="reference internal" href="#overloading-s3-group-generics">16.4.3. 🚧 Overloading S3 group generics</a></li>
+<li><a class="reference internal" href="#processing-formulas">16.4.4. 🚧 Processing Formulas, `<strong class="command">~</strong>` (*)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#exercises">16.5. Exercises</a></li>
