@@ -370,7 +370,7 @@ of the prescribed use cases.</p>
 <p>Setting the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute might make some objects
 behave differently in certain scenarios.</p>
 </div>
-<div class="proof proof-type-example" id="id42">
+<div class="proof proof-type-example" id="id41">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.1</span>
@@ -416,7 +416,7 @@ is emphasised below:</p>
 </div>
 </div></div><p>We are having so much fun that one more illustration can only add
 to joy.</p>
-<div class="proof proof-type-example" id="id43">
+<div class="proof proof-type-example" id="id42">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.2</span>
@@ -537,12 +537,18 @@ equipped with the <code class="docutils literal notranslate"><span class="pre">d
 </div>
 <p>Any function like the above<a class="footnote-reference brackets" href="#footusemeth1" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a> we will call from now on
 an S3 (S version 3) <em>generic</em>.
-Its only job is to invoke <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;)</span></code><a class="footnote-reference brackets" href="#footusemeth2" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>.
+Its only job is to invoke <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;)</span></code>.
 This dispatches the control flow to another function,
 referred to as <em>method</em>, based on the class of the first argument.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Even though it cannot be implied by the reading the above source code,
+all arguments passed to the generic will also be
+available<a class="footnote-reference brackets" href="#footusemeth2" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a> in the method dispatched to.</p>
+</div>
 <p>For example, let us define an object of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
 (a name that we have just come up with; we could have called it
-<code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">CtGrCl</span></code>, or <code class="docutils literal notranslate"><span class="pre">SpanishInquisition</span></code> as well), which
+<code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">CATEGORICAL</span></code>, or <code class="docutils literal notranslate"><span class="pre">SpanishInquisition</span></code> as well), which
 will be our own version of the famous built-in <code class="docutils literal notranslate"><span class="pre">factor</span></code> type that we discuss
 later.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span>
@@ -618,7 +624,7 @@ as defining a function that calls <strong class="command">UseMethod</strong>.</p
 creating new objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code> based on
 other objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
-<span class="w">    </span><span class="nf">UseMethod</span><span class="p">(</span><span class="s">&quot;as.categorical&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">UseMethod</span><span class="p">(</span><span class="s">&quot;as.categorical&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># synonym: UseMethod(&quot;as.categorical&quot;, x)</span>
 </pre></div>
 </div>
 <p>We always need to define the default method:</p>
@@ -649,7 +655,7 @@ The above is quite flexible already, because it relies on the
 <strong class="command">as.character</strong>, which handles a wide variety of data types.
 Of course, it does not mean we cannot be more precise about
 some particular ones.</p>
-<div class="proof proof-type-example" id="id44">
+<div class="proof proof-type-example" id="id43">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.3</span>
@@ -666,7 +672,7 @@ that they are the ones responsible for an explicit
 conversion of list objects to something different prior to a call
 to <strong class="command">as.categorical</strong>. Whether this was a good design choice,
 time will tell.</p>
-</div></div><div class="proof proof-type-example" id="id45">
+</div></div><div class="proof proof-type-example" id="id44">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.4</span>
@@ -729,11 +735,11 @@ to name a few.</p>
 explicitly; dispatching can be done internally, at the C language
 level<a class="footnote-reference brackets" href="#footinternaldispatch" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.
 Overall, the list of all S3 generics is somewhat difficult
-to generate<a class="footnote-reference brackets" href="#footknowns3generics" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>,
-but at least the internal ones are enumerated in
+to generate<a class="footnote-reference brackets" href="#footknowns3generics" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>.
+Luckily, at least the internal ones are enumerated in
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;InternalMethods&quot;)</span></code> and
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code>.</p>
-<div class="proof proof-type-example" id="id46">
+<div class="proof proof-type-example" id="id45">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.5</span>
@@ -756,21 +762,21 @@ of our custom type:</p>
 <span class="c1">## [1] &quot;a&quot; &quot;c&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;c&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id47">
+</div></div><div class="proof proof-type-exercise" id="id46">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.6</span>
         
     </div><div class="proof-content">
 <p>Overload the <strong class="command">unique</strong> method for objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.</p>
-</div></div><div class="proof proof-type-exercise" id="id48">
+</div></div><div class="proof proof-type-exercise" id="id47">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.7</span>
         
     </div><div class="proof-content">
 <p>Overload the <strong class="command">rep</strong> method for objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.</p>
-</div></div><div class="proof proof-type-example" id="id49">
+</div></div><div class="proof proof-type-example" id="id48">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.8</span>
@@ -813,7 +819,7 @@ when they see:</p>
 which is now guaranteed to be handled by the default methods
 (<strong class="command">print</strong>, subsetting, <strong class="command">as.character</strong>, etc.).</p>
 </div>
-<div class="proof proof-type-exercise" id="id50">
+<div class="proof proof-type-exercise" id="id49">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.9</span>
@@ -822,7 +828,7 @@ which is now guaranteed to be handled by the default methods
 <p>What would happen if we used <strong class="command">as.numeric</strong>
 instead of <strong class="command">unclass</strong> in
 <strong class="command">print.categorical</strong> and <strong class="command">as.character.categorical</strong>?</p>
-</div></div><div class="proof proof-type-exercise" id="id51">
+</div></div><div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.10</span>
@@ -831,7 +837,7 @@ instead of <strong class="command">unclass</strong> in
 <p>Update the above methods in such a way that
 we can also create <em>named</em> objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
 (i.e., equipped with the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute).</p>
-</div></div><div class="proof proof-type-exercise" id="id52">
+</div></div><div class="proof proof-type-exercise" id="id51">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.11</span>
@@ -844,7 +850,7 @@ generate a more natural result.</p>
 </div></div></section>
 <section id="first-argument-dispatch-and-calling-s3-methods-directly">
 <span id="sec-s3-direct-method-call"></span><h3><span class="section-number">10.2.4. </span>First-argument dispatch and calling S3 methods directly<a class="headerlink" href="#first-argument-dispatch-and-calling-s3-methods-directly" title="Permalink to this heading">#</a></h3>
-<p>With S3, the dispatching is done based on the class of
+<p>With S3, the dispatching is done most often based on the class of
 only one<a class="footnote-reference brackets" href="#footonedispatch" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a> argument:
 by default, the first one from the parameter list.</p>
 <p>For example, the <strong class="command">c</strong> function is a generic which
@@ -898,19 +904,17 @@ outcome:</p>
 <span class="c1">## Categories: 2, 5, 7, 9</span>
 </pre></div>
 </div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
 <p>We said “in most cases”, because some methods can be:</p>
 <ul class="simple">
 <li><p>hardcoded at the C language level
 (for instance, there is no <strong class="command">c.default</strong> defined at all<a class="footnote-reference brackets" href="#footoperoverload" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>),</p></li>
 <li><p>hidden (defined in a package’s namespace but not exported);
 see <a class="reference internal" href="330-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.2</span></a>,</p></li>
-<li><p>overloaded as a group; see <a class="reference internal" href="330-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.3</span></a>.</p></li>
+<li><p>overloaded as a group; see <a class="reference internal" href="#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>
+and <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code>.</p></li>
 </ul>
 </div>
-<div class="proof proof-type-example" id="id53">
+<div class="proof proof-type-example" id="id52">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.12</span>
@@ -991,7 +995,7 @@ into three clusters using the <em>k</em>-means algorithm:</p>
 <span class="c1">## [1] 0</span>
 </pre></div>
 </div>
-<p>and we already know that the above is displayed in a fancy way
+<p>We already know that the above was displayed in a fancy way
 only because there is a <strong class="command">print</strong> method overloaded
 for objects of class <code class="docutils literal notranslate"><span class="pre">kmeans</span></code>.</p>
 <p>But is there really?</p>
@@ -1011,20 +1015,20 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-03-30 14:54:27 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-04-05 16:31:11 AEST&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
 </div>
-<p>Let us inspect the two objects’ classes:</p>
+<p>Let us inspect the classes of these two objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXlt&quot; &quot;POSIXt&quot;</span>
 </pre></div>
 </div>
-<p>When we discuss date-time classes in more detail later,
-we will take note that the former is represented as a numeric
+<p>In <a class="reference internal" href="#sec-datetime"><span class="std std-numref">Section 10.3.1</span></a>, we will discuss date-time classes in more detail:
+this is where we will take note that the former is represented as a numeric
 vector, whilst the latter is a list.
 Hence, primarily, these two should be seen as instances of two
 distinct types. However, both of them have a lot in common,
@@ -1039,14 +1043,14 @@ of classes<a class="footnote-reference brackets" href="#footclassdispatch" id="i
 <strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x)</span></code> dispatches to the method
 determined as follows:</p>
 <ol class="arabic simple">
-<li><p>if <code class="docutils literal notranslate"><span class="pre">f.class1</span></code> is available<a class="footnote-reference brackets" href="#footlookup" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></a>, call it;</p></li>
-<li><p>otherwise, if <code class="docutils literal notranslate"><span class="pre">f.class2</span></code> is available, call this one;</p></li>
+<li><p>if <strong class="command">f.class1</strong> is available<a class="footnote-reference brackets" href="#footlookup" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></a>, call it;</p></li>
+<li><p>otherwise, if <strong class="command">f.class2</strong> is available, call this one;</p></li>
 <li><p>…;</p></li>
-<li><p>otherwise, if <code class="docutils literal notranslate"><span class="pre">f.classK</span></code> is available, invoke it;</p></li>
-<li><p>otherwise, refer to the fallback <code class="docutils literal notranslate"><span class="pre">f.default</span></code>.</p></li>
+<li><p>otherwise, if <strong class="command">f.classK</strong> is available, invoke it;</p></li>
+<li><p>otherwise, refer to the fallback <strong class="command">f.default</strong>.</p></li>
 </ol>
 </div>
-<div class="proof proof-type-example" id="id54">
+<div class="proof proof-type-example" id="id53">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.13</span>
@@ -1059,8 +1063,8 @@ determined as follows:</p>
 </div>
 <p>This way, we can be handling both <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> and <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> instances
 via the same procedure.</p>
-</div></div><p>Let us see in this simple scheme any magic. It is nothing more than what was
-described above: a way of determining which method should be called for a
+</div></div><p>Let us see in this simple scheme no magic. It is nothing more than what
+we described above: a way of determining which method should be called for a
 particular R object. It can of course be used as a mechanism to mimic
 (and certainly it was inspired by) the idea of inheritance
 in object-oriented programming languages,
@@ -1072,6 +1076,17 @@ from <code class="docutils literal notranslate"><span class="pre">POSIXt</span><
 per-object basis: we can create ones whose class is
 simply <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (without the <code class="docutils literal notranslate"><span class="pre">POSIXt</span></code> part)
 or even <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;POSIXt&quot;,</span> <span class="pre">&quot;POSIXct&quot;)</span></code> (in this very order).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In any method, it is possible to call the method corresponding
+to the next class by calling <strong class="command">NextMethod</strong>.</p>
+</div>
+<p>For instance, if we are in <strong class="command">f.class1</strong>, a call to
+<strong class="command">NextMethod</strong><code class="code docutils literal notranslate"><span class="pre">(f)</span></code> will try invoking
+<strong class="command">f.class2</strong>. If such a method does not exist,
+further methods in the search chain will be tried,
+falling back to the default method if necessary.
+An example will be given below.</p>
 </section>
 <section id="operator-overloading">
 <span id="sec-operator-overloading-s3"></span><h3><span class="section-number">10.2.6. </span>Operator overloading<a class="headerlink" href="#operator-overloading" title="Permalink to this heading">#</a></h3>
@@ -1080,7 +1095,7 @@ Even though what follows can partially be implied by what we
 have said above, as usual in R, there will be some oddities.</p>
 <p>For example, let us overload the index operator for
 objects of class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.
-Looking at <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>, we see that the default method<a class="footnote-reference brackets" href="#footdefaultsubst" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></a>
+Looking at <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>, we see that the default method
 has two arguments: <code class="docutils literal notranslate"><span class="pre">x</span></code> (the <code class="docutils literal notranslate"><span class="pre">categorical</span></code> object being sliced)
 and <code class="docutils literal notranslate"><span class="pre">i</span></code> (the indexer).
 Ours will have the same interface then:</p>
@@ -1094,15 +1109,28 @@ Ours will have the same interface then:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>However, we note that the default S3 method,
+`<strong class="command">[.default</strong>`, is hardcoded at the C language level.
+Therefore, we cannot refer to it directly.
+This is why we had to call <strong class="command">unclass</strong>.
+Alternatively, we can also call <strong class="command">NextMethod</strong>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[.categorical`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nf">structure</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">NextMethod</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="p">),</span><span class="w">  </span><span class="c1"># call default method, passing `x` and `i`</span>
+<span class="w">        </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">levels</span><span class="o">=</span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># the same levels as input</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>We can also introduce the replacement version of this operator:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`[&lt;-.categorical`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">levels</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">codes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="p">)</span><span class="w">  </span><span class="c1"># integer codes corresponding to levels</span>
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="w">    </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">codes</span><span class="w">  </span><span class="c1"># default method for the replacement version of `[`</span>
+<span class="w">    </span><span class="n">value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="p">)</span><span class="w">  </span><span class="c1"># integer codes corresponding to levels</span>
 <span class="w">    </span><span class="nf">structure</span><span class="p">(</span>
-<span class="w">        </span><span class="n">x</span><span class="p">,</span>
+<span class="w">        </span><span class="nf">NextMethod</span><span class="p">(</span><span class="s">&quot;[&lt;-&quot;</span><span class="p">),</span><span class="w">  </span><span class="c1"># call default method, passing `x`, `i`, `values`</span>
 <span class="w">        </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="w">  </span><span class="c1"># same levels as input</span>
 <span class="w">    </span><span class="p">)</span>
@@ -1130,7 +1158,7 @@ Ours will have the same interface then:</p>
 <p>Note how we handled the case of non-existing levels
 and that the recycling rule has been automagically inherited
 (amongst other features) from the default index operator.</p>
-<div class="proof proof-type-exercise" id="id55">
+<div class="proof proof-type-exercise" id="id54">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.14</span>
@@ -1140,7 +1168,7 @@ and that the recycling rule has been automagically inherited
 Is indexing with negative integers or logical vectors supported as well?
 Why is that/is that not the case?</p>
 </div></div><p>Furthermore, let us overload the `<strong class="command">==</strong>` operator.
-Assume<a class="footnote-reference brackets" href="#footcatcmp" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a> that we would like two <code class="docutils literal notranslate"><span class="pre">categorical</span></code> objects
+Assume<a class="footnote-reference brackets" href="#footcatcmp" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></a> that we would like two <code class="docutils literal notranslate"><span class="pre">categorical</span></code> objects
 be compared based on the actual labels they encode, in an elementwise
 manner:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`==.categorical`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
@@ -1150,7 +1178,7 @@ manner:</p>
 <p>We are feeling lucky: by not performing any type checking,
 we rely on the particular <strong class="command">as.character</strong> methods
 corresponding to the types of <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.
-Also, assuming that <strong class="command">as.character</strong> always<a class="footnote-reference brackets" href="#footascharacter" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></a>
+Also, assuming that <strong class="command">as.character</strong> always<a class="footnote-reference brackets" href="#footascharacter" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a>
 returns an object of type character,
 we dispatch to the default method for `<strong class="command">==</strong>`
 (which handles atomic vectors).</p>
@@ -1183,11 +1211,31 @@ and the default internal method will be called.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In <a class="reference internal" href="330-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.3</span></a>, we will mention
-that operators as well as certain groups of functions
-(including <strong class="command">min</strong>, <strong class="command">sum</strong>, and <strong class="command">all</strong>
-or <strong class="command">abs</strong>, <strong class="command">log</strong>, and <strong class="command">round</strong>)
-can be overloaded all at once; see also <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code>.</p>
+<p>(*) By defining a single <strong class="command">Ops</strong> method,
+we can define the meaning of all binary operators at once.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Ops.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">.Generic</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;&lt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&lt;=&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&gt;=&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;==&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;!=&quot;</span><span class="p">)))</span>
+<span class="w">        </span><span class="nf">stop</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s not defined for &#39;categorical&#39; objects&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">.Generic</span><span class="p">))</span>
+<span class="w">    </span><span class="n">e1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
+<span class="w">    </span><span class="n">e2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">e2</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">NextMethod</span><span class="p">(</span><span class="n">.Generic</span><span class="p">)</span><span class="w">  </span><span class="c1"># dispatch to the default method (for character)</span>
+<span class="p">}</span>
+
+<span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
+<span class="c1">## [1] FALSE  TRUE  TRUE FALSE</span>
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">.Generic</span></code> is a variable representing the name
+of the operator (generic) being invoked; see <strong class="command">sec:use-method</strong>.</p>
+<p>Other <em>group generics</em> are: <strong class="command">Summary</strong>
+(including functions such as
+<strong class="command">min</strong>, <strong class="command">sum</strong>, and <strong class="command">all</strong>),
+<strong class="command">Math</strong> (<strong class="command">abs</strong>, <strong class="command">log</strong>, and <strong class="command">round</strong>, etc.),
+and <strong class="command">Complex</strong> (e.g., <strong class="command">Re</strong>, <strong class="command">Im</strong>);
+see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code> for more details.
+Note that sometimes we will need to rely on <strong class="command">registerS3method</strong>
+to force R to recognise a custom method related to such generics.</p>
 </div>
 </section>
 </section>
@@ -1201,13 +1249,13 @@ will be dealt with in separate parts of this textbook,
 owing to their importance and ubiquity.
 Namely, matrices and other arrays are covered in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>,
 and data frames in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>.</p>
-<p>The inspecting of other<a class="footnote-reference brackets" href="#foototherclasses" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></a> interesting classes is left
+<p>The inspecting of other<a class="footnote-reference brackets" href="#foototherclasses" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></a> interesting classes is left
 as a simple exercise to the kind reader.</p>
 <section id="date-time-etc">
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-03-30&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="c1">## [1] &quot;2023-04-05&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
@@ -1216,7 +1264,7 @@ as a simple exercise to the kind reader.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19446    -1     0    NA</span>
+<span class="c1">## [1] 19452    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the so called UNIX epoch,
@@ -1224,13 +1272,13 @@ as a simple exercise to the kind reader.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-03-30 14:54:27 AEDT&quot;</span>
+<span class="c1">## [1] &quot;2023-04-05 16:31:11 AEST&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1680148468</span>
+<span class="c1">## [1] 1680676272</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1246,7 +1294,7 @@ However, such objects can be equipped with the <code class="docutils literal not
 <p>In both cases, the time is 1 second after the beginning of UNIX epoch.
 In the former, it is displayed in the current local timezone, though
 (on the author’s PC).</p>
-<div class="proof proof-type-exercise" id="id56">
+<div class="proof proof-type-exercise" id="id55">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.15</span>
@@ -1255,7 +1303,7 @@ In the former, it is displayed in the current local timezone, though
 <p>Use <strong class="command">ISOdatetime</strong> to inspect how
 midnights are displayed in different timezones.</p>
 </div></div><p>There is also the <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> (local time) class,
-which is represented using a list of atomic vectors<a class="footnote-reference brackets" href="#footposixlt" id="id25" role="doc-noteref"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></a>.</p>
+which is represented using a list of atomic vectors<a class="footnote-reference brackets" href="#footposixlt" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.POSIXlt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&quot;1970-01-01 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="s">&quot;2030-12-31 23:59:59&quot;</span><span class="p">)))</span>
 <span class="c1">##                          a                          b</span>
 <span class="c1">## &quot;1970-01-01 00:00:00 AEST&quot; &quot;2030-12-31 23:59:59 AEDT&quot;</span>
@@ -1279,7 +1327,7 @@ which is represented using a list of atomic vectors<a class="footnote-reference 
 <span class="c1">##  $ gmtoff: int [1:2] NA NA</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id57">
+<div class="proof proof-type-exercise" id="id56">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.16</span>
@@ -1291,7 +1339,7 @@ especially <code class="docutils literal notranslate"><span class="pre">mon</spa
 <em>closer to human-readable forms</em> than <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code>,
 but it is a matter of taste.
 Some R functions return the former, and some yield the latter type.</p>
-<div class="proof proof-type-exercise" id="id58">
+<div class="proof proof-type-exercise" id="id57">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.17</span>
@@ -1302,11 +1350,10 @@ Some R functions return the former, and some yield the latter type.</p>
 use special field formatters (similar to those used
 by <strong class="command">sprintf</strong>). Read about them in the R manual.
 What type of inputs do they accept? What outputs do they produce?</p>
-</div></div><p>There is a number of methods overloaded for objects of the
-said classes.
+</div></div><p>There is a number of methods overloaded for objects of the said classes.
 In fact, the first call in this section
 already involved the use of <strong class="command">c.Date</strong>.</p>
-<div class="proof proof-type-exercise" id="id59">
+<div class="proof proof-type-exercise" id="id58">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.18</span>
@@ -1326,7 +1373,7 @@ which yields an object of class <code class="docutils literal notranslate"><span
 <span class="c1">## Time difference of 1 secs</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id60">
+<div class="proof proof-type-exercise" id="id59">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.19</span>
@@ -1336,18 +1383,18 @@ which yields an object of class <code class="docutils literal notranslate"><span
 </div></div><p>Applying other arithmetic operations on date-time objects
 yields an error.
 Also note that because date-time objects are just numbers,
-they can be compared to each other using binary operators<a class="footnote-reference brackets" href="#footdateops" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></a>
-and methods such as <strong class="command">sort</strong> and <strong class="command">order</strong><a class="footnote-reference brackets" href="#footdatextfrm" id="id27" role="doc-noteref"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></a>.</p>
-<div class="proof proof-type-exercise" id="id61">
+they can be compared to each other using binary operators<a class="footnote-reference brackets" href="#footdateops" id="id25" role="doc-noteref"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></a>
+and methods such as <strong class="command">sort</strong> and <strong class="command">order</strong><a class="footnote-reference brackets" href="#footdatextfrm" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></a>.</p>
+<div class="proof proof-type-exercise" id="id60">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.20</span>
         
     </div><div class="proof-content">
-<p>Check out the <strong class="program">stringx</strong> package <span id="id28">[<a class="reference internal" href="999-bibliography.html#id4" title="Gagolewski, M. (2023).  stringx: Drop-in replacements for base R string functions powered by stringi. URL: https://stringx.gagolewski.com.">23</a>]</span>
+<p>Check out the <strong class="program">stringx</strong> package <span id="id27">[<a class="reference internal" href="999-bibliography.html#id4" title="Gagolewski, M. (2023).  stringx: Drop-in replacements for base R string functions powered by stringi. URL: https://stringx.gagolewski.com.">23</a>]</span>
 which replaces the base R date-time processing functions with
 their more portable counterparts.</p>
-</div></div><div class="proof proof-type-exercise" id="id62">
+</div></div><div class="proof proof-type-exercise" id="id61">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.21</span>
@@ -1361,7 +1408,7 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.259   0.011   0.270</span>
+<span class="c1">##   0.254   0.013   0.266</span>
 </pre></div>
 </div>
 <p>The function returns an object of class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1371,11 +1418,11 @@ Inspect how it is represented internally.</p>
 <span id="sec-formula-intro"></span><h3><span class="section-number">10.3.2. </span>Formulas (*)<a class="headerlink" href="#formulas" title="Permalink to this heading">#</a></h3>
 <p>Formulas (created by means of `<strong class="command">~</strong>`)
 are quite advanced language constructs and hence they will be discussed
-much further: in <a class="reference internal" href="330-environment.html#sec-formula"><span class="std std-numref">Section 16.4.4</span></a>.</p>
+much further: in <a class="reference internal" href="330-environment.html#sec-formula"><span class="std std-numref">Section 16.3.10</span></a>.</p>
 <p>Some R users refer to them in functions such as
 <strong class="command">lm</strong>, <strong class="command">aggregate</strong>, <strong class="command">t.test</strong>,
 <strong class="command">boxplot</strong>, or <strong class="command">plot</strong> to specify statistical
-models (see also Chapter 11 in <span id="id29">[<a class="reference internal" href="999-bibliography.html#id8" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">44</a>]</span> ) or queries
+models (see also Chapter 11 in <span id="id28">[<a class="reference internal" href="999-bibliography.html#id8" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">44</a>]</span> ) or queries
 such as “<code class="docutils literal notranslate"><span class="pre">y</span></code> as a function of <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, and <code class="docutils literal notranslate"><span class="pre">x3</span></code>” and
 “<code class="docutils literal notranslate"><span class="pre">y</span></code> grouped/split by a combination of <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>”
 where <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">x1</span></code>, etc., are, for example, column names in a data frame
@@ -1383,7 +1430,7 @@ or named items in a list.</p>
 <p>There is no single standard governing how a function should interpret
 a formula’s terms. In fact, each procedure is free to introduce
 its own meaning (a microlanguage built on top of R). Due to this,
-yours truly discourages<a class="footnote-reference brackets" href="#footagainstformulas" id="id30" role="doc-noteref"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></a>
+yours truly discourages<a class="footnote-reference brackets" href="#footagainstformulas" id="id29" role="doc-noteref"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></a>
 their use (especially by beginners).</p>
 </section>
 <section id="factors">
@@ -1404,7 +1451,7 @@ around the labels and the list of levels is given at the end.</p>
 <p>Internally, such objects are represented as integer vectors
 (<a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>) with elements between 1 and <em>k</em> with the special
 (as in <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>) <code class="docutils literal notranslate"><span class="pre">levels</span></code>
-attribute being a character vector of length <em>k</em><a class="footnote-reference brackets" href="#footfactorint" id="id31" role="doc-noteref"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></a>.</p>
+attribute being a character vector of length <em>k</em><a class="footnote-reference brackets" href="#footfactorint" id="id30" role="doc-noteref"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="c1">## [1] &quot;factor&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -1418,7 +1465,7 @@ attribute being a character vector of length <em>k</em><a class="footnote-refere
 </pre></div>
 </div>
 <p>Factors are often  used instead of
-character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id32" role="doc-noteref"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></a>,
+character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id31" role="doc-noteref"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></a>,
 where there is a need to manipulate their levels easily.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># also levels(f) &lt;- c(....new...)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -1439,7 +1486,7 @@ related to this, such as
 <strong class="command">tabulate</strong>.
 Specifically, the latter can be implemented like
 “for each <code class="docutils literal notranslate"><span class="pre">i</span></code>, increase <code class="docutils literal notranslate"><span class="pre">count[factor_codes[i]]</span></code> by one”.</p>
-<div class="proof proof-type-exercise" id="id63">
+<div class="proof proof-type-exercise" id="id62">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.22</span>
@@ -1448,7 +1495,7 @@ Specifically, the latter can be implemented like
 <p>Study the source code of the <strong class="command">factor</strong> function.
 Note the use of <strong class="command">as.character</strong>,
 <strong class="command">unique</strong>, <strong class="command">order</strong>, and <strong class="command">match</strong>.</p>
-</div></div><div class="proof proof-type-exercise" id="id64">
+</div></div><div class="proof proof-type-exercise" id="id63">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.23</span>
@@ -1457,7 +1504,7 @@ Note the use of <strong class="command">as.character</strong>,
 <p>Implement a simplified version of <strong class="command">table</strong>
 based on <strong class="command">tabulate</strong>. It should work
 for objects of class <code class="docutils literal notranslate"><span class="pre">factor</span></code> and return a named numeric vector.</p>
-</div></div><div class="proof proof-type-exercise" id="id65">
+</div></div><div class="proof proof-type-exercise" id="id64">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.24</span>
@@ -1544,7 +1591,7 @@ the built-in <code class="docutils literal notranslate"><span class="pre">iris</
 </pre></div>
 </div>
 </div>
-<div class="proof proof-type-exercise" id="id66">
+<div class="proof proof-type-exercise" id="id65">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.25</span>
@@ -1565,7 +1612,7 @@ the result will have the <code class="docutils literal notranslate"><span class=
 </div>
 <p>Implement your own version of the <strong class="command">droplevels</strong> function
 which removes the unused attributes.</p>
-</div></div><div class="proof proof-type-exercise" id="id67">
+</div></div><div class="proof proof-type-exercise" id="id66">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.26</span>
@@ -1640,7 +1687,7 @@ any surprising results, they should check/redefine the underlying
 that they get <em>unexpected</em> or <em>confusing</em> (in their opinion) outputs.
 With infinitely many potential types, however, we cannot respond
 to every possible situation.</p>
-<div class="proof proof-type-example" id="id68">
+<div class="proof proof-type-example" id="id67">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.27</span>
@@ -1741,7 +1788,7 @@ stemming from the ingenious simplicity of S3:
 method dispatch is usually based only on the type of the first
 function argument, classes cannot be defined formally
 (but see <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>) and that there is no real encapsulation
-(we cannot actually hide data from a user<a class="footnote-reference brackets" href="#footencapsulation" id="id33" role="doc-noteref"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></a>).
+(we cannot actually hide data from a user<a class="footnote-reference brackets" href="#footencapsulation" id="id32" role="doc-noteref"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></a>).
 However, overall the whole concept has proven quite versatile.</p>
 <p>In functional programming, emphasis is on operations (verbs),
 not data (nouns).
@@ -1761,8 +1808,8 @@ This should not be a problem for most programmers.</p>
 </pre></div>
 </div>
 <p>However, some people are inherently lazy, always
-complaining and/or always trying to “optimise”<a class="footnote-reference brackets" href="#footoptimise" id="id34" role="doc-noteref"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></a> things.</p>
-<div class="proof proof-type-example" id="id69">
+complaining and/or always trying to “optimise”<a class="footnote-reference brackets" href="#footoptimise" id="id33" role="doc-noteref"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></a> things.</p>
+<div class="proof proof-type-example" id="id68">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.28</span>
@@ -1802,9 +1849,9 @@ with the last (the most important?) operation
 being listed first.</p>
 <p>By the way, self-explanatory variable names and rich comments are priceless.</p>
 </div></div><p>In more traditional object-oriented programming languages,
-either the method list is sealed inside<a class="footnote-reference brackets" href="#footsealmeth" id="id35" role="doc-noteref"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></a> the class’ definition
+either the method list is sealed inside<a class="footnote-reference brackets" href="#footsealmeth" id="id34" role="doc-noteref"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></a> the class’ definition
 (like in C++), or some peculiar patches must be applied to
-inject a method (like in Python)<a class="footnote-reference brackets" href="#footextmeth" id="id36" role="doc-noteref"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></a>.
+inject a method (like in Python)<a class="footnote-reference brackets" href="#footextmeth" id="id35" role="doc-noteref"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></a>.
 There, it is the objects that are <em>told</em> what to do: they are treated
 as black boxes.</p>
 <p>Some popular languages rely on the message-passing syntax,
@@ -1814,7 +1861,7 @@ For instance, in C++ and Python (amongst many others),
 “<code class="docutils literal notranslate"><span class="pre">obj.</span></code><strong class="command">method1</strong><code class="code docutils literal notranslate"><span class="pre">().</span></code><strong class="command">method2</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>”
 means “call <strong class="command">method1</strong> on <code class="docutils literal notranslate"><span class="pre">obj</span></code> and
 then call <strong class="command">method2</strong> on the result.</p>
-<p>Since R 4.1.0, there is a <em>pipe operator</em><a class="footnote-reference brackets" href="#footpipe" id="id37" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>, `<strong class="command">|&gt;</strong>`,
+<p>Since R 4.1.0, there is a <em>pipe operator</em><a class="footnote-reference brackets" href="#footpipe" id="id36" role="doc-noteref"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></a>, `<strong class="command">|&gt;</strong>`,
 which is merely a syntactic sugar for
 translating between the message-passing and function-centric notion.
 In a nutshell, writing:</p>
@@ -1831,7 +1878,7 @@ In a nutshell, writing:</p>
 order in which the operations are executed,
 something that could always be achieved with the
 function-centric form and perhaps a few auxiliary variables.</p>
-<div class="proof proof-type-example" id="id70">
+<div class="proof proof-type-example" id="id69">
 
     <div class="proof-title">
         <span class="proof-type">Example 10.29</span>
@@ -1844,7 +1891,7 @@ of the <code class="docutils literal notranslate"><span class="pre">iris</span><
 </div>
 </div></div><p>This book is minimalist by design and there is nothing that
 cannot be achieved without the pipe operator,
-hence we will be refraining<a class="footnote-reference brackets" href="#footcool" id="id38" role="doc-noteref"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></a> ourselves from using it.</p>
+hence we will be refraining<a class="footnote-reference brackets" href="#footcool" id="id37" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a> ourselves from using it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When writing code interactively, we may sometimes benefit from
@@ -1870,7 +1917,7 @@ In the long run, multiplying entities without necessity is unsustainable.</p>
 </section>
 <section id="exercises">
 <h2><span class="section-number">10.6. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id71">
+<div class="proof proof-type-exercise" id="id70">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.30</span>
@@ -1892,7 +1939,7 @@ and another one of class <strong class="command">c</strong><code class="code doc
 is <code class="docutils literal notranslate"><span class="pre">x[f]</span></code> equivalent to <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code> or rather
 <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(f)]</span></code>?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id72">
+</div></div><div class="proof proof-type-exercise" id="id71">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.31</span>
@@ -1905,7 +1952,7 @@ is <code class="docutils literal notranslate"><span class="pre">x[f]</span></cod
 <p>where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are numeric vectors. Consult <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;plot&quot;)</span></code>
 for the meaning of the <code class="docutils literal notranslate"><span class="pre">ylim</span></code> and <code class="docutils literal notranslate"><span class="pre">log</span></code> arguments.
 Was that straightforward?</p>
-</div></div><div class="proof proof-type-exercise" id="id73">
+</div></div><div class="proof proof-type-exercise" id="id72">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.32</span>
@@ -1914,12 +1961,12 @@ Was that straightforward?</p>
 <p>Explain why the two following calls yield significantly different
 results and present a workaround:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-03-30&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2023-04-05&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19446&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19452&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id74">
+</div></div><div class="proof proof-type-exercise" id="id73">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.33</span>
@@ -1927,7 +1974,7 @@ results and present a workaround:</p>
     </div><div class="proof-content">
 <p>Write methods <strong class="command">head</strong> and <strong class="command">tail</strong>
 for our example <code class="docutils literal notranslate"><span class="pre">categorical</span></code> class.</p>
-</div></div><div class="proof proof-type-exercise" id="id75">
+</div></div><div class="proof proof-type-exercise" id="id74">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.34</span>
@@ -1936,8 +1983,8 @@ for our example <code class="docutils literal notranslate"><span class="pre">cat
 <p>(*) Write an R package that defines S3 class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>
 and a couple of methods therefor.
 Note the need for the use of the <code class="docutils literal notranslate"><span class="pre">S3method</span></code> directive  <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code>;
-see <span id="id39">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id76">
+see <span id="id38">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span>.</p>
+</div></div><div class="proof proof-type-exercise" id="id75">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.35</span>
@@ -1946,7 +1993,7 @@ see <span id="id39">[<a class="reference internal" href="999-bibliography.html#i
 <p>Inspect the result of a call to
 <strong class="command">binom.test</strong><code class="code docutils literal notranslate"><span class="pre">(79,</span> <span class="pre">100)</span></code>.
 Find the method responsible for the pretty-printing of such objects.</p>
-</div></div><div class="proof proof-type-exercise" id="id77">
+</div></div><div class="proof proof-type-exercise" id="id76">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.36</span>
@@ -1955,7 +2002,7 @@ Find the method responsible for the pretty-printing of such objects.</p>
 <p>Inspect the result of a call to
 <strong class="command">rle</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">4,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">3,,</span> <span class="pre">2,</span> <span class="pre">2))</span></code>.
 Find the method responsible for the pretty-printing of such objects.</p>
-</div></div><div class="proof proof-type-exercise" id="id78">
+</div></div><div class="proof proof-type-exercise" id="id77">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.37</span>
@@ -1963,7 +2010,7 @@ Find the method responsible for the pretty-printing of such objects.</p>
     </div><div class="proof-content">
 <p>Read more about the <code class="docutils literal notranslate"><span class="pre">connection</span></code> class; see the <em>Value</em> section
 in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;connections&quot;)</span></code>.</p>
-</div></div><div class="proof proof-type-exercise" id="id79">
+</div></div><div class="proof proof-type-exercise" id="id78">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.38</span>
@@ -1972,7 +2019,7 @@ in <strong class="command">help</strong><code class="code docutils literal notra
 <p>Read about the subsetting
 operators overloaded for the <code class="docutils literal notranslate"><span class="pre">package_version</span></code> class;
 see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;numeric_version&quot;)</span></code>.</p>
-</div></div><div class="proof proof-type-exercise" id="id80">
+</div></div><div class="proof proof-type-exercise" id="id79">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.39</span>
@@ -1983,7 +2030,7 @@ overloaded for classes such as <code class="docutils literal notranslate"><span 
 <code class="docutils literal notranslate"><span class="pre">difftime</span></code>, <code class="docutils literal notranslate"><span class="pre">Date</span></code>, and <code class="docutils literal notranslate"><span class="pre">factor</span></code>.  Find out how they work and
 where they might be useful (especially in relation to
 <strong class="command">order</strong> and <strong class="command">sort</strong>; see also <a class="reference internal" href="240-data-frame.html#sec-df-order"><span class="std std-numref">Section 12.3.1</span></a>).</p>
-</div></div><div class="proof proof-type-exercise" id="id81">
+</div></div><div class="proof proof-type-exercise" id="id80">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.40</span>
@@ -1992,7 +2039,7 @@ where they might be useful (especially in relation to
 <p>Give an example where
 <strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(y1,</span> <span class="pre">y2))</span></code>
 (with default arguments) will fail to generate the correct result.</p>
-</div></div><div class="proof proof-type-exercise" id="id82">
+</div></div><div class="proof proof-type-exercise" id="id81">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.41</span>
@@ -2001,14 +2048,14 @@ where they might be useful (especially in relation to
 <p>Write a function that determines the mode, i.e., the most frequently
 occurring value in a given object of class <code class="docutils literal notranslate"><span class="pre">factor</span></code>. If the mode is not unique,
 return a randomly chosen one (each with the same probability).</p>
-</div></div><div class="proof proof-type-exercise" id="id83">
+</div></div><div class="proof proof-type-exercise" id="id82">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.42</span>
         
     </div><div class="proof-content">
 <p>Implement your own version of the <strong class="command">gl</strong> function.</p>
-</div></div><div class="proof proof-type-exercise" id="id84">
+</div></div><div class="proof proof-type-exercise" id="id83">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.43</span>
@@ -2050,7 +2097,7 @@ and other ones proposed by third-party packages</p>
 <aside class="footnote brackets" id="footsexptype" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
 <p>Their list is hardcoded at the C language level;
-compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id40">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">51</a>]</span> and
+compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id39">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">51</a>]</span> and
 see also <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footexternalptr" role="note">
@@ -2080,9 +2127,8 @@ see <a class="reference internal" href="#sec-built-in-generics"><span class="std
 </aside>
 <aside class="footnote brackets" id="footusemeth2" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">9</a><span class="fn-bracket">]</span></span>
-<p>Which in this context is equivalent to
-<strong class="command">UseMethod</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;print&quot;,</span> <span class="pre">x)</span></code>,
-with <code class="docutils literal notranslate"><span class="pre">x</span></code> being the first argument to the function.</p>
+<p>This uses a quite ugly hack
+that we will explain <a class="reference internal" href="330-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.2</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="foots3consistency" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">10</a><span class="fn-bracket">]</span></span>
@@ -2096,10 +2142,10 @@ it decreases transparency; we need to look this information
 up somewhere in the documentation (instead of simply inspecting
 a function’s source code; see, e.g., <strong class="command">cbind</strong>).
 Also, it allows for some methods to
-be hardcoded at the C language level too and thus be unoverloadable.
+be hardcoded at the C language level too, and thus be unoverloadable.
 Some of such design choices can somewhat be defended, though,
-as they increase execution speed or memory consumption,
-but still: we are not fans thereof.</p>
+as they increase execution speed or memory consumption.
+However, we are not particularly happy about them.</p>
 </aside>
 <aside class="footnote brackets" id="footknowns3generics" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">12</a><span class="fn-bracket">]</span></span>
@@ -2122,24 +2168,27 @@ has its cons as well. Choose your audience wisely.</p>
 </aside>
 <aside class="footnote brackets" id="footonedispatch" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">14</a><span class="fn-bracket">]</span></span>
-<p>This is R, so there are of course many exceptions
+<p>This is R, so there are, of course, many exceptions
 to this rule which were made for the (debatable) sake of the
 R users’ convenience. In particular, in
 <a class="reference internal" href="240-data-frame.html#sec-cbind-data-frame"><span class="std std-numref">Section 12.1.2</span></a>
 we mention that <strong class="command">cbind</strong> and <strong class="command">rbind</strong>
 will dispatch to the <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> method if at least one argument
 is a data frame (and other ones are unclassed).
-Also it is worth noting that the S4 class system that we discuss
+Binary operators dispatch on the type of both operands;
+see <a class="reference internal" href="#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>.
+Furthermore, it is worth noting that the S4 class system that we discuss
 in <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a> allows for dispatching based on the classes
 many arguments.</p>
 </aside>
 <aside class="footnote brackets" id="footoperoverload" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">15</a><span class="fn-bracket">]</span></span>
-<p>Also, dispatching can be done internally
-to internal methods: overloading `<strong class="command">&lt;.character</strong>`
-will have no effect unless the base `<strong class="command">&lt;</strong>` is
-replaced with a custom one that makes an explicit
-call to <strong class="command">UseMethod</strong>.
+<p>Dispatching to internal methods
+can also be done… internally. For instance, overloading
+`<strong class="command">&lt;.character</strong>` (or <strong class="command">Compare.character</strong>; see below)
+will have no effect unless
+the base `<strong class="command">&lt;</strong>` is replaced with a custom one
+that makes an explicit call to <strong class="command">UseMethod</strong>.
 Most often, we can expect that the built-in types (e.g.,
 atomic vectors), factors, data frames, and matrices and other arrays
 might be treated specially.</p>
@@ -2161,17 +2210,8 @@ in order for <strong class="command">class</strong> to return a sensible answer)
 <p>For more details on S3 method lookup;
 see <a class="reference internal" href="330-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.2</span></a>.</p>
 </aside>
-<aside class="footnote brackets" id="footdefaultsubst" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">19</a><span class="fn-bracket">]</span></span>
-<p>Note that the default S3 method,
-`<strong class="command">[.default</strong>`, is hardcoded at the C language level.
-Therefore,     we cannot refer to it directly (but <strong class="command">unclass</strong>
-does the trick).
-Also note that we can also call <strong class="command">NextMethod</strong> here;
-see <a class="reference internal" href="330-environment.html#sec-use-method"><span class="std std-numref">Section 16.4.2</span></a>.</p>
-</aside>
 <aside class="footnote brackets" id="footcatcmp" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">20</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">19</a><span class="fn-bracket">]</span></span>
 <p>There are of course many possible ways to implement
 the `<strong class="command">==</strong>` operator for the discussed objects.
 For instance, it may return
@@ -2181,35 +2221,35 @@ would be a better idea). We could also be comparing the
 corresponding underlying integer codes instead of the labels, etc.</p>
 </aside>
 <aside class="footnote brackets" id="footascharacter" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">21</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">20</a><span class="fn-bracket">]</span></span>
 <p>Which of course does not
 have to be the case; it is merely an assumption based on
 our belief in the common sense of other developers.</p>
 </aside>
 <aside class="footnote brackets" id="foototherclasses" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">22</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">21</a><span class="fn-bracket">]</span></span>
 <p>An (incomprehensive) approximation to the
 list of available classes can be generated by calling
 <strong class="command">unique</strong><code class="code docutils literal notranslate"><span class="pre">(.S3_methods_table[,</span> <span class="pre">2])</span></code>.</p>
 </aside>
 <aside class="footnote brackets" id="footposixlt" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id25">23</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">22</a><span class="fn-bracket">]</span></span>
 <p>Which was inspired by C’s <code class="docutils literal notranslate"><span class="pre">tm</span></code> structure defined
 in <code class="docutils literal notranslate"><span class="pre">&lt;time.h&gt;</span></code>.</p>
 </aside>
 <aside class="footnote brackets" id="footdateops" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">24</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id25">23</a><span class="fn-bracket">]</span></span>
 <p>The overloaded group generic <code class="docutils literal notranslate"><span class="pre">Ops</span></code>
 prevents us from adding or multiplying two dates
 and defines the meaning of the comparison operators;
-see <a class="reference internal" href="330-environment.html#sec-group-generics"><span class="std std-numref">Section 16.4.3</span></a>.</p>
+see <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:group-generics</span></code>.</p>
 </aside>
 <aside class="footnote brackets" id="footdatextfrm" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">25</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">24</a><span class="fn-bracket">]</span></span>
 <p>See an exercise below on the use of <strong class="command">xtfrm</strong>.</p>
 </aside>
 <aside class="footnote brackets" id="footagainstformulas" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id30">26</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">25</a><span class="fn-bracket">]</span></span>
 <p>For example, <strong class="command">lm.fit</strong>
 can be used instead of <strong class="command">lm</strong>. It is slightly more difficult
 to learn, surely, but has the added benefit of making sure
@@ -2217,8 +2257,8 @@ the user knows that all model variables are not magical
 (especially the nonlinear/mixed effect terms).</p>
 </aside>
 <aside class="footnote brackets" id="footfactorint" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id31">27</a><span class="fn-bracket">]</span></span>
-<p><span id="id41">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span> states: <em>Factors are currently
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id30">26</a><span class="fn-bracket">]</span></span>
+<p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span> states: <em>Factors are currently
 implemented using an integer
 array to specify the actual levels and a second array of names that are
 mapped to the integers. Rather unfortunately users often make use of the
@@ -2229,17 +2269,17 @@ Still, <em>fortunately</em>, this has been a de facto standard for factors for
 a very long time.</p>
 </aside>
 <aside class="footnote brackets" id="footstrcache" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id32">28</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id31">27</a><span class="fn-bracket">]</span></span>
 <p>Recall that there is a global (internal) string cache,
 hence having many duplicated strings is not an issue,
 memory-use-wisely.</p>
 </aside>
 <aside class="footnote brackets" id="footencapsulation" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id33">29</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id32">28</a><span class="fn-bracket">]</span></span>
 <p>Which can be good, right?</p>
 </aside>
 <aside class="footnote brackets" id="footoptimise" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id34">30</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id33">29</a><span class="fn-bracket">]</span></span>
 <p>Do not get yours truly wrong, improving things is generally
 good, but overall, in the long run, as a compulsive habit
 (“this is what (some) stakeholders want”,
@@ -2255,7 +2295,7 @@ a whole new set of issues (how to make the new functions
 interoperable with each other in a seamless manner, etc.).</p>
 </aside>
 <aside class="footnote brackets" id="footsealmeth" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id35">31</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id34">30</a><span class="fn-bracket">]</span></span>
 <p>When methods are parts of particular classes,
 there can be a lot of duplicated code.
 Functional OOP can be more developer-friendly as we
@@ -2263,13 +2303,13 @@ can implement all methods related to roughly the same
 functionality in one spot.</p>
 </aside>
 <aside class="footnote brackets" id="footextmeth" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id36">32</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id35">31</a><span class="fn-bracket">]</span></span>
 <p>See also the concept
 of extension methods in C# or Kotlin or, to some extent,
 class inheritance.</p>
 </aside>
 <aside class="footnote brackets" id="footpipe" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id37">33</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id36">32</a><span class="fn-bracket">]</span></span>
 <p>It was inspired by `<strong class="command">|</strong>` in Bash
 and `<strong class="command">|&gt;&#64;</strong>` in F# and Julia (which are part of the
 language specification).
@@ -2277,7 +2317,7 @@ Also, there is a `<strong class="command">%&gt;%</strong>` operator (and related
 in the R package <strong class="program">magrittr</strong>.</p>
 </aside>
 <aside class="footnote brackets" id="footcool" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id38">34</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id37">33</a><span class="fn-bracket">]</span></span>
 <p>Which some readers would name an <em>uncool</em> (old-school)
 approach, but we do not care. Remember that the functional
 syntax is the native one and we have to be able
@@ -2322,7 +2362,7 @@ to understand it anyway.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-03T20:15:25+1000.
+              Last updated on 2023-04-05T16:34:08+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
