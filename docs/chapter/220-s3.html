@@ -1015,7 +1015,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-04-06 17:25:28 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-04-06 21:59:03 AEST&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1272,13 +1272,13 @@ as a simple exercise to the kind reader.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-04-06 17:25:28 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-04-06 21:59:03 AEST&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1680765929</span>
+<span class="c1">## [1] 1680782344</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1409,33 +1409,14 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.240   0.025   0.265</span>
+<span class="c1">##   0.258   0.017   0.275</span>
 </pre></div>
 </div>
 <p>The function returns an object of class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
 Inspect how it is represented internally.</p>
 </div></div></section>
-<section id="formulas">
-<span id="sec-formula-intro"></span><h3><span class="section-number">10.3.2. </span>Formulas (*)<a class="headerlink" href="#formulas" title="Permalink to this heading">#</a></h3>
-<p>Formulas (created by means of `<strong class="command">~</strong>`)
-are quite advanced language constructs and hence they will be discussed
-much further: in <a class="reference internal" href="330-environment.html#sec-formula"><span class="std std-numref">Section 16.4.6</span></a>.</p>
-<p>Some R users refer to them in functions such as
-<strong class="command">lm</strong>, <strong class="command">aggregate</strong>, <strong class="command">t.test</strong>,
-<strong class="command">boxplot</strong>, or <strong class="command">plot</strong> to specify statistical
-models (see also Chapter 11 in <span id="id28">[<a class="reference internal" href="999-bibliography.html#id8" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">48</a>]</span> ) or queries
-such as “<code class="docutils literal notranslate"><span class="pre">y</span></code> as a function of <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, and <code class="docutils literal notranslate"><span class="pre">x3</span></code>” and
-“<code class="docutils literal notranslate"><span class="pre">y</span></code> grouped/split by a combination of <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>”
-where <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">x1</span></code>, etc., are, for example, column names in a data frame
-or named items in a list.</p>
-<p>There is no single standard governing how a function should interpret
-a formula’s terms. In fact, each procedure is free to introduce
-its own meaning (a microlanguage built on top of R). Due to this,
-yours truly discourages<a class="footnote-reference brackets" href="#footagainstformulas" id="id29" role="doc-noteref"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></a>
-their use (especially by beginners).</p>
-</section>
 <section id="factors">
-<span id="sec-factor"></span><h3><span class="section-number">10.3.3. </span>Factors<a class="headerlink" href="#factors" title="Permalink to this heading">#</a></h3>
+<span id="sec-factor"></span><h3><span class="section-number">10.3.2. </span>Factors<a class="headerlink" href="#factors" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">factor</span></code> class is often used to represent categorical (qualitative) data,
 e.g., species, groups, types.
 In fact, the example <code class="docutils literal notranslate"><span class="pre">categorical</span></code> class that we played with above has been
@@ -1452,7 +1433,7 @@ around the labels and the list of levels is given at the end.</p>
 <p>Internally, such objects are represented as integer vectors
 (<a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>) with elements between 1 and <em>k</em> with the special
 (as in <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>) <code class="docutils literal notranslate"><span class="pre">levels</span></code>
-attribute being a character vector of length <em>k</em><a class="footnote-reference brackets" href="#footfactorint" id="id30" role="doc-noteref"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></a>.</p>
+attribute being a character vector of length <em>k</em><a class="footnote-reference brackets" href="#footfactorint" id="id28" role="doc-noteref"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="c1">## [1] &quot;factor&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -1466,7 +1447,7 @@ attribute being a character vector of length <em>k</em><a class="footnote-refere
 </pre></div>
 </div>
 <p>Factors are often  used instead of
-character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id31" role="doc-noteref"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></a>,
+character vectors defined over a small number of unique labels<a class="footnote-reference brackets" href="#footstrcache" id="id29" role="doc-noteref"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></a>,
 where there is a need to manipulate their levels easily.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;levels&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># also levels(f) &lt;- c(....new...)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -1633,7 +1614,7 @@ add new levels to the modified object:</p>
 is capable of doing so.</p>
 </div></div></section>
 <section id="ordered-factors">
-<h3><span class="section-number">10.3.4. </span>Ordered factors<a class="headerlink" href="#ordered-factors" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">10.3.3. </span>Ordered factors<a class="headerlink" href="#ordered-factors" title="Permalink to this heading">#</a></h3>
 <p>Note that when creating factors, we can enforce a particular ordering
 and the number of levels:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">)</span>
@@ -1660,6 +1641,34 @@ relation over set of the labels, we can call:</p>
 <p>How is that possible? Well, based on information provided in this chapter
 it will come as no surprise that it is because… someone has
 implemented a comparison operator for objects of class <code class="docutils literal notranslate"><span class="pre">ordered</span></code>.</p>
+</section>
+<section id="formulae">
+<span id="sec-formula-intro"></span><h3><span class="section-number">10.3.4. </span>Formulae (*)<a class="headerlink" href="#formulae" title="Permalink to this heading">#</a></h3>
+<p>Formulae are created by means of the `<strong class="command">~</strong>` operator.
+Some R users employ them to specify widely-conceived <em>statistical models</em>
+in functions such as
+<strong class="command">lm</strong> (e.g., linear regression),
+<strong class="command">glm</strong> (logistic regression etc.),
+<strong class="command">aov</strong> (analysis of variance),
+<strong class="command">wilcox.test</strong> (the two-sample Mann-Whitney-Wilcoxon test),
+<strong class="command">aggregate</strong> (computing aggregates within data groups),
+<strong class="command">boxplot</strong> (box and whisker plots for a variable
+split by a combination of factors),
+or <strong class="command">plot</strong> (scatterplots);
+see also Chapter 11 in <span id="id30">[<a class="reference internal" href="999-bibliography.html#id8" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">48</a>]</span>.</p>
+<p>For instance, they can be used to describe symbolic relationships such as:</p>
+<ul class="simple">
+<li><p>“<code class="docutils literal notranslate"><span class="pre">y</span></code> as a linear combination of <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, and <code class="docutils literal notranslate"><span class="pre">x3</span></code>”,</p></li>
+<li><p>“<code class="docutils literal notranslate"><span class="pre">y</span></code> grouped/split by a combination of <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>”,</p></li>
+</ul>
+<p>where <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">x1</span></code>, etc., are, for example, column names in some data frame.</p>
+<p>Due to the fact that formulae are interpreted by the corresponding
+functions, and not the R language itself, programmers are free
+to assign them any meaning. As their syntax is quite esoteric,
+beginners might find them confusing. Hence,
+we will discuss them much later: in <a class="reference internal" href="330-environment.html#sec-formula"><span class="std std-numref">Section 16.4.6</span></a>.</p>
+<p>For now, good news is that the use of formulae can usually quite easily
+be avoided<a class="footnote-reference brackets" href="#footagainstformulae" id="id31" role="doc-noteref"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></a>.</p>
 </section>
 </section>
 <section id="argument-checking-revisited">
@@ -2249,16 +2258,8 @@ As an exercise, check out its source code.</p>
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">24</a><span class="fn-bracket">]</span></span>
 <p>See an exercise below on the use of <strong class="command">xtfrm</strong>.</p>
 </aside>
-<aside class="footnote brackets" id="footagainstformulas" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">25</a><span class="fn-bracket">]</span></span>
-<p>For example, <strong class="command">lm.fit</strong>
-can be used instead of <strong class="command">lm</strong>. It is slightly more difficult
-to learn, surely, but has the added benefit of making sure
-the user knows that all model variables are not magical
-(especially the nonlinear/mixed effect terms).</p>
-</aside>
 <aside class="footnote brackets" id="footfactorint" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id30">26</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id28">25</a><span class="fn-bracket">]</span></span>
 <p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">56</a>]</span> states: <em>Factors are currently
 implemented using an integer
 array to specify the actual levels and a second array of names that are
@@ -2270,10 +2271,18 @@ Still, <em>fortunately</em>, this has been a de facto standard for factors for
 a very long time.</p>
 </aside>
 <aside class="footnote brackets" id="footstrcache" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id31">27</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">26</a><span class="fn-bracket">]</span></span>
 <p>Recall that there is a global (internal) string cache,
 hence having many duplicated strings is not an issue,
 memory-use-wisely.</p>
+</aside>
+<aside class="footnote brackets" id="footagainstformulae" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id31">27</a><span class="fn-bracket">]</span></span>
+<p>For example, <strong class="command">lm.fit</strong>
+can be used instead of <strong class="command">lm</strong>. It is slightly more difficult
+to learn, surely, but has the added benefit of making sure
+the user knows that all model variables are not magical
+(especially the nonlinear/mixed effect terms).</p>
 </aside>
 <aside class="footnote brackets" id="footencapsulation" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id32">28</a><span class="fn-bracket">]</span></span>
@@ -2363,7 +2372,7 @@ to understand it anyway.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-06T17:46:27+1000.
+              Last updated on 2023-04-06T22:30:22+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2397,9 +2406,9 @@ to understand it anyway.</p>
 </li>
 <li><a class="reference internal" href="#common-built-in-s3-classes">10.3. Common built-in S3 classes</a><ul>
 <li><a class="reference internal" href="#date-time-etc">10.3.1. Date, time, etc.</a></li>
-<li><a class="reference internal" href="#formulas">10.3.2. Formulas (*)</a></li>
-<li><a class="reference internal" href="#factors">10.3.3. Factors</a></li>
-<li><a class="reference internal" href="#ordered-factors">10.3.4. Ordered factors</a></li>
+<li><a class="reference internal" href="#factors">10.3.2. Factors</a></li>
+<li><a class="reference internal" href="#ordered-factors">10.3.3. Ordered factors</a></li>
+<li><a class="reference internal" href="#formulae">10.3.4. Formulae (*)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#argument-checking-revisited">10.4. Argument checking revisited</a></li>
