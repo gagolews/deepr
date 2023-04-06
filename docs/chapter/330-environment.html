@@ -296,7 +296,7 @@ it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
 </div></blockquote>
 <p>In the first part of our book, we have discussed quite a few
 <em>basic</em> object types: numeric, logical, and character vectors,
@@ -322,7 +322,10 @@ a hash table-like data structure with a quick by-name element look-up),
 they are crucial for the R interpreter itself.
 Namely, we shall soon see that they form the basis
 of the <em>environment model of evaluation</em>
-which governs how expressions are computed (<a class="reference internal" href="#sec-env-mod-eval"><span class="std std-numref">Section 16.2</span></a>).</p>
+which governs how expressions are computed (<a class="reference internal" href="#sec-env-mod-eval"><span class="std std-numref">Section 16.2</span></a>).
+Marrying it with <em>lazy evaluation</em> (<a class="reference internal" href="#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>),
+we will discover a set of very powerful metaprogramming
+techniques.</p>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
@@ -357,7 +360,7 @@ look-and-feel. This is also the case with element extraction:</p>
 <h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Permalink to this heading">#</a></h3>
 <p>Let us note that the printing of an environment is quite awkward:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span><span class="w">  </span><span class="c1"># same with str(e1)</span>
-<span class="c1">## &lt;environment: 0x560195cccdb0&gt;</span>
+<span class="c1">## &lt;environment: 0x556aabcea650&gt;</span>
 </pre></div>
 </div>
 <p>This is the address where <code class="docutils literal notranslate"><span class="pre">e1</span></code> is stored
@@ -393,7 +396,7 @@ at the same time with the index operator:</p>
 <span class="c1">## Error in e1[[1]] &lt;- &quot;bad key&quot;: wrong args for environment subassignment</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id38">
+<div class="proof proof-type-exercise" id="id37">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.1</span>
@@ -414,7 +417,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 <span class="c1">## $z</span>
 <span class="c1">## NULL</span>
 <span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="n">whatever</span><span class="o">=</span><span class="s">&quot;it&#39;s not going to be printed anyway&quot;</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x560195628368&gt;</span>
+<span class="c1">## &lt;environment: 0x556aab709320&gt;</span>
 <span class="nf">as.list</span><span class="p">(</span><span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="m">3</span><span class="p">)))</span><span class="w">  </span><span class="c1"># no duplicates allowed</span>
 <span class="c1">## $y</span>
 <span class="c1">## [1] 2</span>
@@ -427,7 +430,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 <section id="hash-maps-fast-element-look-up-by-name">
 <h3><span class="section-number">16.1.3. </span>Hash maps: Fast element look-up by name<a class="headerlink" href="#hash-maps-fast-element-look-up-by-name" title="Permalink to this heading">#</a></h3>
 <p>Environment frames are internally implemented
-using hash tables (hash maps; see, e.g., <span id="id6">[<a class="reference internal" href="999-bibliography.html#id58" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., and Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">10</a>, <a class="reference internal" href="999-bibliography.html#id33" title="Knuth, D.E. (1997).  The Art of Computer Programming III: Sorting and Searching. Addison-Wesley.">34</a>]</span>)
+using hash tables (hash maps; see, e.g., <span id="id6">[<a class="reference internal" href="999-bibliography.html#id62" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., and Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">14</a>, <a class="reference internal" href="999-bibliography.html#id33" title="Knuth, D.E. (1997).  The Art of Computer Programming III: Sorting and Searching. Addison-Wesley.">38</a>]</span>)
 with keys being character strings.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -451,7 +454,7 @@ we would rather store, iterate over, and process all the elements
 Lists still allow for an element look-up by name, even though this
 is slightly slower<a class="footnote-reference brackets" href="#footlisttime" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>. Hence, they are much more universal.</p>
 </div>
-<div class="proof proof-type-example" id="id39">
+<div class="proof proof-type-example" id="id38">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.2</span>
@@ -477,7 +480,7 @@ If <code class="docutils literal notranslate"><span class="pre">counter</span></
 will be <span class="math notranslate nohighlight">\(O(n^2)\)</span> (if all keys are unique).
 However, for environments, it is faster by an order of magnitude:
 down to amortised <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id40">
+</div></div><div class="proof proof-type-exercise" id="id39">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.3</span>
@@ -486,7 +489,7 @@ down to amortised <span class="math notranslate nohighlight">\(O(n)\)</span>.</p
 <p>(*)
 Implement the above pseudocode and benchmark the two data structures
 using <strong class="command">proc.time</strong> on some example data.</p>
-</div></div><div class="proof proof-type-exercise" id="id41">
+</div></div><div class="proof proof-type-exercise" id="id40">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.4</span>
@@ -548,9 +551,9 @@ an assign- and pass-by-reference semantics.</p>
 <p>then the names <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are bound with exactly the same object
 in computer’s memory:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x56019515a738&gt;</span>
+<span class="c1">## &lt;environment: 0x556aab187968&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x56019515a738&gt;</span>
+<span class="c1">## &lt;environment: 0x556aab187968&gt;</span>
 </pre></div>
 </div>
 <p>Therefore:</p>
@@ -563,7 +566,7 @@ in computer’s memory:</p>
 </div>
 <p>The same happens when we pass them to a function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># pass-by-reference (`y` is `x`, remember?)</span>
-<span class="c1">## &lt;environment: 0x56019515a738&gt;</span>
+<span class="c1">## &lt;environment: 0x556aab187968&gt;</span>
 <span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span><span class="w">   </span><span class="c1"># `x` has changed (names `y` and `x` are bound to the same object)</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
@@ -587,13 +590,13 @@ is only created if absolutely necessary.</p>
 <p>Creation of a new large numeric vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w">                </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.085   0.220   0.305</span>
+<span class="c1">##   0.089   0.237   0.325</span>
 </pre></div>
 </div>
 <p>Creation of a (delayed) copy:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">                         </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##       0       0       0</span>
+<span class="c1">##   0.001   0.000   0.001</span>
 </pre></div>
 </div>
 <p>This was instant. Thus, we definitely did not duplicate the <code class="docutils literal notranslate"><span class="pre">n</span></code> data cells.</p>
@@ -601,23 +604,23 @@ is only created if absolutely necessary.</p>
 compare <a class="reference internal" href="310-compiled.html#sec-memory-management"><span class="std std-numref">Section 14.3</span></a>. That, temporarily,
 <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> point to the same address in memory can be inspected by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># internal function - do not use it</span>
-<span class="c1">## @7f8589174010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7fa5dd73b010 14 REALSXP g0c7 [REF(4)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f8589174010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
+<span class="c1">## @7fa5dd73b010 14 REALSXP g0c7 [REF(5)] (len=100000000, tl=0) 0,0,0,0,0,...</span>
 </pre></div>
 </div>
 <p>The real copying is only triggered when we try to modify <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code>.
 This is when they need to be separated.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w">                      </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.127   0.185   0.313</span>
+<span class="c1">##   0.141   0.175   0.316</span>
 </pre></div>
 </div>
 <p>Now <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are different objects.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="c1">## @7f8589174010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0…</span>
+<span class="c1">## @7fa5dd73b010 14 REALSXP g0c7 [MARK,REF(5)] (len=100000000, tl=0) 0,0,0,0…</span>
 <span class="nf">.Internal</span><span class="p">(</span><span class="nf">inspect</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="c1">## @7f8559683010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0…</span>
+<span class="c1">## @7fa5adc4a010 14 REALSXP g0c7 [MARK,REF(1)] (len=100000000, tl=0) 1,0,0,0…</span>
 </pre></div>
 </div>
 <p>Note that the elapsed time  is similar to that needed to create
@@ -625,7 +628,7 @@ This is when they need to be separated.</p>
 <p>Further modifications will already be quick:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">proc.time</span><span class="p">();</span><span class="w">           </span><span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w">                      </span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.161   0.200   0.362</span>
+<span class="c1">##   0.159   0.220   0.379</span>
 </pre></div>
 </div>
 </div>
@@ -647,7 +650,7 @@ in the current author’s opinion, such classes are alien citizens
 of our environment, breaking its <em>functional</em> nature.
 Therefore, we will not be discussing them here.</p>
 <p>A curious reader is referred to <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;ReferenceClasses&quot;)</span></code>
-and Chapters 9 and 11 of <span id="id12">[<a class="reference internal" href="999-bibliography.html#id20" title="Chambers, J.M. (2016).  Extending R. Chapman &amp; Hall.">7</a>]</span> for more details.</p>
+and Chapters 9 and 11 of <span id="id12">[<a class="reference internal" href="999-bibliography.html#id20" title="Chambers, J.M. (2016).  Extending R. Chapman &amp; Hall.">11</a>]</span> for more details.</p>
 </section>
 </section>
 <section id="the-environment-model-of-evaluation">
@@ -690,7 +693,7 @@ in which <em>environment</em> we <em>evaluate</em> the said sentence.</p>
 <p>We call this the <em>environment model of evaluation</em>,
 a notion that R authors have borrowed from a Lisp-like
 language called Scheme<a class="footnote-reference brackets" href="#footlisp" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>
-(see Section 3.2 in <span id="id14">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> and Section 6 in <span id="id15">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span>).</p>
+(see Section 3.2 in <span id="id14">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> and Section 6 in <span id="id15">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">56</a>]</span>).</p>
 <section id="getting-the-current-environment-here-the-global-one">
 <h3><span class="section-number">16.2.1. </span>Getting the current environment (here: the global one)<a class="headerlink" href="#getting-the-current-environment-here-the-global-one" title="Permalink to this heading">#</a></h3>
 <p>By default, expressions are evaluated in the <em>current</em> environment,
@@ -702,7 +705,7 @@ which we can fetch by calling:</p>
 <p>We are working <em>on the R console</em>, hence the current one is the <em>global</em>
 environment (user workspace), which we can access anywhere by calling
 <strong class="command">globalenv</strong> or referring to the `<code class="docutils literal notranslate"><span class="pre">.GlobalEnv</span></code>` object.</p>
-<div class="proof proof-type-example" id="id42">
+<div class="proof proof-type-example" id="id41">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.5</span>
@@ -731,7 +734,7 @@ the current environment):</p>
 </pre></div>
 </div>
 <p>exactly the above named object is fetched.</p>
-</div></div><div class="proof proof-type-exercise" id="id43">
+</div></div><div class="proof proof-type-exercise" id="id42">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.6</span>
@@ -828,19 +831,19 @@ It can be fetched and set using the <strong class="command">parent.env</strong> 
 let us create two new environments
 whose enclosures are set explicitly as follows:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e4</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e3</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x560195ce8a48&gt;</span>
+<span class="c1">## &lt;environment: 0x556aabcff290&gt;</span>
 <span class="p">(</span><span class="n">e5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e4</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x560195c0beb8&gt;</span>
+<span class="c1">## &lt;environment: 0x556aabc08678&gt;</span>
 </pre></div>
 </div>
 <p>To verify that everything is in order, let us inspect
 the following:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e3</span><span class="p">)</span><span class="w">  </span><span class="c1"># this is the address of e3 by the way</span>
-<span class="c1">## &lt;environment: 0x56019705d220&gt;</span>
+<span class="c1">## &lt;environment: 0x556aad06a0b8&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e4</span><span class="p">)</span><span class="w">  </span><span class="c1"># e3 is the enclosing environment of e4</span>
-<span class="c1">## &lt;environment: 0x56019705d220&gt;</span>
+<span class="c1">## &lt;environment: 0x556aad06a0b8&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e5</span><span class="p">)</span><span class="w">  </span><span class="c1"># e4 is the enclosing environment of e5</span>
-<span class="c1">## &lt;environment: 0x560195ce8a48&gt;</span>
+<span class="c1">## &lt;environment: 0x556aabcff290&gt;</span>
 </pre></div>
 </div>
 <p>Also, let us bind two different objects with the name `<code class="docutils literal notranslate"><span class="pre">y</span></code>` in <code class="docutils literal notranslate"><span class="pre">e5</span></code>
@@ -850,10 +853,10 @@ and <code class="docutils literal notranslate"><span class="pre">e3</span></code
 </pre></div>
 </div>
 <p>The current state of matters is depicted in <a class="reference internal" href="#fig-envirs1"><span class="std std-numref">Figure 16.1</span></a>.</p>
-<figure class="align-default" id="id44">
+<figure class="align-default" id="id43">
 <span id="fig-envirs1"></span><img alt="../_images/envirs1.png" src="../_images/envirs1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 16.1 </span><span class="caption-text">Example environments and their enclosures (original setting)</span><a class="headerlink" href="#id44" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 16.1 </span><span class="caption-text">Example environments and their enclosures (original setting)</span><a class="headerlink" href="#id43" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Now, let us consider a simple expression featuring
@@ -879,10 +882,10 @@ so that we obtain the setting depicted in <a class="reference internal" href="#f
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e4</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">e5</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id45">
+<figure class="align-default" id="id44">
 <span id="fig-envirs2"></span><img alt="../_images/envirs2.png" src="../_images/envirs2.png" />
 <figcaption>
-<p><span class="caption-number">Figure 16.2 </span><span class="caption-text">Example environments and their enclosures (after the change made)</span><a class="headerlink" href="#id45" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 16.2 </span><span class="caption-text">Example environments and their enclosures (after the change made)</span><a class="headerlink" href="#id44" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Now evaluating `<code class="docutils literal notranslate"><span class="pre">y</span></code>` again in the same <code class="docutils literal notranslate"><span class="pre">e4</span></code> yields of course
@@ -991,14 +994,14 @@ the enclosures recursively.</p>
 <span class="w">    </span><span class="n">ecur</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">parent.env</span><span class="p">(</span><span class="n">ecur</span><span class="p">)</span><span class="w">  </span><span class="c1"># advance to its enclosure</span>
 <span class="p">}</span>
 <span class="c1">## &lt;environment: R_GlobalEnv&gt;</span>
-<span class="c1">## &lt;environment: 0x5601954fe900&gt;</span>
+<span class="c1">## &lt;environment: 0x556aab4fd1e0&gt;</span>
 <span class="c1">## &lt;environment: package:stats&gt;</span>
 <span class="c1">## &lt;environment: package:graphics&gt;</span>
 <span class="c1">## &lt;environment: package:grDevices&gt;</span>
 <span class="c1">## &lt;environment: package:utils&gt;</span>
 <span class="c1">## &lt;environment: package:datasets&gt;</span>
 <span class="c1">## &lt;environment: package:methods&gt;</span>
-<span class="c1">## &lt;environment: 0x5601934a8cf0&gt;</span>
+<span class="c1">## &lt;environment: 0x556aa94afa60&gt;</span>
 <span class="c1">## &lt;environment: base&gt;                  `&lt;` found here!</span>
 <span class="c1">## &lt;environment: R_EmptyEnv&gt;</span>
 <span class="c1">## Error in parent.env(ecur): the empty environment has no parent</span>
@@ -1081,7 +1084,7 @@ is to be referred to:</p>
 <p>Here, the <code class="docutils literal notranslate"><span class="pre">iris</span></code> list was converted to an environment,
 and the necessary enclosures were set accordingly:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">()))</span>
-<span class="c1">## &lt;environment: 0x56019353cc78&gt;</span>
+<span class="c1">## &lt;environment: 0x556aa9e92b58&gt;</span>
 <span class="c1">##  - attr(*, &quot;name&quot;)= chr &quot;iris&quot;</span>
 <span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">())))</span>
 <span class="c1">## &lt;environment: package:tools&gt;</span>
@@ -1204,8 +1207,8 @@ in the current environment:</p>
 </div>
 </section>
 </section>
-<section id="evaluating-functions">
-<span id="sec-eval-fun"></span><h2><span class="section-number">16.3. </span>🚧 Evaluating functions<a class="headerlink" href="#evaluating-functions" title="Permalink to this heading">#</a></h2>
+<section id="closures">
+<span id="sec-eval-fun"></span><h2><span class="section-number">16.3. </span>🚧 Closures<a class="headerlink" href="#closures" title="Permalink to this heading">#</a></h2>
 <p>So far we have only covered the rules behind the evaluation of <em>standalone</em>
 R expressions. In this section, we take a look at what happens
 <em>inside</em> the invoked functions.</p>
@@ -1229,7 +1232,7 @@ and we go back to the previous environment from the call stack.</p>
 <p>First call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x560196b69378&gt;</span>
+<span class="c1">## &lt;environment: 0x556aacb7a088&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 4</span>
 <span class="c1">##  $ x: num 2</span>
@@ -1238,7 +1241,7 @@ and we go back to the previous environment from the call stack.</p>
 <p>Second call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x560196d25978&gt;</span>
+<span class="c1">## &lt;environment: 0x556aacd34768&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 9</span>
 <span class="c1">##  $ x: num 3</span>
@@ -1298,7 +1301,7 @@ has this associated environment as its closure.</p>
 <span class="c1">## &lt;environment: R_GlobalEnv&gt;</span>
 </pre></div>
 </div>
-<div class="proof proof-type-example" id="id46">
+<div class="proof proof-type-example" id="id45">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.7</span>
@@ -1326,7 +1329,7 @@ one that also happens to define `<code class="docutils literal notranslate"><spa
 <span class="c1">## [1] &quot;x in e&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-example" id="id47">
+</div></div><div class="proof proof-type-example" id="id46">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.8</span>
@@ -1352,8 +1355,8 @@ one that also happens to define `<code class="docutils literal notranslate"><spa
 
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span>
 <span class="nf">test</span><span class="p">()</span>
-<span class="c1">## test: current env: &lt;environment: 0x56019420d778&gt;</span>
-<span class="c1">## subtest: enclosing env: &lt;environment: 0x56019420d778&gt;</span>
+<span class="c1">## test: current env: &lt;environment: 0x556aaa0d4bd8&gt;</span>
+<span class="c1">## subtest: enclosing env: &lt;environment: 0x556aaa0d4bd8&gt;</span>
 <span class="c1">## x = spam</span>
 <span class="c1">## subtest: enclosing env: &lt;environment: R_GlobalEnv&gt;</span>
 <span class="c1">## x = bacon</span>
@@ -1407,7 +1410,7 @@ To recall:</p>
 <span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x5601967c8960&gt;</span>
+<span class="c1">## &lt;environment: 0x556aac7d6270&gt;</span>
 </pre></div>
 </div>
 <p>The variables `<code class="docutils literal notranslate"><span class="pre">x</span></code>`, `<code class="docutils literal notranslate"><span class="pre">y</span></code>`, etc. that <strong class="command">f1</strong>’s source code
@@ -1419,7 +1422,7 @@ refers to are stored inside its dedicated, associated environment:</p>
 <p>Routines such as <strong class="command">approxfun</strong> we are used to referring to
 as <em>function factories</em>. They return functions whose
 its non-local variables are stored in their associated environments.</p>
-<div class="proof proof-type-example" id="id48">
+<div class="proof proof-type-example" id="id47">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.9</span>
@@ -1442,10 +1445,10 @@ used after the call, hence it will not be garbage-collected.</p>
 <p>Example calls:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">square</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x560196d23860&gt;</span>
+<span class="c1">## &lt;environment: 0x556aacd32340&gt;</span>
 <span class="p">(</span><span class="n">cube</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x560196db4290&gt;</span>
+<span class="c1">## &lt;environment: 0x556aacdc2d70&gt;</span>
 <span class="nf">cube</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] 8</span>
 <span class="nf">square</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
@@ -1458,7 +1461,7 @@ used after the call, hence it will not be garbage-collected.</p>
 <span class="c1">## [1] 128</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id49">
+</div></div><div class="proof proof-type-exercise" id="id48">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.10</span>
@@ -1466,13 +1469,13 @@ used after the call, hence it will not be garbage-collected.</p>
     </div><div class="proof-content">
 <p><strong class="command">Negate</strong> is another example of a built-in function factory.
 Study its source code.</p>
-</div></div><div class="proof proof-type-example" id="id50">
+</div></div><div class="proof proof-type-example" id="id49">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.11</span>
         
     </div><div class="proof-content">
-<p>In <span id="id24">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">32</a>]</span>, the following example is given:</p>
+<p>In <span id="id24">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">36</a>]</span>, the following example is given:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">account</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">list</span><span class="p">(</span>
 <span class="w">        </span><span class="n">balance</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="n">total</span><span class="p">,</span>
@@ -1494,7 +1497,7 @@ Study its source code.</p>
 This somewhat resembles a class with three methods and one data field.
 No wonder why reference classes (<a class="reference internal" href="#sec-refclass"><span class="std std-numref">Section 16.1.5</span></a>) were introduced
 at some point: they are based on the same concept.</p>
-</div></div><div class="proof proof-type-exercise" id="id51">
+</div></div><div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.12</span>
@@ -1539,8 +1542,83 @@ Normally, we should not be doing that,
 but some built-in functions rely on this feature, hence our avid interest
 in it here. In the subsections below, we will discuss a few its use cases.</p>
 </section>
-<section id="lazy-evaluation-of-arguments">
-<span id="sec-lazy-evaluation"></span><h3><span class="section-number">16.3.5. </span>Lazy evaluation of arguments<a class="headerlink" href="#lazy-evaluation-of-arguments" title="Permalink to this heading">#</a></h3>
+<section id="package-namespaces">
+<h3><span class="section-number">16.3.5. </span>🚧 Package namespaces (*)<a class="headerlink" href="#package-namespaces" title="Permalink to this heading">#</a></h3>
+<p>… to do … working on it …</p>
+<p>We will use an example <strong class="program">rpackagedemo</strong> package
+discussed <a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>, which is available
+for download from <a class="reference external" href="https://github.com/gagolews/rpackagedemo/">https://github.com/gagolews/rpackagedemo/</a>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># https://github.com/gagolews/rpackagedemo/</span>
+<span class="c1">## Attaching package: &#39;rpackagedemo&#39;</span>
+<span class="c1">## The following object is masked from &#39;package:utils&#39;: demo</span>
+<span class="nf">demo</span><span class="p">(</span><span class="s">&quot;Sir Lancelot&quot;</span><span class="p">)</span>
+<span class="c1">## G&#39;day, Sir Lancelot!</span>
+<span class="n">demo</span>
+<span class="c1">## function (x = &quot;world&quot;)</span>
+<span class="c1">## {</span>
+<span class="c1">##     cat(prepare_message(x))</span>
+<span class="c1">## }</span>
+<span class="c1">## &lt;environment: namespace:rpackagedemo&gt;</span>
+<span class="n">prepare_message</span>
+<span class="c1">## Error in eval(expr, envir, enclos): object &#39;prepare_message&#39; not found</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Functions defined in packages have the package namespace
+as their associated environment.</p>
+</div>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">rpackagedemo</span><span class="o">:::</span><span class="n">prepare_message</span>
+<span class="c1">## function (x)</span>
+<span class="c1">## {</span>
+<span class="c1">##     sprintf(&quot;G&#39;day, %s!\n&quot;, x)</span>
+<span class="c1">## }</span>
+<span class="c1">## &lt;environment: namespace:rpackagedemo&gt;</span>
+<span class="n">prepare_message</span><span class="w"> </span><span class="o">&lt;&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;aaargh&quot;</span>
+<span class="nf">demo</span><span class="p">(</span><span class="s">&quot;Sir Lancelot&quot;</span><span class="p">)</span>
+<span class="c1">## G&#39;day, Sir Lancelot!</span>
+<span class="nf">getNamespaceExports</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;demo&quot;</span>
+<span class="nf">getNamespaceImports</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span>
+<span class="c1">## $base</span>
+<span class="c1">## [1] TRUE</span>
+<span class="c1">##</span>
+<span class="c1">## $stringx</span>
+<span class="c1">##   sprintf</span>
+<span class="c1">## &quot;sprintf&quot;</span>
+<span class="nf">assign</span><span class="p">(</span><span class="s">&quot;prepare_message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;aaargh&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">envir</span><span class="o">=</span><span class="nf">getNamespace</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">))</span>
+<span class="c1">## Error in assign(&quot;prepare_message&quot;, function(x) &quot;aaargh&quot;, envir =</span>
+<span class="c1">##     getNamespace(&quot;rpackagedemo&quot;)): cannot change value of locked binding</span>
+<span class="c1">##     for &#39;prepare_message&#39;</span>
+<span class="nf">getNamespace</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span>
+<span class="c1">## &lt;environment: namespace:rpackagedemo&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="s3-method-lookup-by-usemethod">
+<span id="sec-use-method"></span><h3><span class="section-number">16.3.6. </span>🚧 S3 method lookup by <strong class="command">UseMethod</strong> (*)<a class="headerlink" href="#s3-method-lookup-by-usemethod" title="Permalink to this heading">#</a></h3>
+<p>… to do … working on it …</p>
+</section>
+</section>
+<section id="lazy-evaluation">
+<span id="sec-lazy-evaluation"></span><h2><span class="section-number">16.4. </span>🚧 Lazy evaluation<a class="headerlink" href="#lazy-evaluation" title="Permalink to this heading">#</a></h2>
+<p>The ability to create, store, and manipulate unevaluated expressions
+so that the can be computed later is not particularly special.
+Many languages enjoy such <em>metaprogramming</em> (computing <em>on</em> the language,
+reflection) capabilities, e.g., Lisp, Scheme, Wolfram, Julia,
+amongst many others.</p>
+<p>However, R inherited from its predecessor, the S language,
+a variation of the idea of lazy<a class="footnote-reference brackets" href="#footnomemoisation" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a>
+(nonstrict, noneager, delayed)
+evaluation of function arguments.
+They are evaluated when their <em>values</em> are first needed.
+As we can take the expressions used to generate them
+(via <strong class="command">substitute</strong>; see <a class="reference internal" href="320-language.html#sec-substitute"><span class="std std-numref">Section 15.4.2</span></a>),
+we shall see that we can ignore their meaning in the original (caller’s)
+context and compute them in a custom one.</p>
+<section id="evaluation-of-supplied-arguments">
+<span id="sec-lazy-args"></span><h3><span class="section-number">16.4.1. </span>Evaluation of supplied arguments<a class="headerlink" href="#evaluation-of-supplied-arguments" title="Permalink to this heading">#</a></h3>
 <p>We know that calls such as
 `<strong class="command">if</strong>`<code class="code docutils literal notranslate"><span class="pre">(test,</span> <span class="pre">ifyes,</span> <span class="pre">ifno)</span></code>,
 `<strong class="command">||</strong>`<code class="code docutils literal notranslate"><span class="pre">(mustbe,</span> <span class="pre">maybe)</span></code>,
@@ -1565,7 +1643,7 @@ do not have to evaluate all their arguments.</p>
 </div>
 <p>The second argument was not referred to in the function’s body.
 Therefore, it was not evaluated.</p>
-<div class="proof proof-type-example" id="id52">
+<div class="proof proof-type-example" id="id51">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.13</span>
@@ -1623,27 +1701,39 @@ Therefore, it was not evaluated.</p>
 </pre></div>
 </div>
 <p>On a side note, the `<strong class="command">~</strong>` (formula) operator will be discussed
-in <a class="reference internal" href="#sec-formula"><span class="std std-numref">Section 16.3.10</span></a>.
+in <a class="reference internal" href="#sec-formula"><span class="std std-numref">Section 16.4.6</span></a>.
 Furthermore, the `<strong class="command">:=</strong>` operator was used
 in an ancient version of R for assignments, but it is still recognised by
 the parser, yet now it has no associated meaning.</p>
 </div></div><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>We note what follows.</p>
-<ul class="simple">
-<li><p>either the evaluation of an argument does not happen
-or it is triggered only once (in which case the result is cached);</p></li>
-<li><p>fetching the expression passed as an argument
+<ul>
+<li><p>Either the evaluation of an argument does not happen
+or it is triggered only once (in which case the result is cached).</p></li>
+<li><p>Evaluation is <em>delayed</em> until the very first request
+for the underlying value (we call it <em>lazy evaluation</em>).</p></li>
+<li><p>Evaluation takes place in the calling environment (parent frame).</p></li>
+<li><p>Fetching the expression passed as an argument
 using <strong class="command">substitute</strong> (<a class="reference internal" href="320-language.html#sec-substitute"><span class="std std-numref">Section 15.4.2</span></a>)
-does not trigger the evaluation;</p></li>
-<li><p>merely passing arguments further to another function usually<a class="footnote-reference brackets" href="#footnotlazy" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a>
-does not trigger the evaluation;</p></li>
-<li><p>evaluation is <em>delayed</em> until the very first request
-for the underlying value (we call it <em>lazy evaluation</em>);</p></li>
-<li><p>evaluation takes place in the calling environment (parent frame).</p></li>
+or checking if an argument was provided with
+<strong class="command">missing</strong> (<a class="reference internal" href="320-language.html#sec-missing-arg"><span class="std std-numref">Section 15.4.3</span></a>)
+does not trigger the evaluation.</p></li>
+<li><p>Merely passing arguments further to another function <em>usually</em>
+does not trigger the evaluation.</p>
+<p>We wrote <em>usually</em>, because <code class="docutils literal notranslate"><span class="pre">builtin</span></code> functions
+(e.g., <strong class="command">c</strong>, <strong class="command">list</strong>,
+<strong class="command">sum</strong>, `<strong class="command">+</strong>`, `<strong class="command">&amp;</strong>`, and `<strong class="command">:</strong>`)
+always evaluate the arguments.
+There is no lazy evaluation in case
+of the arguments passed to group generics;
+see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code> and <a class="reference internal" href="220-s3.html#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>.
+Furthermore, replacement functions’ <code class="docutils literal notranslate"><span class="pre">values</span></code> arguments
+(<a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a>) are computed eagerly.</p>
+</li>
 </ul>
 </div>
-<div class="proof proof-type-exercise" id="id53">
+<div class="proof proof-type-exercise" id="id52">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.14</span>
@@ -1652,9 +1742,9 @@ for the underlying value (we call it <em>lazy evaluation</em>);</p></li>
 <p>Study the source code of <strong class="command">system.time</strong> and
 note the use of delayed evaluation to measure the execution
 time of a given expression.
-Also note the use of <strong class="command">on.exit</strong> (<a class="reference internal" href="#sec-on-exit"><span class="std std-numref">Section 16.3.8</span></a>)
+Also note the use of <strong class="command">on.exit</strong> (<a class="reference internal" href="#sec-on-exit"><span class="std std-numref">Section 16.4.4</span></a>)
 to react to possible exceptions.</p>
-</div></div><div class="proof proof-type-example" id="id54">
+</div></div><div class="proof proof-type-example" id="id53">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.15</span>
@@ -1689,7 +1779,7 @@ of `<code class="docutils literal notranslate"><span class="pre">x</span></code>
 its first argument. Hence, if we called
 <strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(ey,</span> <span class="pre">...)</span></code>, we would treat
 `<code class="docutils literal notranslate"><span class="pre">ey</span></code>` as a quoted name.</p>
-</div></div><div class="proof proof-type-exercise" id="id55">
+</div></div><div class="proof proof-type-exercise" id="id54">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.16</span>
@@ -1699,10 +1789,9 @@ its first argument. Hence, if we called
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
-Lazy evaluation of arguments is a concept that R inherited from its
-predecessor, the S language; see <span id="id27">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">32</a>]</span> for discussion.
-Internally, it is implemented using the so-called <em>promises</em>.
-As such, they consist of (compare <span id="id28">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span>):</p>
+Internally, lazy evaluation of arguments
+is implemented using the so-called <em>promises</em>.
+As such, they consist of (compare <span id="id27">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">56</a>]</span>):</p>
 <ul class="simple">
 <li><p>an expression (which we can access by calling <strong class="command">substitute</strong>),</p></li>
 <li><p>an environment where the expression is to be evaluated
@@ -1712,7 +1801,7 @@ As such, they consist of (compare <span id="id28">[<a class="reference internal"
 <p>This interface is not really visible
 from within R, but see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;delayedAssign&quot;)</span></code>.</p>
 </div>
-<div class="proof proof-type-exercise" id="id56">
+<div class="proof proof-type-exercise" id="id55">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.17</span>
@@ -1741,7 +1830,7 @@ very rarely needed there).</p>
 </div>
 </div></div></section>
 <section id="evaluation-of-default-arguments">
-<span id="sec-default-args-eval"></span><h3><span class="section-number">16.3.6. </span>Evaluation of default arguments<a class="headerlink" href="#evaluation-of-default-arguments" title="Permalink to this heading">#</a></h3>
+<span id="sec-default-args-eval"></span><h3><span class="section-number">16.4.2. </span>Evaluation of default arguments<a class="headerlink" href="#evaluation-of-default-arguments" title="Permalink to this heading">#</a></h3>
 <p>As we know from <a class="reference internal" href="210-design.html#sec-default-args"><span class="std std-numref">Section 9.5.4</span></a>, default arguments
 are special expressions specified in a function’s parameter list.
 When a function’s body requires the value of an argument
@@ -1770,13 +1859,13 @@ are interpreted in the context of the calling environment.</p>
 </div>
 <p>As usual, the evaluation is triggered only once,
 where it is explicitly requested, and only when needed.</p>
-<div class="proof proof-type-example" id="id57">
+<div class="proof proof-type-example" id="id56">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.18</span>
         
     </div><div class="proof-content">
-<p>Consider the following example from <span id="id29">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">32</a>]</span>:</p>
+<p>Consider the following example from <span id="id28">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">36</a>]</span>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sumsq</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">about</span><span class="o">=</span><span class="nf">mean</span><span class="p">(</span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">na.rm</span><span class="p">)</span>
@@ -1821,7 +1910,7 @@ it might be better to rewrite the above using a call to <strong class="command">
 <span class="c1">## [1] 0</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id58">
+</div></div><div class="proof proof-type-exercise" id="id57">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.19</span>
@@ -1830,7 +1919,7 @@ it might be better to rewrite the above using a call to <strong class="command">
 <p>Note that the default arguments to <strong class="command">do.call</strong>
 <strong class="command">new.env</strong> are set to <strong class="command">parent.frame</strong>.
 What does that mean?</p>
-</div></div><div class="proof proof-type-exercise" id="id59">
+</div></div><div class="proof proof-type-exercise" id="id58">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.20</span>
@@ -1839,7 +1928,7 @@ What does that mean?</p>
 <p>Study the source code of the <strong class="command">local</strong> function.</p>
 </div></div></section>
 <section id="ellipsis-revisited">
-<span id="sec-ellipsis-eval"></span><h3><span class="section-number">16.3.7. </span>Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`,  revisited<a class="headerlink" href="#ellipsis-revisited" title="Permalink to this heading">#</a></h3>
+<span id="sec-ellipsis-eval"></span><h3><span class="section-number">16.4.3. </span>Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`,  revisited<a class="headerlink" href="#ellipsis-revisited" title="Permalink to this heading">#</a></h3>
 <p>If our function features the dot-dot-dot parameter,
 `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`, whatever we pass through it
 is packed into a pairlist of promise expressions. Thus, we can
@@ -1864,7 +1953,7 @@ to another call, as-is.</p>
 <span class="c1">##  $ z: num 3</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id60">
+<div class="proof proof-type-exercise" id="id59">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.21</span>
@@ -1875,7 +1964,7 @@ is called like <strong class="command">lapply</strong><code class="code docutils
 where `<code class="code docutils literal notranslate"><span class="pre">...</span></code>` are <em>optional arguments to <code class="docutils literal notranslate"><span class="pre">FUN</span></code></em>.
 Verify that whatever is passed via the ellipsis is evaluated
 only once, and not on each application of <code class="docutils literal notranslate"><span class="pre">FUN</span></code> on the elements of <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
-</div></div><div class="proof proof-type-example" id="id61">
+</div></div><div class="proof proof-type-example" id="id60">
 
     <div class="proof-title">
         <span class="proof-type">Example 16.22</span>
@@ -1961,14 +2050,14 @@ as if they were local variables:</p>
 </div>
 <p>In other words, no assignment in the local environment is triggered.</p>
 </div>
-<div class="proof proof-type-exercise" id="id62">
+<div class="proof proof-type-exercise" id="id61">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.23</span>
         
     </div><div class="proof-content">
 <p>Implement your own version of the built-in <strong class="command">switch</strong> function.</p>
-</div></div><div class="proof proof-type-exercise" id="id63">
+</div></div><div class="proof proof-type-exercise" id="id62">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.24</span>
@@ -1977,7 +2066,7 @@ as if they were local variables:</p>
 <p>Implement your own version of the <strong class="command">stopifnot</strong> function.</p>
 </div></div></section>
 <section id="on-exit">
-<span id="sec-on-exit"></span><h3><span class="section-number">16.3.8. </span><strong class="command">on.exit</strong><a class="headerlink" href="#on-exit" title="Permalink to this heading">#</a></h3>
+<span id="sec-on-exit"></span><h3><span class="section-number">16.4.4. </span><strong class="command">on.exit</strong> (*)<a class="headerlink" href="#on-exit" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">on.exit</strong> registers an expression to be evaluated
 at the very end of a function call, regardless whether
 it exited due to an error or not.
@@ -2015,7 +2104,7 @@ or clean up the allocated resources (e.g., closing open files).</p>
 <p>Note that we can always do without <strong class="command">on.exit</strong>,
 e.g., by applying proper exception handling techniques;
 <a class="reference internal" href="180-flow.html#sec-exceptions"><span class="std std-numref">Section 8.2</span></a>.</p>
-<div class="proof proof-type-exercise" id="id64">
+<div class="proof proof-type-exercise" id="id63">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.25</span>
@@ -2027,7 +2116,7 @@ e.g., by applying proper exception handling techniques;
 </div>
 <p>in the definition of <strong class="command">scan</strong>.
 What is its purpose?</p>
-</div></div><div class="proof proof-type-exercise" id="id65">
+</div></div><div class="proof proof-type-exercise" id="id64">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.26</span>
@@ -2045,7 +2134,7 @@ expressions?</p>
 </div>
 </div></div></section>
 <section id="metaprogramming-in-action-examples">
-<span id="sec-metaprogramming-implement"></span><h3><span class="section-number">16.3.9. </span>🚧 Metaprogramming in action: Examples (*)<a class="headerlink" href="#metaprogramming-in-action-examples" title="Permalink to this heading">#</a></h3>
+<span id="sec-metaprogramming-implement"></span><h3><span class="section-number">16.4.5. </span>🚧 Metaprogramming in action: Examples (*)<a class="headerlink" href="#metaprogramming-in-action-examples" title="Permalink to this heading">#</a></h3>
 <p>… to do … working on it …</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2062,75 +2151,20 @@ we can successfully refer to the <strong class="command">head</strong> function.
 </div>
 </section>
 <section id="processing-formulas">
-<span id="sec-formula"></span><h3><span class="section-number">16.3.10. </span>🚧 Processing formulas, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#processing-formulas" title="Permalink to this heading">#</a></h3>
-<p>… to do … working on it …</p>
-</section>
-</section>
-<section id="other-topics">
-<h2><span class="section-number">16.4. </span>🚧 Other topics (*)<a class="headerlink" href="#other-topics" title="Permalink to this heading">#</a></h2>
-<p>… to do … working on it …</p>
-<section id="package-namespaces">
-<h3><span class="section-number">16.4.1. </span>🚧 Package namespaces (*)<a class="headerlink" href="#package-namespaces" title="Permalink to this heading">#</a></h3>
-<p>… to do … working on it …</p>
-<p>We will use an example <strong class="program">rpackagedemo</strong> package
-discussed <a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>, which is available
-for download from <a class="reference external" href="https://github.com/gagolews/rpackagedemo/">https://github.com/gagolews/rpackagedemo/</a>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># https://github.com/gagolews/rpackagedemo/</span>
-<span class="c1">## Attaching package: &#39;rpackagedemo&#39;</span>
-<span class="c1">## The following object is masked from &#39;package:utils&#39;: demo</span>
-<span class="nf">demo</span><span class="p">(</span><span class="s">&quot;Sir Lancelot&quot;</span><span class="p">)</span>
-<span class="c1">## G&#39;day, Sir Lancelot!</span>
-<span class="n">demo</span>
-<span class="c1">## function (x = &quot;world&quot;)</span>
-<span class="c1">## {</span>
-<span class="c1">##     cat(prepare_message(x))</span>
-<span class="c1">## }</span>
-<span class="c1">## &lt;environment: namespace:rpackagedemo&gt;</span>
-<span class="n">prepare_message</span>
-<span class="c1">## Error in eval(expr, envir, enclos): object &#39;prepare_message&#39; not found</span>
-<span class="n">rpackagedemo</span><span class="o">:::</span><span class="n">prepare_message</span>
-<span class="c1">## function (x)</span>
-<span class="c1">## {</span>
-<span class="c1">##     sprintf(&quot;G&#39;day, %s!\n&quot;, x)</span>
-<span class="c1">## }</span>
-<span class="c1">## &lt;environment: namespace:rpackagedemo&gt;</span>
-<span class="n">prepare_message</span><span class="w"> </span><span class="o">&lt;&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;aaargh&quot;</span>
-<span class="nf">demo</span><span class="p">(</span><span class="s">&quot;Sir Lancelot&quot;</span><span class="p">)</span>
-<span class="c1">## G&#39;day, Sir Lancelot!</span>
-<span class="nf">getNamespaceExports</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;demo&quot;</span>
-<span class="nf">getNamespaceImports</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span>
-<span class="c1">## $base</span>
-<span class="c1">## [1] TRUE</span>
-<span class="c1">##</span>
-<span class="c1">## $stringx</span>
-<span class="c1">##   sprintf</span>
-<span class="c1">## &quot;sprintf&quot;</span>
-<span class="nf">assign</span><span class="p">(</span><span class="s">&quot;prepare_message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;aaargh&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">envir</span><span class="o">=</span><span class="nf">getNamespace</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">))</span>
-<span class="c1">## Error in assign(&quot;prepare_message&quot;, function(x) &quot;aaargh&quot;, envir =</span>
-<span class="c1">##     getNamespace(&quot;rpackagedemo&quot;)): cannot change value of locked binding</span>
-<span class="c1">##     for &#39;prepare_message&#39;</span>
-<span class="nf">getNamespace</span><span class="p">(</span><span class="s">&quot;rpackagedemo&quot;</span><span class="p">)</span>
-<span class="c1">## &lt;environment: namespace:rpackagedemo&gt;</span>
-</pre></div>
-</div>
-</section>
-<section id="s3-method-lookup-by-usemethod">
-<span id="sec-use-method"></span><h3><span class="section-number">16.4.2. </span>🚧 S3 method lookup by <strong class="command">UseMethod</strong> (*)<a class="headerlink" href="#s3-method-lookup-by-usemethod" title="Permalink to this heading">#</a></h3>
+<span id="sec-formula"></span><h3><span class="section-number">16.4.6. </span>🚧 Processing formulas, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#processing-formulas" title="Permalink to this heading">#</a></h3>
 <p>… to do … working on it …</p>
 </section>
 </section>
 <section id="exercises">
 <h2><span class="section-number">16.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id66">
+<div class="proof proof-type-exercise" id="id65">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.27</span>
         
     </div><div class="proof-content">
 <p>Asking too many questions is not very charismatic,
-but challenge yourself with the following.</p>
+but challenge yourself by trying to find the answer to the following.</p>
 <ul class="simple">
 <li><p>What is the role of a frame in an environment?</p></li>
 <li><p>What is the role of an enclosing environment? How to read
@@ -2158,8 +2192,8 @@ of packages with namespaces are locked when loaded?</p></li>
 environment? How to get it/them programmatically?</p></li>
 <li><p>How and why function factories work?</p></li>
 <li><p>What is the role of promises?</p></li>
-<li><p>Why the use of functions relying on metaprogramming is generally
-discouraged?</p></li>
+<li><p>Why do we generally discourage the use of functions relying on
+metaprogramming?</p></li>
 <li><p>How are default arguments evaluated?</p></li>
 <li><p>Is there anything special about formulas?</p></li>
 <li><p>What is the difference between <strong class="program">package:pkg</strong> and
@@ -2167,8 +2201,13 @@ discouraged?</p></li>
 <li><p>How to fetch the definition of an S3 method which does not seem
 to be available directly via the
 standard accessor <strong class="command">fun_name.class_name</strong>?</p></li>
+<li><p>R evaluates function arguments lazily.
+Does it mean that
+“<code class="docutils literal notranslate"><span class="pre">y[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1,</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1,</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1)]</span> <span class="pre">&lt;-</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>”
+extends a list `<code class="docutils literal notranslate"><span class="pre">y</span></code>` by three elements?
+Or are there cases where evaluation is eager?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id67">
+</div></div><div class="proof proof-type-exercise" id="id66">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.28</span>
@@ -2188,7 +2227,7 @@ on each given package.</p>
 <p>Use an object of type environment (a hast table)
 to map the package names to numeric IDs (indexes). This will greatly
 speed up the processing (compare it to a named list-based implementation).</p>
-</div></div><div class="proof proof-type-exercise" id="id68">
+</div></div><div class="proof proof-type-exercise" id="id67">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.29</span>
@@ -2210,13 +2249,13 @@ speed up the processing (compare it to a named list-based implementation).</p>
 <span class="c1">## [1] &quot;1:5&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id69">
+</div></div><div class="proof proof-type-exercise" id="id68">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 16.30</span>
         
     </div><div class="proof-content">
-<p>According to <span id="id30">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span>, compare
+<p>According to <span id="id29">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">56</a>]</span>, compare
 also <a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a>, a call to:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;&lt;-</span><span class="w"> </span><span class="n">v</span>
 </pre></div>
@@ -2252,10 +2291,10 @@ also <a class="reference internal" href="210-design.html#sec-replacementfun"><sp
 of R Data Types that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.
 As a summary of what we have covered in this book, let us contemplate
 upon <a class="reference internal" href="#fig-data-types-full"><span class="std std-numref">Figure 16.3</span></a>, which gives a much broader picture.</p>
-<figure class="align-default" id="id70">
+<figure class="align-default" id="id69">
 <span id="fig-data-types-full"></span><img alt="../_images/data-types-full.png" src="../_images/data-types-full.png" />
 <figcaption>
-<p><span class="caption-number">Figure 16.3 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id70" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 16.3 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id69" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>If we omitted something, it was most likely on purpose –
@@ -2265,12 +2304,12 @@ that we explained in the <a class="reference internal" href="000-preface.html#ch
 <p>Now that we have reached the end of this course,
 we might be interested in reading the following materials:</p>
 <ul class="simple">
-<li><p><em>R Language Definition</em> <span id="id31">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span>,</p></li>
-<li><p><em>R Internals</em> <span id="id32">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">51</a>]</span>,</p></li>
-<li><p><em>Writing R Extensions</em> <span id="id33">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span>,</p></li>
+<li><p><em>R Language Definition</em> <span id="id30">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">56</a>]</span>,</p></li>
+<li><p><em>R Internals</em> <span id="id31">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">55</a>]</span>,</p></li>
+<li><p><em>Writing R Extensions</em> <span id="id32">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">52</a>]</span>,</p></li>
 <li><p>R’s source code available at <a class="reference external" href="https://cran.r-project.org/src/base/">https://cran.r-project.org/src/base/</a>,</p></li>
 <li><p>The open-access
-<a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist data wrangling with Python</em></a> <span id="id34">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span> by yours truly.</p></li>
+<a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist data wrangling with Python</em></a> <span id="id33">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span> by yours truly.</p></li>
 </ul>
 <p>Also, the <code class="docutils literal notranslate"><span class="pre">NEWS</span></code> files available at
 <a class="reference external" href="https://cran.r-project.org/doc/manuals/r-release/">https://cran.r-project.org/doc/manuals/r-release/</a>
@@ -2288,7 +2327,7 @@ of S3 class <code class="docutils literal notranslate"><span class="pre">data.fr
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
 <p>Some also call it a <em>parent</em> environment,
 but we will not. We will try following the nomenclature
-established in Section 3.2 in <span id="id35">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span>.
+established in Section 3.2 in <span id="id34">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span>.
 Note that there is a bit of a mess in the R documentation
 regarding the way enclosing environments are referred to as.</p>
 </aside>
@@ -2333,10 +2372,10 @@ count (<a class="reference internal" href="310-compiled.html#chap-compiled"><spa
 <p>That is why everyone <em>serious</em> (not exactly in a good way)
 about R programming should add the
 <em>Structure and Interpretation of Computer Programs</em>
-<span id="id36">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> to their reading list.
+<span id="id35">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> to their reading list.
 Also note that R is not the only environment that marries
 statistics and Lisp-like languages; see also LISP-STAT
-<span id="id37">[<a class="reference internal" href="999-bibliography.html#id16" title="Tierney, L. (1990).  LISP-STAT: An Object-Oriented Environment for Statistical Computing and Dynamic Graphics. Wiley.">41</a>]</span>.</p>
+<span id="id36">[<a class="reference internal" href="999-bibliography.html#id16" title="Tierney, L. (1990).  LISP-STAT: An Object-Oriented Environment for Statistical Computing and Dynamic Graphics. Wiley.">45</a>]</span>.</p>
 </aside>
 <aside class="footnote brackets" id="footassign" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">11</a><span class="fn-bracket">]</span></span>
@@ -2377,7 +2416,7 @@ from the search path. As we will soon see, they are automatically locked.</p>
 <aside class="footnote brackets" id="footlocarg" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">17</a><span class="fn-bracket">]</span></span>
 <p>Function arguments are initially unevaluated;
-see <a class="reference internal" href="#sec-lazy-evaluation"><span class="std std-numref">Section 16.3.5</span></a>.</p>
+see <a class="reference internal" href="#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footprimitive" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">18</a><span class="fn-bracket">]</span></span>
@@ -2385,7 +2424,7 @@ see <a class="reference internal" href="#sec-lazy-evaluation"><span class="std s
 a <code class="docutils literal notranslate"><span class="pre">special</span></code> is an internal function that
 does not necessarily evaluate its arguments (e.g.,
 <strong class="command">switch</strong>, <strong class="command">if</strong>, or <strong class="command">quote</strong>;
-compare also <a class="reference internal" href="#sec-lazy-evaluation"><span class="std std-numref">Section 16.3.5</span></a>),
+compare also <a class="reference internal" href="#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>),
 whereas a <code class="docutils literal notranslate"><span class="pre">builtin</span></code> always evaluates its actual parameters,
 e.g., <strong class="command">sum</strong>.</p>
 </aside>
@@ -2396,12 +2435,13 @@ the parent frame number, as returned by <strong class="command">sys.parent</stro
 is not necessarily equal to <strong class="command">sys.nframe</strong><code class="code docutils literal notranslate"><span class="pre">()-1</span></code>.
 This is certainly true if we are at the top (global) level.</p>
 </aside>
-<aside class="footnote brackets" id="footnotlazy" role="note">
+<aside class="footnote brackets" id="footnomemoisation" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">20</a><span class="fn-bracket">]</span></span>
-<p><code class="docutils literal notranslate"><span class="pre">builtin</span></code> functions always evaluate the arguments.
-Also, there is no lazy evaluation in case
-of the arguments passed to group generics;
-see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code> and <a class="reference internal" href="220-s3.html#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>.</p>
+<p>But without the memoisation of results generated by
+expressions, which is available, e.g., in Haskell.
+In other words, in an expression like
+<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x),</span> </code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>,
+the call <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> will still be performed twice.</p>
 </aside>
 </aside>
 </section>
@@ -2442,7 +2482,7 @@ see <strong class="command">help</strong><code class="code docutils literal notr
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-05T16:34:08+1000.
+              Last updated on 2023-04-06T17:46:27+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2482,22 +2522,22 @@ see <strong class="command">help</strong><code class="code docutils literal notr
 <li><a class="reference internal" href="#masking-shadowing-objects-from-down-under">16.2.7. Masking (shadowing) objects from down under</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#evaluating-functions">16.3. 🚧 Evaluating functions</a><ul>
+<li><a class="reference internal" href="#closures">16.3. 🚧 Closures</a><ul>
 <li><a class="reference internal" href="#local-environment">16.3.1. Local environment</a></li>
 <li><a class="reference internal" href="#lexical-scope-and-function-closures">16.3.2. Lexical scope and function closures</a></li>
 <li><a class="reference internal" href="#application-function-factories">16.3.3. Application: Function factories</a></li>
 <li><a class="reference internal" href="#accessing-the-calling-environment">16.3.4. Accessing the calling environment</a></li>
-<li><a class="reference internal" href="#lazy-evaluation-of-arguments">16.3.5. Lazy evaluation of arguments</a></li>
-<li><a class="reference internal" href="#evaluation-of-default-arguments">16.3.6. Evaluation of default arguments</a></li>
-<li><a class="reference internal" href="#ellipsis-revisited">16.3.7. Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`,  revisited</a></li>
-<li><a class="reference internal" href="#on-exit">16.3.8. <strong class="command">on.exit</strong></a></li>
-<li><a class="reference internal" href="#metaprogramming-in-action-examples">16.3.9. 🚧 Metaprogramming in action: Examples (*)</a></li>
-<li><a class="reference internal" href="#processing-formulas">16.3.10. 🚧 Processing formulas, `<strong class="command">~</strong>` (*)</a></li>
+<li><a class="reference internal" href="#package-namespaces">16.3.5. 🚧 Package namespaces (*)</a></li>
+<li><a class="reference internal" href="#s3-method-lookup-by-usemethod">16.3.6. 🚧 S3 method lookup by <strong class="command">UseMethod</strong> (*)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#other-topics">16.4. 🚧 Other topics (*)</a><ul>
-<li><a class="reference internal" href="#package-namespaces">16.4.1. 🚧 Package namespaces (*)</a></li>
-<li><a class="reference internal" href="#s3-method-lookup-by-usemethod">16.4.2. 🚧 S3 method lookup by <strong class="command">UseMethod</strong> (*)</a></li>
+<li><a class="reference internal" href="#lazy-evaluation">16.4. 🚧 Lazy evaluation</a><ul>
+<li><a class="reference internal" href="#evaluation-of-supplied-arguments">16.4.1. Evaluation of supplied arguments</a></li>
+<li><a class="reference internal" href="#evaluation-of-default-arguments">16.4.2. Evaluation of default arguments</a></li>
+<li><a class="reference internal" href="#ellipsis-revisited">16.4.3. Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`,  revisited</a></li>
+<li><a class="reference internal" href="#on-exit">16.4.4. <strong class="command">on.exit</strong> (*)</a></li>
+<li><a class="reference internal" href="#metaprogramming-in-action-examples">16.4.5. 🚧 Metaprogramming in action: Examples (*)</a></li>
+<li><a class="reference internal" href="#processing-formulas">16.4.6. 🚧 Processing formulas, `<strong class="command">~</strong>` (*)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#exercises">16.5. Exercises</a></li>

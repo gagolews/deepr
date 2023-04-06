@@ -296,7 +296,7 @@ it should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">21</a>]</span>.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
 </div></blockquote>
 <p>In this and the next chapter, we will learn some hocus-pocus
 that should only be of interest to advanced-to-be<a class="footnote-reference brackets" href="#footbegend" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and
@@ -322,7 +322,7 @@ the above never means anything else than:</p>
 </pre></div>
 </div>
 <p>But R was heavily inspired by the S language from whom it
-has taken the notion of lazy arguments (<a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.3.5</span></a>).
+has taken the notion of lazy arguments (<a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>).
 This leads to our being equipped with the ability to apply a set of
 techniques referred to as <em>metaprogramming</em> (computing on the language).
 Namely, we may define functions that can peek outside their
@@ -338,10 +338,11 @@ in <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span 
 due to the fact that <strong class="command">plot</strong> was able to see not only
 a vector like <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1.0000,</span> <span class="pre">1.0101,</span> <span class="pre">1.0202,</span> <span class="pre">1.0305,</span> <span class="pre">...)</span></code>,
 but also the expression that generated it, <strong class="command">exp</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>.</p>
-<p>But, as a form of <em>untamed freedom of expression</em><a class="footnote-reference brackets" href="#footimho" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, it has potential
-to result in chaos, confusion, and division in the user community.
-In particular, we can introduce a microlanguage within our language
-that people outside of our circle will not be able to understand.</p>
+<p>But, as a form of <em>untamed freedom of expression</em><a class="footnote-reference brackets" href="#footimho" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>,
+it has the potential to result in chaos, confusion, and division in
+the user community. In particular, we can introduce a microlanguage
+within our language that people outside of our circle will not be able
+to understand.</p>
 <p>Therefore, cursed be us, for we are about to start eating from tree of the
 knowledge of good and evil. But remember: with great power comes great
 responsibility.</p>
@@ -640,7 +641,7 @@ in the form of a named list<a class="footnote-reference brackets" href="#footpai
 </pre></div>
 </div>
 <p>Note that the expressions generating the values of the default arguments
-(compare <a class="reference internal" href="330-environment.html#sec-default-args-eval"><span class="std std-numref">Section 16.3.6</span></a>) are stored as
+(compare <a class="reference internal" href="330-environment.html#sec-default-args-eval"><span class="std std-numref">Section 16.4.2</span></a>) are stored as
 ordinary list elements.</p>
 <p>Furthermore, we can get access to its body:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -675,15 +676,15 @@ the expression used to generate a function’s argument:</p>
 <span class="nf">test</span><span class="p">()</span><span class="w">  </span><span class="c1"># it is not an error</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.3.5</span></a>, we note that arguments are
-evaluated only on demand: <strong class="command">substitute</strong> does not trigger
+<p>In <a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>, we note that arguments are
+evaluated only on demand (lazily): <strong class="command">substitute</strong> does not trigger
 any computations.
 Therefore, often we will have to interact with functions that accept
 gobbledegook on input (as long as it is syntactically correct)
 and programmatically reinterpret it in whichever way they like;
 see <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>,
 <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>, and
-<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.3.9</span></a> for examples.</p>
+<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.4.5</span></a> for examples.</p>
 <div class="proof proof-type-example" id="id15">
 
     <div class="proof-title">
@@ -759,11 +760,9 @@ with <strong class="command">is.null</strong> be a good alternative?</p>
 </div></div></section>
 <section id="determining-how-a-function-was-called">
 <span id="sec-sys-call"></span><h3><span class="section-number">15.4.4. </span>Determining how a function was called<a class="headerlink" href="#determining-how-a-function-was-called" title="Permalink to this heading">#</a></h3>
-<p>Even though this somewhat touches the topic of the environment
-model of evaluation that we discuss in the next chapter,
-it is worth knowing that
-<strong class="command">sys.call</strong> can take a look at the call stack
-and determine how the current function was invoked.</p>
+<p>Even though this somewhat touches the topics discussed in the next chapter,
+it is worth knowing that <strong class="command">sys.call</strong> can take a look at the
+call stack and determine how the current function was invoked.</p>
 <p>Moreover, <strong class="command">match.call</strong> takes us a step further:
 it returns a call with argument names matched to the list
 of a function’s formal parameters.</p>
@@ -810,12 +809,13 @@ access the call stack much more deeply:</p>
 <p class="admonition-title">Note</p>
 <p>It will be educative to formalise the order of the matching
 of function parameters to the passed arguments;
-see Section 4.3 in <span id="id8">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">52</a>]</span>. The order is as follows:</p>
+see Section 4.3 in <span id="id8">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">56</a>]</span>. The order is as follows:</p>
 <ol class="arabic simple">
 <li><p>keyword arguments with names matched exactly,
 each name matched at most once,</p></li>
-<li><p>remaining keyword arguments, but with partial matching of names listed
-before the ellipsis, `<code class="docutils literal notranslate"><span class="pre">...</span></code>`, each match must be unambiguous,</p></li>
+<li><p>remaining keyword arguments, but with the partial matching of
+names listed before the ellipsis, `<code class="docutils literal notranslate"><span class="pre">...</span></code>`,
+each match must be unambiguous,</p></li>
 <li><p>positional matching to the remaining parameters,</p></li>
 <li><p>all remaining arguments (named or not) will be consumed by the ellipsis
 (if present).</p></li>
@@ -923,7 +923,7 @@ whatever.</p>
 <aside class="footnote brackets" id="footlazygood" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
 <p>The original authors of R (R. Ihaka and R. Gentleman)
-in <span id="id10">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">32</a>]</span> mention:
+in <span id="id10">[<a class="reference internal" href="999-bibliography.html#id17" title="Ihaka, R. and Gentleman, R. (1996).  R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics, 5(3):299–314. URL: https://www.stat.auckland.ac.nz/~ihaka/downloads/R-paper.pdf, DOI: 10.1080/10618600.1996.10474713.">36</a>]</span> mention:
 “A policy of <em>lazy arguments</em> is very useful because it means
 that, in addition to the value of an argument, its symbolic form
 can be made available in the function being called. This
@@ -933,13 +933,13 @@ form.”</p>
 <aside class="footnote brackets" id="footimho" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
 <p>In the current author’s opinion, R (as a whole, in the sense of
-<a class="reference internal" href="000-preface.html#sec-r-env"><span class="std std-ref">R as a language and an environment</span></a>) would be better-off if metaprogramming
+<a class="reference internal" href="000-preface.html#sec-r-env"><span class="std std-ref">R (GNU S) as a language and an environment</span></a>) would be better-off if metaprogramming
 techniques were not so easily available to an ordinary programmer.
 A healthy R user (also yours truly 99% of the time)
 can perfectly do without and thus refrain from using them.
-The fact that we call them “advanced” will not make us “cool”
+The fact that we call them <em>advanced</em> will not make us <em>cool</em>
 if we start horsing around with nonstandard evaluation.
-“Perverse” is perhaps a better label.</p>
+<em>Perverse</em> is perhaps a better label.</p>
 </aside>
 <aside class="footnote brackets" id="footsugar" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
@@ -950,8 +950,8 @@ see <a class="reference internal" href="210-design.html#sec-operfun"><span class
 <aside class="footnote brackets" id="footpairlist" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
 <p>Actually, a special internal datatype called
-<code class="docutils literal notranslate"><span class="pre">pairlist</span></code> which is rarely seen in R; see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">51</a>]</span>
-and <span id="id12">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">48</a>]</span> for information how to deal with them at the C level.
+<code class="docutils literal notranslate"><span class="pre">pairlist</span></code> which is rarely seen in R; see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">55</a>]</span>
+and <span id="id12">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">52</a>]</span> for information how to deal with them at the C level.
 From this course’s perspective, seeing pairlists
 as named lists is perfectly fine.</p>
 </aside>
@@ -999,7 +999,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-05T16:34:08+1000.
+              Last updated on 2023-04-06T17:46:27+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
