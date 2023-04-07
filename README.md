@@ -48,8 +48,9 @@ this repository's *Issues* tracker. Thank you.
 ## About the Author
 
 Dr habil. [Marek Gagolewski][1]
-is currently a Senior Lecturer in Applied AI at Deakin University in Melbourne,
-Australia and an Associate Professor in Data Science at the Systems
+is currently a Senior Lecturer in Data Science/Applied AI
+at Deakin University in Melbourne,
+Australia and an Associate Professor at the Systems
 Research Institute, Polish Academy of Sciences.
 
 His research interests are related to data science, in particular: modelling

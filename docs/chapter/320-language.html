@@ -25,11 +25,11 @@
 <meta content="INDEX,FOLLOW" name="robots" />
 <meta content="book" name="og:type" />
 <meta content="9780645571929" name="og:book:isbn" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="16. 🚧🚧 Environments and evaluation (**)" href="330-environment.html" /><link rel="prev" title="14. 🚧🚧 Interfacing compiled code (*)" href="310-compiled.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="16. 🚧🚧 Environments and evaluation (*)" href="330-environment.html" /><link rel="prev" title="14. 🚧🚧 Interfacing compiled code (*)" href="310-compiled.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/320-language.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>15. 🚧 Unevaluated expressions (**) - Deep R Programming</title>
+        <title>15. 🚧 Unevaluated expressions (*) - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
@@ -230,8 +230,9 @@ v0.1.13.9001 (draft)
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="310-compiled.html">14. 🚧🚧 Interfacing compiled code (*)</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">15. 🚧 Unevaluated expressions (**)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments and evaluation (**)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">15. 🚧 Unevaluated expressions (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments and evaluation (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="340-lazy.html">17. 🚧 Lazy evaluation (**)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -279,7 +280,7 @@ v0.1.13.9001 (draft)
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="unevaluated-expressions">
-<span id="chap-language"></span><h1><span class="section-number">15. </span>🚧 Unevaluated expressions (**)<a class="headerlink" href="#unevaluated-expressions" title="Permalink to this heading">#</a></h1>
+<span id="chap-language"></span><h1><span class="section-number">15. </span>🚧 Unevaluated expressions (*)<a class="headerlink" href="#unevaluated-expressions" title="Permalink to this heading">#</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -322,7 +323,7 @@ the above never means anything else than:</p>
 </pre></div>
 </div>
 <p>But R was heavily inspired by the S language from whom it
-has taken the notion of lazy arguments (<a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>).
+has taken the notion of lazy arguments (<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>).
 This leads to our being equipped with the ability to apply a set of
 techniques referred to as <em>metaprogramming</em> (computing on the language).
 Namely, we may define functions that can peek outside their
@@ -341,7 +342,7 @@ but also the expression that generated it, <strong class="command">exp</strong><
 <p>But, as a form of <em>untamed freedom of expression</em><a class="footnote-reference brackets" href="#footimho" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>,
 it has the potential to result in chaos, confusion, and division in
 the user community. In particular, we can introduce a microlanguage
-within our language that people outside of our circle will not be able
+within our language that people outside our circle will not be able
 to understand.</p>
 <p>Therefore, cursed be us, for we are about to start eating from tree of the
 knowledge of good and evil. But remember: with great power comes great
@@ -641,7 +642,7 @@ in the form of a named list<a class="footnote-reference brackets" href="#footpai
 </pre></div>
 </div>
 <p>Note that the expressions generating the values of the default arguments
-(compare <a class="reference internal" href="330-environment.html#sec-default-args-eval"><span class="std std-numref">Section 16.4.2</span></a>) are stored as
+(compare <a class="reference internal" href="340-lazy.html#sec-default-args-eval"><span class="std std-numref">Section 17.2</span></a>) are stored as
 ordinary list elements.</p>
 <p>Furthermore, we can get access to its body:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -676,22 +677,20 @@ the expression used to generate a function’s argument:</p>
 <span class="nf">test</span><span class="p">()</span><span class="w">  </span><span class="c1"># it is not an error</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>, we note that arguments are
-evaluated only on demand (lazily): <strong class="command">substitute</strong> does not trigger
-any computations.
-Therefore, often we will have to interact with functions that accept
-gobbledegook on input (as long as it is syntactically correct)
-and programmatically reinterpret it in whichever way they like;
+<p>In <a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>, we note that arguments are
+evaluated only on demand (lazily): <strong class="command">substitute</strong> triggers
+no computations. This opens the possibility to implement
+functions that interpret their input in whichever way they like;
 see <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>,
 <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>, and
-<a class="reference internal" href="330-environment.html#sec-metaprogramming-implement"><span class="std std-numref">Section 16.4.5</span></a> for examples.</p>
+<a class="reference internal" href="340-lazy.html#sec-metaprogramming-implement"><span class="std std-numref">Section 17.5</span></a> for examples.</p>
 <div class="proof proof-type-example" id="id15">
 
     <div class="proof-title">
         <span class="proof-type">Example 15.3</span>
         
     </div><div class="proof-content">
-<p><strong class="command">library</strong> (see <a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>) allows specifying the
+<p><strong class="command">library</strong> (see <a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>) allows to specify the
 name of the package to be loaded both in the form of a character string
 and a <em>name</em>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># preferred</span>
@@ -726,9 +725,8 @@ Study the source code of <strong class="command">plot.default</strong>,
 <strong class="command">hist.default</strong>, <strong class="command">prop.test</strong>,
 <strong class="command">wilcox.test.default</strong> and the aforementioned
 <strong class="command">library</strong>.
-Explain why they do that. Propose a solution
-to to achieve the same functionality without the use of
-reflection techniques.</p>
+Explain why they do that. Propose a solution to achieve the same
+functionality without the use of reflection techniques.</p>
 </div></div></section>
 <section id="checking-if-an-argument-is-missing">
 <span id="sec-missing-arg"></span><h3><span class="section-number">15.4.3. </span>Checking if an argument is missing<a class="headerlink" href="#checking-if-an-argument-is-missing" title="Permalink to this heading">#</a></h3>
@@ -910,7 +908,7 @@ from a character vector <code class="docutils literal notranslate"><span class="
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p>Remember that this book is supposed to be read from the
 beginning to the end. Also, if you have not tested yourself against all
-the 250-odd exercises suggested so far, please do it before proceeding
+the 300-odd exercises suggested so far, please do it before proceeding
 with the material presented here.
 Only practice makes perfect, and nothing is built in a day.
 Give yourself time: you can always come back later.</p>
@@ -974,7 +972,7 @@ returns a modified version of itself.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><span class="section-number">16. </span>🚧🚧 Environments and evaluation (**)</div>
+                <div class="title"><span class="section-number">16. </span>🚧🚧 Environments and evaluation (*)</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -999,7 +997,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-06T22:30:22+1000.
+              Last updated on 2023-04-07T15:27:59+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1020,7 +1018,7 @@ returns a modified version of itself.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">15. 🚧 Unevaluated expressions (**)</a><ul>
+<li><a class="reference internal" href="#">15. 🚧 Unevaluated expressions (*)</a><ul>
 <li><a class="reference internal" href="#expressions-at-a-glance">15.1. Expressions at a glance</a></li>
 <li><a class="reference internal" href="#language-objects">15.2. Language objects</a></li>
 <li><a class="reference internal" href="#calls-as-combinations-of-expressions">15.3. Calls as combinations of expressions</a><ul>

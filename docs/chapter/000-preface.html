@@ -230,8 +230,9 @@ v0.1.13.9001 (draft)
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="310-compiled.html">14. 🚧🚧 Interfacing compiled code (*)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧 Unevaluated expressions (**)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments and evaluation (**)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧 Unevaluated expressions (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments and evaluation (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="340-lazy.html">17. 🚧 Lazy evaluation (**)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -361,7 +362,8 @@ people, just like you and me.</p></li>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>R is a free, open-source variation upon the very popular S
+<p>R is a free, open-source (licensed under the GNU General Public License v2)
+variation upon/dialect of the very popular S
 system designed in the mid-1970s by Rick A. Becker, John M. Chambers,
 and Allan R. Wilks at Bell Labs;
 see <span id="id5">[<a class="reference internal" href="999-bibliography.html#id51" title="Becker, R.A. (1994).  A brief history of S. URL: https://sas.uwaterloo.ca/~rwoldfor/software/R-code/historyOfS.pdf.">3</a>, <a class="reference internal" href="999-bibliography.html#id52" title="Becker, R.A. and Chambers, J.M. (1984).  Design of the S system for data analysis. Communications of the ACM, 27(5):486–495. DOI: 10.1145/358189.358078.">4</a>, <a class="reference internal" href="999-bibliography.html#id53" title="Becker, R.A. and Chambers, J.M. (1984).  S: An Interactive Environment for Data Analysis and Graphics. Wadsworth.">5</a>, <a class="reference internal" href="999-bibliography.html#id54" title="Becker, R.A. and Chambers, J.M. (1985).  Extending the S System. Wadsworth.">6</a>]</span>
@@ -398,7 +400,7 @@ programming language: its design was heavily inspired by Scheme (with its
 environment model of evaluation; see
 <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="Abelson, H., Sussman, G.J., and Sussman, J. (1996).  Structure and Interpretation of Computer Programs. MIT Press.">1</a>]</span> and <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a> for more details),
 but with the added notion of lazy arguments inherited
-from S (<a class="reference internal" href="330-environment.html#sec-lazy-evaluation"><span class="std std-numref">Section 16.4</span></a>).
+from S (<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>).
 It is also somewhat object-oriented (<a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>).</p>
 </section>
 <section id="aims-scope-and-design-philosophy">
@@ -457,7 +459,7 @@ chapters, though).</p>
 <figure class="align-default" id="id20">
 <span id="fig-data-types-overview"></span><img alt="../_images/data-types-overview.png" src="../_images/data-types-overview.png" />
 <figcaption>
-<p><span class="caption-number">Figure 1 </span><span class="caption-text">An overview of the most prevalent R data types (see <a class="reference internal" href="330-environment.html#fig-data-types-full"><span class="std std-numref">Figure 16.3</span></a> for a more comprehensive list)</span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 1 </span><span class="caption-text">An overview of the most prevalent R data types (see <a class="reference internal" href="340-lazy.html#fig-data-types-full"><span class="std std-numref">Figure 17.2</span></a> for a more comprehensive list)</span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The most commonly used R data types can be classified as follows;
@@ -530,7 +532,7 @@ This includes, amongst others, the following data types:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">externalptr</span></code> (<a class="reference internal" href="310-compiled.html#sec-xptr"><span class="std std-numref">Section 14.2</span></a>);</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">environment</span></code> (<a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>);</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">symbol</span></code> (<code class="docutils literal notranslate"><span class="pre">name</span></code>), <code class="docutils literal notranslate"><span class="pre">call</span></code>, <code class="docutils literal notranslate"><span class="pre">expression</span></code> (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>);</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">formula</span></code> (<a class="reference internal" href="330-environment.html#sec-formula"><span class="std std-numref">Section 16.4.6</span></a>) –
+<li><p><code class="docutils literal notranslate"><span class="pre">formula</span></code> (<a class="reference internal" href="340-lazy.html#sec-formula"><span class="std std-numref">Section 17.6</span></a>) –
 used by some functions to specify supervised learning models or
 define operations to be performed within data subgroups,
 amongst others.</p></li>
@@ -540,7 +542,7 @@ amongst others.</p></li>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The above classification is just a first approximation to the complete
-type classification that we give in <a class="reference internal" href="330-environment.html#fig-data-types-full"><span class="std std-numref">Figure 16.3</span></a>.</p>
+type classification that we give in <a class="reference internal" href="340-lazy.html#fig-data-types-full"><span class="std std-numref">Figure 17.2</span></a>.</p>
 </div>
 <p>Also, we should not be surprised that we did not list any of the
 data types defined by a few very popular<a class="footnote-reference brackets" href="#footpopular" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> third-party packages.
@@ -552,8 +554,8 @@ to learn them easily ourselves.</p>
 <span id="sec-about-author"></span><h2>About the author<a class="headerlink" href="#about-the-author" title="Permalink to this heading">#</a></h2>
 <p>I, <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
 (pronounced like Ma’rek Gong-olive-ski), am currently a Senior Lecturer
-in Applied AI at Deakin University in Melbourne, VIC, Australia,
-and an Associate Professor in Data Science at the Systems Research Institute
+in Data Science/Applied AI at Deakin University in Melbourne, VIC, Australia,
+and an Associate Professor at the Systems Research Institute
 of the Polish Academy of Sciences.</p>
 <p>My research interests are related to data science, in particular: modelling
 complex phenomena, developing usable, general-purpose algorithms, studying
@@ -577,7 +579,18 @@ and many <a class="reference external" href="https://github.com/gagolews">others
 </section>
 <section id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading">#</a></h2>
-<p><em>Deep R Programming</em> is based on my experience as an R user (since ~2003),
+<p>R, and its predecessor S, is the result of a collaborative effort
+of <a class="reference external" href="https://www.r-project.org/contributors.html">many programmers</a>.
+Without their generous intellectual contributions, the landscape of data
+analysis would not be as beautiful as it is now.
+R is distributed under the terms of the GNU General Public license version 2,
+and we occasionally display fragments of its source code for didactic
+purposes.</p>
+<p>We describe and use R version 4.2.3 (2023-03-15). However,
+we expect 99.9% of the material covered here to be valid in future releases
+(consider filing a bug report if you discover that this is not the case).</p>
+<p><em>Deep R Programming</em> is based on the author’s experience
+as an R user (since ~2003),
 developer of open-source packages (mentioned above),
 tutor/lecturer (since ~2008),
 and an author of a quite successful Polish textbook
@@ -592,9 +605,9 @@ Data Science Retreat (Berlin),
 and Deakin University (Melbourne).
 I thank all my students and colleagues
 for the feedback given over the last 15-odd years.</p>
-<p>We describe R version 4.2.3 (2023-03-15). However,
-we expect 99.9% of the material covered here to be valid in future releases
-(consider filing a bug report if you discover that this is not the case).</p>
+<p>However, this book received no funding, administrative, technical, or
+editorial support from Deakin University, Warsaw University of Technology,
+Polish Academy of Sciences, or any other source.</p>
 <p>This book was prepared in a Markdown superset
 called <a class="reference external" href="https://myst-parser.readthedocs.io/en/latest/index.html">MyST</a>,
 <a class="reference external" href="https://www.sphinx-doc.org/"><strong class="program">Sphinx</strong></a>, and
@@ -613,9 +626,6 @@ Typesetting of the main text relies upon the
 <a class="reference external" href="https://www.huertatipografica.com/en"><em>Alegreya</em></a>
 and <a class="reference external" href="https://www.latofonts.com/"><em>Lato</em></a>
 typefaces.</p>
-<p>This book received no funding, administrative, technical, or
-editorial support from Deakin University, Warsaw University of Technology,
-Polish Academy of Sciences, or any other source.</p>
 </section>
 <section id="you-can-make-this-book-better">
 <h2>You can make this book better<a class="headerlink" href="#you-can-make-this-book-better" title="Permalink to this heading">#</a></h2>
@@ -641,7 +651,7 @@ Thank you.</p>
 <aside class="footnote brackets" id="footgnus" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
 <p>Or we should rather say: S, whose open-source
-reimplementation R is; see below for historical notes.
+reimplementation/dialect R is; see below for historical notes.
 Credit must be given where credit is due.</p>
 </aside>
 <aside class="footnote brackets" id="footr049" role="note">
@@ -724,7 +734,7 @@ but it does not make them healthy.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-06T22:30:22+1000.
+              Last updated on 2023-04-07T15:27:59+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
