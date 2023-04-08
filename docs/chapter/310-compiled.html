@@ -25,7 +25,7 @@
 <meta content="INDEX,FOLLOW" name="robots" />
 <meta content="book" name="og:type" />
 <meta content="9780645571929" name="og:book:isbn" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="15. 🚧 Unevaluated expressions (*)" href="320-language.html" /><link rel="prev" title="13. 🚧🚧 Graphics" href="250-graphics.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="15. Unevaluated expressions (*)" href="320-language.html" /><link rel="prev" title="13. 🚧🚧 Graphics" href="250-graphics.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/310-compiled.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
@@ -171,7 +171,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.1.13.9001 (draft)
+v0.1.14.9001 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -230,8 +230,8 @@ v0.1.13.9001 (draft)
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">14. 🚧🚧 Interfacing compiled code (*)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. 🚧 Unevaluated expressions (*)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧🚧 Environments and evaluation (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="320-language.html">15. Unevaluated expressions (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧 Environments and evaluation (*)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="340-lazy.html">17. 🚧 Lazy evaluation (**)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
@@ -273,7 +273,7 @@ v0.1.13.9001 (draft)
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -288,7 +288,7 @@ is, and will remain, freely available for everyone’s enjoyment
 (also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
 It is a non-profit project.</em>
 <strong>This book is still a work in progress. Beta versions
-of Chapters 1–12 are already complete, but there will be more.
+of Chapters 1–12 and 15–17 are already complete, but there will be more.
 In the meantime, any
 <a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
 are appreciated.</strong>
@@ -299,30 +299,32 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
 </div></blockquote>
-<p>R is a nice <em>glue</em> language: it is perfect for
-implementing data wrangling pipelines, visualisation,
-and developing prototypes of data analysis algorithms.
-In other words, it makes connecting larger <em>building blocks</em>
-very easy.
-Still, the more computing-intensive tasks should be done at
-the C, C++, or Fortran level.</p>
+<p>R is a nice <em>glue</em> language: it is perfect for implementing data wrangling
+pipelines, visualisation, and developing prototypes of data analysis
+algorithms. In other words, it makes connecting larger <em>building blocks</em>
+very easy. Still, for performance reasons<a class="footnote-reference brackets" href="#footwhycompile" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>,
+we recommend moving the more
+computing-intensive tasks to the C, C++, or Fortran level.
+R works very well as a user-friendly interface to compiled code.</p>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
 <p>Note that the definitive reference on this topic is
-Chapter 5 in <span id="id2">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">52</a>]</span>.</p>
-<section id="r-api">
-<h2><span class="section-number">14.1. </span>🚧 R API<a class="headerlink" href="#r-api" title="Permalink to this heading">#</a></h2>
-<p>… to do … working on it …</p>
-</section>
-<section id="external-pointers">
-<span id="sec-xptr"></span><h2><span class="section-number">14.2. </span>🚧 External pointers<a class="headerlink" href="#external-pointers" title="Permalink to this heading">#</a></h2>
-<p>… to do … working on it …</p>
-</section>
-<section id="memory-management">
-<span id="sec-memory-management"></span><h2><span class="section-number">14.3. </span>🚧 Memory management<a class="headerlink" href="#memory-management" title="Permalink to this heading">#</a></h2>
-<p>… to do … working on it …</p>
-</section>
+Chapter 5 in <span id="id3">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">51</a>]</span>.</p>
+<blockquote>
+<div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
+</div></blockquote>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footwhycompile" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>A well-written, portable function library relying only
+on simple data structures (e.g., arrays of type <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span></code>)
+can be used in other environments, such as Python (e.g., via Cython)
+of Julia. Let us remember about other programmers yearning for
+the possibility to enjoy our cultivated algorithms.</p>
+</aside>
+</aside>
 </section>
 
         </article>
@@ -335,7 +337,7 @@ Chapter 5 in <span id="id2">[<a class="reference internal" href="999-bibliograph
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><span class="section-number">15. </span>🚧 Unevaluated expressions (*)</div>
+                <div class="title"><span class="section-number">15. </span>Unevaluated expressions (*)</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -360,7 +362,7 @@ Chapter 5 in <span id="id2">[<a class="reference internal" href="999-bibliograph
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-07T15:27:59+1000.
+              Last updated on 2023-04-08T18:12:50+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -369,29 +371,8 @@ Chapter 5 in <span id="id2">[<a class="reference internal" href="999-bibliograph
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            In this chapter
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">14. 🚧🚧 Interfacing compiled code (*)</a><ul>
-<li><a class="reference internal" href="#r-api">14.1. 🚧 R API</a></li>
-<li><a class="reference internal" href="#external-pointers">14.2. 🚧 External pointers</a></li>
-<li><a class="reference internal" href="#memory-management">14.3. 🚧 Memory management</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
