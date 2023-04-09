@@ -25,11 +25,11 @@
 <meta content="INDEX,FOLLOW" name="robots" />
 <meta content="book" name="og:type" />
 <meta content="9780645571929" name="og:book:isbn" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="998-changelog.html" /><link rel="prev" title="16. 🚧 Environments and evaluation (*)" href="330-environment.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="998-changelog.html" /><link rel="prev" title="16. Environments and evaluation (*)" href="330-environment.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/340-lazy.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>17. 🚧 Lazy evaluation (**) - Deep R Programming</title>
+        <title>17. Lazy evaluation (**) - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.1.14.9001 (draft)
+v0.2.0 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -231,8 +231,8 @@ v0.1.14.9001 (draft)
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="310-compiled.html">14. 🚧🚧 Interfacing compiled code (*)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="320-language.html">15. Unevaluated expressions (*)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. 🚧 Environments and evaluation (*)</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">17. 🚧 Lazy evaluation (**)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. Environments and evaluation (*)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">17. Lazy evaluation (**)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -280,16 +280,16 @@ v0.1.14.9001 (draft)
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="lazy-evaluation">
-<span id="chap-lazy"></span><h1><span class="section-number">17. </span>🚧 Lazy evaluation (**)<a class="headerlink" href="#lazy-evaluation" title="Permalink to this heading">#</a></h1>
+<span id="chap-lazy"></span><h1><span class="section-number">17. </span>Lazy evaluation (**)<a class="headerlink" href="#lazy-evaluation" title="Permalink to this heading">#</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
 is, and will remain, freely available for everyone’s enjoyment
 (also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
 It is a non-profit project.</em>
-<strong>This book is still a work in progress. Beta versions
-of Chapters 1–12 and 15–17 are already complete, but there will be more.
-In the meantime, any
+<strong>This book is still a work in progress.</strong> <em>Beta versions
+of Chapters 1–12 and 15–17 are already complete (copyediting still pending),
+but there will be more. In the meantime,</em> <strong>any
 <a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
 are appreciated.</strong>
 <em>Although available online, it is a whole course;
@@ -300,19 +300,19 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
 </div></blockquote>
 <p>The ability to create, store, and manipulate unevaluated expressions
-so that the can be computed later is not particularly special.
+so that they can be computed later is not particularly special.
 Many languages enjoy such <em>metaprogramming</em> (computing <em>on</em> the language,
 reflection) capabilities, e.g., Lisp, Scheme, Wolfram, Julia,
 amongst many others.</p>
 <p>However, R inherited from its predecessor, the S language,
-a variation of the idea of lazy<a class="footnote-reference brackets" href="#footnomemoisation" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
+a variation of lazy<a class="footnote-reference brackets" href="#footnomemoisation" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
 (nonstrict, noneager, delayed)
 evaluation of function arguments.
-They are evaluated when their <em>values</em> are first needed.
+They are only computed when their <em>values</em> are first needed.
 As we can take the expressions used to generate them
 (via <strong class="command">substitute</strong>; see <a class="reference internal" href="320-language.html#sec-substitute"><span class="std std-numref">Section 15.4.2</span></a>),
 we shall see that we can ignore their meaning in the original (caller’s)
-context and compute them in a custom one.</p>
+context, and compute them in a very different one.</p>
 <section id="evaluation-of-function-arguments">
 <span id="sec-lazy-args"></span><h2><span class="section-number">17.1. </span>Evaluation of function arguments<a class="headerlink" href="#evaluation-of-function-arguments" title="Permalink to this heading">#</a></h2>
 <p>We know that calls such as
@@ -358,14 +358,14 @@ Therefore, it was not evaluated.</p>
 <span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;x = &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">deparse</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;y = &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">deparse</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;z = &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">deparse</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="n">z</span><span class="p">)),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;Using x(a) and z(c)... &quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="n">retval</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="w">  </span><span class="c1"># evaluate a, c is reused, b is unused</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;Using x and z... &quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="n">retval</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="w">  </span><span class="c1"># does not refer to `y`</span>
 <span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;Cheers!\n&quot;</span><span class="p">)</span>
 <span class="w">        </span><span class="n">retval</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;Using c... &quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">c</span><span class="w">  </span><span class="c1"># evaluate; we do not even have to be particularly creative</span>
+<span class="w">    </span><span class="n">c</span><span class="w">  </span><span class="c1"># force evaluation; we do not even have to be particularly creative</span>
 
 <span class="w">    </span><span class="nf">subtest</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="o">~!~</span><span class="n">b</span><span class="o">*</span><span class="m">2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">headache</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="n">ha</span><span class="o">@</span><span class="n">x</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">*</span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># no evaluation yet!</span>
 <span class="p">}</span>
@@ -386,7 +386,7 @@ Therefore, it was not evaluated.</p>
 <span class="c1">## x =  a</span>
 <span class="c1">## y =  `:=`(~!~b * 2, ha@x$y &lt;&lt;- headache)</span>
 <span class="c1">## z =  c * 10</span>
-<span class="c1">## Using x(a) and z(c)... spam</span>
+<span class="c1">## Using x and z... spam</span>
 <span class="c1">## Cheers!</span>
 <span class="c1">## [1] 1001</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">testx</span><span class="p">)</span>
@@ -450,9 +450,11 @@ than just getting the expression passed as an argument.
 We can actually replace each occurrence of every name from
 a given dictionary (a named list or an environment).</p>
 <p>For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">subtest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">ex</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">env</span><span class="o">=</span><span class="nf">parent.frame</span><span class="p">())</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">subtest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ex</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">env</span><span class="o">=</span><span class="nf">parent.frame</span><span class="p">())</span><span class="w">  </span><span class="c1"># substitute(x) is just `x`</span>
 <span class="w">        </span><span class="n">ey</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">substitute</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ex =&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">deparse</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ey =&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">deparse</span><span class="p">(</span><span class="n">ey</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
@@ -461,13 +463,14 @@ a given dictionary (a named list or an environment).</p>
 
 <span class="w">    </span><span class="nf">subtest</span><span class="p">(</span><span class="nf">spam</span><span class="p">(</span><span class="o">!</span><span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="p">](</span><span class="n">x</span><span class="p">)))</span>
 <span class="p">}</span>
-<span class="nf">test</span><span class="p">(</span><span class="n">bacon</span><span class="o">@</span><span class="n">hovercraft</span><span class="p">)</span>
-<span class="c1">## ex = bacon@hovercraft</span>
+
+<span class="nf">test</span><span class="p">(</span><span class="n">eels</span><span class="o">@</span><span class="n">hovercraft</span><span class="p">)</span>
+<span class="c1">## ex = eels@hovercraft</span>
 <span class="c1">## ey = spam(!x[x](x))</span>
-<span class="c1">## spam(!bacon@hovercraft[bacon@hovercraft](bacon@hovercraft))</span>
+<span class="c1">## spam(!eels@hovercraft[eels@hovercraft](eels@hovercraft))</span>
 </pre></div>
 </div>
-<p>This way, we could not only fetch the expression passed as the
+<p>This way, we were not only able to fetch the expression passed as the
 `<code class="docutils literal notranslate"><span class="pre">x</span></code>` argument to the calling function, but also replace every occurrence
 of `<code class="docutils literal notranslate"><span class="pre">x</span></code>` in the expression `<code class="docutils literal notranslate"><span class="pre">ey</span></code>`.</p>
 <p>Note that <strong class="command">substitute</strong> does not evaluate
@@ -481,7 +484,7 @@ its first argument. Hence, if we called
         
     </div><div class="proof-content">
 <p>Study the source code of <strong class="command">replicate</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">replicate</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">replicate</span><span class="p">)</span>
 <span class="c1">## function (n, expr, simplify = &quot;array&quot;)</span>
 <span class="c1">## sapply(integer(n), eval.parent(substitute(function(...) expr)),</span>
 <span class="c1">##     simplify = simplify)</span>
@@ -494,17 +497,17 @@ its first argument. Hence, if we called
         <span class="proof-type">Exercise 17.5</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of the <strong class="command">bquote</strong> function.</p>
+<p>(*) Implement your own version of the <strong class="command">bquote</strong> function.</p>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
 Internally, lazy evaluation of arguments
-is implemented using the so-called <em>promises</em>.
-As such, they consist of (compare <span id="id3">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">55</a>]</span>):</p>
+is implemented using the so-called <em>promises</em> (compare <span id="id3">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">55</a>]</span>).
+As such, they consist of:</p>
 <ul class="simple">
-<li><p>an expression (which we can access by calling <strong class="command">substitute</strong>),</p></li>
+<li><p>an expression (which we can access by calling <strong class="command">substitute</strong>);</p></li>
 <li><p>an environment where the expression is to be evaluated
-(once this happens, it is set to <code class="docutils literal notranslate"><span class="pre">NULL</span></code>),</p></li>
+(once this happens, it is set to <code class="docutils literal notranslate"><span class="pre">NULL</span></code>);</p></li>
 <li><p>a cached value (computed on demand, once).</p></li>
 </ul>
 <p>This interface is not really visible
@@ -522,7 +525,7 @@ Why is it used by, e.g., <strong class="command">apply</strong>,
 <p>Note that it uses
 <strong class="command">eval.parent</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(FUN)))</span></code> to fetch the expression representing
 the argument passed by the calling function (but it is probably
-very rarely needed there).</p>
+very rarely needed there). Compare:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">subtest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -531,11 +534,11 @@ very rarely needed there).</p>
 <span class="w">        </span><span class="nf">eval.parent</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nf">subtest</span><span class="p">(</span><span class="n">x</span><span class="m">+3</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">subtest</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="m">3</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="o">*</span><span class="m">2</span><span class="p">)</span>
-<span class="c1">## 1 * 2 + 3</span>
+<span class="nf">test</span><span class="p">(</span><span class="m">1+2</span><span class="p">)</span>
+<span class="c1">## (1 + 2) * 3</span>
 </pre></div>
 </div>
 </div></div></section>
@@ -546,27 +549,32 @@ are special expressions specified in a function’s parameter list.
 When a function’s body requires the value of an argument
 that was not provided by the caller, the default expression
 will be evaluated <em>in the current (local) environment</em> of the function.
-This is thus different than the case of normally passed arguments, which
+This is thus different from the case of normally passed arguments, which
 are interpreted in the context of the calling environment.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;banana\n&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;banana&quot;</span>
 
 <span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam\n&quot;</span><span class="p">);</span><span class="w"> </span><span class="n">x</span><span class="p">})</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="nf">deparse</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;bacon\n&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;rotten potatoes\n&quot;</span>
-<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;rotten potatoes&quot;</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 
+<span class="nf">test</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">## x</span>
+<span class="c1">## bacon</span>
+<span class="c1">## banana banana</span>
 <span class="nf">test</span><span class="p">()</span>
 <span class="c1">## {     cat(&quot;spam\n&quot;)     x }</span>
 <span class="c1">## bacon</span>
 <span class="c1">## spam</span>
-<span class="c1">## rotten potatoes</span>
-<span class="nf">test</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## x</span>
+<span class="c1">## rotten potatoes rotten potatoes</span>
+<span class="nf">test</span><span class="p">({</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam\n&quot;</span><span class="p">);</span><span class="w"> </span><span class="n">x</span><span class="p">})</span>
+<span class="c1">## {     cat(&quot;spam\n&quot;)     x }</span>
 <span class="c1">## bacon</span>
-<span class="c1">## banana</span>
+<span class="c1">## spam</span>
+<span class="c1">## banana banana</span>
 </pre></div>
 </div>
 <p>As usual, the evaluation is triggered only once,
@@ -638,7 +646,7 @@ are set to <strong class="command">parent.frame</strong>. What does that mean?</
         
     </div><div class="proof-content">
 <p>Study the source code of the <strong class="command">local</strong> function:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">local</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">local</span><span class="p">)</span>
 <span class="c1">## function (expr, envir = new.env())</span>
 <span class="c1">## eval.parent(substitute(eval(quote(expr), envir)))</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
@@ -677,11 +685,11 @@ to another call, as-is.</p>
         <span class="proof-type">Exercise 17.10</span>
         
     </div><div class="proof-content">
-<p>In <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;lapply&quot;)</span></code>, we read that this function
-is called like <strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">FUN,</span> <span class="pre">...)</span></code>,
-where `<code class="code docutils literal notranslate"><span class="pre">...</span></code>` are <em>optional arguments to <code class="docutils literal notranslate"><span class="pre">FUN</span></code></em>.
-Verify that whatever is passed via the ellipsis is evaluated
-only once, and not on each application of <code class="docutils literal notranslate"><span class="pre">FUN</span></code> on the elements of <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<p>In the documentation of <strong class="command">lapply</strong>, we read that this function
+is called like “<strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">FUN,</span> <span class="pre">...)</span></code>”,
+where `<code class="code docutils literal notranslate"><span class="pre">...</span></code>` are <em>optional arguments to <strong class="command">FUN</strong></em>.
+Verify that whatever is passed via the ellipsis is evaluated only once,
+and not on each application of <strong class="command">FUN</strong> on the elements of <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
 </div></div><div class="proof proof-type-example" id="id21">
 
     <div class="proof-title">
@@ -692,9 +700,9 @@ only once, and not on each application of <code class="docutils literal notransl
 many high-level graphical functions rely on multiple calls to
 more primitive functions that allow for setting a variety of parameters
 (e.g., via <strong class="command">par</strong>).
-A quite common scenario is for the high-level function
+A quite common scenario is for a high-level function
 to submit <em>all</em> the passed arguments to the underlying
-basic routines, which then decide by themselves which items
+basic routines that then can decide by themselves which items
 they are interested in.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
@@ -710,19 +718,19 @@ they are interested in.</p>
 <span class="c1">## &quot;A&quot; &quot;B&quot; &quot;3&quot;</span>
 </pre></div>
 </div>
-<p>Here, for instance, <strong class="command">subtest1</strong> only consumes the value of <code class="docutils literal notranslate"><span class="pre">a</span></code>
+<p>Here, for instance, <strong class="command">subtest1</strong> only consumes the value of `<code class="docutils literal notranslate"><span class="pre">a</span></code>`
 and ignores all the other arguments whatsoever.
 <strong class="command">plot.default</strong> (amongst others) relies on such a design pattern.</p>
-</div></div><p><strong class="command">...length</strong> fetches the number of items
-passed via the ellipsis, <strong class="command">...names</strong> retrieves their names
+</div></div><p><strong class="command">...length</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code> fetches the number of items
+passed via the ellipsis, <strong class="command">...names</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code> retrieves their names
 (in the case they are given as keyword arguments), and
-<strong class="command">...elt(i)</strong> gives the <em>value</em> of the <em>i</em>-th element.
+<strong class="command">...elt</strong><code class="code docutils literal notranslate"><span class="pre">(i)</span></code> gives the <em>value</em> of the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th element.
 Furthermore, <code class="docutils literal notranslate"><span class="pre">..1</span></code>, <code class="docutils literal notranslate"><span class="pre">..2</span></code>, … are synonymous with
-<strong class="command">...elt(1)</strong>, <strong class="command">...elt(2)</strong>, etc.</p>
+<strong class="command">...elt</strong><code class="code docutils literal notranslate"><span class="pre">(1)</span></code>, <strong class="command">...elt</strong><code class="code docutils literal notranslate"><span class="pre">(2)</span></code>, etc.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;length:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">...length</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;names: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="nf">...names</span><span class="p">(),</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;length:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">...length</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;names: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="nf">...names</span><span class="p">(),</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="nf">...length</span><span class="p">()))</span>
 <span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">...elt</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="nf">...elt</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
@@ -737,7 +745,7 @@ Furthermore, <code class="docutils literal notranslate"><span class="pre">..1</s
 <span class="c1">## ...elt(3L)</span>
 </pre></div>
 </div>
-<p>Note that only <code class="docutils literal notranslate"><span class="pre">...elt(i)</span></code> triggers the evaluation of the respective
+<p>Note that <strong class="command">...elt</strong><code class="code docutils literal notranslate"><span class="pre">(i)</span></code> triggers the evaluation of the respective
 argument. Unfortunately, we cannot use <strong class="command">substitute</strong> to
 fetch the underlying expression.
 Instead, we can rely on <strong class="command">match.call</strong> discussed
@@ -758,7 +766,7 @@ in <a class="reference internal" href="320-language.html#sec-sys-call"><span cla
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>(*) Objects passed via `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`, even if they are specified as
+<p>Objects passed via `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`, even if they are specified as
 keyword arguments, cannot be referred to by their name,
 as if they were local variables:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="n">zzz</span>
@@ -786,42 +794,50 @@ as if they were local variables:</p>
 <section id="on-exit">
 <span id="sec-on-exit"></span><h2><span class="section-number">17.4. </span><strong class="command">on.exit</strong> (*)<a class="headerlink" href="#on-exit" title="Permalink to this heading">#</a></h2>
 <p><strong class="command">on.exit</strong> registers an expression to be evaluated
-at the very end of a function call, regardless whether
-it exited due to an error or not.
-It might be used to
+at the very end of a call, regardless whether the function
+exited due to an error or not. It might be used to
 re-set the temporarily modified graphical parameters (see <strong class="command">par</strong>)
 and system options (<strong class="command">options</strong>),
-or clean up the allocated resources (e.g., closing open files).</p>
+or clean up the allocated resources (e.g., close all open file connections).</p>
 <p>For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">reset</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">reset</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="nf">on.exit</span><span class="p">(</span><span class="nf">print</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">))</span>
-<span class="w">    </span><span class="nf">on.exit</span><span class="p">(</span><span class="nf">print</span><span class="p">(</span><span class="s">&quot;bacon&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># replace</span>
-<span class="w">    </span><span class="nf">on.exit</span><span class="p">(</span><span class="nf">print</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># add</span>
+<span class="w">    </span><span class="nf">on.exit</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;eggs\n&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">on.exit</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;bacon\n&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># replace</span>
+<span class="w">    </span><span class="nf">on.exit</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam\n&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># add</span>
 
-<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="s">&quot;roti canai&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;roti canai\n&quot;</span><span class="p">)</span>
 
 <span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">reset</span><span class="p">)</span>
 <span class="w">        </span><span class="nf">on.exit</span><span class="p">()</span><span class="w">  </span><span class="c1"># cancels all (replace by nothing)</span>
 
-<span class="w">    </span><span class="s">&quot;end.&quot;</span><span class="w">  </span><span class="c1"># return value</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">stop</span><span class="p">(</span><span class="s">&quot;aaarrgh!&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;end\n&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="s">&quot;return value&quot;</span>
 <span class="p">}</span>
 
-<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span>
-<span class="c1">## [1] &quot;roti canai&quot;</span>
-<span class="c1">## [1] &quot;bacon&quot;</span>
-<span class="c1">## [1] &quot;spam&quot;</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] &quot;end.&quot;</span>
-<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">test</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## [1] &quot;roti canai&quot;</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] &quot;end.&quot;</span>
+<span class="nf">test</span><span class="p">()</span>
+<span class="c1">## roti canai</span>
+<span class="c1">## end</span>
+<span class="c1">## bacon</span>
+<span class="c1">## spam</span>
+<span class="c1">## [1] &quot;return value&quot;</span>
+<span class="nf">test</span><span class="p">(</span><span class="n">reset</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## roti canai</span>
+<span class="c1">## end</span>
+<span class="c1">## [1] &quot;return value&quot;</span>
+<span class="nf">test</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## roti canai</span>
+<span class="c1">## Error in test(error = TRUE): aaarrgh!</span>
+<span class="c1">## bacon</span>
+<span class="c1">## spam</span>
 </pre></div>
 </div>
 <p>Note that we can always do without <strong class="command">on.exit</strong>,
 e.g., by applying proper exception handling techniques;
-<a class="reference internal" href="180-flow.html#sec-exceptions"><span class="std std-numref">Section 8.2</span></a>.</p>
+see <a class="reference internal" href="180-flow.html#sec-exceptions"><span class="std std-numref">Section 8.2</span></a>.</p>
 <div class="proof proof-type-exercise" id="id24">
 
     <div class="proof-title">
@@ -833,15 +849,15 @@ e.g., by applying proper exception handling techniques;
 </pre></div>
 </div>
 <p>in the definition of <strong class="command">scan</strong>.
-What is its purpose?</p>
+Is its purpose to close the file on exit?</p>
 </div></div><div class="proof proof-type-exercise" id="id25">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 17.15</span>
         
     </div><div class="proof-content">
-<p>Why does <strong class="command">graphics::barplot.default</strong> call the following
-expressions?</p>
+<p>Why does <strong class="program">graphics</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">barplot.default</strong>
+call the following expressions?</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">dev.hold</span><span class="p">()</span>
 <span class="n">opar</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="n">horiz</span><span class="p">)</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">xaxs</span><span class="o">=</span><span class="s">&quot;i&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xpd</span><span class="o">=</span><span class="n">xpd</span><span class="p">)</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">yaxs</span><span class="o">=</span><span class="s">&quot;i&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xpd</span><span class="o">=</span><span class="n">xpd</span><span class="p">)</span>
 <span class="nf">on.exit</span><span class="p">({</span>
@@ -851,8 +867,8 @@ expressions?</p>
 </pre></div>
 </div>
 </div></div></section>
-<section id="metaprogramming-in-action-examples">
-<span id="sec-metaprogramming-implement"></span><h2><span class="section-number">17.5. </span>Metaprogramming in action: Examples (*)<a class="headerlink" href="#metaprogramming-in-action-examples" title="Permalink to this heading">#</a></h2>
+<section id="metaprogramming-and-laziness-in-action-examples">
+<span id="sec-metaprogramming-implement"></span><h2><span class="section-number">17.5. </span>Metaprogramming and laziness in action: Examples (*)<a class="headerlink" href="#metaprogramming-and-laziness-in-action-examples" title="Permalink to this heading">#</a></h2>
 <p>As we mentioned at the beginning of the previous chapter
 and in <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>
 and <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>,
@@ -862,11 +878,11 @@ as long as they are syntactically valid R expressions.
 Nothing but basic decency stops us from interpreting them in
 any way we want. Each such function can become a microverse
 (a microlanguage?) by itself. This might confuse<a class="footnote-reference brackets" href="#footconfuse" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> our users,
-as they will have to study its behaviour separately.</p>
-<p>In this section, we will take a look at a few builtin functions relying
-on metaprogramming, mostly because that studying them is a good exercise
-that help extend our programming skills and deepen our understanding
-of the underlying concepts.</p>
+as they will have to analyse its behaviour separately.</p>
+<p>In this section, we will take a look at a few built-in functions relying
+on metaprogramming and laziness, mostly because that studying them is a good
+exercise that help extend our programming skills and deepen our understanding
+of the concepts discussed in this part of the book.</p>
 <p>By no means it is an invite to use them in practice.</p>
 <p>Still, R’s computing on the language capabilities
 might be of interest to some advanced programmers (e.g., package
@@ -911,7 +927,7 @@ of the function it is enclosed in!</p>
         
     </div><div class="proof-content">
 <p>Inspect the source code and the documentation of
-<strong class="command">stats::binom.test</strong>, which looks like:</p>
+<strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">binom.test</strong>, which looks like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;two.sided&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;less&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;greater&quot;</span><span class="p">))</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1"># ...</span>
@@ -941,7 +957,7 @@ In particular, note the following fragment:</p>
 </div></div></section>
 <section id="curve">
 <h3><span class="section-number">17.5.2. </span><strong class="command">curve</strong><a class="headerlink" href="#curve" title="Permalink to this heading">#</a></h3>
-<p>The <strong class="command">curve</strong> function can be called like:</p>
+<p>The <strong class="command">curve</strong> function can be called, e.g.,  like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">curve</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="kc">pi</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1001</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -951,7 +967,9 @@ In particular, note the following fragment:</p>
 <p><span class="caption-number">Figure 17.1 </span><span class="caption-text">An example plot generated by calling <strong class="command">curve</strong></span><a class="headerlink" href="#id28" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>which results in <a class="reference internal" href="#fig-curve-plot"><span class="std std-numref">Figure 17.1</span></a>.</p>
+<p>which results in <a class="reference internal" href="#fig-curve-plot"><span class="std std-numref">Figure 17.1</span></a>.
+Wait a minute… We did not define `<code class="docutils literal notranslate"><span class="pre">x</span></code>` to be
+a sequence ranging between ca. 0.3 and 3!</p>
 <div class="proof proof-type-exercise" id="id29">
 
     <div class="proof-title">
@@ -989,8 +1007,8 @@ Due to this, the <code class="docutils literal notranslate"><span class="pre">en
 Thus, even though <code class="docutils literal notranslate"><span class="pre">Sepal.Length</span></code> is not a standalone variable,
 it is treated as if it was one <em>inside</em> the <code class="docutils literal notranslate"><span class="pre">iris</span></code> data frame.</p>
 <p>Note that thanks to the enclosure’s being set to the calling frame,
-we can successfully refer to the <strong class="command">head</strong> function
-somewhere from the search path.
+we can successfully refer to the <strong class="command">head</strong> function located
+somewhere on the search path.
 This is somewhat similar to <strong class="command">attach</strong> (<a class="reference internal" href="330-environment.html#sec-attach"><span class="std std-numref">Section 16.2.6</span></a>),
 but without modifying the search path.</p>
 <p>The <strong class="command">with</strong> function does exactly the above:</p>
@@ -1065,8 +1083,8 @@ in a data frame using vectorised functions, for instance:</p>
 </pre></div>
 </div>
 <p>If we suspect that this function evaluates
-all expressions passed as `<code class="docutils literal notranslate"><span class="pre">...</span></code>` in <em>within</em> the data frame,
-we are obviously right.
+all expressions passed as `<code class="docutils literal notranslate"><span class="pre">...</span></code>` <em>within</em> the data frame,
+we are brilliantly right.
 Furthermore, there must be some mechanism allowing for the detection
 of newly created variables so that new columns can be added.</p>
 <div class="proof proof-type-exercise" id="id31">
@@ -1108,7 +1126,7 @@ of a data frame that meet certain criteria. For instance:</p>
 </pre></div>
 </div>
 <p>The second argument, the row selector, must definitely
-be evaluated <em>within</em> the data frame. We expect it to reduce
+be evaluated <em>within</em> the data frame. We expect it to reduce itself
 to a logical vector which then can be passed to the index operator.</p>
 <p>The “select all columns except those between the given ones”
 part can be implemented by assigning each column a consecutive
@@ -1147,8 +1165,8 @@ integer, and then treating them as numeric indexes.</p>
 </div></div></section>
 <section id="a-forward-pipe-operator">
 <h3><span class="section-number">17.5.6. </span>A forward-pipe operator<a class="headerlink" href="#a-forward-pipe-operator" title="Permalink to this heading">#</a></h3>
-<p>In <a class="reference internal" href="220-s3.html#sec-pipe"><span class="std std-numref">Section 10.5</span></a>, we mentioned the pipe operator,
-`<code class="docutils literal notranslate"><span class="pre">|&gt;</span></code>`. We can quite easily implement its simplified version manually:</p>
+<p>In <a class="reference internal" href="220-s3.html#sec-pipe"><span class="std std-numref">Section 10.5</span></a>, we mentioned the pipe operator, `<strong class="command">|&gt;</strong>`.
+We can implement its simplified version manually:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`%&gt;%`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">e2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.list</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="n">e2</span><span class="p">))</span>
@@ -1189,11 +1207,18 @@ so that it can be referred to in the righthand side expression.</p>
 multiple times in a single call, for instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">);</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%.&gt;%</span><span class="w"> </span><span class="nf">`[`</span><span class="p">(</span><span class="n">.</span><span class="o">&gt;</span><span class="m">0.5</span><span class="p">)</span><span class="w">   </span><span class="c1"># x[x&gt;0.5] with x=runif(5)</span>
 <span class="c1">## [1] 0.78831 0.88302 0.94047</span>
-<span class="c1"># x[x&gt;=0.5] &lt;- 0.5 with x=round(runif(5), 2):</span>
-<span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">);</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%.&gt;%</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">%.&gt;%</span><span class="w"> </span><span class="nf">`[&lt;-`</span><span class="p">(</span><span class="n">.</span><span class="o">&gt;=</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
-<span class="c1">## [1] 0.29 0.50 0.41 0.50 0.50</span>
 </pre></div>
 </div>
+<p>This is crazy, I know. I made this. Your author.
+One more then:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># x[x&gt;=0.5] &lt;- 0.5 with x=round(runif(5), 2):</span>
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">);</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%.&gt;%</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">%.&gt;%</span><span class="w"> </span><span class="nf">`[&lt;-`</span><span class="p">(</span><span class="n">.</span><span class="o">&gt;=</span><span class="m">0.5</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">.</span><span class="o">&lt;=</span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="o">=</span><span class="kc">NA</span><span class="p">)</span>
+<span class="c1">## [1] 0.29   NA 0.41   NA 0.94</span>
+</pre></div>
+</div>
+<p>I cannot wait for someone to put this operator into some new R package
+(it is a brilliant idea, by the way, isn’t it?) and then confuse
+thousands of users (“what is this thing?”).</p>
 </section>
 <section id="other-ideas">
 <h3><span class="section-number">17.5.7. </span>Other ideas (**)<a class="headerlink" href="#other-ideas" title="Permalink to this heading">#</a></h3>
@@ -1387,10 +1412,10 @@ and <span class="math notranslate nohighlight">\(x\)</span> and <span class="mat
 </li>
 </ul>
 </div></div><p>From the perspective of this book, which focuses on more universal
-aspects of the R language, formulas are enough interesting
+aspects of the R language, formulae are not interesting enough
 to describe them in any more detail. However, the kind reader
 is now equipped with all the necessary knowledge to solve
-the following very educative exercise.</p>
+the following very educative exercises.</p>
 <div class="proof proof-type-exercise" id="id38">
 
     <div class="proof-title">
@@ -1398,9 +1423,9 @@ the following very educative exercise.</p>
         
     </div><div class="proof-content">
 <p>Study the source code of
-<strong class="command">graphics:::boxplot.formula</strong>,
-<strong class="command">stats::lm</strong>,
-and <strong class="command">stats:::t.test.formula</strong>
+<strong class="program">graphics</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">boxplot.formula</strong>,
+<strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">lm</strong>,
+and <strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">t.test.formula</strong>
 and take note of how they prepare and process
 the calls to <strong class="command">model.frame</strong>,
 <strong class="command">model.matrix</strong>,
@@ -1408,7 +1433,7 @@ the calls to <strong class="command">model.frame</strong>,
 <strong class="command">model.weights</strong>, etc.</p>
 <p>Note that their main aim is to prepare data to be passed
 to <strong class="command">boxplot.default</strong>, <strong class="command">lm.fit</strong> (it is just a function
-with such a name),
+with such a name, not an S3 method),
 and <strong class="command">t.test.default</strong></p>
 </div></div><div class="proof proof-type-exercise" id="id39">
 
@@ -1466,7 +1491,7 @@ Or are there cases where evaluation is eager?</p></li>
 <section id="outro">
 <h2><span class="section-number">17.8. </span>Outro<a class="headerlink" href="#outro" title="Permalink to this heading">#</a></h2>
 <p>Let us recall our first approximation to the classification
-of R Data Types that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.
+of R data types that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.
 As a summary of what we have covered in this book, let us contemplate
 upon <a class="reference internal" href="#fig-data-types-full"><span class="std std-numref">Figure 17.2</span></a>, which gives a much broader picture.</p>
 <figure class="align-default" id="id42">
@@ -1485,15 +1510,17 @@ we might be interested in reading the following materials:</p>
 <li><p><em>R Language Definition</em> <span id="id7">[<a class="reference internal" href="999-bibliography.html#id10" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">55</a>]</span>,</p></li>
 <li><p><em>R Internals</em> <span id="id8">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">54</a>]</span>,</p></li>
 <li><p><em>Writing R Extensions</em> <span id="id9">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">51</a>]</span>,</p></li>
-<li><p>R’s source code available at <a class="reference external" href="https://cran.r-project.org/src/base/">https://cran.r-project.org/src/base/</a>,</p></li>
-<li><p>The open-access
-<a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist data wrangling with Python</em></a> <span id="id10">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span> by yours truly.</p></li>
+<li><p>R’s source code available at <a class="reference external" href="https://cran.r-project.org/src/base/">https://cran.r-project.org/src/base/</a>.</p></li>
 </ul>
-<p>Also, the <code class="docutils literal notranslate"><span class="pre">NEWS</span></code> files available at
+<p>What is more, the <code class="docutils literal notranslate"><span class="pre">NEWS</span></code> files available at
 <a class="reference external" href="https://cran.r-project.org/doc/manuals/r-release/">https://cran.r-project.org/doc/manuals/r-release/</a>
 will keep us up to date with new features, bug fixes,
 and deprecated functionality; see also the <strong class="command">news</strong> function.</p>
-<p>Good luck!</p>
+<p>Please spread the news about this book.
+Also, check out the other open-access textbook by yours truly,
+<a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist data wrangling with Python</em></a> <span id="id10">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.
+Thank you.</p>
+<p>Good luck in your further projects!</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footnomemoisation" role="note">
@@ -1535,7 +1562,7 @@ so such exceptions go against this natural coping strategy of theirs.</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><span class="section-number">16. </span>🚧 Environments and evaluation (*)</div>
+                <div class="title"><span class="section-number">16. </span>Environments and evaluation (*)</div>
                 
               </div>
             </a>
@@ -1549,7 +1576,7 @@ so such exceptions go against this natural coping strategy of theirs.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-08T18:12:50+1000.
+              Last updated on 2023-04-09T20:45:28+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1570,12 +1597,12 @@ so such exceptions go against this natural coping strategy of theirs.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">17. 🚧 Lazy evaluation (**)</a><ul>
+<li><a class="reference internal" href="#">17. Lazy evaluation (**)</a><ul>
 <li><a class="reference internal" href="#evaluation-of-function-arguments">17.1. Evaluation of function arguments</a></li>
 <li><a class="reference internal" href="#evaluation-of-default-arguments">17.2. Evaluation of default arguments</a></li>
 <li><a class="reference internal" href="#ellipsis-revisited">17.3. Ellipsis, `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`,  revisited</a></li>
 <li><a class="reference internal" href="#on-exit">17.4. <strong class="command">on.exit</strong> (*)</a></li>
-<li><a class="reference internal" href="#metaprogramming-in-action-examples">17.5. Metaprogramming in action: Examples (*)</a><ul>
+<li><a class="reference internal" href="#metaprogramming-and-laziness-in-action-examples">17.5. Metaprogramming and laziness in action: Examples (*)</a><ul>
 <li><a class="reference internal" href="#match-arg">17.5.1. <strong class="command">match.arg</strong></a></li>
 <li><a class="reference internal" href="#curve">17.5.2. <strong class="command">curve</strong></a></li>
 <li><a class="reference internal" href="#with-and-within">17.5.3. <strong class="command">with</strong> and <strong class="command">within</strong></a></li>
