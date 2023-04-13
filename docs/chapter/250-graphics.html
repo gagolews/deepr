@@ -299,33 +299,262 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
 </div></blockquote>
-<p>The R Project <a class="reference external" href="https://www.r-project.org/">homepage</a>
-advertises our free software as an
+<p>The R Project homepage advertises our free software as an
 <em>environment for statistical computing and graphics</em>.
 Hence, had we not dealt with the latter use case,
 our course would have been incomplete.</p>
-<p>R is equipped with two independent systems for graphics generation.</p>
+<p>R is equipped with the two following independent (incompatible,
+yet coexisting) systems for graphics generation;
+see <a class="reference internal" href="#fig-graphics-systems"><span class="std std-numref">Figure 13.1</span></a>.</p>
 <ol class="arabic simple">
-<li><p>The (historically) newer one, <strong class="program">grid</strong>, is quite complicated.
-Some readers might have come across the <strong class="program">lattice</strong>
-and <strong class="program">ggplot2</strong> packages before: they are built
-on top of <strong class="program">grid</strong>.</p></li>
+<li><p>The (historically) newer one,
+<a class="reference external" href="https://www.stat.auckland.ac.nz/~paul/grid/grid.html"><strong class="program">grid</strong></a>
+(e.g., <span id="id2">[<a class="reference internal" href="999-bibliography.html#id42" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">44</a>]</span>),
+is very flexible but might seem quite complicated.
+Some readers might have come across
+the <strong class="program">lattice</strong> <span id="id3">[<a class="reference internal" href="999-bibliography.html#id43" title="Sarkar, D. (2008).  Lattice: Multivariate Data Visualization with R. Springer. URL: http://lmdvr.r-forge.r-project.org.">48</a>]</span>
+and <strong class="program">ggplot2</strong> <span id="id4">[<a class="reference internal" href="999-bibliography.html#id45" title="Wickham, H. (2016).  ggplot2: Elegant Graphics for Data Analysis. Springer, 2nd edition.">53</a>, <a class="reference internal" href="999-bibliography.html#id44" title="Wilkinson, L. (2005).  The Grammar of Graphics. Springer.">56</a>]</span> packages
+before:
+they are built on top of <strong class="program">grid</strong>.</p></li>
 <li><p>On the other hand, its traditional (S-style) counterpart,
-<strong class="program">graphics</strong>, is much easier to master. It still gives their
-users full control over the drawing process.
-Its being simple, fast, and low-level makes it very attractive
+<em>base</em> <strong class="program">graphics</strong> (e.g., <span id="id5">[<a class="reference internal" href="999-bibliography.html#id51" title="Becker, R.A., Chambers, J.M., and Wilks, A.R. (1988).  The New S Language: A Programming Environment for Data Analysis and Graphics. Chapman &amp; Hall.">7</a>]</span>),
+is much easier to master.
+It still gives their users full control over drawing processes.
+Its being simple, fast, and minimalist makes it very attractive
 from the perspective of this course’s philosophy.</p></li>
 </ol>
-<p>This is why we will only be covering the second approach.
-Note that <em>all</em> figures in this book were generated using <strong class="program">graphics</strong>
+<p>This is why we only cover the second system here.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>All</em> figures in this book were generated using <strong class="program">graphics</strong>
 and its dependants. They are sufficiently aesthetic, aren’t they?</p>
+</div>
+<figure class="align-default" id="id10">
+<span id="fig-graphics-systems"></span><img alt="../_images/graphics-systems.png" src="../_images/graphics-systems.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.1 </span><span class="caption-text">Relation between the graphics subsystems</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
+<section id="graphics-primitives">
+<h2><span class="section-number">13.1. </span>🚧 Graphics primitives<a class="headerlink" href="#graphics-primitives" title="Permalink to this heading">#</a></h2>
+<p>In <strong class="program">graphics</strong>, we do not choose from a superfluity
+of virtual objects to be placed on an abstract canvas,
+letting some algorithm decide how and when to delineate them. We <em>just draw</em>.</p>
+<p>To do so, we call functions that plot the following <em>graphics primitives</em>
+(compare, e.g., <span id="id6">[<a class="reference internal" href="999-bibliography.html#id54" title="Hughes, J., van Dam, A., McGuire, M., Sklar, D., Foley, J., Feiner, S., and Akeley, K. (2013).  Computer Graphics: Principles and Practice. Addison-Wesley, 3rd edition.">35</a>, <a class="reference internal" href="999-bibliography.html#id55" title="Marschner, S. and Shirley, P. (2021).  Fundamentals of Computer Graphics. AK Peters/CRC Press, 5th edition.">41</a>]</span>):</p>
+<ul class="simple">
+<li><p>plotting symbols (e.g., pixels, circles stars)
+of different shapes and colours,</p></li>
+<li><p>line segments of different styles (e.g., solid, dashed, dotted),</p></li>
+<li><p>polygons (optionally filled),</p></li>
+<li><p>text (using available fonts),</p></li>
+<li><p>raster images (bitmaps; if the output device supports it).</p></li>
+</ul>
+<p>That’s it. It will turn out that most other shapes
+(smooth curves, circles) might be easily approximated using the above.</p>
+<div class="proof proof-type-example" id="id11">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 13.1</span>
+        
+    </div><div class="proof-content">
+<p><a class="reference internal" href="#fig-primitives-demo"><span class="std std-numref">Figure 13.2</span></a> depicts some examples of the aforementioned
+graphics primitives which we plotted using the following code.
+We will detail the meaning of all the functions in the next
+sections.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">  </span><span class="c1"># small plot margins (bottom, left, top, right)</span>
+<span class="nf">plot.new</span><span class="p">()</span><span class="w">  </span><span class="c1"># start a new plot</span>
+<span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">asp</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># x range: 0–6, y: 0–2; proportional</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w">   </span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="m">6</span><span class="p">)</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="nf">points</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">],</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">])</span><span class="w">  </span><span class="c1"># plotting symbols</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">   </span><span class="c1"># connected line segments</span>
+<span class="nf">text</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;(0, 0)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(6, 2)&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># two text labels</span>
+<span class="nf">rasterImage</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">  </span><span class="c1"># 2x3 pixel &quot;image&quot;; 0=black, 1=red</span>
+<span class="w">             </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span>
+<span class="w">             </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="m">2</span><span class="p">),</span>
+<span class="w">    </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w">  </span><span class="c1"># position: xleft, ybottom, xright, ytop</span>
+<span class="w">    </span><span class="n">interpolate</span><span class="o">=</span><span class="kc">FALSE</span>
+<span class="p">)</span>
+<span class="nf">polygon</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5.5</span><span class="p">,</span><span class="w">    </span><span class="m">4</span><span class="p">),</span><span class="w">  </span><span class="c1"># x coordinates of the vertices</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">   </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0.75</span><span class="p">),</span><span class="w">  </span><span class="c1"># y coordinates</span>
+<span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dotted&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1"># border style</span>
+<span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;#ffff0044&quot;</span><span class="w">  </span><span class="c1"># fill colour: semi-transparent yellow</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-default" id="id12">
+<span id="fig-primitives-demo"></span><img alt="../_images/primitives-demo-1.png" src="../_images/primitives-demo-1.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.2 </span><span class="caption-text">Most important graphical primitives: plotting symbols, line segments, polygons, text labels, and bitmaps; note that objects are plotted one after another, with newer ones overlapping the already existing shapes</span><a class="headerlink" href="#id12" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div></div><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In <strong class="program">graphics</strong>, most of the function calls have immediate
+effects. Objects are drawn on the active plot one by one,
+and their state cannot be modified later.</p>
+</div>
+<p>Of course, in practice, we do not have to be so low-level all the time.
+There are many built-in functions that implement (using exactly the above
+building blocks) the most popular chart types: histograms, bar plots,
+dendrograms, etc. They should suit our basic needs. We will review them
+in <a class="reference internal" href="#sec-high-level-plotting"><span class="std std-numref">Section 13.3</span></a>.</p>
+<section id="plotting-symbols">
+<h3><span class="section-number">13.1.1. </span>🚧 Plotting symbols<a class="headerlink" href="#plotting-symbols" title="Permalink to this heading">#</a></h3>
+<p>… working on it …</p>
+<p>(actually <strong class="command">points</strong> and <strong class="command">lines</strong> are wrappers around the same function, <strong class="command">plot.xy</strong>, which we do not usually call directly)</p>
+<p>Typical setting for the <code class="docutils literal notranslate"><span class="pre">pch</span></code> (plotting character or symbol;
+see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;points&quot;)</span></code> for the whole list):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NA_integer_</span></code> – no symbol,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>, …, <code class="docutils literal notranslate"><span class="pre">14</span></code> – unfilled symbols</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">15</span></code>, …, <code class="docutils literal notranslate"><span class="pre">20</span></code> – filled symbols (<code class="docutils literal notranslate"><span class="pre">col</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">21</span></code>, …, <code class="docutils literal notranslate"><span class="pre">25</span></code> – filled symbols (<code class="docutils literal notranslate"><span class="pre">bg</span></code>) with a border (<code class="docutils literal notranslate"><span class="pre">col</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code> – tiny point (a “pixel”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;1&quot;</span></code>, etc. – a single character (not all Unicode characters
+are available); strings longer than one will be truncated</p></li>
+</ul>
+<p><a class="reference internal" href="#fig-pch"><span class="std std-numref">Figure 13.3</span></a>…</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">));</span><span class="w"> </span><span class="nf">plot.new</span><span class="p">();</span><span class="w"> </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.8</span><span class="p">,</span><span class="w"> </span><span class="m">9.2</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.8</span><span class="p">,</span><span class="w"> </span><span class="m">4.2</span><span class="p">))</span>
+<span class="n">xy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expand.grid</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">points</span><span class="p">(</span>
+<span class="w">    </span><span class="m">1</span><span class="o">:</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pch</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Spanish Inquisition&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;9&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="m">-1</span><span class="p">),</span><span class="w"> </span><span class="n">pos</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">0.67</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="o">=</span><span class="m">0.75</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;darkgray&quot;</span><span class="p">)</span>
+<span class="nf">points</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="m">-1</span><span class="p">),</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;yellow&quot;</span><span class="p">)</span>
+<span class="c1">## Warning in plot.xy(xy.coords(x, y), type = type, ...): unimplemented pch</span>
+<span class="c1">##     value &#39;26&#39;</span>
+</pre></div>
+</div>
+<figure class="align-default" id="id13">
+<span id="fig-pch"></span><img alt="../_images/pch-1.png" src="../_images/pch-1.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.3 </span><span class="caption-text">Available plotting characters and symbols (<code class="docutils literal notranslate"><span class="pre">pch</span></code>)</span><a class="headerlink" href="#id13" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> arguments must be of the same length (need to manually recycle)…</p>
+<p>NOTE: but a matrix or a data frame with two columns is accepted as <code class="docutils literal notranslate"><span class="pre">x</span></code> (and then <code class="docutils literal notranslate"><span class="pre">y</span></code> can be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>; recall that <strong class="command">cbind</strong><code class="code docutils literal notranslate"><span class="pre">(1:9,</span> <span class="pre">4)</span></code> will recycle
+the shorter vector</p>
+</section>
+<section id="line-segments">
+<h3><span class="section-number">13.1.2. </span>🚧 Line segments<a class="headerlink" href="#line-segments" title="Permalink to this heading">#</a></h3>
+<p>… working on it …</p>
+<p>type = p, l, b, c, o, s, S, h, n</p>
+<p>lty = (0=”blank”, 1=”solid” , 2=”dashed”, 3=”dotted”, 4=”dotdash”, 5=”longdash”, 6=”twodash”) or c(“44”, “13”, “1343”, “73”, “2262”)</p>
+<p>col, pty, lty = 1 - default</p>
+<p>NA coordinates…</p>
+<p>abline
+polypath
+segments
+arrows</p>
+<p>example: splinefun, approxfun</p>
+</section>
+<section id="polygons">
+<h3><span class="section-number">13.1.3. </span>🚧 Polygons<a class="headerlink" href="#polygons" title="Permalink to this heading">#</a></h3>
+<p>… working on it …</p>
+<p>hatched</p>
+</section>
+<section id="text">
+<h3><span class="section-number">13.1.4. </span>🚧 Text<a class="headerlink" href="#text" title="Permalink to this heading">#</a></h3>
+<p>… working on it …</p>
+</section>
+<section id="raster-images">
+<h3><span class="section-number">13.1.5. </span>🚧 Raster images (*)<a class="headerlink" href="#raster-images" title="Permalink to this heading">#</a></h3>
+<p>… working on it …</p>
+</section>
+</section>
+<section id="graphics-parameters">
+<h2><span class="section-number">13.2. </span>🚧 Graphics parameters<a class="headerlink" href="#graphics-parameters" title="Permalink to this heading">#</a></h2>
+<p>… working on it …</p>
+<section id="colours">
+<h3><span class="section-number">13.2.1. </span>🚧 Colours<a class="headerlink" href="#colours" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="user-coordinates">
+<h3><span class="section-number">13.2.2. </span>🚧 User coordinates<a class="headerlink" href="#user-coordinates" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="plot-margins">
+<h3><span class="section-number">13.2.3. </span>🚧 Plot margins<a class="headerlink" href="#plot-margins" title="Permalink to this heading">#</a></h3>
+<p><a class="reference internal" href="#fig-margins1"><span class="std std-numref">Figure 13.4</span></a>…</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot.new</span><span class="p">()</span>
+<span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># whatever</span>
+
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1"># Some text lines on the inner margins</span>
+<span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;mar&quot;</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span><span class="m">-1</span><span class="p">))</span>
+<span class="w">        </span><span class="nf">mtext</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Text line %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">side</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="n">j</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">mtext</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Inner margin %d (mar[%d]=%g)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;mar&quot;</span><span class="p">)[</span><span class="n">i</span><span class="p">]),</span>
+<span class="w">            </span><span class="n">side</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;darkgray&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nf">rect</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># rectangle (clipped to plot region)</span>
+<span class="nf">text</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Plot region&quot;</span><span class="p">)</span>
+
+<span class="nf">box</span><span class="p">(</span><span class="s">&quot;figure&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># a box around the figure region</span>
+<span class="nf">box</span><span class="p">(</span><span class="s">&quot;plot&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1"># a box around the plot region</span>
+<span class="nf">axis</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># horizontal axis (bottom)</span>
+<span class="nf">axis</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># vertical axis (left)</span>
+</pre></div>
+</div>
+<figure class="align-default" id="id14">
+<span id="fig-margins1"></span><img alt="../_images/margins1-1.png" src="../_images/margins1-1.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.4 </span><span class="caption-text">Figure layout with default inner margins: Some tweaking might be necessary to better suit our needs</span><a class="headerlink" href="#id14" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="clipping-regions">
+<h3><span class="section-number">13.2.4. </span>🚧 Clipping regions<a class="headerlink" href="#clipping-regions" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="many-figures-on-one-page-subplots">
+<h3><span class="section-number">13.2.5. </span>🚧 Many figures on one page (subplots)<a class="headerlink" href="#many-figures-on-one-page-subplots" title="Permalink to this heading">#</a></h3>
+<p><a class="reference internal" href="#fig-margins2"><span class="std std-numref">Figure 13.5</span></a>…</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">oma</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">  </span><span class="c1"># outer margins (default 0)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># a 2x2 plot grid</span>
+
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">plot.new</span><span class="p">()</span>
+<span class="w">    </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+
+<span class="w">    </span><span class="nf">rect</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">text</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Plot region (plot %d)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span>
+
+<span class="w">    </span><span class="nf">box</span><span class="p">(</span><span class="s">&quot;figure&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># a box around the figure region</span>
+<span class="w">    </span><span class="nf">box</span><span class="p">(</span><span class="s">&quot;plot&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1"># a box around the plot region</span>
+<span class="w">    </span><span class="nf">axis</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># horizontal axis (bottom)</span>
+<span class="w">    </span><span class="nf">axis</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># vertical axis (left)</span>
+<span class="p">}</span>
+
+<span class="nf">box</span><span class="p">(</span><span class="s">&quot;outer&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dotdash&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># obwodka strony</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">mtext</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Outer margin %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">side</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">outer</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-default" id="id15">
+<span id="fig-margins2"></span><img alt="../_images/margins2-1.png" src="../_images/margins2-1.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.5 </span><span class="caption-text">A page with four figures</span><a class="headerlink" href="#id15" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="graphics-devices">
+<h3><span class="section-number">13.2.6. </span>🚧 Graphics devices<a class="headerlink" href="#graphics-devices" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="higher-level-functions">
+<span id="sec-high-level-plotting"></span><h2><span class="section-number">13.3. </span>🚧 Higher-level functions<a class="headerlink" href="#higher-level-functions" title="Permalink to this heading">#</a></h2>
+<p>… working on it …</p>
+</section>
 <section id="placeholders-for-plots-referred-to-elsewhere">
-<h2><span class="section-number">13.1. </span>🚧 Placeholders for plots referred to elsewhere<a class="headerlink" href="#placeholders-for-plots-referred-to-elsewhere" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">13.4. </span>🚧 Placeholders for plots referred to elsewhere<a class="headerlink" href="#placeholders-for-plots-referred-to-elsewhere" title="Permalink to this heading">#</a></h2>
 <p>… to do … working on it …</p>
-<p>🚧 Plotting and factors; see <a class="reference internal" href="#fig-irisplot-factors"><span class="std std-numref">Figure 13.1</span></a>.</p>
+<p>🚧 Plotting and factors; see <a class="reference internal" href="#fig-irisplot-factors"><span class="std std-numref">Figure 13.6</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">]],</span><span class="w">  </span><span class="c1"># x (it is a vector)</span>
 <span class="w">     </span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Petal.Width&quot;</span><span class="p">]],</span><span class="w">   </span><span class="c1"># y (it is a vector)</span>
 <span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]]),</span><span class="w">  </span><span class="c1"># colours</span>
@@ -334,16 +563,42 @@ and its dependants. They are sufficiently aesthetic, aren’t they?</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id16">
 <span id="fig-irisplot-factors"></span><img alt="../_images/irisplot-factors-1.png" src="../_images/irisplot-factors-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.1 </span><span class="caption-text"><strong class="command">as.numeric</strong> on factors can be used to create different plotting styles</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.6 </span><span class="caption-text"><strong class="command">as.numeric</strong> on factors can be used to create different plotting styles</span><a class="headerlink" href="#id16" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+</section>
+<section id="exercises">
+<h2><span class="section-number">13.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<div class="proof proof-type-exercise" id="id17">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.2</span>
+        
+    </div><div class="proof-content">
+<p>Answer the following questions:</p>
+<ul class="simple">
+<li><p>Can functions from the <strong class="program">graphics</strong> package be used to adjust
+the plots generated by <strong class="program">lattice</strong> and <strong class="program">ggplot2</strong>?</p></li>
+<li><p>What are the admissible values of <code class="docutils literal notranslate"><span class="pre">pch</span></code> and <code class="docutils literal notranslate"><span class="pre">lty</span></code>?
+Also, in the default palette, what is the meaning of colours
+<code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">8</span></code>?
+(It is good to learn them by heart.)</p></li>
+<li><p>…</p></li>
+</ul>
+</div></div><div style="margin-top: 1em"></div><p>For further information on graphics generation in R,
+see, e.g., Chapter 12 in <span id="id7">[<a class="reference internal" href="999-bibliography.html#id8" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">52</a>]</span>, <span id="id8">[<a class="reference internal" href="999-bibliography.html#id42" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">44</a>]</span>,
+and <span id="id9">[<a class="reference internal" href="999-bibliography.html#id52" title="Rahlf, T. (2019).  Data Visualisation with R: 111 Examples. Springer Nature, 2nd edition. URL: http://www.datavisualisation-r.com/.">47</a>]</span>.</p>
+<p>Note that in this chapter, we were only interested in <em>static</em> graphics
+generation, e.g., for use in printed publications or plain websites.
+Interactive plots that a user might tinker with in a web browser
+are a different story.</p>
+<p>And so the second part of our course is ended.</p>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
-<div style="margin-top: 1em"></div><p>And so the second part of our course is ended.</p>
 </section>
 </section>
 
@@ -382,7 +637,7 @@ and its dependants. They are sufficiently aesthetic, aren’t they?</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-10T11:45:30+1000.
+              Last updated on 2023-04-13T19:48:37+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -404,7 +659,26 @@ and its dependants. They are sufficiently aesthetic, aren’t they?</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">13. 🚧🚧 Graphics</a><ul>
-<li><a class="reference internal" href="#placeholders-for-plots-referred-to-elsewhere">13.1. 🚧 Placeholders for plots referred to elsewhere</a></li>
+<li><a class="reference internal" href="#graphics-primitives">13.1. 🚧 Graphics primitives</a><ul>
+<li><a class="reference internal" href="#plotting-symbols">13.1.1. 🚧 Plotting symbols</a></li>
+<li><a class="reference internal" href="#line-segments">13.1.2. 🚧 Line segments</a></li>
+<li><a class="reference internal" href="#polygons">13.1.3. 🚧 Polygons</a></li>
+<li><a class="reference internal" href="#text">13.1.4. 🚧 Text</a></li>
+<li><a class="reference internal" href="#raster-images">13.1.5. 🚧 Raster images (*)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#graphics-parameters">13.2. 🚧 Graphics parameters</a><ul>
+<li><a class="reference internal" href="#colours">13.2.1. 🚧 Colours</a></li>
+<li><a class="reference internal" href="#user-coordinates">13.2.2. 🚧 User coordinates</a></li>
+<li><a class="reference internal" href="#plot-margins">13.2.3. 🚧 Plot margins</a></li>
+<li><a class="reference internal" href="#clipping-regions">13.2.4. 🚧 Clipping regions</a></li>
+<li><a class="reference internal" href="#many-figures-on-one-page-subplots">13.2.5. 🚧 Many figures on one page (subplots)</a></li>
+<li><a class="reference internal" href="#graphics-devices">13.2.6. 🚧 Graphics devices</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#higher-level-functions">13.3. 🚧 Higher-level functions</a></li>
+<li><a class="reference internal" href="#placeholders-for-plots-referred-to-elsewhere">13.4. 🚧 Placeholders for plots referred to elsewhere</a></li>
+<li><a class="reference internal" href="#exercises">13.5. Exercises</a></li>
 </ul>
 </li>
 </ul>
