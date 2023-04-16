@@ -61,8 +61,9 @@ and decision-making settings.
 
 He's an author of 90+ publications, including journal papers
 in outlets such as *Proceedings of the National Academy of Sciences (PNAS)*,
-*Information Fusion*, *International Journal of Forecasting*,
-*Statistical Modelling*, *Journal of Statistical Software*,
+*Journal of Statistical Software*, *The R Journal*, *Information Fusion*,
+*International Journal of Forecasting*, *Statistical Modelling*,
+*Physica A: Statistical Mechanics and its Applications*,
 *Information Sciences*, *Knowledge-Based Systems*,
 *IEEE Transactions on Fuzzy Systems*, and *Journal of Informetrics*.
 
