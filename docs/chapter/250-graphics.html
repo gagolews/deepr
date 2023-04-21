@@ -299,6 +299,9 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
 </div></blockquote>
+<blockquote>
+<div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
+</div></blockquote>
 <p>The R Project homepage advertises our free software as an
 <em>environment for statistical computing and graphics</em>.
 Hence, had we not dealt with the latter use case,
@@ -335,9 +338,6 @@ and its dependants. They are sufficiently aesthetic, aren’t they?</p>
 <p><span class="caption-number">Figure 13.1 </span><span class="caption-text">Relation between the graphics subsystems</span><a class="headerlink" href="#id15" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<blockquote>
-<div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
-</div></blockquote>
 <section id="graphics-primitives">
 <h2><span class="section-number">13.1. </span>Graphics primitives<a class="headerlink" href="#graphics-primitives" title="Permalink to this heading">#</a></h2>
 <p>In <strong class="program">graphics</strong>, we do not choose from a superfluity
@@ -682,7 +682,7 @@ image, with and without interpolation.</p>
 </div></div></section>
 </section>
 <section id="graphics-settings">
-<h2><span class="section-number">13.2. </span>🚧 Graphics settings<a class="headerlink" href="#graphics-settings" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">13.2. </span>Graphics settings<a class="headerlink" href="#graphics-settings" title="Permalink to this heading">#</a></h2>
 <p><strong class="command">par</strong> can be used to read and modify (as long
 as they are not read-only) a number of graphics settings.</p>
 <p>For instance, we have several parameters related to the current page
@@ -999,23 +999,37 @@ the edges of the figure and device region in user coordinates.</p>
 text on the right inner margin rotated by 180 degrees
 as compared to what we see in <a class="reference internal" href="#fig-margins1"><span class="std std-numref">Figure 13.12</span></a>.
 Implement your own version of this function that will allow you to
-do the above (based on <strong class="command">text</strong>, the <code class="docutils literal notranslate"><span class="pre">cin</span></code> parameter,
+do the above (based on <strong class="command">text</strong>, the <code class="docutils literal notranslate"><span class="pre">cin</span></code> graphics parameter,
 and what can be read from <a class="reference internal" href="#fig-user-coords"><span class="std std-numref">Figure 13.13</span></a>).</p>
 </div></div></section>
 <section id="many-figures-on-one-page-subplots">
-<span id="sec-mfrow"></span><h3><span class="section-number">13.2.4. </span>🚧 Many figures on one page (subplots)<a class="headerlink" href="#many-figures-on-one-page-subplots" title="Permalink to this heading">#</a></h3>
-<p>… working on it …</p>
-<p><a class="reference internal" href="#fig-margins2"><span class="std std-numref">Figure 13.14</span></a>…</p>
+<span id="sec-mfrow"></span><h3><span class="section-number">13.2.4. </span>Many figures on one page (subplots)<a class="headerlink" href="#many-figures-on-one-page-subplots" title="Permalink to this heading">#</a></h3>
+<p>It is possible to create many figures on one page.
+In such a case, each of them has its own inner margins and a plot region.</p>
+<p>A call to <strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(mfrow=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(nr,</span> <span class="pre">nc))</span></code>
+or <strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(mfcol=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(nr,</span> <span class="pre">nc))</span></code>
+splits the page into a regular grid with <code class="docutils literal notranslate"><span class="pre">nr</span></code> rows and <code class="docutils literal notranslate"><span class="pre">nc</span></code> columns.
+Each invocation of <strong class="command">plot.new</strong> starts a new figure.
+Consecutive figures are either placed in a rowwise manner (<code class="docutils literal notranslate"><span class="pre">mfrow</span></code>)
+or the columnwise one (<code class="docutils literal notranslate"><span class="pre">mfcol</span></code>).</p>
+<div class="proof proof-type-example" id="id44">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 13.17</span>
+        
+    </div><div class="proof-content">
+<p><a class="reference internal" href="#fig-margins2"><span class="std std-numref">Figure 13.14</span></a> depicts an example page with four figures
+aligned on a 2-by-2 grid.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">oma</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">  </span><span class="c1"># outer margins (default 0)</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># a 2x2 plot grid</span>
 
 <span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nf">plot.new</span><span class="p">()</span>
-<span class="w">    </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
-<span class="w">    </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># each plot can have different inner margins</span>
+<span class="w">    </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">i</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="m">+1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># separate user coordinates for each</span>
 
-<span class="w">    </span><span class="nf">rect</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="nf">text</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Plot region (plot %d)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Plot region (plot %d)\n(%d, %d)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span>
+<span class="w">        </span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;mfg&quot;</span><span class="p">)[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;mfg&quot;</span><span class="p">)[</span><span class="m">2</span><span class="p">]))</span>
 
 <span class="w">    </span><span class="nf">box</span><span class="p">(</span><span class="s">&quot;figure&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># a box around the figure region</span>
 <span class="w">    </span><span class="nf">box</span><span class="p">(</span><span class="s">&quot;plot&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1"># a box around the plot region</span>
@@ -1028,20 +1042,72 @@ and what can be read from <a class="reference internal" href="#fig-user-coords">
 <span class="w">    </span><span class="nf">mtext</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Outer margin %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">side</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">outer</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id44">
+<figure class="align-default" id="id45">
 <span id="fig-margins2"></span><img alt="../_images/margins2-1.png" src="../_images/margins2-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.14 </span><span class="caption-text">A page with four figures</span><a class="headerlink" href="#id44" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.14 </span><span class="caption-text">A page with four figures created using <strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(mfrow=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2))</span></code></span><a class="headerlink" href="#id45" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>also: <strong class="command">layout</strong> (incompatible with <code class="docutils literal notranslate"><span class="pre">mfrow</span></code> and <code class="docutils literal notranslate"><span class="pre">mfcol</span></code>);
-examples:
-scatterplot with marginal histograms,
-trellis plot+subgroups+legend on the side (3 factor comb)</p>
+</div></div><p>Thanks to <code class="docutils literal notranslate"><span class="pre">mfrow</span></code> and <code class="docutils literal notranslate"><span class="pre">mfcol</span></code>we can create a scatterplot matrix (a pairplot)
+or different trellis (grid,  panel, or lattice) plots.
+If a nonregular grid is required, we can call the slightly more
+sophisticated <strong class="command">layout</strong> function
+(which is incompatible with <code class="docutils literal notranslate"><span class="pre">mfrow</span></code> and <code class="docutils literal notranslate"><span class="pre">mfcol</span></code>). Examples will follow later.</p>
 </section>
 <section id="graphics-devices">
-<span id="sec-grdevices"></span><h3><span class="section-number">13.2.5. </span>🚧 Graphics devices<a class="headerlink" href="#graphics-devices" title="Permalink to this heading">#</a></h3>
-<p>… working on it …</p>
+<span id="sec-grdevices"></span><h3><span class="section-number">13.2.5. </span>Graphics devices<a class="headerlink" href="#graphics-devices" title="Permalink to this heading">#</a></h3>
+<p>Where our plots are <em>displayed</em> by default depends on our
+development environment (<a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>).
+Users of <strong class="program">JupyterLab</strong> should see a plot embedded
+into the current notebook,
+consumers of <strong class="program">RStudio</strong> display them in a dedicated
+Plots pane,
+working from the console opens a plot in a new graphical window
+(unless we are in a text-only environment),
+whereas compiling
+<strong class="program">utils</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Sweave</strong> or <strong class="program">knitr</strong>
+markup files results in an image included in the output document.</p>
+<p>In practice, we might be interested in redirecting our
+creative endeavours to different devices.
+For instance:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cairo_pdf</span><span class="p">(</span><span class="s">&quot;figure.pdf&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">3.5</span><span class="p">)</span><span class="w">  </span><span class="c1"># open &quot;device&quot;</span>
+<span class="c1"># plotting functions...</span>
+<span class="nf">dev.off</span><span class="p">()</span><span class="w">  </span><span class="c1"># save file</span>
+</pre></div>
+</div>
+<p>draws whatever is to be plotted in a PDF file.
+Similarly, a call to <strong class="command">png</strong> or <strong class="command">svg</strong>
+would create a PNG or a SVG file.
+In both cases, as we rely on the <strong class="program">Cairo</strong> library,
+we are able to customise the font family by calling
+<strong class="program">Cairo</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">CairoFonts</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Typically, web browsers can display JPEG, PNG, and SVG files.
+JPEG uses a lossy compression method, therefore it is not
+a particularly fortunate file format for data visualisations.
+On the other hand, PDF is a popular choice in printed publications
+(e.g., articles or books).</p>
+<p>It is worth knowing that PNG and JPEG are raster graphics formats,
+i.e., they store figures as bitmaps (pixel matrices).
+They are fast to render, but the file sizes might be large
+if we want decent image quality (high resolution). Most importantly,
+they should not be scaled: it is best to display them
+at their original widths and heights.</p>
+<p>On the other hand, SVG and PDF files store vector graphics,
+i.e., all primitives are described geometrically. This way,
+the image can be redrawn at any size and should always be aesthetic.
+Unfortunately, scatterplots featuring millions of points
+will result in large files sizes and relatively slow rendition times
+(but there are tricks to remedy this).</p>
+</div>
+<p>Users of TeX might be interested in
+<strong class="program">tikzDevice</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">tikz</strong>, which created
+TikZ files that can be compiled to standalone PDF files
+or embedded in LaTeX documents (and its variants).
+This allows typesetting beautiful equations using the standard
+<code class="docutils literal notranslate"><span class="pre">&quot;$...$&quot;</span></code> syntax from within any R string.</p>
+<p>A list of many built-in devices is available in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Devices&quot;)</span></code>.</p>
 </section>
 </section>
 <section id="higher-level-functions">
@@ -1067,19 +1133,19 @@ trellis plot+subgroups+legend on the side (3 factor comb)</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id45">
+<figure class="align-default" id="id46">
 <span id="fig-irisplot-factors"></span><img alt="../_images/irisplot-factors-1.png" src="../_images/irisplot-factors-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.15 </span><span class="caption-text"><strong class="command">as.numeric</strong> on factors can be used to define different plotting styles for each factor level</span><a class="headerlink" href="#id45" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.15 </span><span class="caption-text"><strong class="command">as.numeric</strong> on factors can be used to define different plotting styles for each factor level</span><a class="headerlink" href="#id46" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="exercises">
 <h2><span class="section-number">13.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id46">
+<div class="proof proof-type-exercise" id="id47">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.17</span>
+        <span class="proof-type">Exercise 13.18</span>
         
     </div><div class="proof-content">
 <p>Answer the following questions:</p>
@@ -1180,7 +1246,7 @@ should note that its online version displays this figure
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-21T17:06:53+1000.
+              Last updated on 2023-04-21T22:19:48+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1210,12 +1276,12 @@ should note that its online version displays this figure
 <li><a class="reference internal" href="#raster-images-bitmaps">13.1.5. Raster images (bitmaps) (*)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#graphics-settings">13.2. 🚧 Graphics settings</a><ul>
+<li><a class="reference internal" href="#graphics-settings">13.2. Graphics settings</a><ul>
 <li><a class="reference internal" href="#colours">13.2.1. Colours</a></li>
 <li><a class="reference internal" href="#plot-margins-and-clipping-regions">13.2.2. Plot margins and clipping regions</a></li>
 <li><a class="reference internal" href="#user-coordinates-and-plot-dimensions">13.2.3. User coordinates and plot dimensions</a></li>
-<li><a class="reference internal" href="#many-figures-on-one-page-subplots">13.2.4. 🚧 Many figures on one page (subplots)</a></li>
-<li><a class="reference internal" href="#graphics-devices">13.2.5. 🚧 Graphics devices</a></li>
+<li><a class="reference internal" href="#many-figures-on-one-page-subplots">13.2.4. Many figures on one page (subplots)</a></li>
+<li><a class="reference internal" href="#graphics-devices">13.2.5. Graphics devices</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#higher-level-functions">13.3. 🚧 Higher-level functions</a></li>
