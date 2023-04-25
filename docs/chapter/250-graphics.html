@@ -1129,8 +1129,8 @@ or different trellis plots.
 If a non-regular grid is required, we can call the slightly more
 sophisticated <strong class="command">layout</strong> function
 (which is incompatible with <code class="docutils literal notranslate"><span class="pre">mfrow</span></code> and <code class="docutils literal notranslate"><span class="pre">mfcol</span></code>).
-Examples will follow later; see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-numref">Figure 13.23</span></a>
-and <a class="reference internal" href="#fig-layout-demo"><span class="std std-numref">Figure 13.21</span></a>.</p>
+Examples will follow later; see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-numref">Figure 13.25</span></a>
+and <a class="reference internal" href="#fig-layout-demo"><span class="std std-numref">Figure 13.23</span></a>.</p>
 <p>Note that certain grid sizes might affect
 the <code class="docutils literal notranslate"><span class="pre">mex</span></code> and <code class="docutils literal notranslate"><span class="pre">cex</span></code> parameters, and hence the default font sizes
 (amongst others). Refer to the documentation of <strong class="command">par</strong> for
@@ -1191,6 +1191,21 @@ or embedded in LaTeX documents (and its variants).
 This allows typesetting beautiful equations using the standard
 <code class="docutils literal notranslate"><span class="pre">&quot;$...$&quot;</span></code> syntax from within any R string.</p>
 <p>A list of many built-in devices is available in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Devices&quot;)</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The current plot can be copied to another device (e.g.,
+a PDF file) using <strong class="command">dev.print</strong>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(*) The opened graphics devices form a stack;
+calling <strong class="command">dev.off</strong> will return to the last opened device.
+See <strong class="command">dev.list</strong> and other functions listed in its help page
+for more information.</p>
+<p>Also, <strong class="command">dev.hold</strong> and <strong class="command">dev.flush</strong>
+can be used to suppress the immediate display of the plotted objects,
+which might increase the drawing speed on certain devices.</p>
+</div>
 <div class="proof proof-type-exercise" id="id48">
 
     <div class="proof-title">
@@ -1221,7 +1236,9 @@ They provide ready-to-use implementations of the most common data
 visualisation tools, e.g., box-and-whisker plots, histograms,
 pairs plots, etc.</p>
 <p>Below we review some of them, but also show how they can be customised,
-or rewritten from scratch if we are not completely happy with them.</p>
+or rewritten from scratch if we are not completely happy with them.
+They will inspire us to practice some lower-level
+graphics programming.</p>
 <div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
@@ -1232,9 +1249,8 @@ or rewritten from scratch if we are not completely happy with them.</p>
 graphics parameters
 and how they affect <strong class="command">plot.new</strong>, <strong class="command">axis</strong>,
 <strong class="command">title</strong>, and so forth.</p>
-</div></div></section>
-<section id="scatter-and-function-plots-with-plot-default-and-matplot">
-<h2><span class="section-number">13.4. </span>🚧 Scatter- and function plots with <strong class="command">plot.default</strong> and <strong class="command">matplot</strong><a class="headerlink" href="#scatter-and-function-plots-with-plot-default-and-matplot" title="Permalink to this heading">#</a></h2>
+</div></div><section id="scatter-and-function-plots-with-plot-default-and-matplot">
+<h3><span class="section-number">13.3.1. </span>Scatter- and function plots with <strong class="command">plot.default</strong> and <strong class="command">matplot</strong><a class="headerlink" href="#scatter-and-function-plots-with-plot-default-and-matplot" title="Permalink to this heading">#</a></h3>
 <p>The default method for the <strong class="command">plot</strong> S3 generic
 is a convenient wrapper around <strong class="command">points</strong> and <strong class="command">lines</strong>.</p>
 <div class="proof proof-type-example" id="id51">
@@ -1383,16 +1399,84 @@ of <code class="docutils literal notranslate"><span class="pre">cars[[&quot;spee
 for depicting this dataset?</p>
 </div></div></section>
 <section id="bar-plots-and-histograms">
-<h2><span class="section-number">13.5. </span>🚧 Bar plots and histograms<a class="headerlink" href="#bar-plots-and-histograms" title="Permalink to this heading">#</a></h2>
-<p>which are drawn using
-a series of rectangles (i.e., some polygons)</p>
-<p>bar plot - two factors</p>
-<p>to do…</p>
-<p>bar plots….</p>
-<p>Histograms are simple density estimators which are drawn
-as bar plots of heights
-proportional to the number of observations falling into disjoint
-intervals covering the data range; see <a class="reference internal" href="#fig-hist-demo"><span class="std std-numref">Figure 13.20</span></a>.</p>
+<h3><span class="section-number">13.3.2. </span>Bar plots and histograms<a class="headerlink" href="#bar-plots-and-histograms" title="Permalink to this heading">#</a></h3>
+<p>A bar plot is drawn using a series of rectangles (i.e., some polygons)
+of different heights (or widths, if we request horizontal alignment).</p>
+<div class="proof proof-type-example" id="id62">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 13.29</span>
+        
+    </div><div class="proof-content">
+<p>Let us visualise a
+<a class="reference external" href="https://www.cec.health.nsw.gov.au/CEC-Academy/quality-improvement-tools/pareto-charts">dataset</a> listing the most frequent causes of medication errors
+(data are fabricated):</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cat_med</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;Unauthorised drug&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wrong IV rate&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wrong patient&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Dose missed&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;Underdose&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wrong calculation&quot;</span><span class="p">,</span><span class="s">&quot;Wrong route&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wrong drug&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;Wrong time&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Technique error&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Duplicated drugs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Overdose&quot;</span>
+<span class="p">)</span>
+<span class="n">counts_med</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">53</span><span class="p">,</span><span class="w"> </span><span class="m">92</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">76</span><span class="p">,</span><span class="w"> </span><span class="m">83</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">59</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A Pareto chart combines a box plot with bars of decreasing heights
+with a cumulative percentage curve; see <a class="reference internal" href="#fig-pareto-chart"><span class="std std-numref">Figure 13.20</span></a>.
+Note that <strong class="command">barplot</strong> returns the midpoints of the bars
+and that the function sets the <code class="docutils literal notranslate"><span class="pre">xaxs</span></code> graphical parameter and thus
+does not extend the x-axis range by 4% on both sides (which does
+not make us happy here).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">o</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">order</span><span class="p">(</span><span class="n">counts_med</span><span class="p">)</span>
+<span class="n">cato_med</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cat_med</span><span class="p">[</span><span class="n">o</span><span class="p">]</span>
+<span class="n">pcto_med</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">counts_med</span><span class="p">[</span><span class="n">o</span><span class="p">]</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">counts_med</span><span class="p">)</span><span class="o">*</span><span class="m">100</span>
+<span class="n">cumpcto_med</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rev</span><span class="p">(</span><span class="nf">cumsum</span><span class="p">(</span><span class="nf">rev</span><span class="p">(</span><span class="n">pcto_med</span><span class="p">)))</span>
+<span class="c1"># bar plot of %s</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">7.2</span><span class="p">,</span><span class="w"> </span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.2</span><span class="p">))</span><span class="w">  </span><span class="c1"># wide left margin</span>
+<span class="n">midp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">barplot</span><span class="p">(</span><span class="n">pcto_med</span><span class="p">,</span><span class="w"> </span><span class="n">names.arg</span><span class="o">=</span><span class="n">cato_med</span><span class="p">,</span><span class="w"> </span><span class="n">horiz</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;%&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">),</span><span class="w"> </span><span class="n">xaxs</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">yaxs</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">pcto_med</span><span class="p">,</span><span class="w"> </span><span class="n">midp</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.1f%%&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pcto_med</span><span class="p">),</span><span class="w"> </span><span class="n">pos</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">0.89</span><span class="p">)</span>
+<span class="nf">box</span><span class="p">()</span>
+<span class="c1"># cumulative % curve in a new coordinate system</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">usr</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">104</span><span class="p">,</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;usr&quot;</span><span class="p">)[</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;usr&quot;</span><span class="p">)[</span><span class="m">4</span><span class="p">]))</span><span class="w">  </span><span class="c1"># 0-100 with 4% addition</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">cumpcto_med</span><span class="p">,</span><span class="w"> </span><span class="n">midp</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;o&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="o">=</span><span class="m">18</span><span class="p">)</span>
+<span class="nf">axis</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>
+<span class="nf">mtext</span><span class="p">(</span><span class="s">&quot;cumulative %&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">side</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="m">1.2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">cumpcto_med</span><span class="p">,</span><span class="w"> </span><span class="n">midp</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.1f%%&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cumpcto_med</span><span class="p">),</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">0.89</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">4</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pos</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)[(</span><span class="n">cumpcto_med</span><span class="o">&gt;</span><span class="m">80</span><span class="p">)</span><span class="m">+1</span><span class="p">])</span>
+</pre></div>
+</div>
+<figure class="align-default" id="id63">
+<span id="fig-pareto-chart"></span><img alt="../_images/pareto-chart-1.png" src="../_images/pareto-chart-1.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.20 </span><span class="caption-text">An example Pareto chart (a fancy bar plot); double axes have a general tendency to confuse a reader</span><a class="headerlink" href="#id63" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div></div><div class="proof proof-type-exercise" id="id64">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.30</span>
+        
+    </div><div class="proof-content">
+<p>Draw a bar plot summarising the number of adults
+for each passenger Class and Sex in the built-in <code class="docutils literal notranslate"><span class="pre">Titanic</span></code> dataset,
+who did not survive the sinking of the deadliest 1912 cruise;
+see <a class="reference internal" href="#fig-bar-plot-titanic"><span class="std std-numref">Figure 13.21</span></a>.</p>
+<figure class="align-default" id="id65">
+<span id="fig-bar-plot-titanic"></span><img alt="../_images/bar-plot-titanic-1.png" src="../_images/bar-plot-titanic-1.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.21 </span><span class="caption-text">An example bar plot representing a two-way contingency table</span><a class="headerlink" href="#id65" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div></div><p>We are definitely not going to cover the (in)famous pie charts in our
+book. The human brain is not very skilled at judging the relative differences
+between the areas of geometric objects.</p>
+<div style="margin-top: 1em"></div><p>Moving on: a histogram is a simple density estimator for continuous data.
+It can be thought of as a bar plot with bars of heights
+proportional to the number of observations falling into
+the corresponding disjoint intervals.
+Most often, there is no space between the bars to emphasise that
+the said intervals cover the whole data range.</p>
+<p>A histogram can be computed and drawn using the high-level function
+<strong class="command">hist</strong>; see <a class="reference internal" href="#fig-hist-demo"><span class="std std-numref">Figure 13.22</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
 <span class="nf">for </span><span class="p">(</span><span class="n">breaks</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="s">&quot;Sturges&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1"># &quot;Sturges&quot; is the default, any value is merely a suggestion</span>
@@ -1402,55 +1486,77 @@ intervals covering the data range; see <a class="reference internal" href="#fig-
 <span class="p">}</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id62">
+<figure class="align-default" id="id66">
 <span id="fig-hist-demo"></span><img alt="../_images/hist-demo-1.png" src="../_images/hist-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.20 </span><span class="caption-text">Histograms of the same dataset, but with different numbers of bins; as an exercise, implement them from scratch using <strong class="command">barplot</strong></span><a class="headerlink" href="#id62" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.22 </span><span class="caption-text">Example histograms for the same dataset, but with different numbers of bins</span><a class="headerlink" href="#id66" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="proof proof-type-exercise" id="id63">
+<div class="proof proof-type-exercise" id="id67">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.29</span>
+        <span class="proof-type">Exercise 13.31</span>
         
     </div><div class="proof-content">
 <p>Study the source code of <strong class="command">hist.default</strong>.
 Note the (invisibly returned) list (of S3 class <code class="docutils literal notranslate"><span class="pre">histogram</span></code>).
 The, study <strong class="program">graphics</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">plot.histogram</strong>.
 Implement similar functions yourself.</p>
-</div></div><div class="proof proof-type-exercise" id="id64">
+</div></div><div class="proof proof-type-exercise" id="id68">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.30</span>
+        <span class="proof-type">Exercise 13.32</span>
         
     </div><div class="proof-content">
 <p>Modify your function to draw a scatter plot matrix
 in such a way that it gives the histograms of the marginal distributions
 on its diagonal.</p>
-</div></div><div class="proof proof-type-example" id="id65">
+</div></div><div class="proof proof-type-example" id="id69">
 
     <div class="proof-title">
-        <span class="proof-type">Example 13.31</span>
+        <span class="proof-type">Example 13.33</span>
         
     </div><div class="proof-content">
-<p>to do…
-<strong class="command">layout</strong> example:
-scatter plot with marginal histograms,
-<a class="reference internal" href="#fig-layout-demo"><span class="std std-numref">Figure 13.21</span></a>
-….</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span><span class="w">  </span><span class="c1"># HIDDEN</span>
+<p>Using <strong class="command">layout</strong> that we mentioned in <a class="reference internal" href="#sec-mfrow"><span class="std std-numref">Section 13.2.6</span></a>,
+we can draw a scatter plot with marginal histograms;
+see <a class="reference internal" href="#fig-layout-demo"><span class="std std-numref">Figure 13.23</span></a>.
+Note that we split the page into four plots of unequal sizes,
+and that the upper right part of the grid will be unused.
+We use <strong class="command">hist</strong> for binning only (<code class="docutils literal notranslate"><span class="pre">plot=FALSE</span></code>), and then
+<strong class="command">barplot</strong> for drawing, because it gives greater control
+over the process (e.g., allows vertical layout).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">layout</span><span class="p">(</span><span class="nf">matrix</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">  </span><span class="c1"># first row: plot no. 1 of width 3 and nothing</span>
+<span class="w">      </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w">  </span><span class="c1"># three rows: square plot no. 3 and a thin but long no. 2</span>
+<span class="w">      </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span>
+<span class="w">      </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mex</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># the layout function changed this!</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">jitter</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">]])</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">jitter</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">]])</span>
+<span class="c1"># subplot 1</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">),</span><span class="w"> </span><span class="n">ann</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">hx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">plot</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="nf">seq</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">20</span><span class="p">))</span>
+<span class="nf">barplot</span><span class="p">(</span><span class="n">hx</span><span class="p">[[</span><span class="s">&quot;density&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">space</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">axes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;#00000011&quot;</span><span class="p">)</span>
+<span class="c1"># subplot 2</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span><span class="w"> </span><span class="n">ann</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">hy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">plot</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="nf">seq</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">20</span><span class="p">))</span>
+<span class="nf">barplot</span><span class="p">(</span><span class="n">hy</span><span class="p">[[</span><span class="s">&quot;density&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">space</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">axes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">horiz</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;#00000011&quot;</span><span class="p">)</span>
+<span class="c1"># subplot 3</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">),</span><span class="w"> </span><span class="n">ann</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Sepal length&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Sepal width&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">xlim</span><span class="o">=</span><span class="nf">range</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">range</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="w">  </span><span class="c1"># default xlim, ylim</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id66">
+<figure class="align-default" id="id70">
 <span id="fig-layout-demo"></span><img alt="../_images/layout-demo-1.png" src="../_images/layout-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.21 </span><span class="caption-text">…</span><a class="headerlink" href="#id66" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.23 </span><span class="caption-text">Three (four) plots on one page, but on a nonuniform grid created using <strong class="command">layout</strong>: A scatter plot with marginal histograms</span><a class="headerlink" href="#id70" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-example" id="id67">
+</div></div><div class="proof proof-type-example" id="id71">
 
     <div class="proof-title">
-        <span class="proof-type">Example 13.32</span>
+        <span class="proof-type">Example 13.34</span>
         
     </div><div class="proof-content">
 <p>(*)
@@ -1460,7 +1566,7 @@ numeric vector, returns a list featuring, amongst others,
 the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> coordinates of points we can pass directly to
 the <strong class="command">lines</strong> function.
 Below we depict the KDEs of data split into three groups;
-see <a class="reference internal" href="#fig-semitrans-density"><span class="std std-numref">Figure 13.22</span></a>.</p>
+see <a class="reference internal" href="#fig-semitrans-density"><span class="std std-numref">Figure 13.24</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_transparency</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">rgb</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="nf">col2rgb</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">/</span><span class="m">255</span><span class="p">),</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span><span class="w">  </span><span class="c1"># alpha in [0, 1]</span>
 
@@ -1478,23 +1584,23 @@ see <a class="reference internal" href="#fig-semitrans-density"><span class="std
 <span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="nf">seq_along</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]])))</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id68">
+<figure class="align-default" id="id72">
 <span id="fig-semitrans-density"></span><img alt="../_images/semitrans-density-1.png" src="../_images/semitrans-density-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.22 </span><span class="caption-text">Kernel density estimators of Sepal length split into Species in the Iris datase; note the semi-transparent polygons (again)</span><a class="headerlink" href="#id68" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.24 </span><span class="caption-text">Kernel density estimators of Sepal length split into Species in the Iris datase; note the semi-transparent polygons (again)</span><a class="headerlink" href="#id72" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id69">
+</div></div><div class="proof proof-type-exercise" id="id73">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.33</span>
+        <span class="proof-type">Exercise 13.35</span>
         
     </div><div class="proof-content">
 <p>(*)
 Implement a function <strong class="command">grid_kde</strong>, which
 draws kernel density estimators for a given numeric variable
 split by a combination of three factor levels;
-see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-numref">Figure 13.23</span></a> for an example.</p>
+see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-numref">Figure 13.25</span></a> for an example.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">grid_kde</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">hue</span><span class="p">)</span><span class="w"> </span><span class="n">...to.do...</span>
 
 <span class="c1"># see https://github.com/gagolews/teaching-data</span>
@@ -1508,44 +1614,131 @@ see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-
 <span class="nf">grid_kde</span><span class="p">(</span><span class="n">tips</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="o">=</span><span class="s">&quot;tip&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="s">&quot;smoker&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hue</span><span class="o">=</span><span class="s">&quot;sex&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id70">
+<figure class="align-default" id="id74">
 <span id="fig-trellis-demo"></span><img alt="../_images/trellis-demo-1.png" src="../_images/trellis-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.23 </span><span class="caption-text">An example grid (also known as trellis, panel, conditioning, or lattice plots) plot, featuring kernel density estimators for a numeric variable (amount of tip in a US restaurant) split by a combination of three factor levels (smoker, time, sex)</span><a class="headerlink" href="#id70" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.25 </span><span class="caption-text">An example grid (also known as trellis, panel, conditioning, or lattice plots) plot, featuring kernel density estimators for a numeric variable (amount of tip in a US restaurant) split by a combination of three factor levels (smoker, time, sex)</span><a class="headerlink" href="#id74" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
 <section id="box-and-whisker-plots">
-<h2><span class="section-number">13.6. </span>🚧 Box-and-whisker plots<a class="headerlink" href="#box-and-whisker-plots" title="Permalink to this heading">#</a></h2>
-<p>… to do … working on it …</p>
-<p>box plots - 2 factors (groups + hue)</p>
-<p>violin plots - implement yourself</p>
-<p>Basic: <a class="reference internal" href="150-indexing.html#fig-toothgrowth-boxplot"><span class="std std-numref">Figure 5.1</span></a></p>
-</section>
-<section id="contour-plots-and-heat-maps">
-<h2><span class="section-number">13.7. </span>🚧 Contour plots and heat maps<a class="headerlink" href="#contour-plots-and-heat-maps" title="Permalink to this heading">#</a></h2>
-<p>… to do … working on it …</p>
-</section>
-<section id="exercises">
-<h2><span class="section-number">13.8. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id71">
+<h3><span class="section-number">13.3.3. </span>Box-and-whisker plots<a class="headerlink" href="#box-and-whisker-plots" title="Permalink to this heading">#</a></h3>
+<p>We have already seen a chart generated by <strong class="command">boxplot</strong>
+in <a class="reference internal" href="150-indexing.html#fig-toothgrowth-boxplot"><span class="std std-numref">Figure 5.1</span></a>. Tinkering with it will
+give us some good practice, which in turn shall make us perfect.</p>
+<div class="proof proof-type-exercise" id="id75">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.34</span>
+        <span class="proof-type">Exercise 13.36</span>
+        
+    </div><div class="proof-content">
+<p>Modify the code generating <a class="reference internal" href="150-indexing.html#fig-toothgrowth-boxplot"><span class="std std-numref">Figure 5.1</span></a> so that:</p>
+<ol class="arabic simple">
+<li><p>same <code class="docutils literal notranslate"><span class="pre">dose</span></code>s are grouped together (more space between
+different <code class="docutils literal notranslate"><span class="pre">dose</span></code>s; also, on the x-axis, only <em>unique</em> <code class="docutils literal notranslate"><span class="pre">dose</span></code>s are printed),</p></li>
+<li><p>different <code class="docutils literal notranslate"><span class="pre">supp</span></code>s have different colours (add a legend explaining them).</p></li>
+</ol>
+</div></div><div class="proof proof-type-exercise" id="id76">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.37</span>
+        
+    </div><div class="proof-content">
+<p>Write a function implementing box plot drawing from scratch.</p>
+</div></div><div class="proof proof-type-exercise" id="id77">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.38</span>
+        
+    </div><div class="proof-content">
+<p>(*) Write a function for drawing violin plots
+(which are similar to box plots, but use kernel density estimators).</p>
+</div></div></section>
+<section id="contour-plots-and-heat-maps">
+<h3><span class="section-number">13.3.4. </span>🚧 Contour plots and heat maps<a class="headerlink" href="#contour-plots-and-heat-maps" title="Permalink to this heading">#</a></h3>
+<p>… to do … working on it …</p>
+</section>
+</section>
+<section id="exercises">
+<h2><span class="section-number">13.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<div class="proof proof-type-exercise" id="id78">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.39</span>
         
     </div><div class="proof-content">
 <p>Answer the following questions:</p>
 <ul class="simple">
 <li><p>Can functions from the <strong class="program">graphics</strong> package be used to adjust
 the plots generated by <strong class="program">lattice</strong> and <strong class="program">ggplot2</strong>?</p></li>
+<li><p>List the most commonly used graphics primitives.</p></li>
+<li><p>Can all high-level functions be implemented using low-level ones?
+As an example, discuss the key ingredients used in <strong class="command">barplot</strong>.</p></li>
+<li><p>Some high-level functions discussed in this chapter
+feature the <code class="docutils literal notranslate"><span class="pre">add</span></code> parameter. What is its purpose?</p></li>
 <li><p>What are the admissible values of <code class="docutils literal notranslate"><span class="pre">pch</span></code> and <code class="docutils literal notranslate"><span class="pre">lty</span></code>?
 Also, in the default palette, what is the meaning of colours
 <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">8</span></code>?
 (It is good to learn them by heart.)</p></li>
-<li><p>…</p></li>
+<li><p>Can all graphics parameters be changed?</p></li>
+<li><p>What is the difference between passing <code class="docutils literal notranslate"><span class="pre">xaxt=&quot;n&quot;</span></code> to
+<strong class="command">plot.default</strong> vs setting it with <strong class="command">par</strong>,
+and then calling <strong class="command">plot.default</strong>?</p></li>
+<li><p>Which graphics parameters are set by <strong class="command">plot.window</strong>?</p></li>
+<li><p>What is the meaning of the <code class="docutils literal notranslate"><span class="pre">usr</span></code> parameter when using the logarithmic
+scale on the x-axis?</p></li>
+<li><p>(*) How to place a plotting symbol exactly 1 centimetre from
+the top-left corner
+of the current page (following the page’s diagonal)?</p></li>
+<li><p>List the colours represented by numeric IDs of 1, 2, …, 16.
+Can their meaning be changed?</p></li>
+<li><p>Recall the line types 1, 2, …, 6.</p></li>
+<li><p>Semi-transparent polygons are nice, right?</p></li>
+<li><p>Can an ellipse be drawn using <strong class="command">polygon</strong>?</p></li>
+<li><p>What happens when we set the graphics parameter
+<code class="docutils literal notranslate"><span class="pre">mfrow=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code>?</p></li>
+<li><p>How to export the current plot to a PDF file?</p></li>
 </ul>
-</div></div><p>… to do … working on it …</p>
-<div style="margin-top: 1em"></div><p>For further information on graphics generation in R,
+</div></div><div class="proof proof-type-exercise" id="id79">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.40</span>
+        
+    </div><div class="proof-content">
+<p>Draw the 2022 <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/btcusd_close_2022.csv"><code class="docutils literal notranslate"><span class="pre">BTC-to-USD</span> <span class="pre">close</span> <span class="pre">rates</span></code></a>
+time series. Then, add the 7- and 30-day moving average.</p>
+<p>(*) Also, fit a local polynomial (moving) regression model
+using the Savitzky–Golay filter (see <strong class="command">loess</strong>).</p>
+</div></div><div class="proof proof-type-exercise" id="id80">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.41</span>
+        
+    </div><div class="proof-content">
+<p>(*) Draw (from scratch) a candlestick plot
+for the 2022 <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/btcusd_ohlc_2022.csv"><code class="docutils literal notranslate"><span class="pre">BTC-to-USD</span> <span class="pre">rates</span></code></a>.</p>
+</div></div><div class="proof proof-type-exercise" id="id81">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.42</span>
+        
+    </div><div class="proof-content">
+<p>(*) Create a function to draw a normal quantile-quantile (Q-Q) plot,
+i.e., for inspecting whether a numeric sample might come from some normal
+distribution.</p>
+</div></div><div class="proof proof-type-exercise" id="id82">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.43</span>
+        
+    </div><div class="proof-content">
+<p>(*) Draw a map of the world, where each country
+is filled with a colour whose brightness or hue is linked
+to its Gini index of income inequality.
+You can easily find the data on Wikipedia.
+Try to find an open dataset that gives the borders of each country
+as vertices of a polygon (e.g., in the form of a (geo)JSON file).</p>
+</div></div><div style="margin-top: 1em"></div><p>For further information on graphics generation in R,
 see, e.g., Chapter 12 in <span id="id11">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">53</a>]</span>, <span id="id12">[<a class="reference internal" href="999-bibliography.html#id43" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">44</a>]</span>,
 and <span id="id13">[<a class="reference internal" href="999-bibliography.html#id53" title="Rahlf, T. (2019).  Data Visualisation with R: 111 Examples. Springer Nature, 2nd edition. URL: http://www.datavisualisation-r.com/.">48</a>]</span>.</p>
 <p>Note that in this chapter, we were only interested in <em>static</em> graphics
@@ -1633,7 +1826,7 @@ should note that its online version displays this figure
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-25T15:15:22+1000.
+              Last updated on 2023-04-25T20:04:31+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1673,12 +1866,14 @@ should note that its online version displays this figure
 <li><a class="reference internal" href="#graphics-devices">13.2.7. Graphics devices</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#higher-level-functions">13.3. Higher-level functions</a></li>
-<li><a class="reference internal" href="#scatter-and-function-plots-with-plot-default-and-matplot">13.4. 🚧 Scatter- and function plots with <strong class="command">plot.default</strong> and <strong class="command">matplot</strong></a></li>
-<li><a class="reference internal" href="#bar-plots-and-histograms">13.5. 🚧 Bar plots and histograms</a></li>
-<li><a class="reference internal" href="#box-and-whisker-plots">13.6. 🚧 Box-and-whisker plots</a></li>
-<li><a class="reference internal" href="#contour-plots-and-heat-maps">13.7. 🚧 Contour plots and heat maps</a></li>
-<li><a class="reference internal" href="#exercises">13.8. Exercises</a></li>
+<li><a class="reference internal" href="#higher-level-functions">13.3. Higher-level functions</a><ul>
+<li><a class="reference internal" href="#scatter-and-function-plots-with-plot-default-and-matplot">13.3.1. Scatter- and function plots with <strong class="command">plot.default</strong> and <strong class="command">matplot</strong></a></li>
+<li><a class="reference internal" href="#bar-plots-and-histograms">13.3.2. Bar plots and histograms</a></li>
+<li><a class="reference internal" href="#box-and-whisker-plots">13.3.3. Box-and-whisker plots</a></li>
+<li><a class="reference internal" href="#contour-plots-and-heat-maps">13.3.4. 🚧 Contour plots and heat maps</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercises">13.4. Exercises</a></li>
 </ul>
 </li>
 </ul>
