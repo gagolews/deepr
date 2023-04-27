@@ -29,7 +29,7 @@
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/250-graphics.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>13. 🚧 Graphics - Deep R Programming</title>
+        <title>13. Graphics - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.2.0.9001 (draft)
+v0.2.1 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -225,7 +225,7 @@ v0.2.0.9001 (draft)
 <li class="toctree-l1"><a class="reference internal" href="220-s3.html">10. S3 classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and other arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="240-data-frame.html">12. Data frames</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">13. 🚧 Graphics</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">13. Graphics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul>
@@ -280,7 +280,7 @@ v0.2.0.9001 (draft)
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="graphics">
-<span id="chap-graphics"></span><h1><span class="section-number">13. </span>🚧 Graphics<a class="headerlink" href="#graphics" title="Permalink to this heading">#</a></h1>
+<span id="chap-graphics"></span><h1><span class="section-number">13. </span>Graphics<a class="headerlink" href="#graphics" title="Permalink to this heading">#</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -303,12 +303,11 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <em>environment for statistical computing and graphics</em>.
 Hence, had we not dealt with the latter use case,
 our course would have been incomplete.</p>
-<p>R is equipped with the two following independent (incompatible,
+<p>R is nowadays equipped with the two following independent (incompatible,
 yet coexisting) systems for graphics generation;
 see <a class="reference internal" href="#fig-graphics-systems"><span class="std std-numref">Figure 13.1</span></a>.</p>
 <ol class="arabic simple">
-<li><p>The (historically) newer one,
-<a class="reference external" href="https://www.stat.auckland.ac.nz/~paul/grid/grid.html"><strong class="program">grid</strong></a>
+<li><p>The (historically) newer one, <strong class="program">grid</strong>
 (e.g., <span id="id2">[<a class="reference internal" href="999-bibliography.html#id43" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">44</a>]</span>),
 is very flexible but might seem quite complicated.
 Some readers might have come across
@@ -339,8 +338,8 @@ and its dependants. They are sufficiently aesthetic, aren’t they?</p>
 <h2><span class="section-number">13.1. </span>Graphics primitives<a class="headerlink" href="#graphics-primitives" title="Permalink to this heading">#</a></h2>
 <p>In <strong class="program">graphics</strong>, we do not choose from a superfluity
 of virtual objects to be placed on an abstract canvas,
-letting some algorithm decide how and when to delineate them. We <em>just draw</em>.</p>
-<p>To do so, we call functions that plot the following <em>graphics primitives</em>
+letting some algorithm decide how and when to delineate them. We <em>just draw</em>.
+To do so, we call functions that plot the following <em>graphics primitives</em>
 (see, e.g., <span id="id6">[<a class="reference internal" href="999-bibliography.html#id55" title="Hughes, J., van Dam, A., McGuire, M., Sklar, D., Foley, J., Feiner, S., and Akeley, K. (2013).  Computer Graphics: Principles and Practice. Addison-Wesley, 3rd edition.">35</a>, <a class="reference internal" href="999-bibliography.html#id56" title="Marschner, S. and Shirley, P. (2021).  Fundamentals of Computer Graphics. AK Peters/CRC Press, 5th edition.">41</a>]</span>):</p>
 <ul class="simple">
 <li><p>plotting symbols (e.g., pixels, circles stars)
@@ -388,7 +387,7 @@ sections.</p>
 <figure class="align-default" id="id17">
 <span id="fig-primitives-demo"></span><img alt="../_images/primitives-demo-1.png" src="../_images/primitives-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.2 </span><span class="caption-text">Graphical primitives: plotting symbols, line segments, polygons, text labels, and bitmaps; note that objects are plotted one after another, with newer ones overlapping the already existing shapes</span><a class="headerlink" href="#id17" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.2 </span><span class="caption-text">Graphical primitives: plotting symbols, line segments, polygons, text labels, and bitmaps; note that objects are added one after another, with newer ones drawn over the already existing shapes</span><a class="headerlink" href="#id17" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><div class="admonition important">
@@ -414,7 +413,7 @@ plot region relative to the user coordinate system.</p>
 <p>We specify the points’ coordinates using the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> arguments
 (two vectors of equal lengths; no recycling).
 Alternatively, we may give a matrix or a data frame with two columns:
-the first column (regardless how and if it is named) defines the abscissae
+its first column (regardless how and if it is named) defines the abscissae,
 and the second column determines the ordinates.</p>
 <p>This function allows each point to be plotted differently, if this
 is what we desire. Thus, it is ideal for drawing scatter plots,
@@ -465,42 +464,42 @@ are available); strings longer than one will be truncated.</p></li>
 <section id="line-segments">
 <h3><span class="section-number">13.1.2. </span>Line segments<a class="headerlink" href="#line-segments" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">lines</strong> can be used to draw connected line segments
-whose endpoints (midpoints?) are given just like
-in the case of the <strong class="command">points</strong> function.
+whose mid- and endpoints are given in a similar manner as in
+the <strong class="command">points</strong> function.
 A series of segments can be interrupted by defining an endpoint
-whose coordinate  is a missing value; compare <a class="reference internal" href="#fig-primitives-demo"><span class="std std-numref">Figure 13.2</span></a>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">col</span></code> argument controls the line colour (see <a class="reference internal" href="#sec-colours"><span class="std std-numref">Section 13.2.1</span></a>),
-<code class="docutils literal notranslate"><span class="pre">lwd</span></code> determines the line width (1 by default), and <code class="docutils literal notranslate"><span class="pre">lty</span></code>
-gives the line type.</p>
-<p>Six named line types are available, which can also be specified
-via their respective numeric IDs, <code class="docutils literal notranslate"><span class="pre">lty=1</span></code>, …, <code class="docutils literal notranslate"><span class="pre">lty=6</span></code>; see <a class="reference internal" href="#fig-lty"><span class="std std-numref">Figure 13.4</span></a>
-(implementing a similar plot is left as an exercise).
-Additionally, custom dashes can be defined using strings of
-up to 8 (hexadecimal) digits. Consecutive digits give the lengths
-of the dashes and blanks. For instance, <code class="docutils literal notranslate"><span class="pre">lty=&quot;1343&quot;</span></code> is a dash
-of length 1, followed by a space of length 3, then a segment
-of length 4, followed by a blank of length 3 (recycled for as long
-as necessary).</p>
-<figure class="align-default" id="id20">
-<span id="fig-lty"></span><img alt="../_images/lty-1.png" src="../_images/lty-1.png" />
-<figcaption>
-<p><span class="caption-number">Figure 13.4 </span><span class="caption-text">Line types (<code class="docutils literal notranslate"><span class="pre">lty</span></code>)</span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p><strong class="command">points</strong> and <strong class="command">lines</strong> are wrappers around the same function, <strong class="command">plot.xy</strong> (which we usually do not call directly).
-The <code class="docutils literal notranslate"><span class="pre">type</span></code> argument determines the object to draw;
+whose coordinate is a missing value; compare <a class="reference internal" href="#fig-primitives-demo"><span class="std std-numref">Figure 13.2</span></a>.</p>
+<p>Actually, <strong class="command">points</strong> and <strong class="command">lines</strong> are wrappers around the same function, <strong class="command">plot.xy</strong> (which we usually do not call directly).
+Their <code class="docutils literal notranslate"><span class="pre">type</span></code> arguments determine the object to draw;
 the only difference between them is that
 the former uses <code class="docutils literal notranslate"><span class="pre">type=&quot;p&quot;</span></code> whilst the latter relies on <code class="docutils literal notranslate"><span class="pre">type=&quot;l&quot;</span></code> by default.
 Changing these to <code class="docutils literal notranslate"><span class="pre">type=&quot;b&quot;</span></code> (both) or <code class="docutils literal notranslate"><span class="pre">type=&quot;o&quot;</span></code> (overplot) will give
 their combination. Moreover, <code class="docutils literal notranslate"><span class="pre">type=&quot;s&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">type=&quot;S&quot;</span></code> results in step
 functions (with post- and pre-increments, respectively),
 and <code class="docutils literal notranslate"><span class="pre">type=&quot;h&quot;</span></code> draws bar plot-like vertical lines.
-See <a class="reference internal" href="#fig-line-type"><span class="std std-numref">Figure 13.5</span></a> for an illustration
-(implement something similar yourself).</p>
-<figure class="align-default" id="id21">
+See <a class="reference internal" href="#fig-line-type"><span class="std std-numref">Figure 13.4</span></a> for an illustration
+(implement something similar yourself as an exercise).</p>
+<figure class="align-default" id="id20">
 <span id="fig-line-type"></span><img alt="../_images/line-type-1.png" src="../_images/line-type-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.5 </span><span class="caption-text">Different <code class="docutils literal notranslate"><span class="pre">type</span></code> argument settings in <strong class="command">lines</strong> or <strong class="command">points</strong></span><a class="headerlink" href="#id21" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.4 </span><span class="caption-text">Different <code class="docutils literal notranslate"><span class="pre">type</span></code> argument settings in <strong class="command">lines</strong> or <strong class="command">points</strong></span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The <code class="docutils literal notranslate"><span class="pre">col</span></code> argument controls the line colour (see <a class="reference internal" href="#sec-colours"><span class="std std-numref">Section 13.2.1</span></a>)
+and <code class="docutils literal notranslate"><span class="pre">lwd</span></code> determines the line width (1 by default).
+Six named line types (<code class="docutils literal notranslate"><span class="pre">lty</span></code>) are available, which can also be specified
+via their respective numeric identifiers,
+<code class="docutils literal notranslate"><span class="pre">lty=1</span></code>, …, <code class="docutils literal notranslate"><span class="pre">lty=6</span></code>; see <a class="reference internal" href="#fig-lty"><span class="std std-numref">Figure 13.5</span></a>
+(implementing a similar plot is left as an exercise).
+Additionally, custom dashes can be defined using strings of
+up to 8 (hexadecimal) digits. Consecutive digits give the lengths
+of the dashes and blanks. For instance, <code class="docutils literal notranslate"><span class="pre">lty=&quot;1343&quot;</span></code> yields a dash
+of length 1, followed by a space of length 3, then a segment
+of length 4, followed by a blank of length 3. The whole sequence
+will be recycled for as long as necessary.</p>
+<figure class="align-default" id="id21">
+<span id="fig-lty"></span><img alt="../_images/lty-1.png" src="../_images/lty-1.png" />
+<figcaption>
+<p><span class="caption-number">Figure 13.5 </span><span class="caption-text">Line types (<code class="docutils literal notranslate"><span class="pre">lty</span></code>)</span><a class="headerlink" href="#id21" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="proof proof-type-example" id="id22">
@@ -512,13 +511,11 @@ See <a class="reference internal" href="#fig-line-type"><span class="std std-num
 <p><strong class="command">lines</strong> can be used for plotting empirical cumulative
 distribution functions (we will suggest it as an exercise later),
 regression models (e.g., lines, splines of different degrees),
-time series,
-and any other mathematical functions,
-even when they are smooth and <em>curvy</em>.
-A naked eye cannot tell the difference between a densely
+time series, and any other mathematical functions, even when they are smooth
+and <em>curvy</em>. A naked eye cannot tell the difference between a densely
 sampled piecewise linear approximation of an object and its original version.</p>
-<p>The code below illustrates this sad truth using the <em>sine</em>
-function; see <a class="reference internal" href="#fig-sampling"><span class="std std-numref">Figure 13.6</span></a>.</p>
+<p>The code below illustrates this (sad for the high-hearted idealists)
+truth using the <em>sine</em> function; see <a class="reference internal" href="#fig-sampling"><span class="std std-numref">Figure 13.6</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ns</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">));</span><span class="w"> </span><span class="nf">plot.new</span><span class="p">();</span><span class="w"> </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span><span class="o">*</span><span class="kc">pi</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">ns</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
@@ -559,9 +556,10 @@ to change the line end and join styles (from the default rounded caps).</p>
 <h3><span class="section-number">13.1.3. </span>Polygons<a class="headerlink" href="#polygons" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">polygon</strong> draws a possibly filled (if the <code class="docutils literal notranslate"><span class="pre">col</span></code> argument is not
 missing) polygon with a border of specified colour and line type
-(<code class="docutils literal notranslate"><span class="pre">border</span></code>, <code class="docutils literal notranslate"><span class="pre">lty</span></code>, <code class="docutils literal notranslate"><span class="pre">lwd</span></code>).</p>
-<p>Optionally (<code class="docutils literal notranslate"><span class="pre">density</span></code>, <code class="docutils literal notranslate"><span class="pre">angle</span></code>), instead of filling
-with a single colour, the polygon can be hatched.</p>
+(<code class="docutils literal notranslate"><span class="pre">border</span></code>, <code class="docutils literal notranslate"><span class="pre">lty</span></code>, <code class="docutils literal notranslate"><span class="pre">lwd</span></code>).
+Optionally, instead of filling
+with a single colour, the polygon can be hatched
+(via the <code class="docutils literal notranslate"><span class="pre">density</span></code> and <code class="docutils literal notranslate"><span class="pre">angle</span></code> arguments).</p>
 <div class="proof proof-type-example" id="id26">
 
     <div class="proof-title">
@@ -609,36 +607,37 @@ using a call to <strong class="command">polygon</strong>.</p>
 <section id="text">
 <h3><span class="section-number">13.1.4. </span>Text<a class="headerlink" href="#text" title="Permalink to this heading">#</a></h3>
 <p>A call to <strong class="command">text</strong>, draws arbitrary strings (newlines and tabs
-are allowed) centred at, below, to the left of, etc. (see the <code class="docutils literal notranslate"><span class="pre">pos</span></code> argument)
-the specified points,
-with some further position adjustment possible (<code class="docutils literal notranslate"><span class="pre">adj</span></code>, <code class="docutils literal notranslate"><span class="pre">offset</span></code>);
+are allowed) centred at the specified points.
+Moreover, by setting the <code class="docutils literal notranslate"><span class="pre">pos</span></code> argument, the labels may be placed
+below, to the left of, etc. the pivots.
+Some further position adjustments are also possible (<code class="docutils literal notranslate"><span class="pre">adj</span></code>, <code class="docutils literal notranslate"><span class="pre">offset</span></code>);
 see <a class="reference internal" href="#fig-textdemo"><span class="std std-numref">Figure 13.8</span></a>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">col</span></code> specifies the colour, <code class="docutils literal notranslate"><span class="pre">cex</span></code> affects the size, and <code class="docutils literal notranslate"><span class="pre">srt</span></code>
-changes the rotation of the text.</p>
-<p>On many default graphical devices, we have little control over
-the font face used: font family can be selected using <code class="docutils literal notranslate"><span class="pre">family</span></code>
-(<code class="docutils literal notranslate"><span class="pre">&quot;sans&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;serif&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;mono&quot;</span></code>) and <code class="docutils literal notranslate"><span class="pre">font</span></code>
-can be used to select the normal variant (<code class="docutils literal notranslate"><span class="pre">1</span></code>), bold (<code class="docutils literal notranslate"><span class="pre">2</span></code>),
-italic (<code class="docutils literal notranslate"><span class="pre">3</span></code>), or bold italic (<code class="docutils literal notranslate"><span class="pre">4</span></code>).
-See, however, <a class="reference internal" href="#sec-grdevices"><span class="std std-numref">Section 13.2.7</span></a> for some workarounds.</p>
 <figure class="align-default" id="id29">
 <span id="fig-textdemo"></span><img alt="../_images/textdemo-1.png" src="../_images/textdemo-1.png" />
 <figcaption>
 <p><span class="caption-number">Figure 13.8 </span><span class="caption-text">The positioning of text with <strong class="command">text</strong> (the plotting symbols were added for reference)</span><a class="headerlink" href="#id29" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p><code class="docutils literal notranslate"><span class="pre">col</span></code> specifies the colour, <code class="docutils literal notranslate"><span class="pre">cex</span></code> affects the size, and <code class="docutils literal notranslate"><span class="pre">srt</span></code>
+changes the rotation of the text.</p>
+<p>On many default graphical devices, we have little control over
+the font face used: font family can be selected using <code class="docutils literal notranslate"><span class="pre">family</span></code>
+(<code class="docutils literal notranslate"><span class="pre">&quot;sans&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;serif&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;mono&quot;</span></code>), and <code class="docutils literal notranslate"><span class="pre">font</span></code>
+can be used to select the normal variant (<code class="docutils literal notranslate"><span class="pre">1</span></code>), bold (<code class="docutils literal notranslate"><span class="pre">2</span></code>),
+italic (<code class="docutils literal notranslate"><span class="pre">3</span></code>), or bold italic (<code class="docutils literal notranslate"><span class="pre">4</span></code>).
+See, however, <a class="reference internal" href="#sec-grdevices"><span class="std std-numref">Section 13.2.7</span></a> for some workarounds.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*) There is some limited support for basic mathematical
 symbols and formulae. It relies
 on some quirky syntax that we enter using unevaluated R expressions
-(<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>), but it is enough to meet our most basic needs.
-For instance, passing “<strong class="command">quote</strong><code class="code docutils literal notranslate"><span class="pre">(beta[i]^j)</span></code>”
+(<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>). Still, it should be enough to meet our most basic
+needs. For instance, passing “<strong class="command">quote</strong><code class="code docutils literal notranslate"><span class="pre">(beta[i]^j)</span></code>”
 as the <code class="docutils literal notranslate"><span class="pre">labels</span></code> argument to <strong class="command">text</strong>, will output “<span class="math notranslate nohighlight">\(\beta_i^j\)</span>”.
 See <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;plotmath&quot;)</span></code> for more details.</p>
 <p>For more sophisticated mathematical typesetting, see <strong class="program">tikzDevice</strong>
 that we mention in <a class="reference internal" href="#sec-grdevices"><span class="std std-numref">Section 13.2.7</span></a>.
-It renders plot specifications that can be rendered with
+This graphics device outputs plot specifications that can be rendered by
 the LaTeX typesetting system.</p>
 </div>
 </section>
@@ -658,8 +657,8 @@ contour plots; see <a class="reference internal" href="#sec-heat-map"><span clas
     </div><div class="proof-content">
 <p>Optionally, bilinear interpolation
 can be applied if the drawing area is larger than the bitmap size
-and we would like to smoothen the colours out.</p>
-<p><a class="reference internal" href="#fig-gradient"><span class="std std-numref">Figure 13.9</span></a> presents a very stretched 4-by-3 pixel
+and we would like to smoothen the colour transitions out.
+<a class="reference internal" href="#fig-gradient"><span class="std std-numref">Figure 13.9</span></a> presents a very stretched 4-by-3 pixel
 image, with and without interpolation.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">));</span><span class="w"> </span><span class="nf">plot.new</span><span class="p">();</span><span class="w"> </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="n">I</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="n">nrow</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
@@ -682,15 +681,15 @@ image, with and without interpolation.</p>
 </section>
 <section id="graphics-settings">
 <h2><span class="section-number">13.2. </span>Graphics settings<a class="headerlink" href="#graphics-settings" title="Permalink to this heading">#</a></h2>
-<p><strong class="command">par</strong> can be used to read and modify (as long
+<p><strong class="command">par</strong> can be used to query and modify (as long
 as they are not read-only) a number of graphics settings.</p>
 <p>For instance, we have several parameters related to the current page
 or device settings,
 e.g., the plot’s margins (see <a class="reference internal" href="#sec-plot-margins"><span class="std std-numref">Section 13.2.2</span></a>)
 or user coordinates (see <a class="reference internal" href="#sec-plot-usr"><span class="std std-numref">Section 13.2.3</span></a>).</p>
-<p>Moreover, a few functions<a class="footnote-reference brackets" href="#pardefexcept" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> may take
-the values of some of the parameters set via <strong class="command">par</strong>
-as the settings to use by default. This is the case of,
+<p>Moreover, values of some of the parameters set via <strong class="command">par</strong>
+may be taken by a few functions<a class="footnote-reference brackets" href="#pardefexcept" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
+as settings to use by default. This is the case of,
 e.g., <code class="docutils literal notranslate"><span class="pre">col</span></code>, <code class="docutils literal notranslate"><span class="pre">pch</span></code>, <code class="docutils literal notranslate"><span class="pre">lty</span></code> in the <strong class="command">points</strong> and <strong class="command">lines</strong>
 function.</p>
 <div class="proof proof-type-exercise" id="id32">
@@ -700,11 +699,10 @@ function.</p>
         
     </div><div class="proof-content">
 <p>Study the following (pseudo)code.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># uses the default `lty`, i.e., par(&quot;lty&quot;) == &quot;solid&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># use the default `lty`, i.e., par(&quot;lty&quot;) == &quot;solid&quot;</span>
 <span class="n">old_settings</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># change setting, save old for reference</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># uses the default `lty`, i.e., par(&quot;lty&quot;) == &quot;dashed&quot;</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># uses the given `lty`</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># use the default `lty`, i.e., par(&quot;lty&quot;) == &quot;dashed&quot;</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># use the given `lty`</span>
 <span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># lty=&quot;dashed&quot;</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">old_settings</span><span class="p">)</span><span class="w">  </span><span class="c1"># restore previous settings</span>
 <span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># lty=&quot;solid&quot;</span>
@@ -715,27 +713,26 @@ Below we discuss the most noteworthy ones.</p>
 <section id="colours">
 <span id="sec-colours"></span><h3><span class="section-number">13.2.1. </span>Colours<a class="headerlink" href="#colours" title="Permalink to this heading">#</a></h3>
 <p>Many functions allow specifying colours of the plotted objects
-or their parts, compare, e.g., <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">border</span></code> arguments
+or their parts; compare, e.g., <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">border</span></code> arguments
 to <strong class="command">polygon</strong>, or <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">bg</span></code> to <strong class="command">points</strong>.</p>
 <p>There are a few ways to specify colours
 (see the <em>Colour Specification</em> section in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;par&quot;)</span></code> for more details):</p>
 <ul>
-<li><p>A <code class="docutils literal notranslate"><span class="pre">&quot;colorname&quot;</span></code> string, being one of the 657
-predefined names known to the
-<strong class="command">colours</strong> function:</p>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">&quot;colour</span> <span class="pre">name&quot;</span></code> string, being one of the 657
+predefined tags known to the <strong class="command">colours</strong> function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sample</span><span class="p">(</span><span class="nf">colours</span><span class="p">(),</span><span class="w"> </span><span class="m">8</span><span class="p">)</span><span class="w">  </span><span class="c1"># this is just a sample</span>
 <span></span><span class="c1">## [1] &quot;grey23&quot;        &quot;darksalmon&quot;    &quot;tan3&quot;          &quot;violetred4&quot;</span>
 <span class="c1">## [5] &quot;lightblue1&quot;    &quot;darkorchid3&quot;   &quot;darkseagreen1&quot; &quot;slategray3&quot;</span>
 </pre></div>
 </div>
 </li>
-<li><p>An <code class="docutils literal notranslate"><span class="pre">&quot;#rrggbb&quot;</span></code> string, giving the position in the
+<li><p>An <code class="docutils literal notranslate"><span class="pre">&quot;#rrggbb&quot;</span></code> string, specifying a position in the
 <a class="reference external" href="https://en.wikipedia.org/wiki/RGB_color_model">RGB</a>
 colour space; three series of hexadecimal numbers of two digits each,
-i.e.,     between <span class="math notranslate nohighlight">\(\text{00}_\text{hex}=0\)</span>
+i.e., between <span class="math notranslate nohighlight">\(\text{00}_\text{hex}=0\)</span>
 (off) and <span class="math notranslate nohighlight">\(\text{FF}_\text{hex}=255\)</span> (full on),
 giving the intensity of the red, green, and blue channels<a class="footnote-reference brackets" href="#footrgb" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>;</p>
-<p>In practice, <strong class="command">col2rgb</strong> and <strong class="command">rgb</strong> functions
+<p>In practice, the <strong class="command">col2rgb</strong> and <strong class="command">rgb</strong> functions
 can be used to convert between the decimal and hexadecimal
 representations:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;green&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cyan&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;magenta&quot;</span><span class="p">,</span>
@@ -761,14 +758,18 @@ indicating fully visible (“lit”) colour;
 see <a class="reference internal" href="#fig-primitives-demo"><span class="std std-numref">Figure 13.2</span></a> for an example.</p>
 <p>Note that semi-transparency (translucency) can significantly enhance
 the expressivity of our data visualisations;
-see <a class="reference internal" href="#fig-semitrans-ribbon"><span class="std std-numref">Figure 13.19</span></a>
-and <a class="reference internal" href="#fig-semitrans-scatter"><span class="std std-numref">Figure 13.18</span></a>.</p>
+see <a class="reference internal" href="#fig-semitrans-scatter"><span class="std std-numref">Figure 13.18</span></a>
+and <a class="reference internal" href="#fig-semitrans-ribbon"><span class="std std-numref">Figure 13.19</span></a>.</p>
 </li>
 <li><p>An integer index, selecting an item from the <em>current palette</em>
 (with recycling), which we can get or set by a call to
-<strong class="command">palette</strong>.</p>
-<p>Moreover, <code class="docutils literal notranslate"><span class="pre">0</span></code> identifies the background colour,
+<strong class="command">palette</strong>.
+Moreover, <code class="docutils literal notranslate"><span class="pre">0</span></code> identifies the background colour,
 <strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;bg&quot;)</span></code>.</p>
+<p>Integer colour specifiers are particularly useful when plotting
+data in groups, as defined by factors. The underlying integer level codes
+can be mapped to consecutive colours from any palette;
+see <a class="reference internal" href="#fig-irisplot-factors"><span class="std std-numref">Figure 13.17</span></a> below for an example.</p>
 </li>
 </ul>
 <div class="proof proof-type-example" id="id33">
@@ -798,27 +799,22 @@ magenta, yellow, grey; see<a class="footnote-reference brackets" href="#footbwon
 <p><span class="caption-number">Figure 13.10 </span><span class="caption-text">The default colour <strong class="command">palette</strong></span><a class="headerlink" href="#id34" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Integer colour specifiers are particularly useful when plotting
-data in groups, as defined by factors: the underlying integer level codes
-can be mapped to consecutive colours from the above list;
-see  <a class="reference internal" href="#fig-irisplot-factors"><span class="std std-numref">Figure 13.17</span></a> below for an example.</p>
 </div></div><p>As choosing usable colours requires some talents that most
-programmers do not have, we will find ourselves relying
-on some built-in, good-enough, colour sets.
+programmers lack, we will find ourselves relying
+on some built-in, good-enough colour sets.
 <strong class="command">palette.pals</strong> and <strong class="command">hcl.pals</strong>
-returns the names of available <em>discrete</em> (qualitative)
+return the names of the available <em>discrete</em> (qualitative)
 palettes. Then, <strong class="command">palette.colors</strong> and <strong class="command">hcl.colors</strong>
 (note the American spelling)
-can generate a given number of colours from a named set
-from the respective list.</p>
-<p>There are also <em>continuous</em> (quantitative) palettes available,
+can generate a given number of colours from particular named set.</p>
+<p><em>Continuous</em> (quantitative) palettes are also available,
 see <strong class="command">rainbow</strong>, <strong class="command">heat.colors</strong>,
 <strong class="command">terrain.colors</strong>, <strong class="command">topo.colors</strong>,
 <strong class="command">cm.colors</strong>, and <strong class="command">gray.colors</strong>.
 They transition smoothly between some predefined pivot colours, e.g.,
 from blue through green to brown (like in a topographic map
 with elevation colouring).
-They may be useful when drawing, for instance, contour plots;
+They may be useful, e.g., when drawing contour plots;
 compare <a class="reference internal" href="#fig-contour"><span class="std std-numref">Figure 13.27</span></a>.</p>
 <div class="proof proof-type-exercise" id="id35">
 
@@ -841,19 +837,18 @@ in a similar (or nicer) style to that in <a class="reference internal" href="#fi
 one raster image file, or a page in a PDF document
 (see <a class="reference internal" href="#sec-grdevices"><span class="std std-numref">Section 13.2.7</span></a> for more information on graphics devices).
 As we will learn from <a class="reference internal" href="#sec-mfrow"><span class="std std-numref">Section 13.2.6</span></a>, it is capable of holding
-many figures.</p>
-<p>Usually, however, we draw one <em>figure</em> per page. In such a case,
+many <em>figures</em>.</p>
+<p>Usually, however, we draw <em>one figure per page</em>. In such a case,
 the device region is divided into the following parts:</p>
 <ol class="arabic">
 <li><p><em>outer margins</em>, which can be set using, e.g.,
-the <code class="docutils literal notranslate"><span class="pre">oma</span></code> (in text lines, based on the height of the default font)
-or <code class="docutils literal notranslate"><span class="pre">omi</span></code> (in inches) graphics parameters;
+the <code class="docutils literal notranslate"><span class="pre">oma</span></code> graphics parameter
+(in text lines, based on the height of the default font);
 by default, they equal to 0;</p></li>
-<li><p>figure region:</p>
+<li><p><em>figure region</em>:</p>
 <p>a) <em>inner (plot) margins</em>, by default
 <code class="docutils literal notranslate"><span class="pre">mar=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(5.1,</span> <span class="pre">4.1,</span> <span class="pre">4.1,</span> <span class="pre">2.1)</span></code> text lines
-(bottom, left, top, right, respectively;
-<code class="docutils literal notranslate"><span class="pre">mai</span></code> could be used to express it in inches);
+(bottom, left, top, right, respectively);
 this is where we usually emplace the figure title,
 axes labels, etc.</p>
 <p>b) <em>plot region</em>,
@@ -863,7 +858,7 @@ to the user coordinates.</p>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Normally, all drawings are <em>clipped</em> to the plot region,
+<p>Typically, all drawings are <em>clipped</em> to the plot region,
 but this can be changed with the <code class="docutils literal notranslate"><span class="pre">xpd</span></code> parameter;
 see also the <strong class="command">clip</strong> function that allows clipping to an
 arbitrary rectangle.</p>
@@ -914,12 +909,12 @@ It accepts the following parameters:</p>
 ranges on the respective axes;
 by default, they are extended by 4% in each direction (for aesthetic
 reasons; see, e.g., <a class="reference internal" href="#fig-margins1"><span class="std std-numref">Figure 13.12</span></a>),
-but see the <code class="docutils literal notranslate"><span class="pre">xaxs</span></code> and <code class="docutils literal notranslate"><span class="pre">yaxs</span></code> graphics parameters</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">asp</span></code> – aspect ratio (<em>y/x</em>), defaults to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, i.e.,
+but see the <code class="docutils literal notranslate"><span class="pre">xaxs</span></code> and <code class="docutils literal notranslate"><span class="pre">yaxs</span></code> graphics parameters;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">asp</span></code> – aspect ratio <span class="math notranslate nohighlight">\((y/x)\)</span>; defaults to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, i.e.,
 no adjustment;
 use <code class="docutils literal notranslate"><span class="pre">asp=1</span></code> for circles to look like ones, and not ovals;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">log</span></code> – <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> (default), <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;y&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;xy&quot;</span></code>: to switch logarithmic
-scaling on particular axes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log</span></code> – switches logarithmic scaling on particular axes:
+<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> (none; default), <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;y&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;xy&quot;</span></code>.</p></li>
 </ul>
 <div class="proof proof-type-example" id="id39">
 
@@ -939,7 +934,7 @@ the extremes of the user coordinates in the form
 <p>Note that indeed the x-axis range was extended by 4% in each direction.
 We have turned this behaviour off for the y-axis, which uses
 the base-10 logarithmic scale. In this case, its actual range is
-<code class="docutils literal notranslate"><span class="pre">10^par(&quot;usr&quot;)[3:4]</span></code>,
+<code class="docutils literal notranslate"><span class="pre">10^</span></code><strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;usr&quot;)[3:4]</span></code>,
 because <span class="math notranslate nohighlight">\(\log_{10} 1=0\)</span> and <span class="math notranslate nohighlight">\(\log_{10} 1000=3\)</span>.</p>
 </div></div><div class="proof proof-type-exercise" id="id40">
 
@@ -955,7 +950,7 @@ because <span class="math notranslate nohighlight">\(\log_{10} 1=0\)</span> and 
 manually using the aforementioned graphics primitives,
 it is usually too tedious a work.</p>
 <p>This is why we tend to rely on the <strong class="command">axis</strong> function,
-which draws the thing on one of the plot sides (as usual,
+which draws the object on one of the plot sides (as usual,
 1=bottom, …, 4=right).</p>
 <p>Once <strong class="command">plot.window</strong> is called, <strong class="command">axTicks</strong>
 can be called to guesstimate some tasteful (<em>round</em>) locations for the tick
@@ -991,8 +986,7 @@ labels.</p>
 <p>Most of the plots in this book use the following graphics settings
 (except <code class="docutils literal notranslate"><span class="pre">las=1</span></code> to <strong class="command">axis</strong><code class="code docutils literal notranslate"><span class="pre">(2)</span></code>); see
 <a class="reference internal" href="#fig-mysettsgraph"><span class="std std-numref">Figure 13.13</span></a>. Check out
-<strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;par&quot;)</span></code>, <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;axis&quot;)</span></code>, etc. to be able to tune them up
-to suit your needs.</p>
+<strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;par&quot;)</span></code>, <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;axis&quot;)</span></code>, etc. and tune them up to suit your needs.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">1.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.6</span><span class="p">))</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">tcl</span><span class="o">=</span><span class="m">0.25</span><span class="p">)</span><span class="w">  </span><span class="c1"># the length of the tick marks (fraction of text line height)</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mgp</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w">  </span><span class="c1"># axis title, axis labels, and axis line location</span>
@@ -1038,13 +1032,13 @@ or on the computer screen).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The positions of most of the objects is specified
-in <em>virtual</em> user coordinates (as specified by <code class="docutils literal notranslate"><span class="pre">usr</span></code>),
-they are automatically mapped to the <em>physical</em> device region
-(taking into account the page size, outer and inner margins, etc.).</p>
+in <em>virtual</em> user coordinates, as specified by <code class="docutils literal notranslate"><span class="pre">usr</span></code>.
+They are automatically mapped to the <em>physical</em> device region,
+taking into account the page size, outer and inner margins, etc.</p>
 </div>
 <p>Knowing the above, some basic scaling can be used
 to convert between user and physical sizes (in inches),
-taking into account the ratios
+based on the ratios
 <code class="docutils literal notranslate"><span class="pre">(usr[2]-usr[1])/pin[1]</span></code> and <code class="docutils literal notranslate"><span class="pre">(usr[4]-usr[3])/pin[2]</span></code>;
 compare the <strong class="command">xinch</strong> and <strong class="command">yinch</strong> functions.</p>
 <div class="proof proof-type-example" id="id43">
@@ -1071,8 +1065,9 @@ the edges of the figure and device region in user coordinates.</p>
 text on the right inner margin rotated by 180 degrees
 as compared to what we see in <a class="reference internal" href="#fig-margins1"><span class="std std-numref">Figure 13.12</span></a>.
 Implement your own version of this function that will allow you to
-do the above (based on <strong class="command">text</strong>, the <code class="docutils literal notranslate"><span class="pre">cin</span></code> graphics parameter,
-and what can be read from <a class="reference internal" href="#fig-user-coords"><span class="std std-numref">Figure 13.14</span></a>).</p>
+do so.
+Hint: use <strong class="command">text</strong>, the <code class="docutils literal notranslate"><span class="pre">cin</span></code> graphics parameter,
+and what you can read from <a class="reference internal" href="#fig-user-coords"><span class="std std-numref">Figure 13.14</span></a>.</p>
 </div></div></section>
 <section id="many-figures-on-one-page-subplots">
 <span id="sec-mfrow"></span><h3><span class="section-number">13.2.6. </span>Many figures on one page (subplots)<a class="headerlink" href="#many-figures-on-one-page-subplots" title="Permalink to this heading">#</a></h3>
@@ -1135,23 +1130,23 @@ more details.</p>
 </section>
 <section id="graphics-devices">
 <span id="sec-grdevices"></span><h3><span class="section-number">13.2.7. </span>Graphics devices<a class="headerlink" href="#graphics-devices" title="Permalink to this heading">#</a></h3>
-<p>Where our plots are <em>displayed</em> by default depends on our
+<p>Where our plots are <em>displayed</em>  depends on our
 development environment (<a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>).
 Users of <strong class="program">JupyterLab</strong> should see a plot embedded
 into the current notebook,
 consumers of <strong class="program">RStudio</strong> display them in a dedicated
-Plots pane,
-working from the console opens a plot in a new graphical window
-(unless we are in a text-only environment),
+<em>Plots</em> pane,
+working from the console opens a new graphics window
+(unless we work in a text-only environment),
 whereas compiling
 <strong class="program">utils</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Sweave</strong> or <strong class="program">knitr</strong>
 markup files results in an image included in the output document.</p>
-<p>In practice, we might be interested in redirecting our
-creative endeavours to different devices.
+<p>In practice, we might be interested in exercises our
+creative endeavours on different devices.
 For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cairo_pdf</span><span class="p">(</span><span class="s">&quot;figure.pdf&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">3.5</span><span class="p">)</span><span class="w">  </span><span class="c1"># open &quot;device&quot;</span>
-<span class="c1"># plotting functions...</span>
-<span class="nf">dev.off</span><span class="p">()</span><span class="w">  </span><span class="c1"># save file</span>
+<span class="c1"># ... calls to plotting functions...</span>
+<span class="nf">dev.off</span><span class="p">()</span><span class="w">  </span><span class="c1"># save file, close device</span>
 </pre></div>
 </div>
 <p>draws whatever is to be plotted in a PDF file.
@@ -1163,7 +1158,7 @@ we are able to customise the font family by calling
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Typically, web browsers can display JPEG, PNG, and SVG files.
-However, JPEG uses a lossy compression method, therefore it is not
+However, JPEG uses a lossy compression method. Therefore, it is not
 a particularly fortunate file format for data visualisations.
 It does not support transparency either.</p>
 <p>PDF is a popular choice in printed publications
@@ -1182,7 +1177,7 @@ will result in large files sizes and relatively slow rendition times
 (but there are tricks to remedy this).</p>
 </div>
 <p>Users of TeX might be interested in
-<strong class="program">tikzDevice</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">tikz</strong>, which created
+<strong class="program">tikzDevice</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">tikz</strong>, which creates
 TikZ files that can be compiled to standalone PDF files
 or embedded in LaTeX documents (and its variants).
 This allows typesetting beautiful equations using the standard
@@ -1190,18 +1185,18 @@ This allows typesetting beautiful equations using the standard
 <p>A list of many built-in devices is available in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Devices&quot;)</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The current plot can be copied to another device (e.g.,
-a PDF file) using <strong class="command">dev.print</strong>.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
 <p>(*) The opened graphics devices form a stack;
-calling <strong class="command">dev.off</strong> will return to the last opened device.
+calling <strong class="command">dev.off</strong> will return to the last opened device
+(if any).
 See <strong class="command">dev.list</strong> and other functions listed in its help page
 for more information.</p>
+<p>Note that each device has its own graphics parameters. When opening a new
+device, we start with default parameters in place.</p>
 <p>Also, <strong class="command">dev.hold</strong> and <strong class="command">dev.flush</strong>
 can be used to suppress the immediate display of the plotted objects,
 which might increase the drawing speed on certain devices.</p>
+<p>The current plot can be copied to another device (e.g.,
+a PDF file) using <strong class="command">dev.print</strong>.</p>
 </div>
 <div class="proof proof-type-exercise" id="id48">
 
@@ -1209,16 +1204,16 @@ which might increase the drawing speed on certain devices.</p>
         <span class="proof-type">Exercise 13.19</span>
         
     </div><div class="proof-content">
-<p>(*) Create an animated PNG of, say, a large point sliding through the
-sine curve. Generate a series of animation frames like in
+<p>(*) Create an animated PNG displaying a large point sliding along the
+sine curve. Generate a series of video frames like in
 <a class="reference internal" href="#fig-animation"><span class="std std-numref">Figure 13.16</span></a>. Store each frame in a separate PNG file.
 Then, use <a class="reference external" href="https://imagemagick.org/"><strong class="program">ImageMagick</strong></a>
 (compare <a class="reference internal" href="170-function.html#sec-external-programs"><span class="std std-numref">Section 7.3.3</span></a>; or rely on some other tool)
-to combine these files to a single animated PNG.</p>
+to combine these files in the form of a single animated PNG.</p>
 <figure class="align-default" id="id49">
 <span id="fig-animation"></span><img alt="../_images/animation-1.png" src="../_images/animation-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.16 </span><span class="caption-text">Selected frames of an example animation: frames can be stored in separate files which can then be combined to a single animated PNG</span><a class="headerlink" href="#id49" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.16 </span><span class="caption-text">Selected frames of an example animation: they can be stored in separate files and then be combined to a single animated PNG</span><a class="headerlink" href="#id49" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -1232,8 +1227,8 @@ on behalf of the user.
 They provide ready-to-use implementations of the most common data
 visualisation tools, e.g., box-and-whisker plots, histograms,
 pairs plots, etc.</p>
-<p>Below we review some of them, but also show how they can be customised,
-or rewritten from scratch if we are not completely happy with them.
+<p>Below we review some of them. We also show how they can be customised,
+or even rewritten from scratch, if we are not completely happy with them.
 They will inspire us to practice some lower-level
 graphics programming.</p>
 <div class="proof proof-type-exercise" id="id50">
@@ -1318,12 +1313,10 @@ we cannot judge what is the density around them.
 On the other hand, translucent symbols somewhat imitate
 two-dimensional histograms that we depict later in
 <a class="reference internal" href="#fig-colour-density2d"><span class="std std-numref">Figure 13.29</span></a>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># see https://github.com/gagolews/teaching-data</span>
-<span class="n">nhanes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;~/Projects/teaching-data/marek/nhanes_adult_female_bmx_2020.csv&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
-<span class="nf">names</span><span class="p">(</span><span class="n">nhanes</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;weight&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;height&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;armlen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;leglen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;armcirc&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;hipcirc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;waistcirc&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">nhanes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="w">  </span><span class="c1"># see https://github.com/gagolews/teaching-data</span>
+<span class="w">    </span><span class="n">file</span><span class="o">=</span><span class="s">&quot;~/Projects/teaching-data/marek/nhanes_adult_female_bmx_2020.csv&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;weight&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;height&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;armlen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;leglen&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;armcirc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hipcirc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;waistcirc&quot;</span><span class="p">))</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
 <span class="nf">for </span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#00000010&quot;</span><span class="p">))</span>
 <span class="w">    </span><span class="nf">plot</span><span class="p">(</span><span class="n">nhanes</span><span class="p">[[</span><span class="s">&quot;height&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">nhanes</span><span class="p">[[</span><span class="s">&quot;weight&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
@@ -1375,7 +1368,7 @@ added using a call to <strong class="command">polygon</strong>.</p>
     </div><div class="proof-content">
 <p><a class="reference internal" href="#fig-colour-scatter"><span class="std std-numref">Figure 13.20</span></a> depicts a scatter plot
 similar to <a class="reference internal" href="#fig-semitrans-scatter"><span class="std std-numref">Figure 13.18</span></a>, but now with the points’
-hue being a function of the third variable.</p>
+hue being a function of a third variable.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">midpoints</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="m">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="m">-1</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
 <span class="nf">layout</span><span class="p">(</span><span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">1</span><span class="p">),</span><span class="w">  </span><span class="c1"># 2 plots in 1 page</span>
 <span class="w">    </span><span class="n">widths</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">lcm</span><span class="p">(</span><span class="m">3</span><span class="p">)))</span><span class="w">         </span><span class="c1"># the 2nd one of fixed width &quot;3cm&quot; (scaled)</span>
@@ -1395,7 +1388,7 @@ hue being a function of the third variable.</p>
 <figure class="align-default" id="id60">
 <span id="fig-colour-scatter"></span><img alt="../_images/colour-scatter-1.png" src="../_images/colour-scatter-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.20 </span><span class="caption-text">A two-dimensional scatterplot with the third variable represented by colour</span><a class="headerlink" href="#id60" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.20 </span><span class="caption-text">A 2D scatter plot with a third variable represented by colour</span><a class="headerlink" href="#id60" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><div class="proof proof-type-exercise" id="id61">
@@ -1425,7 +1418,7 @@ to a given numeric vector.</p>
         <span class="proof-type">Exercise 13.29</span>
         
     </div><div class="proof-content">
-<p><strong class="command">splinefun</strong> performs cubic spline interpolation,
+<p><strong class="command">spline</strong> performs cubic spline interpolation,
 whereas <strong class="command">smooth.spline</strong> determines a smoothing spline
 of a given two-dimensional dataset.
 Plot different splines for <code class="docutils literal notranslate"><span class="pre">cars[[&quot;dist&quot;]]</span></code> as a function
@@ -1442,7 +1435,7 @@ of different heights (or widths, if we request horizontal alignment).</p>
         <span class="proof-type">Example 13.30</span>
         
     </div><div class="proof-content">
-<p>Let us visualise a
+<p>Let us visualise the
 <a class="reference external" href="https://www.cec.health.nsw.gov.au/CEC-Academy/quality-improvement-tools/pareto-charts">dataset</a> listing the most frequent causes of medication errors
 (data are fabricated):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cat_med</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span>
@@ -1453,7 +1446,7 @@ of different heights (or widths, if we request horizontal alignment).</p>
 <span class="n">counts_med</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">53</span><span class="p">,</span><span class="w"> </span><span class="m">92</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">76</span><span class="p">,</span><span class="w"> </span><span class="m">83</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">59</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>A Pareto chart combines a box plot with bars of decreasing heights
+<p>A Pareto chart combines a bar plot with bars of decreasing heights
 with a cumulative percentage curve; see <a class="reference internal" href="#fig-pareto-chart"><span class="std std-numref">Figure 13.21</span></a>.
 Note that <strong class="command">barplot</strong> returns the midpoints of the bars
 and that the function sets the <code class="docutils literal notranslate"><span class="pre">xaxs</span></code> graphical parameter and thus
@@ -1464,10 +1457,12 @@ not make us happy here).</p>
 <span class="n">pcto_med</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">counts_med</span><span class="p">[</span><span class="n">o</span><span class="p">]</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">counts_med</span><span class="p">)</span><span class="o">*</span><span class="m">100</span>
 <span class="n">cumpcto_med</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rev</span><span class="p">(</span><span class="nf">cumsum</span><span class="p">(</span><span class="nf">rev</span><span class="p">(</span><span class="n">pcto_med</span><span class="p">)))</span>
 <span class="c1"># bar plot of %s</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">7.2</span><span class="p">,</span><span class="w"> </span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.6</span><span class="p">))</span><span class="w">  </span><span class="c1"># wide left margin</span>
-<span class="n">midp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">barplot</span><span class="p">(</span><span class="n">pcto_med</span><span class="p">,</span><span class="w"> </span><span class="n">names.arg</span><span class="o">=</span><span class="n">cato_med</span><span class="p">,</span><span class="w"> </span><span class="n">horiz</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;%&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">),</span><span class="w"> </span><span class="n">xaxs</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">yaxs</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.6</span><span class="p">,</span><span class="w"> </span><span class="m">2.2</span><span class="p">,</span><span class="w"> </span><span class="m">6.6</span><span class="p">))</span><span class="w">  </span><span class="c1"># wide left margin</span>
+<span class="n">midp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">barplot</span><span class="p">(</span><span class="n">pcto_med</span><span class="p">,</span><span class="w"> </span><span class="n">horiz</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;%&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">),</span><span class="w"> </span><span class="n">xaxs</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">yaxs</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">yaxt</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">width</span><span class="o">=</span><span class="m">3</span><span class="o">/</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">space</span><span class="o">=</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">)</span>
 <span class="nf">text</span><span class="p">(</span><span class="n">pcto_med</span><span class="p">,</span><span class="w"> </span><span class="n">midp</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.1f%%&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pcto_med</span><span class="p">),</span><span class="w"> </span><span class="n">pos</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">0.89</span><span class="p">)</span>
+<span class="nf">axis</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="o">=</span><span class="n">midp</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="n">cato_med</span><span class="p">,</span><span class="w"> </span><span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 <span class="nf">box</span><span class="p">()</span>
 <span class="c1"># cumulative % curve in a new coordinate system</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">usr</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">104</span><span class="p">,</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;usr&quot;</span><span class="p">)[</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="s">&quot;usr&quot;</span><span class="p">)[</span><span class="m">4</span><span class="p">]))</span><span class="w">  </span><span class="c1"># 0-100 with 4% addition</span>
@@ -1481,7 +1476,7 @@ not make us happy here).</p>
 <figure class="align-default" id="id65">
 <span id="fig-pareto-chart"></span><img alt="../_images/pareto-chart-1.png" src="../_images/pareto-chart-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.21 </span><span class="caption-text">An example Pareto chart (a fancy bar plot); double axes have a general tendency to confuse a reader</span><a class="headerlink" href="#id65" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.21 </span><span class="caption-text">An example Pareto chart (a fancy bar plot); double axes have a general tendency to confuse the reader</span><a class="headerlink" href="#id65" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><div class="proof proof-type-exercise" id="id66">
@@ -1500,6 +1495,16 @@ see <a class="reference internal" href="#fig-bar-plot-titanic"><span class="std 
 <p><span class="caption-number">Figure 13.22 </span><span class="caption-text">An example bar plot representing a two-way contingency table</span><a class="headerlink" href="#id67" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+</div></div><div class="proof proof-type-exercise" id="id68">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.32</span>
+        
+    </div><div class="proof-content">
+<p>Implement your own version of <strong class="command">barplot</strong>,
+but where the bars are placed exactly at the positions
+specified by the user, e.g., allowing the bar midpoints to be
+consecutive integers.</p>
 </div></div><p>We are definitely not going to cover the (in)famous pie charts in our
 book. The human brain is not very skilled at judging the relative differences
 between the areas of geometric objects.</p>
@@ -1513,49 +1518,49 @@ the said intervals cover the whole data range.</p>
 <strong class="command">hist</strong>; see <a class="reference internal" href="#fig-hist-demo"><span class="std std-numref">Figure 13.23</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
 <span class="nf">for </span><span class="p">(</span><span class="n">breaks</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="s">&quot;Sturges&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1"># &quot;Sturges&quot; is the default, any value is merely a suggestion</span>
+<span class="w">    </span><span class="c1"># Sturges (a heuristic) is the default; any value is merely a suggestion</span>
 <span class="w">    </span><span class="nf">hist</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Sepal length&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="n">main</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">box</span><span class="p">()</span><span class="w">  </span><span class="c1"># weirdly we need to add it manually</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id68">
+<figure class="align-default" id="id69">
 <span id="fig-hist-demo"></span><img alt="../_images/hist-demo-1.png" src="../_images/hist-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.23 </span><span class="caption-text">Example histograms for the same dataset, but with different numbers of bins</span><a class="headerlink" href="#id68" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.23 </span><span class="caption-text">Example histograms: the same dataset, but different bin numbers</span><a class="headerlink" href="#id69" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="proof proof-type-exercise" id="id69">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 13.32</span>
-        
-    </div><div class="proof-content">
-<p>Study the source code of <strong class="command">hist.default</strong>.
-Note the (invisibly returned) list (of S3 class <code class="docutils literal notranslate"><span class="pre">histogram</span></code>).
-The, study <strong class="program">graphics</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">plot.histogram</strong>.
-Implement similar functions yourself.</p>
-</div></div><div class="proof proof-type-exercise" id="id70">
+<div class="proof proof-type-exercise" id="id70">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.33</span>
         
     </div><div class="proof-content">
+<p>Study the source code of <strong class="command">hist.default</strong>.
+Note the (invisibly returned) list (of S3 class <code class="docutils literal notranslate"><span class="pre">histogram</span></code>).
+Then, study <strong class="program">graphics</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">plot.histogram</strong>.
+Implement similar functions yourself.</p>
+</div></div><div class="proof proof-type-exercise" id="id71">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.34</span>
+        
+    </div><div class="proof-content">
 <p>Modify your function to draw a scatter plot matrix
 in such a way that it gives the histograms of the marginal distributions
 on its diagonal.</p>
-</div></div><div class="proof proof-type-example" id="id71">
+</div></div><div class="proof proof-type-example" id="id72">
 
     <div class="proof-title">
-        <span class="proof-type">Example 13.34</span>
+        <span class="proof-type">Example 13.35</span>
         
     </div><div class="proof-content">
 <p>Using <strong class="command">layout</strong> that we mentioned in <a class="reference internal" href="#sec-mfrow"><span class="std std-numref">Section 13.2.6</span></a>,
 we can draw a scatter plot with marginal histograms;
 see <a class="reference internal" href="#fig-layout-demo"><span class="std std-numref">Figure 13.24</span></a>.
 Note that we split the page into four plots of unequal sizes,
-and that the upper right part of the grid will be unused.
+but the upper right part of the grid is unused.
 We use <strong class="command">hist</strong> for binning only (<code class="docutils literal notranslate"><span class="pre">plot=FALSE</span></code>), and then
 <strong class="command">barplot</strong> for drawing, because it gives greater control
 over the process (e.g., allows vertical layout).</p>
@@ -1581,23 +1586,23 @@ over the process (e.g., allows vertical layout).</p>
 <span class="w">    </span><span class="n">xlim</span><span class="o">=</span><span class="nf">range</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">range</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="w">  </span><span class="c1"># default xlim, ylim</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id72">
+<figure class="align-default" id="id73">
 <span id="fig-layout-demo"></span><img alt="../_images/layout-demo-1.png" src="../_images/layout-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.24 </span><span class="caption-text">Three (four) plots on one page, but on a nonuniform grid created using <strong class="command">layout</strong>: A scatter plot with marginal histograms</span><a class="headerlink" href="#id72" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.24 </span><span class="caption-text">Three (four) plots on one page, but on a nonuniform grid created using <strong class="command">layout</strong>: a scatter plot with marginal histograms</span><a class="headerlink" href="#id73" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-example" id="id73">
+</div></div><div class="proof proof-type-example" id="id74">
 
     <div class="proof-title">
-        <span class="proof-type">Example 13.35</span>
+        <span class="proof-type">Example 13.36</span>
         
     </div><div class="proof-content">
 <p>(*)
 Kernel density estimators (KDEs) are another way to guesstimate
 the data distribution. The <strong class="command">density</strong> function, for a given
-numeric vector, returns a list featuring, amongst others,
-the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> coordinates of points we can pass directly to
+numeric vector, returns a list that features, amongst others,
+the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> coordinates of the points that we can pass directly to
 the <strong class="command">lines</strong> function.
 Below we depict the KDEs of data split into three groups;
 see <a class="reference internal" href="#fig-semitrans-density"><span class="std std-numref">Figure 13.25</span></a>.</p>
@@ -1606,28 +1611,25 @@ see <a class="reference internal" href="#fig-semitrans-density"><span class="std
 
 <span class="n">pal</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">adjust_transparency</span><span class="p">(</span><span class="nf">palette</span><span class="p">(),</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span>
 <span class="n">kdes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lapply</span><span class="p">(</span><span class="nf">split</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]]),</span><span class="w"> </span><span class="n">density</span><span class="p">)</span>
-
 <span class="nf">matplot</span><span class="p">(</span><span class="nf">sapply</span><span class="p">(</span><span class="n">kdes</span><span class="p">,</span><span class="w"> </span><span class="n">`[[`</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">sapply</span><span class="p">(</span><span class="n">kdes</span><span class="p">,</span><span class="w"> </span><span class="n">`[[`</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">),</span>
 <span class="w">    </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Sepal length&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;density&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
-
 <span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">kdes</span><span class="p">))</span>
 <span class="w">    </span><span class="nf">polygon</span><span class="p">(</span><span class="n">kdes</span><span class="p">[[</span><span class="n">i</span><span class="p">]][[</span><span class="s">&quot;x&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">kdes</span><span class="p">[[</span><span class="n">i</span><span class="p">]][[</span><span class="s">&quot;y&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="n">pal</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">border</span><span class="o">=</span><span class="kc">NA</span><span class="p">)</span>
-
 <span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="nf">levels</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]]),</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span>
 <span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="nf">seq_along</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]])),</span>
 <span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="nf">seq_along</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]])))</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id74">
+<figure class="align-default" id="id75">
 <span id="fig-semitrans-density"></span><img alt="../_images/semitrans-density-1.png" src="../_images/semitrans-density-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.25 </span><span class="caption-text">Kernel density estimators of Sepal length split into Species in the Iris datase; note the semi-transparent polygons (again)</span><a class="headerlink" href="#id74" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.25 </span><span class="caption-text">Kernel density estimators of sepal length split by species in the Iris dataset; note the semi-transparent polygons (again)</span><a class="headerlink" href="#id75" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id75">
+</div></div><div class="proof proof-type-exercise" id="id76">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.36</span>
+        <span class="proof-type">Exercise 13.37</span>
         
     </div><div class="proof-content">
 <p>(*)
@@ -1637,9 +1639,8 @@ split by a combination of three factor levels;
 see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-numref">Figure 13.26</span></a> for an example.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">grid_kde</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">hue</span><span class="p">)</span><span class="w"> </span><span class="n">...to.do...</span>
 
-<span class="c1"># see https://github.com/gagolews/teaching-data</span>
 <span class="n">tips</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;~/Projects/teaching-data/other/tips.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">stringsAsFactors</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">stringsAsFactors</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># see https://github.com/gagolews/teaching-data</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">tips</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># preview an example dataset</span>
 <span class="c1">##   total_bill  tip    sex smoker day   time size</span>
 <span class="c1">## 1      16.99 1.01 Female     No Sun Dinner    2</span>
@@ -1648,10 +1649,10 @@ see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-
 <span class="nf">grid_kde</span><span class="p">(</span><span class="n">tips</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="o">=</span><span class="s">&quot;tip&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="s">&quot;smoker&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hue</span><span class="o">=</span><span class="s">&quot;sex&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id76">
+<figure class="align-default" id="id77">
 <span id="fig-trellis-demo"></span><img alt="../_images/trellis-demo-1.png" src="../_images/trellis-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.26 </span><span class="caption-text">An example grid plot (also known as trellis, panel, conditioning, or lattice plot), featuring kernel density estimators for a numeric variable (amount of tip in a US restaurant) split by a combination of three factor levels (smoker, time, sex)</span><a class="headerlink" href="#id76" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.26 </span><span class="caption-text">An example grid plot (also known as trellis, panel, conditioning, or lattice plot), featuring kernel density estimators for a numeric variable (amount of tip in a US restaurant) split by a combination of three factor levels (smoker, time, sex)</span><a class="headerlink" href="#id77" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -1660,10 +1661,10 @@ see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-
 <p>We have already seen a chart generated by <strong class="command">boxplot</strong>
 in <a class="reference internal" href="150-indexing.html#fig-toothgrowth-boxplot"><span class="std std-numref">Figure 5.1</span></a>. Tinkering with it will
 give us some good practice, which in turn shall make us perfect.</p>
-<div class="proof proof-type-exercise" id="id77">
+<div class="proof proof-type-exercise" id="id78">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.37</span>
+        <span class="proof-type">Exercise 13.38</span>
         
     </div><div class="proof-content">
 <p>Modify the code generating <a class="reference internal" href="150-indexing.html#fig-toothgrowth-boxplot"><span class="std std-numref">Figure 5.1</span></a> so that:</p>
@@ -1672,25 +1673,25 @@ give us some good practice, which in turn shall make us perfect.</p>
 different <code class="docutils literal notranslate"><span class="pre">dose</span></code>s; also, on the x-axis, only <em>unique</em> <code class="docutils literal notranslate"><span class="pre">dose</span></code>s are printed),</p></li>
 <li><p>different <code class="docutils literal notranslate"><span class="pre">supp</span></code>s have different colours (add a legend explaining them).</p></li>
 </ol>
-</div></div><div class="proof proof-type-exercise" id="id78">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 13.38</span>
-        
-    </div><div class="proof-content">
-<p>Write a function implementing box plot drawing from scratch.</p>
 </div></div><div class="proof proof-type-exercise" id="id79">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.39</span>
         
     </div><div class="proof-content">
-<p>(*) Write a function for drawing violin plots
-(which are similar to box plots, but use kernel density estimators).</p>
+<p>Write a function for drawing box plots using graphics primitives.</p>
 </div></div><div class="proof proof-type-exercise" id="id80">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.40</span>
+        
+    </div><div class="proof-content">
+<p>(*) Write a function for drawing violin plots
+(which are similar to box plots, but use kernel density estimators).</p>
+</div></div><div class="proof proof-type-exercise" id="id81">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.41</span>
         
     </div><div class="proof-content">
 <p>(*) Implement a bag plot, being a two-dimensional version
@@ -1700,21 +1701,22 @@ of a point set).</p>
 <section id="contour-plots-and-heat-maps">
 <span id="sec-heat-map"></span><h3><span class="section-number">13.3.4. </span>Contour plots and heat maps<a class="headerlink" href="#contour-plots-and-heat-maps" title="Permalink to this heading">#</a></h3>
 <p>When plotting a function of two variables like <span class="math notranslate nohighlight">\(z=f(x, y)\)</span>,
-the magnitude of <span class="math notranslate nohighlight">\(z\)</span> component can be expressed using colour
+the magnitude of the <span class="math notranslate nohighlight">\(z\)</span> component can be expressed using colour
 brightness or hue.</p>
 <p><strong class="command">image</strong> is a convenient wrapper around <strong class="command">rasterImage</strong>
 which can be used to draw contour plots, two-dimensional histograms,
 heatmaps, etc.</p>
-<div class="proof proof-type-example" id="id81">
+<div class="proof proof-type-example" id="id82">
 
     <div class="proof-title">
-        <span class="proof-type">Example 13.41</span>
+        <span class="proof-type">Example 13.42</span>
         
     </div><div class="proof-content">
-<p><a class="reference internal" href="#fig-contour"><span class="std std-numref">Figure 13.27</span></a> presents a (filled) contour plot
+<p><a class="reference internal" href="#fig-contour"><span class="std std-numref">Figure 13.27</span></a> presents a filled contour plot
 of Himmelblau’s function, <span class="math notranslate nohighlight">\(f(x,y)=(x^{2}+y-11)^{2}+(x+y^{2}-7)^{2}\)</span>,
 for <span class="math notranslate nohighlight">\(x\in[-5, 5]\)</span> and <span class="math notranslate nohighlight">\(y\in[-4, 4]\)</span>.
-Note the call to <strong class="command">contour</strong> that adds labelled contour lines.</p>
+A call to <strong class="command">contour</strong> adds labelled contour lines
+(which is actually a nontrivial operation).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">250</span><span class="p">)</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">200</span><span class="p">)</span>
 <span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">outer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">xg</span><span class="p">,</span><span class="w"> </span><span class="n">yg</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">xg</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">yg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">11</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">xg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">yg</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">7</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
@@ -1722,21 +1724,21 @@ Note the call to <strong class="command">contour</strong> that adds labelled con
 <span class="nf">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">nlevels</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id82">
+<figure class="align-default" id="id83">
 <span id="fig-contour"></span><img alt="../_images/contour-1.png" src="../_images/contour-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.27 </span><span class="caption-text">A filled contour plot of Himmelblau’s function with labelled contour lines</span><a class="headerlink" href="#id82" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.27 </span><span class="caption-text">A filled contour plot of Himmelblau’s function with labelled contour lines</span><a class="headerlink" href="#id83" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><p>Note that in <strong class="command">image</strong>,
 the number of rows in <code class="docutils literal notranslate"><span class="pre">z</span></code> matches the length of <code class="docutils literal notranslate"><span class="pre">x</span></code>,
 whereas the number of columns therein is equal to the size of <code class="docutils literal notranslate"><span class="pre">y</span></code>.
 This might be counterintuitive; if <code class="docutils literal notranslate"><span class="pre">z</span></code> is printed,
-its image is its 90-degree rotated version.</p>
-<div class="proof proof-type-example" id="id83">
+the image is its 90-degree rotated version.</p>
+<div class="proof proof-type-example" id="id84">
 
     <div class="proof-title">
-        <span class="proof-type">Example 13.42</span>
+        <span class="proof-type">Example 13.43</span>
         
     </div><div class="proof-content">
 <p><a class="reference internal" href="#fig-corr-heatmap"><span class="std std-numref">Figure 13.28</span></a> presents an example heatmap,
@@ -1745,38 +1747,42 @@ in the <code class="docutils literal notranslate"><span class="pre">nhanes</span
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">o</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># order of rows/cols (by similarity)</span>
 <span class="n">R</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cor</span><span class="p">(</span><span class="n">nhanes</span><span class="p">[</span><span class="n">o</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">])</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2.8</span><span class="p">,</span><span class="w"> </span><span class="m">7.6</span><span class="p">,</span><span class="w"> </span><span class="m">1.2</span><span class="p">,</span><span class="w"> </span><span class="m">7.6</span><span class="p">),</span><span class="w"> </span><span class="n">ann</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="nf">image</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="n">zlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span>
+<span class="nf">image</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">R</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="m">+0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span>
+<span class="w">    </span><span class="n">zlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span>
 <span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="nf">hcl.colors</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BluGrn&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rev</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span>
-<span class="w">    </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="m">+0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span><span class="w"> </span><span class="n">asp</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">axes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">asp</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">axes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="nf">axis</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">R</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span><span class="w"> </span><span class="n">las</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">tick</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="nf">axis</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">R</span><span class="p">)[[</span><span class="m">2</span><span class="p">]],</span><span class="w"> </span><span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">tick</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="nf">text</span><span class="p">(</span><span class="nf">arrayInd</span><span class="p">(</span><span class="nf">seq_along</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.2f&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">),</span>
-<span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)[</span><span class="nf">abs</span><span class="p">(</span><span class="n">R</span><span class="o">&lt;</span><span class="m">0.8</span><span class="p">)</span><span class="m">+1</span><span class="p">])</span>
+<span class="nf">text</span><span class="p">(</span><span class="nf">arrayInd</span><span class="p">(</span><span class="nf">seq_along</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>
+<span class="w">    </span><span class="n">labels</span><span class="o">=</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.2f&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">),</span>
+<span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)[</span><span class="nf">abs</span><span class="p">(</span><span class="n">R</span><span class="o">&lt;</span><span class="m">0.8</span><span class="p">)</span><span class="m">+1</span><span class="p">],</span>
+<span class="w">    </span><span class="n">cex</span><span class="o">=</span><span class="m">0.89</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id84">
+<figure class="align-default" id="id85">
 <span id="fig-corr-heatmap"></span><img alt="../_images/corr-heatmap-1.png" src="../_images/corr-heatmap-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.28 </span><span class="caption-text">A correlation heatmap drawn using <strong class="command">image</strong></span><a class="headerlink" href="#id84" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.28 </span><span class="caption-text">A correlation heatmap drawn using <strong class="command">image</strong></span><a class="headerlink" href="#id85" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id85">
+</div></div><div class="proof proof-type-exercise" id="id86">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.43</span>
+        <span class="proof-type">Exercise 13.44</span>
         
     </div><div class="proof-content">
 <p>Check out the <strong class="command">heatmap</strong> function
 which uses <strong class="command">image</strong> together with hierarchical clustering
 to find an aesthetic reordering of the matrix’s items.</p>
-</div></div><div class="proof proof-type-example" id="id86">
+</div></div><div class="proof proof-type-example" id="id87">
 
     <div class="proof-title">
-        <span class="proof-type">Example 13.44</span>
+        <span class="proof-type">Example 13.45</span>
         
     </div><div class="proof-content">
-<p><a class="reference internal" href="#fig-colour-density2d"><span class="std std-numref">Figure 13.29</span></a> depicts a two-dimensional histogram,
-approaching the idea of reflecting the points’ density
+<p><a class="reference internal" href="#fig-colour-density2d"><span class="std std-numref">Figure 13.29</span></a> depicts a two-dimensional histogram.
+It approaches the idea of reflecting the points’ density
 quite differently to the semi-transparent symbols in
 <a class="reference internal" href="#fig-semitrans-scatter"><span class="std std-numref">Figure 13.18</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">histogram_2d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
@@ -1798,43 +1804,42 @@ quite differently to the semi-transparent symbols in
 <span class="w">    </span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id87">
+<figure class="align-default" id="id88">
 <span id="fig-colour-density2d"></span><img alt="../_images/colour-density2d-1.png" src="../_images/colour-density2d-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.29 </span><span class="caption-text">Two-dimensional histograms with different numbers of bins, where the bin count is reflected by the colour</span><a class="headerlink" href="#id87" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 13.29 </span><span class="caption-text">Two-dimensional histograms with different numbers of bins, where the bin count is reflected by the colour</span><a class="headerlink" href="#id88" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id88">
+</div></div><div class="proof proof-type-exercise" id="id89">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.45</span>
+        <span class="proof-type">Exercise 13.46</span>
         
     </div><div class="proof-content">
 <p>(*) Implement some two-dimensional kernel density estimator
-and plot them using <strong class="command">contour</strong>.</p>
+and plot it using <strong class="command">contour</strong>.</p>
 </div></div></section>
 </section>
 <section id="exercises">
 <h2><span class="section-number">13.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id89">
+<div class="proof proof-type-exercise" id="id90">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.46</span>
+        <span class="proof-type">Exercise 13.47</span>
         
     </div><div class="proof-content">
 <p>Answer the following questions:</p>
 <ul class="simple">
 <li><p>Can functions from the <strong class="program">graphics</strong> package be used to adjust
 the plots generated by <strong class="program">lattice</strong> and <strong class="program">ggplot2</strong>?</p></li>
-<li><p>List the most commonly used graphics primitives.</p></li>
+<li><p>List the most common graphics primitives.</p></li>
 <li><p>Can all high-level functions be implemented using low-level ones?
 As an example, discuss the key ingredients used in <strong class="command">barplot</strong>.</p></li>
 <li><p>Some high-level functions discussed in this chapter
 feature the <code class="docutils literal notranslate"><span class="pre">add</span></code> parameter. What is its purpose?</p></li>
 <li><p>What are the admissible values of <code class="docutils literal notranslate"><span class="pre">pch</span></code> and <code class="docutils literal notranslate"><span class="pre">lty</span></code>?
 Also, in the default palette, what is the meaning of colours
-<code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">8</span></code>?
-(It is good to learn them by heart.)</p></li>
+<code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">16</span></code>? Can their meaning be changed?</p></li>
 <li><p>Can all graphics parameters be changed?</p></li>
 <li><p>What is the difference between passing <code class="docutils literal notranslate"><span class="pre">xaxt=&quot;n&quot;</span></code> to
 <strong class="command">plot.default</strong> vs setting it with <strong class="command">par</strong>,
@@ -1845,46 +1850,43 @@ scale on the x-axis?</p></li>
 <li><p>(*) How to place a plotting symbol exactly 1 centimetre from
 the top-left corner
 of the current page (following the page’s diagonal)?</p></li>
-<li><p>List the colours represented by numeric IDs of 1, 2, …, 16.
-Can their meaning be changed?</p></li>
-<li><p>Recall the line types 1, 2, …, 6.</p></li>
 <li><p>Semi-transparent polygons are nice, right?</p></li>
 <li><p>Can an ellipse be drawn using <strong class="command">polygon</strong>?</p></li>
 <li><p>What happens when we set the graphics parameter
 <code class="docutils literal notranslate"><span class="pre">mfrow=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code>?</p></li>
 <li><p>How to export the current plot to a PDF file?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id90">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 13.47</span>
-        
-    </div><div class="proof-content">
-<p>Draw the 2022 <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/btcusd_close_2022.csv"><code class="docutils literal notranslate"><span class="pre">BTC-to-USD</span> <span class="pre">close</span> <span class="pre">rates</span></code></a>
-time series. Then, add the 7- and 30-day moving average.</p>
-<p>(*) Also, fit a local polynomial (moving) regression model
-using the Savitzky–Golay filter (see <strong class="command">loess</strong>).</p>
 </div></div><div class="proof proof-type-exercise" id="id91">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.48</span>
         
     </div><div class="proof-content">
-<p>(*) Draw (from scratch) a candlestick plot
-for the 2022 <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/btcusd_ohlc_2022.csv"><code class="docutils literal notranslate"><span class="pre">BTC-to-USD</span> <span class="pre">rates</span></code></a>.</p>
+<p>Draw the 2022 <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/btcusd_close_2022.csv">BTC-to-USD close rates</a>
+time series. Then, add the 7- and 30-day moving average.</p>
+<p>(*) Also, fit a local polynomial (moving) regression model
+using the Savitzky–Golay filter (see <strong class="command">loess</strong>).</p>
 </div></div><div class="proof proof-type-exercise" id="id92">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.49</span>
         
     </div><div class="proof-content">
-<p>(*) Create a function to draw a normal quantile-quantile (Q-Q) plot,
-i.e., for inspecting whether a numeric sample might come from some normal
-distribution.</p>
+<p>(*) Draw (from scratch) a candlestick plot
+for the 2022 <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/btcusd_ohlc_2022.csv">BTC-to-USD rates</a>.</p>
 </div></div><div class="proof proof-type-exercise" id="id93">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.50</span>
+        
+    </div><div class="proof-content">
+<p>(*) Create a function to draw a normal quantile-quantile (Q-Q) plot,
+i.e., for inspecting whether a numeric sample might come from some normal
+distribution.</p>
+</div></div><div class="proof proof-type-exercise" id="id94">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 13.51</span>
         
     </div><div class="proof-content">
 <p>(*) Draw a map of the world, where each country
@@ -1893,10 +1895,10 @@ to its Gini index of income inequality.
 You can easily find the data on Wikipedia.
 Try to find an open dataset that gives the borders of each country
 as vertices of a polygon (e.g., in the form of a (geo)JSON file).</p>
-</div></div><div class="proof proof-type-exercise" id="id94">
+</div></div><div class="proof proof-type-exercise" id="id95">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 13.51</span>
+        <span class="proof-type">Exercise 13.52</span>
         
     </div><div class="proof-content">
 <p>Next time you see a nice data visualisation somewhere,
@@ -1904,11 +1906,11 @@ try to reproduce it using base <strong class="program">graphics</strong>.</p>
 </div></div><div style="margin-top: 1em"></div><p>For further information on graphics generation in R,
 see, e.g., Chapter 12 in <span id="id11">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">53</a>]</span>, <span id="id12">[<a class="reference internal" href="999-bibliography.html#id43" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">44</a>]</span>,
 and <span id="id13">[<a class="reference internal" href="999-bibliography.html#id53" title="Rahlf, T. (2019).  Data Visualisation with R: 111 Examples. Springer Nature, 2nd edition. URL: http://www.datavisualisation-r.com/.">48</a>]</span>.
-Note that in this chapter, we were only interested in <em>static</em> graphics
-generation, e.g., for use in printed publications or plain websites.
+Note that in this chapter, we were only interested in <em>static</em> graphics,
+e.g., for use in printed publications or plain websites.
 Interactive plots that a user might tinker with in a web browser
 are a different story.</p>
-<p>And so the second part of our course is ended.</p>
+<div style="margin-top: 1em"></div><p>And so the second part of our course is ended.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="pardefexcept" role="note">
@@ -1925,10 +1927,10 @@ We should always consult the documentation.</p>
 we obtain, e.g., green colour by using blue-ish and yellow crayons
 (subtracting certain wavelengths from white light).
 The RGB model, on the other hand, corresponds to the three
-photoreceptor/code cells in the retinas of the human eyes.
-However, it is is <em>additive</em>, hence less intuitive: total darkness
-emerges when we do not emit any light; yellow emerges when mixing
-red and green beams, etc.</p>
+photoreceptor/cone cells in the retinas of the human eyes.
+Nonetheless, it is <em>additive</em>, and therefore less intuitive:
+total darkness emerges when we do not emit any light;
+yellow emerges when mixing red and green beams, etc.</p>
 </aside>
 <aside class="footnote brackets" id="footcolourblind" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">3</a><span class="fn-bracket">]</span></span>
@@ -1986,7 +1988,7 @@ should note that its online version displays this figure
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-26T18:15:30+1000.
+              Last updated on 2023-04-27T16:45:17+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2007,7 +2009,7 @@ should note that its online version displays this figure
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">13. 🚧 Graphics</a><ul>
+<li><a class="reference internal" href="#">13. Graphics</a><ul>
 <li><a class="reference internal" href="#graphics-primitives">13.1. Graphics primitives</a><ul>
 <li><a class="reference internal" href="#symbols-points">13.1.1. Symbols (points)</a></li>
 <li><a class="reference internal" href="#line-segments">13.1.2. Line segments</a></li>

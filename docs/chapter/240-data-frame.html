@@ -25,7 +25,7 @@
 <meta content="INDEX,FOLLOW" name="robots" />
 <meta content="book" name="og:type" />
 <meta content="9780645571929" name="og:book:isbn" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="13. 🚧 Graphics" href="250-graphics.html" /><link rel="prev" title="11. Matrices and other arrays" href="230-matrix.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="13. Graphics" href="250-graphics.html" /><link rel="prev" title="11. Matrices and other arrays" href="230-matrix.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/240-data-frame.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.2.0.9001 (draft)
+v0.2.1 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -225,7 +225,7 @@ v0.2.0.9001 (draft)
 <li class="toctree-l1"><a class="reference internal" href="220-s3.html">10. S3 classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="230-matrix.html">11. Matrices and other arrays</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">12. Data frames</a></li>
-<li class="toctree-l1"><a class="reference internal" href="250-graphics.html">13. 🚧 Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="250-graphics.html">13. Graphics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul>
@@ -529,9 +529,9 @@ an S3 class <code class="docutils literal notranslate"><span class="pre">spam</s
 <span class="w">    </span><span class="n">c</span><span class="o">=</span><span class="nf">Sys.Date</span><span class="p">()</span><span class="m">+1</span><span class="o">:</span><span class="m">3</span>
 <span class="p">)</span>
 <span class="c1">##     a     b          c</span>
-<span class="c1">## 1 *a*  spam 2023-04-27</span>
-<span class="c1">## 2 *b* bacon 2023-04-28</span>
-<span class="c1">## 3 *c*  spam 2023-04-29</span>
+<span class="c1">## 1 *a*  spam 2023-04-28</span>
+<span class="c1">## 2 *b* bacon 2023-04-29</span>
+<span class="c1">## 3 *c*  spam 2023-04-30</span>
 </pre></div>
 </div>
 </div></div></section>
@@ -1119,7 +1119,7 @@ of indexing and vectorised functions:</p>
 over  `<strong class="command">[[</strong>`, but we do not.
 By default, the former supports partial matching of column names
 which might be appealing when R is used interactively.
-However, it does not work on matrices, nor it
+Nonetheless, it does not work on matrices, nor it
 allows for programmatically generated names. It is also
 trickier to use on non-syntactically valid labels;
 compare <a class="reference internal" href="210-design.html#sec-backtick"><span class="std std-numref">Section 9.4.1</span></a>.</p>
@@ -2095,7 +2095,8 @@ on the named element <code class="docutils literal notranslate"><span class="pre
 <span class="w">        </span><span class="n">c</span><span class="p">,</span><span class="w">  </span><span class="c1"># concatenates lists</span>
 <span class="w">        </span><span class="nf">lapply</span><span class="p">(</span>
 <span class="w">            </span><span class="nf">structure</span><span class="p">(</span><span class="nf">seq_along</span><span class="p">(</span><span class="n">fs</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="nf">names</span><span class="p">(</span><span class="n">fs</span><span class="p">)),</span>
-<span class="w">            </span><span class="nf">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1"># always returns a list</span>
+<span class="w">            </span><span class="nf">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span><span class="w">   </span><span class="c1"># always returns a list</span>
 <span class="w">                </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[[</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">fs</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="p">]]</span>
 <span class="w">                </span><span class="nf">if </span><span class="p">(</span><span class="nf">is.function</span><span class="p">(</span><span class="n">fs</span><span class="p">[[</span><span class="n">i</span><span class="p">]]))</span>
 <span class="w">                    </span><span class="nf">list</span><span class="p">(</span><span class="n">fs</span><span class="p">[[</span><span class="n">i</span><span class="p">]](</span><span class="n">y</span><span class="p">))</span>
@@ -2398,7 +2399,7 @@ the <em>form</em> of the arguments passed thereto,
 without taking into account their <em>real</em> meaning.
 This is why we try to avoid<a class="footnote-reference brackets" href="#footbaseavoid" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> them in this course:
 we can do perfectly without them.
-However, they are not only interesting on their own,
+Withal, they are not only interesting on their own,
 but also quite popular in other users’ code, hence the honourable mention.
 Learning them in more detail is left to the kind reader as an optional
 exercise.</p>
@@ -2474,7 +2475,7 @@ features as if they were ordinary variables:</p>
 </div>
 <p>Similarly, <strong class="command">attach</strong> adds any named list to the search path
 (see <a class="reference internal" href="330-environment.html#sec-attach"><span class="std std-numref">Section 16.2.6</span></a>) so that the columns can be accessed
-by name. However, we cannot alter their contents.
+by name. Nevertheless, we cannot alter their contents.
 As an alternative, <strong class="command">with</strong> and <strong class="command">within</strong> may be referred
 to if writing <code class="docutils literal notranslate"><span class="pre">df[[&quot;...&quot;]]</span></code> each time is so difficult to us
 (it should not be):</p>
@@ -2688,9 +2689,7 @@ Give some ways to select all rows between March and October
         
     </div><div class="proof-content">
 <p>In this task, you will be working with a version of a
-dataset on 70k+ Melbourne trees (<a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/urban_forest.csv.gz"><code class="docutils literal notranslate"><span class="pre">urban_forest</span></code></a>).
-Before proceeding any further, read the dataset’s description available
-<a class="reference external" href="https://data.melbourne.vic.gov.au/explore/dataset/tree-canopies-2018-entire-municipal-area-urban-forest/information/">here</a>.</p>
+dataset on 70k+ Melbourne trees (<a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/urban_forest.csv.gz"><code class="docutils literal notranslate"><span class="pre">urban_forest</span></code></a>).</p>
 <ol class="arabic simple">
 <li><p>Load the downloaded dataset by calling the <strong class="command">read.csv</strong> function.</p></li>
 <li><p>Fetch the IDs (<code class="docutils literal notranslate"><span class="pre">CoM.ID</span></code>)
@@ -2713,9 +2712,8 @@ Depict the sorted data with <strong class="command">barplot</strong>.</p></li>
 <p>(*)
 Consider the historic data dumps of
 <a class="reference external" href="https://travel.stackexchange.com/">https://travel.stackexchange.com/</a>
-available at
-<a class="reference external" href="https://github.com/gagolews/teaching-data/tree/master/travel_stackexchange_com_2017">https://github.com/gagolews/teaching-data/tree/master/travel_stackexchange_com_2017</a>.</p>
-<p>Export the CSV files located therein to an SQLite database.
+available <a class="reference external" href="https://github.com/gagolews/teaching-data/tree/master/travel_stackexchange_com_2017">here</a>.
+Export the CSV files located therein to an SQLite database.
 Then, write some R code that correspond to the following SQL queries
 (use <strong class="command">dbGetQuery</strong> to verify your results):</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--- 1)</span>
@@ -2979,11 +2977,11 @@ Its truncated version is like an incomplete cross design.</p>
 </aside>
 <aside class="footnote brackets" id="footdtspeed" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">11</a><span class="fn-bracket">]</span></span>
-<p>And, in the case of third-party packages,
-sometimes faster and more memory efficient (on larger datasets),
-as it is usually the case with more specialised tools.
-However, in many daily programming contexts, speed of the
-data wrangling operations is not that often an issue.
+<p>Furthermore, in some third-party packages,
+they can sometimes be faster and more memory efficient
+(on larger datasets), as it is usually the case with more
+specialised tools. However, in many daily programming contexts,
+the speed of the data wrangling operations is not that often an issue.
 Remember that we always have SQL-supporting
 relational databases at our disposal too.</p>
 </aside>
@@ -3023,7 +3021,7 @@ or summarised (e.g., binned) somehow first.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><span class="section-number">13. </span>🚧 Graphics</div>
+                <div class="title"><span class="section-number">13. </span>Graphics</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -3048,7 +3046,7 @@ or summarised (e.g., binned) somehow first.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-26T18:15:30+1000.
+              Last updated on 2023-04-27T16:45:17+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
