@@ -28,10 +28,10 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="12. Data frames" href="240-data-frame.html" /><link rel="prev" title="10. S3 classes" href="220-s3.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/230-matrix.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>11. Matrices and other arrays - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.2.1 (draft)
+v0.2.1.9001 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -288,12 +288,12 @@ is, and will remain, freely available for everyone’s enjoyment
 (also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
 It is a non-profit project.</em>
 <strong>This book is still a work in progress.</strong> <em>Beta versions
-of Chapters 1–12 and 15–17 are already complete (copyediting still pending),
+of Chapters 1–13 and 15–17 are already complete (copyediting pending),
 but there will be more. In the meantime,</em> <strong>any
 <a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
 are appreciated.</strong>
-<em>Although available online, it is a whole course;
-it should be read from the beginning to the end.
+<em>Although available online, this is a whole course.
+It should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
@@ -456,8 +456,7 @@ one after/below another:</p>
 </pre></div>
 </div>
 <p>and so forth.</p>
-<p>Unfortunately, the <em>generalised</em>
-recycling rule is not implemented in full:</p>
+<p>Unfortunately, the <em>generalised</em> recycling rule is not implemented in full:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="o">:</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="m">9</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">))</span><span class="w">  </span><span class="c1"># different from cbind(1:4, 5:8, 9:10, 11)</span>
 <span class="c1">## Warning in cbind(1:4, 5:8, cbind(9:10, 11)): number of rows of result is</span>
 <span class="c1">##     not a multiple of vector length (arg 1)</span>
@@ -1164,8 +1163,8 @@ as numbers like:</p>
 Preserve all attributes.</p>
 </div></div></section>
 </section>
-<section id="common-pperations">
-<span id="sec-matrix-op"></span><h2><span class="section-number">11.3. </span>Common pperations<a class="headerlink" href="#common-pperations" title="Permalink to this heading">#</a></h2>
+<section id="common-operations">
+<span id="sec-matrix-op"></span><h2><span class="section-number">11.3. </span>Common operations<a class="headerlink" href="#common-operations" title="Permalink to this heading">#</a></h2>
 <section id="matrix-transpose">
 <h3><span class="section-number">11.3.1. </span>Matrix transpose<a class="headerlink" href="#matrix-transpose" title="Permalink to this heading">#</a></h3>
 <p>The matrix <em>transpose</em>, mathematically denoted with <span class="math notranslate nohighlight">\(\mathbf{A}^T\)</span>,
@@ -1263,7 +1262,7 @@ applies <strong class="command">f</strong> on each <em>column</em> of <code clas
 </pre></div>
 </div>
 <p>Take note of the columnwise order of the output values.</p>
-<p><strong class="command">apply</strong> works on higher-dimensional arrays too:</p>
+<p><strong class="command">apply</strong> works on higher-dimensional arrays:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># 1st dimension - Class</span>
 <span class="c1">##     1st     2nd     3rd    Crew</span>
 <span class="c1">##  40.625  35.625  88.250 110.625</span>
@@ -1995,7 +1994,7 @@ upon a call to <strong class="command">print</strong>:</p>
 </pre></div>
 </div>
 <p>Methods that dispatch on the type of multiple arguments
-are possible too, for example:</p>
+are also possible, for example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">setMethod</span><span class="p">(</span>
 <span class="w">    </span><span class="s">&quot;split&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">&quot;ANY&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="o">=</span><span class="s">&quot;categorical&quot;</span><span class="p">),</span>
@@ -2545,7 +2544,7 @@ This would be beautiful, but it is not the case in R.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-27T16:45:17+1000.
+              Last updated on 2023-04-28T20:19:07+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2587,7 +2586,7 @@ This would be beautiful, but it is not the case in R.</p>
 <li><a class="reference internal" href="#replacing-elements">11.2.9. Replacing elements</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#common-pperations">11.3. Common pperations</a><ul>
+<li><a class="reference internal" href="#common-operations">11.3. Common operations</a><ul>
 <li><a class="reference internal" href="#matrix-transpose">11.3.1. Matrix transpose</a></li>
 <li><a class="reference internal" href="#vectorised-mathematical-functions">11.3.2. Vectorised mathematical functions</a></li>
 <li><a class="reference internal" href="#aggregating-rows-and-columns">11.3.3. Aggregating rows and columns</a></li>
@@ -2625,9 +2624,6 @@ This would be beautiful, but it is not the case in R.</p>
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>

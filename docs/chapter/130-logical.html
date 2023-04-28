@@ -28,10 +28,10 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="4. Lists and attributes" href="140-list.html" /><link rel="prev" title="2. Numeric vectors" href="120-numeric.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/130-logical.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>3. Logical vectors - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.2.1 (draft)
+v0.2.1.9001 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -288,12 +288,12 @@ is, and will remain, freely available for everyone’s enjoyment
 (also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
 It is a non-profit project.</em>
 <strong>This book is still a work in progress.</strong> <em>Beta versions
-of Chapters 1–12 and 15–17 are already complete (copyediting still pending),
+of Chapters 1–13 and 15–17 are already complete (copyediting pending),
 but there will be more. In the meantime,</em> <strong>any
 <a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
 are appreciated.</strong>
-<em>Although available online, it is a whole course;
-it should be read from the beginning to the end.
+<em>Although available online, this is a whole course.
+It should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
@@ -320,15 +320,15 @@ to generate logical vectors as well:</p>
 <p class="admonition-title">Note</p>
 <p>By default, “<code class="docutils literal notranslate"><span class="pre">T</span></code>” is a synonym for <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and “<code class="docutils literal notranslate"><span class="pre">F</span></code>” stands for <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.
 However, these are not reserved keywords and can be re-assigned
-any other values. Therefore, we advise against relying on them and
-hence we will never use them throughout the course of this course.</p>
-<p>Also note that the logical missing value is spelled simply
-as “<code class="docutils literal notranslate"><span class="pre">NA</span></code>” and not “<code class="docutils literal notranslate"><span class="pre">NA_logical_</span></code>”. The fact that both the logical “<code class="docutils literal notranslate"><span class="pre">NA</span></code>”
+to any other values. Therefore, we advise against relying on them:
+they are not used throughout the course of this course.</p>
+<p>Also, note that the logical missing value is spelled simply
+as “<code class="docutils literal notranslate"><span class="pre">NA</span></code>” and not “<code class="docutils literal notranslate"><span class="pre">NA_logical_</span></code>”. Both the logical “<code class="docutils literal notranslate"><span class="pre">NA</span></code>”
 and the numeric “<code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>”
 are, for the sake of our mental well-being,
-both <em>printed</em>  as “<code class="docutils literal notranslate"><span class="pre">NA</span></code>” on the R console,
-does not mean they are identical; see <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a>
-for discussion.</p>
+both <em>printed</em>  as “<code class="docutils literal notranslate"><span class="pre">NA</span></code>” on the R console.
+This, however, does not mean they are identical;
+see <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a> for discussion.</p>
 </div>
 </section>
 <section id="comparing-elements">
@@ -336,7 +336,7 @@ for discussion.</p>
 <section id="vectorised-relational-operators">
 <h3><span class="section-number">3.2.1. </span>Vectorised relational operators<a class="headerlink" href="#vectorised-relational-operators" title="Permalink to this heading">#</a></h3>
 <p>Logical vectors frequently come into being
-as results of various <em>testing</em> activities.</p>
+as a result of various <em>testing</em> activities.</p>
 <p>In particular, the binary operators:</p>
 <ul class="simple">
 <li><p>`<strong class="command">&lt;</strong>` (less than),</p></li>
@@ -356,8 +356,8 @@ and output a logical vector.</p>
 <span class="c1">##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE</span>
 </pre></div>
 </div>
-<p>Thus, they operate in an elementwise manner. Moreover, the
-recycling rule is applied if necessary:</p>
+<p>Thus, they operate in an elementwise manner. Moreover,
+the recycling rule is applied if necessary:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">3</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="w">  </span><span class="c1"># c(3, 3, 3, 3, 3) &lt; c(1, 2, 3, 4, 5)</span>
 <span class="c1">## [1] FALSE FALSE FALSE  TRUE  TRUE</span>
 <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="w">  </span><span class="c1"># c(1, 4, 1, 4) == c(1, 2, 3, 4)</span>
@@ -379,11 +379,11 @@ function.</p>
 <span class="c1">## [1]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
 <span class="nf">is.nan</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
-<span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># works for logical vectors too</span>
+<span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># works for logical vectors, too</span>
 <span class="c1">## [1] FALSE FALSE  TRUE FALSE</span>
 </pre></div>
 </div>
-<p>Moreover, <strong class="command">is.finite</strong> is noteworthy,
+<p>Moreover, <strong class="command">is.finite</strong> is noteworthy
 because it returns <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> on <code class="docutils literal notranslate"><span class="pre">Inf</span></code>s, <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>s and <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">is.finite</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</span>
@@ -397,10 +397,10 @@ because it returns <code class="docutils literal notranslate"><span class="pre">
 <p>In mathematics, real numbers are merely an idealisation.
 In practice, however, it is impossible to store them with
 infinite precision (think <span class="math notranslate nohighlight">\(\pi=3.1415926535897932384626433...\)</span>):
-computer memory is limited and our time is precious.</p>
-<p>Therefore, a widely agreed upon consensus had to be reached.
+computer memory is limited, and our time is precious.</p>
+<p>Therefore, a widely agreed-upon consensus had to be reached.
 In R, we rely on the so-called <em>double-precision floating point format</em>.
-<em>Floating point</em> means that the numbers can be both small (close to zero)
+The <em>floating point</em> means that the numbers can be both small (close to zero)
 and large: <span class="math notranslate nohighlight">\(\pm 2.23\times 10^{-308}\)</span> and <span class="math notranslate nohighlight">\(\pm 1.79\times 10^{308}\)</span>
 are both acceptable.</p>
 <div class="admonition note">
@@ -422,7 +422,7 @@ are both acceptable.</p>
 </div>
 <p>These two are quite distant from each other.</p>
 </div>
-<p>Every numeric value takes 8 bytes (or equivalently 64 bits) of memory.
+<p>Every numeric value takes 8 bytes (or, equivalently, 64 bits) of memory.
 We are, however, able to store only <em>about</em> 15-17 decimal digits:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="m">0.12345678901234567890123456789012345678901234</span><span class="p">,</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">22</span><span class="p">)</span><span class="w">  </span><span class="c1"># 22 is max</span>
 <span class="c1">## [1] 0.1234567890123456773699</span>
@@ -430,11 +430,11 @@ We are, however, able to store only <em>about</em> 15-17 decimal digits:</p>
 </div>
 <p>which limits the precision of our computations.
 The <em>about</em> part is – unfortunately – due to the numbers’
-being written in the computer-friendly <em>binary</em>, not human-aligned
-<em>decimal</em>, base. This can lead to some unexpected outcomes.</p>
+being written in the computer-friendly <em>binary</em>, not the human-aligned
+<em>decimal</em> base. This can lead to some unexpected outcomes.</p>
 <p>In particular:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">0.1</span></code> cannot be represented exactly, because it cannot be written
+<li><p><code class="docutils literal notranslate"><span class="pre">0.1</span></code> cannot be represented exactly because it cannot be written
 as a finite series of reciprocals of powers of 2
 (it holds <span class="math notranslate nohighlight">\(0.1=2^{-4}+2^{-5}+2^{-8}+2^{-9}+\dots\)</span>).
 This leads to surprising results such as:</p>
@@ -448,8 +448,8 @@ suspicious:</p>
 <span></span><span class="c1">## [1] 0.1 0.3 0.3</span>
 </pre></div>
 </div>
-<p>Printing involves rounding, hence, in the above context, is misleading.
-Above, we have something more like:</p>
+<p>Printing involves rounding. In the above context, it is misleading.
+Actually, we experience something more like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">22</span><span class="p">)</span>
 <span></span><span class="c1">## [1] 0.1000000000000000055511 0.3000000000000000444089</span>
 <span class="c1">## [3] 0.2999999999999999888978</span>
@@ -457,7 +457,7 @@ Above, we have something more like:</p>
 </div>
 </li>
 <li><p>All integers between <span class="math notranslate nohighlight">\(-2^{53}\)</span> and <span class="math notranslate nohighlight">\(2^{53}\)</span> all stored
-exactly – this is good news.
+exactly: this is good news.
 However, the next integer is beyond the representable range:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span>
 <span></span><span class="c1">## [1] TRUE</span>
@@ -465,7 +465,7 @@ However, the next integer is beyond the representable range:</p>
 </div>
 </li>
 <li><p>The above suggests that, more generally, the order of
-operations may matter, in particular, the associativity
+operations may matter. In particular, the associativity
 property may be violated when dealing with numbers of different orders
 of magnitude:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">-53</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">-53</span><span class="w">  </span><span class="c1"># should be == 0.0</span>
@@ -486,17 +486,17 @@ to be represented exactly:</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The double-precision floating point format (IEEE 754)
-is not specific to R: it is used by most other computing environments,
+is not specific to R. It is used by most other computing environments,
 including Python and C++.</p>
 <p>For discussion, see <span id="id2">[<a class="reference internal" href="999-bibliography.html#id38" title="Goldberg, D. (1991).  What every computer scientist should know about floating-point arithmetic. ACM Computing Surveys, 21(1):5–48. URL: https://perso.ens-lyon.fr/jean-michel.muller/goldberg.pdf.">31</a>, <a class="reference internal" href="999-bibliography.html#id37" title="Higham, N.J. (2002).  Accuracy and Stability of Numerical Algorithms. SIAM, Philadelphia, PA. DOI: 10.1137/1.9780898718027.">34</a>, <a class="reference internal" href="999-bibliography.html#id33" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">39</a>]</span>
 (<span id="id3">[<a class="reference internal" href="999-bibliography.html#id40" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">30</a>]</span> can be of particular interest
 to the general statistical/data analysis audience).</p>
 </div>
 <p>Can we do anything about these issues?</p>
-<p>First, when dealing with integers of <em>reasonable</em> order of magnitude
+<p>First, when dealing with integers of a <em>reasonable</em> order of magnitude
 (a frequent case where we are dealing various resource or case IDs
 in our datasets), rest assured that we are safe: their comparison, addition,
-subtraction, and multiplication is always precise.</p>
+subtraction, and multiplication are always precise.</p>
 <p>In all other cases (including applying other operations on integers,
 e.g., division or <strong class="command">sqrt</strong>), we need to be very
 careful with comparisons, especially involving testing for
@@ -515,7 +515,7 @@ we will be considering:</p>
 <li><p><span class="math notranslate nohighlight">\(|x-y|\)</span> (absolute error) or</p></li>
 <li><p><span class="math notranslate nohighlight">\(\frac{|x-y|}{|y|}\)</span> (relative error; which takes the order of
 magnitude of the numbers into account
-but obviously cannot be applied if <span class="math notranslate nohighlight">\(y\)</span> is very close of <span class="math notranslate nohighlight">\(0\)</span>),</p></li>
+but obviously cannot be applied if <span class="math notranslate nohighlight">\(y\)</span> is very close to <span class="math notranslate nohighlight">\(0\)</span>),</p></li>
 </ul>
 <p>and determining if these are less than some assumed error margin,
 <span class="math notranslate nohighlight">\(\varepsilon&gt;0\)</span>, say, <span class="math notranslate nohighlight">\(10^{-8}\)</span> or <span class="math notranslate nohighlight">\(2^{-26}\)</span>.</p>
@@ -527,7 +527,7 @@ but obviously cannot be applied if <span class="math notranslate nohighlight">\(
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that rounding can sometimes have a similar effect as testing for
-almost-equality in terms of the absolute error.</p>
+almost equality in terms of the absolute error.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">round</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">),</span><span class="w"> </span><span class="m">8</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>
 <span class="c1">## [1] TRUE</span>
 </pre></div>
@@ -539,8 +539,8 @@ almost-equality in terms of the absolute error.</p>
 applications of R, i.e., statistical and, more generally,
 scientific computing<a class="footnote-reference brackets" href="#footfpapps" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
 The datasets we handle on a daily basis do not represent
-accurate measurements themselves, bah, the World itself is far from ideal,
-therefore we do not have to lose sleep over our not being able to precisely
+accurate measurements themselves. Bah, the World itself is far from ideal!
+Therefore, we do not have to lose sleep over our not being able to precisely
 pinpoint the <em>exact</em> solution.</p>
 </div>
 </section>
@@ -550,8 +550,8 @@ pinpoint the <em>exact</em> solution.</p>
 <section id="vectorised-logical-operators">
 <h3><span class="section-number">3.3.1. </span>Vectorised logical operators<a class="headerlink" href="#vectorised-logical-operators" title="Permalink to this heading">#</a></h3>
 <p>The relational operators such as `<strong class="command">==</strong>` and `<strong class="command">&gt;</strong>`
-accept only <em>two</em> arguments. Their chaining is forbidden;
-a test which we would mathematically write
+accept only <em>two</em> arguments. Their chaining is forbidden.
+A test that we would mathematically write
 as <span class="math notranslate nohighlight">\(0 \le x \le 1\)</span> (or <span class="math notranslate nohighlight">\(x\in[0, 1]\)</span>) cannot be expressed
 as “<code class="docutils literal notranslate"><span class="pre">0&lt;=x&lt;=1</span></code>” in R.</p>
 <p>Therefore, we need a way to combine two logical conditions
@@ -609,7 +609,7 @@ as follows:</p>
 <h3><span class="section-number">3.3.3. </span>Dealing with missingness<a class="headerlink" href="#dealing-with-missingness" title="Permalink to this heading">#</a></h3>
 <p>Operations involving missing values follow the principles
 of the Łukasiewicz’s three-valued logic, which is based on common sense.
-For instance, “<code class="docutils literal notranslate"><span class="pre">NA</span> <span class="pre">|</span> <span class="pre">TRUE</span></code>” is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, because <em>or</em> needs at least one
+For instance, “<code class="docutils literal notranslate"><span class="pre">NA</span> <span class="pre">|</span> <span class="pre">TRUE</span></code>” is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> because <em>or</em> needs at least one
 argument to be <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> to generate such a result.
 On the other hand, “<code class="docutils literal notranslate"><span class="pre">NA</span> <span class="pre">|</span> <span class="pre">FALSE</span></code>” is <code class="docutils literal notranslate"><span class="pre">NA</span></code>, because
 the result would be different depending on what we substituted <code class="docutils literal notranslate"><span class="pre">NA</span></code> for.</p>
@@ -633,7 +633,7 @@ for all the possible combinations of inputs:</p>
 <p>Just like in the case of numeric vectors,
 we can summarise the contents of logical sequences.</p>
 <p><strong class="command">all</strong> tests whether every element in a logical vector
-is equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and <strong class="command">any</strong> determines if there exists
+is equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>. <strong class="command">any</strong> determines if there exists
 an element that is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">10000</span><span class="p">)</span>
 <span class="nf">all</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span><span class="w">  </span><span class="c1"># are all values in x &lt;= 0.2?</span>
@@ -667,7 +667,7 @@ Sometimes, considering absolute or relative errors might be more appropriate.</p
 </div>
 </div>
 <p>We can also call <strong class="command">sum</strong> on a logical vector.
-Taken into account that it interprets <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> as numeric <code class="docutils literal notranslate"><span class="pre">1</span></code>
+Taking into account that it interprets <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> as numeric <code class="docutils literal notranslate"><span class="pre">1</span></code>
 and <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> as <code class="docutils literal notranslate"><span class="pre">0</span></code> (more on this in <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a>),
 it will give us the number of elements equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span><span class="w">  </span><span class="c1"># how many elements in x are &lt;= 0.2?</span>
@@ -683,7 +683,7 @@ Equivalently:</p>
 </div>
 <p>Naturally, we <em>expect</em>
 <strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span> <span class="pre">&lt;=</span> <span class="pre">0.2)</span></code>” to be equal to
-0.2 (20%), but with randomness we can never be sure.</p>
+0.2 (20%), but with randomness, we can never be sure.</p>
 </section>
 <section id="simplifying-predicates">
 <h3><span class="section-number">3.3.5. </span>Simplifying predicates<a class="headerlink" href="#simplifying-predicates" title="Permalink to this heading">#</a></h3>
@@ -698,7 +698,7 @@ is equivalent to “<code class="docutils literal notranslate"><span class="pre"
 <li><p><code class="docutils literal notranslate"><span class="pre">!(p</span> <span class="pre">|</span> <span class="pre">q)</span></code> is  <code class="docutils literal notranslate"><span class="pre">!p</span> <span class="pre">&amp;</span> <span class="pre">!q</span></code> (another De Morgan’s law),</p></li>
 <li><p><strong class="command">all</strong><code class="code docutils literal notranslate"><span class="pre">(p)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">!</span></code><strong class="command">any</strong><code class="code docutils literal notranslate"><span class="pre">(!p)</span></code>.</p></li>
 </ul>
-<p>Various combinations thereof are of course possible.
+<p>Various combinations thereof are, of course, possible.
 Some further simplifications are enabled by
 other properties of the binary operations:</p>
 <ul class="simple">
@@ -734,7 +734,7 @@ simplify the following expressions:</p>
 <section id="choosing-elements-with-ifelse">
 <h2><span class="section-number">3.4. </span>Choosing elements with <strong class="command">ifelse</strong><a class="headerlink" href="#choosing-elements-with-ifelse" title="Permalink to this heading">#</a></h2>
 <p>The <strong class="command">ifelse</strong> function is a vectorised version
-of the scalar <strong class="command">if</strong>…<strong class="command">else</strong> conditional statement
+of the scalar <strong class="command">if</strong>…<strong class="command">else</strong> conditional statement,
 which we will do without for as long as until <a class="reference internal" href="180-flow.html#chap-flow"><span class="std std-numref">Chapter 8</span></a>.</p>
 <p>It allows us to select an element from either one or another vector
 based on some logical condition.</p>
@@ -785,8 +785,8 @@ Therefore, the following call will generate a warning:</p>
 <span class="c1">## [1]       NA       NA  0.44386 -2.65202 -2.04571  0.53945</span>
 </pre></div>
 </div>
-<p>This is because with <strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(z)</span></code>,
-we are computing the logarithms of negative values
+<p>This is because, with <strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(z)</span></code>,
+we compute the logarithms of negative values
 anyway. To fix this, we can write:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">))</span>
 <span class="c1">## [1]       NA       NA  0.44386 -2.65202 -2.04571  0.53945</span>
@@ -840,8 +840,8 @@ and <span class="math notranslate nohighlight">\(Y\sim\mathrm{N}(3, 1)\)</span>.
 </figcaption>
 </figure>
 <p>In other words, we generated a variate from
-the normal distribution that has expected value of -2
-with probability 20% and from the one with expectation of 3 otherwise.</p>
+the normal distribution that has the expected value of -2
+with probability 20%, and from the one with the expectation of 3 otherwise.</p>
 <p>Inspired by the above, generate the following Gaussian mixtures:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\frac{2}{3} X + \frac{1}{3} Y\)</span>, where <span class="math notranslate nohighlight">\(X\sim\mathrm{N}(100, 16)\)</span>
@@ -868,7 +868,7 @@ the above can be equivalently written as:</p>
     </div><div class="proof-content">
 <p>Answer the following questions:</p>
 <ul class="simple">
-<li><p>Why the statement “Earth is flat or the smallpox
+<li><p>Why the statement “The Earth is flat or the smallpox
 vaccine is proven effective” is obviously true?</p></li>
 <li><p>What is the difference between <code class="docutils literal notranslate"><span class="pre">NA</span></code> and <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>?</p></li>
 <li><p>Why is “<code class="docutils literal notranslate"><span class="pre">FALSE</span> <span class="pre">&amp;</span> <span class="pre">NA</span></code>” equal to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, but “<code class="docutils literal notranslate"><span class="pre">TRUE</span> <span class="pre">&amp;</span> <span class="pre">NA</span></code>” is <code class="docutils literal notranslate"><span class="pre">NA</span></code>?</p></li>
@@ -888,7 +888,7 @@ How to fix this?</p></li>
 <li><p>What is the purpose of very specific functions such as
 <strong class="command">log1p</strong> and <strong class="command">expm1</strong> (see their
 help page) and many other ones listed in, e.g., the GNU GSL library
-<span id="id5">[<a class="reference internal" href="999-bibliography.html#id30" title="Galassi, M., Theiler, J., and et al. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">27</a>]</span>?
+<span id="id5">[<a class="reference internal" href="999-bibliography.html#id30" title="Galassi, M., Theiler, J., and others. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">27</a>]</span>?
 Is our referring to them a violation of the beloved
 “let us be minimalist” approach?</p></li>
 <li><p>If we know that <span class="math notranslate nohighlight">\(x\)</span> may be subject to error,
@@ -947,7 +947,7 @@ The use of the logarithm penalises strong beliefs in the wrong answer.</p>
 </div></div><p>By the way, if we have solved any of the exercises encountered so far
 by referring to <strong class="command">if</strong> statements, <strong class="command">for</strong> loops,
 vector indexing like <code class="docutils literal notranslate"><span class="pre">x[...]</span></code>,
-or any external R package, we should go back and re-write our code.
+or any external R package, we should go back and rewrite our code.
 Let us keep it simple (effective, readable)
 by using the <em>base</em> R’s vectorised operations that
 we have introduced.</p>
@@ -956,8 +956,8 @@ we have introduced.</p>
 <aside class="footnote brackets" id="footfpapps" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">1</a><span class="fn-bracket">]</span></span>
 <p>However, in financial applications, we should rather rely on
-base-10 numbers (compare the 0.1 problem above).
-Also note that there exist some libraries implementing
+base-10 numbers (compare the problem with 0.1 above).
+There are some libraries implementing
 higher precision floating-point numbers
 or even interval arithmetic that keeps track of error propagation
 operation chains.</p>
@@ -1001,7 +1001,7 @@ operation chains.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-27T16:45:17+1000.
+              Last updated on 2023-04-28T20:19:07+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1052,9 +1052,6 @@ operation chains.</p>
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>

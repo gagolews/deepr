@@ -6,11 +6,11 @@
 is a **comprehensive course on one of the most popular
 languages in data science** (statistical computing, graphics, machine learning,
 data wrangling and analytics). It **introduces the base language**
-in-depth and is aimed at ambitious students, practitioners, and researchers
-who would like to become **independent users** of this powerful environment.
+in-depth. It is aimed at ambitious students, practitioners, and researchers
+who want to become **independent users** of this powerful environment.
 
 > **This is an early draft and is distributed in the hope that it will be useful.**
-> Any remarks and bug fixes are appreciated — please submit them via
+> Any remarks and bug fixes are appreciated. Please submit them via
 > this repository's *Issues* tracker. Thank you.
 
 
@@ -40,17 +40,12 @@ ISBN: 978-0-6455719-2-9,
 URL: <https://deepr.gagolewski.com/>.
 
 
-Any remarks and bug fixes are appreciated. Please submit them via
-this repository's *Issues* tracker. Thank you.
-
-
-
 ## About the Author
 
 Dr habil. [Marek Gagolewski][1]
 is currently a Senior Lecturer in Data Science/Applied AI
-at Deakin University in Melbourne,
-Australia and an Associate Professor at the Systems
+at Deakin University in Melbourne, Australia
+and an Associate Professor at the Systems
 Research Institute, Polish Academy of Sciences.
 
 His research interests are related to data science, in particular: modelling

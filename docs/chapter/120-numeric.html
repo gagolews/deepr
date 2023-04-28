@@ -28,10 +28,10 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="3. Logical vectors" href="130-logical.html" /><link rel="prev" title="1. Introduction" href="110-basics.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/120-numeric.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>2. Numeric vectors - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.2.1 (draft)
+v0.2.1.9001 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -288,12 +288,12 @@ is, and will remain, freely available for everyone’s enjoyment
 (also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
 It is a non-profit project.</em>
 <strong>This book is still a work in progress.</strong> <em>Beta versions
-of Chapters 1–12 and 15–17 are already complete (copyediting still pending),
+of Chapters 1–13 and 15–17 are already complete (copyediting pending),
 but there will be more. In the meantime,</em> <strong>any
 <a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
 are appreciated.</strong>
-<em>Although available online, it is a whole course;
-it should be read from the beginning to the end.
+<em>Although available online, this is a whole course.
+It should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
@@ -311,26 +311,25 @@ in yours truly. It is because our selection is comprised only of the most
 representative and educational amongst the plethora of possible choices.
 More complex building blocks can either be reduced to a creative combination
 of the former or be easily found – should the need arise –
-in a number additional packages or libraries
-(e.g., the GNU GSL <span id="id2">[<a class="reference internal" href="999-bibliography.html#id30" title="Galassi, M., Theiler, J., and et al. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">27</a>]</span>).</p>
-<p>A solid understanding of base R programming is necessary for the
-effective dealing with the popular packages
-(such as <strong class="program">data.table</strong>, <strong class="program">dplyr</strong>,
-or <strong class="program">caret</strong>). Most importantly, base R’s API is <em>stable</em>,
-hence the code we write today will most likely work the same way in 10 years.
+in a number of additional packages or libraries
+(e.g., the GNU GSL <span id="id2">[<a class="reference internal" href="999-bibliography.html#id30" title="Galassi, M., Theiler, J., and others. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">27</a>]</span>).</p>
+<p>A solid understanding of base R programming is crucial for dealing with
+popular packages (such as <strong class="program">data.table</strong>, <strong class="program">dplyr</strong>,
+or <strong class="program">caret</strong>). Most importantly, base R’s API is <em>stable</em>.
+Hence, the code we write today will most likely work the same way in 10 years.
 This is often not the case when we rely on third-party add-ons.</p>
 <p>In the sequel, we will be advocating a minimalist, keep-it-simple approach
-to the art of programming of data processing pipelines,
+to the art of programming data processing pipelines,
 one that is a good balance between “doing it all by oneself”,
 “minimising the information overload”, “being lazy”,
 and “standing on the shoulders of giants”.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The exercises that we suggest below are all self-contained, unless explicitly
+<p>The exercises that we suggest below are all self-contained unless explicitly
 stated otherwise. The use of language constructs that are yet to be formally
 introduced (in particular, <strong class="command">if</strong>, <strong class="command">for</strong>,
-and <strong class="command">while</strong> which we will explain in <a class="reference internal" href="180-flow.html#chap-flow"><span class="std std-numref">Chapter 8</span></a>)
-is not only unnecessary, but discouraged.
+and <strong class="command">while</strong>, which we will explain in <a class="reference internal" href="180-flow.html#chap-flow"><span class="std std-numref">Chapter 8</span></a>)
+is not just unnecessary: it is discouraged.
 Moreover, we recommend against taking shortcuts
 by looking up partial solutions on the internet.
 Rather, to get the most out of this course,
@@ -348,16 +347,16 @@ preceding chapters as well as the R help system.</p>
 <span class="c1">## [1] 0.000123</span>
 </pre></div>
 </div>
-<p>The latter is in what we call the <em>scientific notation</em>
-which is convenient means of entering numbers of very
-large or small order of magnitude.
+<p>The latter is in what we call <em>scientific notation</em>,
+which is a convenient means of entering numbers of very
+large or small orders of magnitude.
 Here, “<code class="docutils literal notranslate"><span class="pre">e</span></code>” stands for “… times 10 to the power of…”.
 Therefore, <code class="docutils literal notranslate"><span class="pre">1.23e-4</span></code> is equal to <span class="math notranslate nohighlight">\(1.23\times 10^{-4}=0.000123\)</span>.
 In other words, given <span class="math notranslate nohighlight">\(1.23\)</span>, we move the decimal separator by
 4 digits towards the left.</p>
 <p>In real life, some information items
 may be inherently or temporarily missing, unknown, or <code class="docutils literal notranslate"><span class="pre">N</span></code>ot <code class="docutils literal notranslate"><span class="pre">A</span></code>vailable.
-R is data processing-oriented, hence it is equipped with
+R is data processing-oriented. Hence, it is equipped with
 a special indicator:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="kc">NA_real_</span><span class="w">  </span><span class="c1"># numeric NA (missing value)</span>
 <span class="c1">## [1] NA</span>
@@ -366,7 +365,7 @@ a special indicator:</p>
 <p>This is similar to the <em>Null</em> marker in database query languages
 such as SQL. Note that <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>
 is displayed simply as “<code class="docutils literal notranslate"><span class="pre">NA</span></code>”, chiefly for readability.</p>
-<p>Moreover, <code class="docutils literal notranslate"><span class="pre">Inf</span></code> denotes the infinity (<span class="math notranslate nohighlight">\(\infty\)</span>; a value that is
+<p>Moreover, <code class="docutils literal notranslate"><span class="pre">Inf</span></code> denotes infinity (<span class="math notranslate nohighlight">\(\infty\)</span>; a value that is
 larger than the largest representable double precision
 – 64 bit – floating point number)
 and <code class="docutils literal notranslate"><span class="pre">NaN</span></code> stands for <em>not-a-number</em> (it is returned as the result
@@ -375,7 +374,7 @@ of some illegal operations, e.g., <span class="math notranslate nohighlight">\(0
 <section id="concatenating-vectors-with-c">
 <h3><span class="section-number">2.1.2. </span>Concatenating vectors with <strong class="command">c</strong><a class="headerlink" href="#concatenating-vectors-with-c" title="Permalink to this heading">#</a></h3>
 <p>Let us provide some ways to create numeric vectors with possibly
-more than 1 element.</p>
+more than one element.</p>
 <p>First, the <strong class="command">c</strong> function that we introduced in the previous chapter
 can be used to <em>c</em>ombine (concatenate) many numeric vectors, each
 of any length, so as to form a single object:</p>
@@ -417,7 +416,7 @@ of the same length as the first one, the behaviour would be quite different:</p>
 <p>Here, <em>each</em> element is repeated the <em>corresponding</em> number of times.</p>
 <p>If we call <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;rep&quot;)</span></code>, we will come across the notion like
 “<strong class="command">rep</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">...)</span></code>” in the <em>Usage</em> section.
-Unfortunately, it is rather peculiar, but reading further
+Unfortunately, it is rather peculiar, but reading further,
 we discover the dot-dot-dot stands for one of the following
 further parameters (see the <em>Arguments</em> section):</p>
 <ul class="simple">
@@ -461,7 +460,7 @@ Nevertheless, a drastic change in the repetition pattern
 depending, e.g., on the length of the <code class="docutils literal notranslate"><span class="pre">times</span></code> argument can be bug-prone.
 Anyway, we have been warned<a class="footnote-reference brackets" href="#footillusionarycare" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 </div>
-<p>Zero-length vectors are possible too:</p>
+<p>Zero-length vectors are possible, too:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
 <span class="c1">## numeric(0)</span>
 </pre></div>
@@ -470,7 +469,7 @@ Anyway, we have been warned<a class="footnote-reference brackets" href="#footill
 (compare <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>),
 we will see later that they are useful in contexts like
 “create an empty data frame with a specific column structure”.</p>
-<p>Also note that R often allows for partial matching
+<p>Also, note that R often allows for partial matching
 of named arguments, but its use is a bad programming practice;
 see <a class="reference internal" href="320-language.html#sec-sys-call"><span class="std std-numref">Section 15.4.4</span></a> for more details.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">len</span><span class="o">=</span><span class="m">7</span><span class="p">)</span><span class="w">  </span><span class="c1"># not recommended (see later)</span>
@@ -479,7 +478,7 @@ see <a class="reference internal" href="320-language.html#sec-sys-call"><span cl
 <span class="c1">## [1] 1 2 3 1 2 3 1</span>
 </pre></div>
 </div>
-<p>The only reason we see the warning message is because
+<p>The only reason we see the warning message is that
 we have manually set <strong class="command">options</strong><code class="code docutils literal notranslate"><span class="pre">(warnPartialMatchArgs=TRUE)</span></code>
 in our environment. It is not set by default.</p>
 </section>
@@ -518,7 +517,7 @@ is reported in the <em>Usage</em> section in <strong class="command">help</stron
 <span class="c1">## [1] 1 2 3 4 5</span>
 </pre></div>
 </div>
-<p>Arithmetic progressions with step equal to 1 or -1
+<p>Arithmetic progressions with steps equal to 1 or -1
 can also be generated via the `<strong class="command">:</strong>` operator.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="w">    </span><span class="c1"># seq(1, 10) or seq(1, 10, 1)</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
@@ -537,8 +536,8 @@ compare <a class="reference internal" href="#sec-precedence-numeric"><span class
         <span class="proof-type">Exercise 2.1</span>
         
     </div><div class="proof-content">
-<p>Take a look at the manual page of <strong class="command">seq_along</strong> and <strong class="command">seq_len</strong>
-and determine whether they can easily be done without,
+<p>Take a look at the manual page of <strong class="command">seq_along</strong> and
+<strong class="command">seq_len</strong>. Determine whether they can easily be done without
 having <strong class="command">seq</strong><a class="footnote-reference brackets" href="#footinteger" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> at hand.</p>
 </div></div></section>
 <section id="generating-pseudorandom-numbers">
@@ -586,13 +585,13 @@ and <span class="math notranslate nohighlight">\(\Pr(X=1)=0.1\)</span>:</p>
 Similarly, <strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span></code> is a synonym for <strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">n)</span></code>
 or <strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(n))</span></code>,
 depending on the length of <code class="docutils literal notranslate"><span class="pre">n</span></code>.
-This is a dangerous behaviour which can occasionally backfire
+This is a dangerous behaviour that can occasionally backfire
 and lead to bugs (check what happens when <code class="docutils literal notranslate"><span class="pre">n</span></code> is, e.g., 0).
-Nonetheless, we have been warned and from now on are going to
+Nonetheless, we have been warned. From now on, we are going to
 be extra careful (but are we really?).
 Read more at <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;sample&quot;)</span></code> and <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;seq&quot;)</span></code>.</p>
 </div>
-<p>Let us stress that the numbers we obtain are merely <em>pseudo</em>random,
+<p>Let us stress that the numbers we obtain are merely <em>pseudo</em>random
 because they are generated algorithmically.
 R uses the Mersenne-Twister MT19937 method <span id="id5">[<a class="reference internal" href="999-bibliography.html#id36" title="Matsumoto, M. and Nishimura, T. (1998).  Mersenne Twister: A 623-dimensionally equidistributed uniform pseudo-random number generator. ACM Transactions on Modeling and Computer Simulation, 8:3–30.">43</a>]</span> by default;
 see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;RNG&quot;)</span></code> and <span id="id6">[<a class="reference internal" href="999-bibliography.html#id35" title="Devroye, L. (1986).  Non-Uniform Random Variate Generation. Springer-Verlag. URL: https://luc.devroye.org/rnbookindex.html.">21</a>, <a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2003).  Random Number Generation and Monte Carlo methods. Springer.">28</a>, <a class="reference internal" href="999-bibliography.html#id33" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">39</a>]</span>.
@@ -619,7 +618,7 @@ that are <em>reproducible</em>.</p>
 </pre></div>
 </div>
 <p>Reproducibility is a crucial feature of each truly scientific experiment.
-The same initial condition (here: the same seed), leads to
+The same initial condition (here: the same seed) leads to
 exactly the same outcomes.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -670,9 +669,9 @@ the first couple of lines:</p>
 </pre></div>
 </div>
 <p>The four first lines that begin with “<code class="docutils literal notranslate"><span class="pre">#</span></code>” merely serve as
-comments for us, humans; they should be ignored by the interpreter.
-The first “real” value, <code class="docutils literal notranslate"><span class="pre">NA</span></code>, corresponds to the 1st of January
-(Wednesday; New Years Day; Forex markets were closed,
+comments for us humans; they should be ignored by the interpreter.
+The first “real” value, <code class="docutils literal notranslate"><span class="pre">NA</span></code>, corresponds to 1 January
+(Wednesday, New Year’s Day; Forex markets were closed,
 hence a missing observation).</p>
 <p>The <strong class="command">scan</strong> function can be used to read all the inputs
 and convert them to a single numeric vector:</p>
@@ -706,9 +705,9 @@ directory, denoted “<code class="docutils literal notranslate"><span class="pr
 <p>For portability reasons, we should use slashes, “<code class="docutils literal notranslate"><span class="pre">/</span></code>”, as path
 separators (but see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;file.path&quot;)</span></code> and <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;.Platform&quot;)</span></code>).
 These are not only recognised by all Unix-like boxes
-but also other popular operating systems.
+but also by other popular operating systems.
 Note that URLs (such as <a class="reference external" href="https://www.r-project.org/">https://www.r-project.org/</a>)
-feature slashes too.</p>
+consist of slashes as well.</p>
 </div>
 <p>Paths can also be relative to the current working directory,
 denoted “<code class="docutils literal notranslate"><span class="pre">.</span></code>”. It can be read via a call to <strong class="command">getwd</strong>.
@@ -754,7 +753,7 @@ the aforementioned exchange rates, which was generated by calling:</p>
 <p><span class="caption-number">Figure 2.1 </span><span class="caption-text">EUR/AUD exchange rates from 2020-01-01 (day 1) to 2020-06-30 (day 182)</span><a class="headerlink" href="#id21" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Somewhat misleadingly (and for the reasons that will
+<p>Somewhat misleadingly (and for reasons that will
 become apparent later), the documentation of <strong class="command">plot</strong>
 can be accessed by calling <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;plot.default&quot;)</span></code>.
 Read about, and experiment with, different values of the
@@ -787,7 +786,7 @@ they refer to two different objects.
 Also, if we tried to call <code class="docutils literal notranslate"><span class="pre">Print(x)</span></code> above, we would get an error.</p>
 </div>
 <p>Typically, we will be using what we refer to as <em>syntactic names</em>
-(see <a class="reference internal" href="210-design.html#sec-backtick"><span class="std std-numref">Section 9.4.1</span></a> for an exception though).
+(see <a class="reference internal" href="210-design.html#sec-backtick"><span class="std std-numref">Section 9.4.1</span></a> for an exception).
 In the R help system (see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;make.names&quot;)</span></code>
 and also <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Quotes&quot;)</span></code>), we read:
 <em>A syntactically valid name consists of letters, numbers and the
@@ -838,7 +837,7 @@ Moreover, existing names can be re-bound to new values. For instance:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Objects are automatically destroyed when there are
-no more names bound with them. In particular, by now the
+no more names bound to them. By now, the
 <em>garbage collector</em> should have got rid of the <code class="docutils literal notranslate"><span class="pre">1:3</span></code> vector begotten above
 (to which the name <code class="docutils literal notranslate"><span class="pre">x</span></code> was bound previously). See
 <code class="xref std std-numref docutils literal notranslate"><span class="pre">sec:memory-management</span></code> for more details on memory management.</p>
@@ -875,12 +874,12 @@ marked as “don’t know” as well.</p>
 </div>
 <p>To attract our attention to the fact that computing the square root of a
 negative value yields a not-a-number, R generated an informative warning.
-A warning is not an error though: the result is being reckoned as usual.</p>
+A warning is not an error: the result is being reckoned as usual.</p>
 <p>Also the fact that the irrational <span class="math notranslate nohighlight">\(\sqrt{2}\)</span> is <em>displayed</em><a class="footnote-reference brackets" href="#footprintopts" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>
 as <code class="docutils literal notranslate"><span class="pre">1.4142</span></code>
 does not mean that it is such a crude approximation
 to <span class="math notranslate nohighlight">\(1.414213562373095048801688724209698\dots\)</span>;
-it is only rounded when printing, for aesthetic reasons.
+it is only rounded when printing for aesthetic reasons.
 In fact, in <a class="reference internal" href="130-logical.html#sec-fp"><span class="std std-numref">Section 3.2.3</span></a>, we will point out that the computer’s
 floating-point arithmetic allows for roughly 16 decimal digits precision
 (but we shall see that the devil is in the detail).</p>
@@ -954,7 +953,7 @@ inverse of the other.</p>
 <li><p><span class="math notranslate nohighlight">\(e^{x+y} = e^x\cdot e^y\)</span>.</p></li>
 </ul>
 <p>For more properties like these,
-take a glance at Chapter 4 of the freely available handbook <span id="id9">[<a class="reference internal" href="999-bibliography.html#id62" title="Olver, F.W.J. and et al. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">47</a>]</span>.</p>
+take a glance at Chapter 4 of the freely available handbook <span id="id9">[<a class="reference internal" href="999-bibliography.html#id62" title="Olver, F.W.J. and others. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">47</a>]</span>.</p>
 </div>
 <p>For the logarithm to a different base, say, <span class="math notranslate nohighlight">\(\log_{10} x\)</span>, we can call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">1e10</span><span class="p">),</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># or log(..., base=10)</span>
@@ -986,7 +985,7 @@ can only be applied in the case of values strictly greater than 0.</p>
 </section>
 <section id="probability-distributions">
 <span id="sec-probability-distributions"></span><h3><span class="section-number">2.3.4. </span>Probability distributions (*)<a class="headerlink" href="#probability-distributions" title="Permalink to this heading">#</a></h3>
-<p>It should come as no surprise that R offers an extensive support for
+<p>It should come as no surprise that R offers extensive support for
 many univariate probability distribution families, including:</p>
 <ul>
 <li><p>continuous distributions, which take values being arbitrary
@@ -1049,8 +1048,8 @@ We thus advise the reader to study carefully the documentation
 of <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;dnorm&quot;)</span></code>, <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;dunif&quot;)</span></code>, <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;dexp&quot;)</span></code>,
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;dbinom&quot;)</span></code>,
 and the like.</p>
-<p>It is also worth to know the typical use cases
-of each of the distribution listed, e.g., a Poisson distribution
+<p>It is also worth knowing the typical use cases
+of each of the distributions listed, e.g., a Poisson distribution
 can describe the probability of observing the number of independent
 events in a fixed time interval (e.g., the number of users downloading
 a copy of R from CRAN per hour), and an exponential distribution can model
@@ -1137,9 +1136,9 @@ based on the quantile function:</p>
 <span class="c1">## [1] 0.87482 0.96365</span>
 </pre></div>
 </div>
-<p>In other words, at least 95% of the time
+<p>In other words, at least 95% of the time,
 we will be observing no more than four successes.</p>
-<p>Also here are some pseudorandom realisations of <span class="math notranslate nohighlight">\(C\)</span> –
+<p>Also, here are some pseudorandom realisations of <span class="math notranslate nohighlight">\(C\)</span> –
 the number of “<code class="docutils literal notranslate"><span class="pre">1</span></code>”s in 30 simulations of 12 independent dice rolls each:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rbinom</span><span class="p">(</span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span>
 <span class="c1">##  [1] 1 3 2 4 4 0 2 4 2 2 4 2 3 2 0 4 1 0 1 4 4 3 2 6 2 3 2 2 1 1</span>
@@ -1174,11 +1173,11 @@ does not have to involve any calls to <strong class="command">gamma</strong> at 
 <strong class="command">gamma</strong><code class="code docutils literal notranslate"><span class="pre">(172)</span></code>
 yields <code class="docutils literal notranslate"><span class="pre">Inf</span></code>. It is due to the fact that a computer’s arithmetic
 is not infinitely precise; compare <a class="reference internal" href="130-logical.html#sec-fp"><span class="std std-numref">Section 3.2.3</span></a>.</p>
-<p>Special functions are plentiful; see the open-access <span id="id11">[<a class="reference internal" href="999-bibliography.html#id62" title="Olver, F.W.J. and et al. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">47</a>]</span>
+<p>Special functions are plentiful; see the open-access <span id="id11">[<a class="reference internal" href="999-bibliography.html#id62" title="Olver, F.W.J. and others. (2021).  NIST Digital Library of Mathematical Functions. NIST. URL: https://dlmf.nist.gov/.">47</a>]</span>
 for one of the most definitive references
 (and also <span id="id12">[<a class="reference internal" href="999-bibliography.html#id61" title="Abramowitz, M. and Stegun, I.A. (1972).  Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables. Dover. URL: http://people.math.sfu.ca/~cbm/aands/.">2</a>]</span> for its predecessor).
 R package <strong class="program">gsl</strong> <span id="id13">[<a class="reference internal" href="999-bibliography.html#id31" title="Hankin, R.K.S. (2006).  Special functions in R: Introducing the gsl package. R News, 6:24–26. URL: https://cran.r-project.org/web/packages/gsl/vignettes/gsl.pdf.">32</a>]</span> provides a vectorised interface
-to the GNU GSL <span id="id14">[<a class="reference internal" href="999-bibliography.html#id30" title="Galassi, M., Theiler, J., and et al. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">27</a>]</span> library, which implements
+to the GNU GSL <span id="id14">[<a class="reference internal" href="999-bibliography.html#id30" title="Galassi, M., Theiler, J., and others. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">27</a>]</span> library, which implements
 many of such routines.</p>
 <div class="proof proof-type-exercise" id="id26">
 
@@ -1206,7 +1205,7 @@ all the other functions, including those related to statistics,
 permutations, combinations, and so forth.</p>
 </div></div><p>Many functions also have their logarithm-of versions;
 see, e.g., <strong class="command">lgamma</strong> and <strong class="command">lbeta</strong>.
-Also, for instance, <strong class="command">dnorm</strong> and <strong class="command">dbeta</strong> has the <code class="docutils literal notranslate"><span class="pre">log</span></code>
+Also, for instance, <strong class="command">dnorm</strong> and <strong class="command">dbeta</strong> have the <code class="docutils literal notranslate"><span class="pre">log</span></code>
 parameter. Its classical use case is the (numerical) maximum likelihood
 estimation, which involves the sums of the <em>logarithms</em> of densities.</p>
 </section>
@@ -1226,16 +1225,16 @@ and `<strong class="command">%%</strong>` (modulo, division remainder),</p></li>
 <li><p>`<strong class="command">^</strong>` (exponentiation; synonym: `<strong class="command">**</strong>`).</p></li>
 </ul>
 <p>They are all <em>vectorised</em>: they take two
-vectors on input and yield another vector in result.</p>
+vectors on input and yield another vector in the result.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">)</span>
 <span class="c1">## [1]   10  200 3000</span>
 </pre></div>
 </div>
 <p>We note that the multiplication was performed in an <em>elementwise</em>
 fashion: the 1st element in the left vector was multiplied
-by the <em>corresponding</em> element in the right vector
-and the result has been stored in the 1st element of the output,
-then the 2nd element in the left… all right, we get the point.</p>
+by the <em>corresponding</em> element in the right vector,
+and the result was stored in the first element of the output
+Then, the second element in the left… all right, we get the point.</p>
 <p>Other operators are vectorised in the same manner:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0</span><span class="o">:</span><span class="m">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span>
 <span class="c1">##  [1]  0.0  1.1  2.2  3.3  4.4  5.5  6.6  7.7  8.8  9.9 11.0</span>
@@ -1340,8 +1339,8 @@ from the least to the most binding (see also <strong class="command">help</stron
 `<strong class="command">*</strong>` and `<strong class="command">/</strong>`,
 as well as `<strong class="command">%%</strong>` and `<strong class="command">%/%</strong>`
 have the same priority. Expressions involving a series of
-operations in the same group,
-are evaluated left-to-right, with the exception of `<strong class="command">^</strong>`
+operations in the same group
+are evaluated left to right, with the exception of `<strong class="command">^</strong>`
 and `<strong class="command">&lt;-</strong>`,
 which are performed from right to left.</p>
 <p>Therefore:</p>
@@ -1354,12 +1353,12 @@ and not <code class="docutils literal notranslate"><span class="pre">x</span></c
 </ul>
 <p>And let us remember: when in doubt, we can always
 bracket a subexpression to make sure it is executed
-in the intended order (which can also increase readability of the code).</p>
+in the intended order (which can also increase the readability of the code).</p>
 </section>
 <section id="accumulating">
 <h3><span class="section-number">2.4.4. </span>Accumulating<a class="headerlink" href="#accumulating" title="Permalink to this heading">#</a></h3>
-<p>The `<strong class="command">+</strong>` and `<strong class="command">*</strong>` operators
-as well as the <strong class="command">pmin</strong> and <strong class="command">pmax</strong> functions
+<p>The `<strong class="command">+</strong>` and `<strong class="command">*</strong>` operators,
+as well as the <strong class="command">pmin</strong> and <strong class="command">pmax</strong> functions,
 implement elementwise operations that are applied on the corresponding
 elements taken from two given vectors:</p>
 <div class="math-wrapper docutils container">
@@ -1478,7 +1477,7 @@ to be propagated over a given vector.</p>
     </div><div class="proof-content">
 <p><strong class="command">diff</strong> can be considered an inverse to <strong class="command">cumsum</strong>: it computes
 the iterated difference. Namely, it subtracts the first two elements,
-then the 2nd from the 3rd one, the 3rd from the 4th, and so on.
+then the second from the third one, the third from the fourth, and so on.
 In other words, <strong class="command">diff</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> gives <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> such that <span class="math notranslate nohighlight">\(y_i=x_{i+1}-x_i\)</span>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">)</span>
 <span class="nf">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1549,16 +1548,16 @@ it does not really matter what data you apply these functions on
 We are being abstract in the sense that
 the <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> vector can be anything:
 from the one that features very accurate financial predictions
-that will help minimise inequity and make this world less miserable,
-through the data you have been collecting for the last the years
+that will help minimise inequality and make this world less miserable,
+through the data you have been collecting for the last ten years
 in relation to your definitely-super-important PhD research,
 whatever your company asked you to crunch today,
-to something related to your hobby project that you enjoy doing after hours.
+to something related to the hobby project that you enjoy doing after hours.
 Therefore, just test the above on something
 like “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> </code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(10)</span></code>”, and move on.</p>
 </div></div><p>All the aforementioned functions return a missing value if any
 of the input elements is unavailable.
-Luckily, they are equipped with the <code class="docutils literal notranslate"><span class="pre">na.rm</span></code> parameter
+Luckily, they are equipped with the <code class="docutils literal notranslate"><span class="pre">na.rm</span></code> parameter,
 on behalf of which we can request the removal of <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">aud</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
@@ -1574,7 +1573,7 @@ on behalf of which we can request the removal of <code class="docutils literal n
 of some of the aforementioned functions is like
 <strong class="command">sum</strong><code class="code docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">na.rm=FALSE)</span></code>.
 <strong class="command">prod</strong>, <strong class="command">min</strong>, and <strong class="command">max</strong> are defined similarly.
-They accept any number of input vectors, each of them can be of
+They accept any number of input vectors: each of them can be of
 arbitrary length.
 Therefore, <strong class="command">min</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>,
 <strong class="command">min</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3))</span></code> as well as
@@ -1582,13 +1581,13 @@ Therefore, <strong class="command">min</strong><code class="code docutils litera
 all return the same result.</p>
 <p>However, we can also read that we have
 <strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">trim=0,</span> <span class="pre">na.rm=FALSE,</span> <span class="pre">...)</span></code>.
-This time, only one vector can be aggregated and any further arguments
+This time, only one vector can be aggregated, and any further arguments
 (except <code class="docutils literal notranslate"><span class="pre">trim</span></code> and <code class="docutils literal notranslate"><span class="pre">na.rm</span></code>) are ignored.</p>
 <p>The extra flexibility (which we do not have to rely upon, ever)
-of the former group is due their being
+of the former group is due to their being
 associative operations: it holds, e.g., <span class="math notranslate nohighlight">\((2+3)+4 = 2+(3+4)\)</span>. Hence,
-the operations can be performed in any order, in any groups.</p>
-<p>Also note that they are more primitive operations:
+the operations can be performed in any order, in any group.</p>
+<p>Also, note that they are more primitive operations:
 it is <strong class="command">mean</strong> that is based on <strong class="command">sum</strong>, not vice versa.</p>
 </div>
 </section>
@@ -1704,8 +1703,8 @@ compare your result to a call to the built-in <strong class="command">cor</stron
     </div><div class="proof-content">
 <p>(*) Look up on the internet an R package that features functions to compute
 the 5-day moving (rolling) average and median of a given vector.
-Apply them on the EUR/AUD currency exchange data
-and plot thus obtained smoothened versions of the time series.</p>
+Apply them on the EUR/AUD currency exchange data.
+Draw thus obtained smoothened versions of the time series.</p>
 </div></div><div class="proof proof-type-exercise" id="id35">
 
     <div class="proof-title">
@@ -1715,7 +1714,7 @@ and plot thus obtained smoothened versions of the time series.</p>
 <p>(**)
 Compute the <span class="math notranslate nohighlight">\(k\)</span>-moving average using a call
 to <strong class="command">convolve</strong><code class="code docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">type=&quot;filter&quot;)</span></code>.</p>
-</div></div><p>In the next chapter we will study operations that involve logical values.</p>
+</div></div><p>In the next chapter, we will study operations that involve logical values.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footillusionarycare" role="note">
@@ -1730,7 +1729,7 @@ we would end up with three functions: the original one, <strong class="command">
 which everyone should know anyway because it is so basic and has been
 and will be used everywhere by almost everybody so far,
 and the two redundant ones, whose user-friendliness is only illusory.
-See also <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a> for discussion on the design
+See also <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a> for a discussion on the design
 of functions.</p>
 </aside>
 <aside class="footnote brackets" id="footinteger" role="note">
@@ -1757,7 +1756,7 @@ etc. in <strong class="command">help</strong><code class="code docutils literal
 <p>A few built-in functions do not warn at all when incomplete
 recycling is performed (e.g., <strong class="command">paste</strong>)
 or can even give an error (e.g., <strong class="command">as.data.frame.list</strong>).
-Consider this inconsistency an annoying bug and hope it will be fixed
+Consider this inconsistency an annoying bug and hope it will be fixed,
 in the next decade or so.</p>
 </aside>
 <aside class="footnote brackets" id="footstats" role="note">
@@ -1770,7 +1769,7 @@ make a fuss about it now.</p>
 <aside class="footnote brackets" id="footquantile" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">7</a><span class="fn-bracket">]</span></span>
 <p>Note that <strong class="command">min</strong>, <strong class="command">median</strong>,
-and <strong class="command">max</strong> is a special case of <strong class="command">quantile</strong>,
+and <strong class="command">max</strong> are special cases of <strong class="command">quantile</strong>,
 which we will discuss much further,
 namely, in <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>.
 This is because it returns a named vector.</p>
@@ -1814,7 +1813,7 @@ This is because it returns a named vector.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-27T16:45:17+1000.
+              Last updated on 2023-04-28T20:19:07+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1875,9 +1874,6 @@ This is because it returns a named vector.</p>
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>

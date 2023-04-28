@@ -28,10 +28,10 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="10. S3 classes" href="220-s3.html" /><link rel="prev" title="8. Flow of execution" href="180-flow.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/210-design.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>9. Designing functions - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
@@ -188,7 +188,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.2.1 (draft)
+v0.2.1.9001 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -288,12 +288,12 @@ is, and will remain, freely available for everyone’s enjoyment
 (also in <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF</a>).
 It is a non-profit project.</em>
 <strong>This book is still a work in progress.</strong> <em>Beta versions
-of Chapters 1–12 and 15–17 are already complete (copyediting still pending),
+of Chapters 1–13 and 15–17 are already complete (copyediting pending),
 but there will be more. In the meantime,</em> <strong>any
 <a class="reference external" href="https://github.com/gagolews/deepr/issues">bug/typos reports/fixes</a>
 are appreciated.</strong>
-<em>Although available online, it is a whole course;
-it should be read from the beginning to the end.
+<em>Although available online, this is a whole course.
+It should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
@@ -471,7 +471,7 @@ R serves as a glue language quite well.</p>
 <p>In the long run, some of our software projects might converge to such
 a tool – it might be a good idea to standardise our API
 (e.g., make it available from the command-line; <a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>)
-so that the users of other languages can benefit from our work too.</p>
+so that the users of other languages can benefit from our work.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If our project is merely a modified interface/front-end
@@ -1308,8 +1308,8 @@ see <a class="reference internal" href="340-lazy.html#chap-lazy"><span class="st
 can also be called that way, but they return
 <strong class="command">invisible</strong><code class="code docutils literal notranslate"><span class="pre">(NULL)</span></code>.</p>
 </section>
-<section id="operators-are-functions-too">
-<span id="sec-operfun"></span><h3><span class="section-number">9.4.5. </span>Operators are functions too<a class="headerlink" href="#operators-are-functions-too" title="Permalink to this heading">#</a></h3>
+<section id="operators-are-functions">
+<span id="sec-operfun"></span><h3><span class="section-number">9.4.5. </span>Operators are functions<a class="headerlink" href="#operators-are-functions" title="Permalink to this heading">#</a></h3>
 <section id="calling-built-in-operators-as-functions">
 <h4><span class="section-number">9.4.5.1. </span>Calling built-in operators as functions<a class="headerlink" href="#calling-built-in-operators-as-functions" title="Permalink to this heading">#</a></h4>
 <p>Every arithmetic, logical, and relational operator
@@ -1336,8 +1336,8 @@ For instance,</p>
 <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">function</strong><code class="code docutils literal notranslate"><span class="pre">(e)</span> <span class="pre">e[1],</span> <span class="pre">x)</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Unsurprisingly, the assignment operator, `<strong class="command">&lt;-</strong>`, is a function
-too. It returns the assigned value, invisibly.</p>
+<p>Unsurprisingly, the assignment operator, `<strong class="command">&lt;-</strong>`, is also
+a function. It returns the assigned value, invisibly.</p>
 <p>Knowing that `<strong class="command">&lt;-</strong>` binds right to left (compare <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Syntax&quot;)</span></code>), this is why the expression “<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;-</span> <span class="pre">b</span> <span class="pre">&lt;-</span> <span class="pre">1</span></code>”
 results in both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> being assigned 1:
 it is equivalent to
@@ -1346,7 +1346,7 @@ and “`<strong class="command">&lt;-</strong>`<code class="code docutils litera
 <p>Owing to the pass-by-value semantics (<a class="reference internal" href="#sec-pass-by-value"><span class="std std-numref">Section 9.5.1</span></a>)
 we can also expect that we will always be (with the exception
 of environments, <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>)
-assigning a <em>copy</em> of the value on the righthand side.</p>
+assigning a <em>copy</em> of the value on the right-hand side.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="w">  </span><span class="c1"># makes a copy (but delayed, on demand, for performance reasons)</span>
 <span class="n">y</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NA_real_</span><span class="w">  </span><span class="c1"># modify every 2nd element</span>
@@ -1411,7 +1411,7 @@ at least two parameters:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> (the object to be modified),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">...</span></code> (possible further arguments),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">value</span></code> (as the last parameter;
-the object on the righthand side of the `<strong class="command">&lt;-</strong>` operator).</p></li>
+the object on the right-hand side of the `<strong class="command">&lt;-</strong>` operator).</p></li>
 </ul>
 <p>Most often, we will be interacting with existing
 replacement functions, not creating our own ones.
@@ -1803,11 +1803,11 @@ a corresponding <span class="math notranslate nohighlight">\(y\)</span> can be d
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x560784ab71f8&gt;</span>
+<span class="c1">## &lt;environment: 0x55ac4935b8b8&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x560784c25798&gt;</span>
+<span class="c1">## &lt;environment: 0x55ac494cd618&gt;</span>
 </pre></div>
 </div>
 <p>we might wonder how they can produce different results: it is
@@ -2314,7 +2314,7 @@ product lines/proprietary solutions/payable services etc.</p>
 emphasises on users’ becoming autonomous. This does not contradict the
 user-friendliness (but that many open-source projects could benefit
 from becoming less exclusive is a different story, and this book tries
-to make a change in this area too).</p>
+to make a change in this area).</p>
 </aside>
 <aside class="footnote brackets" id="footfactorstop" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
@@ -2399,7 +2399,7 @@ in a function’s parameter list.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-27T16:45:17+1000.
+              Last updated on 2023-04-28T20:19:07+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2454,7 +2454,7 @@ in a function’s parameter list.</p>
 <li><a class="reference internal" href="#dollar">9.4.2. Dollar, `<strong class="command">$</strong>` (*)</a></li>
 <li><a class="reference internal" href="#curly-braces">9.4.3. Curly braces,  `<strong class="command">{</strong>`</a></li>
 <li><a class="reference internal" href="#if">9.4.4. `<strong class="command">if</strong>`</a></li>
-<li><a class="reference internal" href="#operators-are-functions-too">9.4.5. Operators are functions too</a><ul>
+<li><a class="reference internal" href="#operators-are-functions">9.4.5. Operators are functions</a><ul>
 <li><a class="reference internal" href="#calling-built-in-operators-as-functions">9.4.5.1. Calling built-in operators as functions</a></li>
 <li><a class="reference internal" href="#creating-own-binary-operators">9.4.5.2. Creating own binary operators</a></li>
 </ul>
@@ -2491,9 +2491,6 @@ in a function’s parameter list.</p>
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
