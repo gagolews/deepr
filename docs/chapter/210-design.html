@@ -301,13 +301,13 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 </div></blockquote>
 <p>In <a class="reference internal" href="170-function.html#chap-function"><span class="std std-numref">Chapter 7</span></a>, we learnt how to write our own
 functions. This skill is vital to enforcing the good
-development practice of avoiding the repetition of code: running the
+development practice of avoiding code repetition: running the
 same command sequence on different data.</p>
-<p>This chapter is devoted to the designing of such reusable modules
-so that they are easier to use, test, and maintain.
+<p>This chapter is devoted to designing such reusable modules to
+make them easier to use, test, and maintain.
 We also provide some more technical details, which were not of the highest
-importance upon our first exposure to this topic,
-but which are crucial to our better understanding of how R works.</p>
+importance upon our first exposure to this topic
+but are crucial to our better understanding of how R works.</p>
 <section id="principles-of-sustainable-design">
 <h2><span class="section-number">9.1. </span>Principles of sustainable design<a class="headerlink" href="#principles-of-sustainable-design" title="Permalink to this heading">#</a></h2>
 <p>Good design is more art than science.
@@ -315,31 +315,31 @@ As usual in real life, we will need to make
 many compromises. This is because
 improving things with regard to one criterion sometimes makes them
 worse with respect to other aspects<a class="footnote-reference brackets" href="#footparetooptim" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
-(also which we are not aware of).
+(also those that we are not aware of).
 Also, not everything that counts can and will be counted.
 Below are some observations, ideas, and food for thought.</p>
-<section id="to-write-or-to-abstain">
-<h3><span class="section-number">9.1.1. </span>To write or to abstain<a class="headerlink" href="#to-write-or-to-abstain" title="Permalink to this heading">#</a></h3>
-<p>Functions that we write ourselves can oftentimes be considered
+<section id="to-write-or-abstain">
+<h3><span class="section-number">9.1.1. </span>To write or abstain<a class="headerlink" href="#to-write-or-abstain" title="Permalink to this heading">#</a></h3>
+<p>Functions we write ourselves can often be considered
 merely creative combinations of the building blocks available in base R
 or a few high-quality add-on packages<a class="footnote-reference brackets" href="#footfunc" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Some are simpler than
 others. Thus, there is a question if a new operation
 should be introduced at all: whether we are faced with the case of
 multiplying entities without necessity.</p>
 <p>On the one hand, the DRY (don’t repeat yourself) principle tells us that
-most frequently used (say, at least three times) code chunks
+the most frequently used (say, at least three times) code chunks
 should be generalised in the form of a new function.
-As far as non-trivial operations are concerned,
+As far as complex operations are concerned,
 this is definitely a correct approach.</p>
 <p>On the other hand, not every generalisation is necessarily welcome.
-Let us say that we are lazy and tired of writing
+Let us say we are tired of writing
 <strong class="command">g</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code> for the <em>n</em>-th time.
-Why don’t we therefore introduce <strong class="command">h</strong> defined as a combination
+Why don’t we introduce <strong class="command">h</strong> defined as a combination
 of <strong class="command">g</strong> and <strong class="command">f</strong>?
 This might <em>seem</em> like a good idea, but let us not take it for granted:
 being tired might be an indication of our body and mind
 needing a rest; being lazy can be a call for more self-discipline
-(not an overly popular word these days, but still, a precious trait).</p>
+(not an overly popular word these days, but still, an endearing trait).</p>
 <div class="proof proof-type-example" id="id20">
 
     <div class="proof-title">
@@ -347,18 +347,18 @@ needing a rest; being lazy can be a call for more self-discipline
         
     </div><div class="proof-content">
 <p><strong class="command">paste0</strong> is a specialised version of <strong class="command">paste</strong>,
-but having the <code class="docutils literal notranslate"><span class="pre">sep</span></code> argument hardcoded to an empty string.</p>
+but has the <code class="docutils literal notranslate"><span class="pre">sep</span></code> argument hardcoded to an empty string.</p>
 <ul class="simple">
 <li><p>Even if this might be the most often applied use case,
 is the introduction of a new function justifiable?
 Is it so hard to write “<code class="docutils literal notranslate"><span class="pre">paste=&quot;&quot;</span></code>” each time?</p></li>
 <li><p>Would changing <strong class="command">paste</strong>’s default argument be better?
-That of course would harm backward compatibility, but what strategies
+That, of course, would harm backward compatibility, but what strategies
 could we apply to make the transition as smooth as possible?</p></li>
 <li><p>Would it be better to introduce a new version of <strong class="command">paste</strong>
-with <code class="docutils literal notranslate"><span class="pre">sep</span></code> defaulting to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>,
-informing the users that the old version is deprecated and
-to be removed in, say, two years? Or maybe one year is better? Or five?</p></li>
+with <code class="docutils literal notranslate"><span class="pre">sep</span></code> defaulting to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, and
+inform the users that the old version is deprecated and
+to be removed in, say, two years? (or maybe one year is better? or five?)</p></li>
 </ul>
 </div></div><div class="proof proof-type-example" id="id21">
 
@@ -377,20 +377,20 @@ a combination of <strong class="command">deparse</strong> (see below) and <stron
 <p>Let us say this covers 90% of use cases: was introducing
 it a justified idea then?
 What if that number was 99%?</p>
-</div></div><p>Overall, more functions contribute to the information overload.
+</div></div><p>Overall, more functions contribute to information overload.
 We do not want our users to be overwhelmed by too many choices.
 Luckily, nothing is cemented once and for all.
-Had we done bad design choices resulting in our API’s being bloated,
-we can always clean up those that no longer spark joy.</p>
+Had we made bad design choices resulting in our API’s being bloated,
+we could always clean up those that no longer spark joy.</p>
 </section>
-<section id="to-pamper-or-to-challenge">
-<h3><span class="section-number">9.1.2. </span>To pamper or to challenge<a class="headerlink" href="#to-pamper-or-to-challenge" title="Permalink to this heading">#</a></h3>
+<section id="to-pamper-or-challenge">
+<h3><span class="section-number">9.1.2. </span>To pamper or challenge<a class="headerlink" href="#to-pamper-or-challenge" title="Permalink to this heading">#</a></h3>
 <p>Think about the kind of audience we would like to serve: is it our team only,
 students, professionals, certain client groups, etc.? Do they have
 mathematical, programming, engineering, or scientific background?
-Not everything that is appropriate for one cohort, will be valuable for
-another. And not everything that is good for some <em>now</em>, will be beneficial
-for them in the long run. People (their skills, attitudes, etc.) change.</p>
+Not everything appropriate for one cohort will be valuable for
+another. And not everything pleasing some <em>now</em> will benefit
+them in the long run: people (their skills, attitudes, etc.) change.</p>
 <div class="proof proof-type-example" id="id22">
 
     <div class="proof-title">
@@ -403,10 +403,10 @@ of data analysis as quickly<a class="footnote-reference brackets" href="#footqui
 Without much effort, it would enable them to solve 80–95%
 of the most common, easy problems.</p>
 <p>Think of introducing the students to a function
-that returns five largest observations in a given vector.
+that returns the five largest observations in a given vector.
 Let us call it <strong class="command">nlargest</strong>: so pleasant to use.
 It makes the students feel empowered quickly.</p>
-<p>Still, when faced with the remaining 5–20% tasks, they will have to
+<p>Still, when faced with the remaining 5–20% of tasks, they will have to
 learn another, more advanced, generic, and powerful tool anyway
 (in our case, the base R itself). Are they determined
 and skilled enough to do that? Time will tell.
@@ -422,7 +422,7 @@ in the future, e.g., when we consider matrices and data frames.</p>
 <p>Yes, everyone will be reinventing their own <strong class="command">nlargest</strong> this way.
 But this constitutes a great exercise: by our being too <em>nice</em>,
 some might have lost an opportunity to learn a new, more universal skill.</p>
-</div></div><p>Although most of the users would really love to minimise
+</div></div><p>Although most users would love to minimise
 the effort put into all their activities, ultimately,
 they sometimes need to learn new things.
 Let us thus not be afraid to teach them stuff.</p>
@@ -430,28 +430,28 @@ Let us thus not be afraid to teach them stuff.</p>
 by presenting them with overly simplified solutions
 that keep their hands tied when something more ambitious needs to be done.</p>
 </section>
-<section id="to-build-or-to-reuse">
-<h3><span class="section-number">9.1.3. </span>To build or to reuse<a class="headerlink" href="#to-build-or-to-reuse" title="Permalink to this heading">#</a></h3>
-<p>In the short term, the <em>fail fast</em> philosophy encourages
+<section id="to-build-or-reuse">
+<h3><span class="section-number">9.1.3. </span>To build or reuse<a class="headerlink" href="#to-build-or-reuse" title="Permalink to this heading">#</a></h3>
+<p>In the short term, the <em>fail-fast</em> philosophy encourages
 us to build our applications using prefabricated components.
 This is fantastic at the early stage of its life cycle.
 If we build something really simple or whose purpose is merely to
-illustrate an idea, show-off how “awesome” we are, or to educate,
+illustrate an idea, educate, or show off how “awesome” we are,
 let us be explicit about it so that other users do not feel
 obliged to treat our product (exercise) seriously.</p>
 <p>In the (not so likely, probabilistically speaking) event of its
-becoming successful, we should start thinking about the project’s
+becoming successful, we are expected to start thinking about the project’s
 long-term stability and sustainability.
 After all, relying on third-party functions, packages, or programs
-makes our software projects less… independent. This may be problematic,
+makes our software projects less… independent. This may be problematic
 because:</p>
 <ul class="simple">
 <li><p>the dependencies might not be available on every platform
 or may behave differently across various system configurations,</p></li>
 <li><p>they may be huge (and can depend on other external software too),</p></li>
-<li><p>their APIs may change which could result in our project’s not
+<li><p>their APIs may be altered, which could result in our project’s not
 working anymore,</p></li>
-<li><p>their functionality can change which can lead to some unexpected
+<li><p>their functionality can change, which can lead to some unexpected
 behaviours.</p></li>
 </ul>
 <p>Hence, it might be a good idea to rewrite some parts from scratch on our own.</p>
@@ -462,25 +462,24 @@ behaviours.</p></li>
         
     </div><div class="proof-content">
 <p>Identify some R packages on CRAN with many dependencies.
-See what functions do they import from other packages.
-How often it is just a few lines of code?</p>
-</div></div><p>The Unix philosophy emphasises upon the building and using of
-minimalist yet nontrivial, single-purpose, high quality pieces of software
+See what functions they import from other packages.
+How often is it just a few lines of code?</p>
+</div></div><p>The Unix philosophy emphasises building and using
+minimalist yet nontrivial, single-purpose, high-quality pieces of software
 that can work as parts of more complex pipelines.
 R serves as a glue language quite well.</p>
 <p>In the long run, some of our software projects might converge to such
 a tool – it might be a good idea to standardise our API
-(e.g., make it available from the command-line; <a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>)
+(e.g., make it available from the command line; <a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>)
 so that the users of other languages can benefit from our work.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If our project is merely a modified interface/front-end
 to a standalone program developed by others,
-we should be humble about it and make sure it is not us who
-get all the credit for other people’s work.</p>
-<p>Also, we should state very clearly how can
-the original tools be used to achieve the same goals,
-e.g., when working from the command line.</p>
+we should be humble about it. We should strive to ensure
+we are not the ones who get all the credit for other people’s work.</p>
+<p>Also, we must clearly state how the original tools can be used
+to achieve the same goals, e.g., when working from the command line.</p>
 </div>
 </section>
 </section>
@@ -489,31 +488,31 @@ e.g., when working from the command line.</p>
 <p>A function, most of the time, can and should be treated as a black box:
 its callers do not have to care what it hides inside.
 After all, they are supposed to <em>use</em> it: given some <em>inputs</em>,
-they expect a well-defined (read: explained in very detail
-in the function’s manual; see <a class="reference internal" href="#sec-doc-packages"><span class="std std-numref">Section 9.3.2.3</span></a>) <em>outputs</em>.</p>
+they expect well-defined <em>outputs</em> (explained in very detail
+in the function’s manual; see <a class="reference internal" href="#sec-doc-packages"><span class="std std-numref">Section 9.3.2.3</span></a>).</p>
 <section id="checking-input-data-integrity-and-argument-handling">
 <span id="sec-arg-check"></span><h3><span class="section-number">9.2.1. </span>Checking input data integrity and argument handling<a class="headerlink" href="#checking-input-data-integrity-and-argument-handling" title="Permalink to this heading">#</a></h3>
 <p>A function takes R objects of any kind as arguments, but it does not mean
-that feeding it with every- or any-thing is healthy for its guts.</p>
+feeding it with every- or any-thing is healthy for its guts.</p>
 <p>When designing functions, it is best to handle the inputs
 in a manner similar to base R’s behaviour.
-This will make our contributions easier to handle.</p>
-<p>Unfortunately, base R functions frequently do not handle arguments
-of similar <em>kind</em> 100% consistently.
+This will make our contributions easier to work with.</p>
+<p>Unfortunately, base R functions frequently do not process arguments
+of a similar <em>kind</em> fully consistently.
 Such variability might be due to many reasons and, in essence,
 is not necessarily bad.
-Usually, there might be many different possible behaviours
+Usually, there might be many possible behaviours
 and choosing one over another will make a few users unhappy anyway.
 Some choices might not be optimal, but they are for historical
 compatibility (e.g., with S).
 Of course, it might also happen (but the probability is low)
-that there is a bug or something is not at all well designed.</p>
+that there is a bug or something is poorly designed.</p>
 <p>This is why it is better to keep the vocabulary quite restricted
-(and we advocate for such minimalism in this book): even
-if there are exceptions to the general rules, with fewer
-functions, they are simply easier to remember.</p>
+Even if there are exceptions to the general rules, with fewer
+functions, they are easier to remember.
+We advocate for such minimalism in this book.</p>
 <p>Consider the following case study, illustrating that even the extremely
-simple scenario where we deal with a single positive integer,
+simple scenario dealing with a single positive integer
 is not necessarily straightforward.</p>
 <div class="proof proof-type-exercise" id="id24">
 
@@ -550,10 +549,9 @@ nothing prevents their users from trying to challenge them by passing:</p>
 etc. (compound types; see <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>).</p></li>
 </ul>
 <p>Read the aforementioned functions’ reference manuals and call them
-on different inputs, noting how differently they handle such
+on different inputs. Notice how differently they handle such
 atypical arguments.</p>
-</div></div><p>Sometimes we will rely on other functions to handle the data
-integrity checking for us.</p>
+</div></div><p>Sometimes we will rely on other functions to check data integrity for us.</p>
 <div class="proof proof-type-example" id="id25">
 
     <div class="proof-title">
@@ -587,16 +585,17 @@ and <strong class="command">round</strong>:</p>
 <span class="c1">## numeric(0)</span>
 </pre></div>
 </div>
-</div></div><p>If well thought-out and adequately documented, many such design
-choices can be defended.
+</div></div><p>Many such design choices can be defended
+if they are well thought-out and adequately documented.
 Some programmers will opt for high uniformity/compatibility across
 numerous tools, but there are cases where some exceptions/diversity
 do more good than harm.</p>
-<p>Yet, we should keep in mind that the functions we write
-might be part of a more complicated data flow pipeline,
-where some other function generates a value that we did not expect
-(because of a bug therein or because we did not study its manual)
-and this value is used as input to our function.
+<p>Yet, the functions we write
+might be part of a more complicated data flow pipeline.
+It might happen that some other function generates a value that
+we did not expect (because of a bug therein or because we did
+not study its manual). The problem starts when
+this <em>unthinkable</em> value is used as input to our function.
 In our case, this would correspond to the said <em>n</em> or <em>d</em> being
 determined programmatically.</p>
 <div class="proof proof-type-example" id="id26">
@@ -613,7 +612,7 @@ with regard to our being flexible and open-minded:</p>
 <span class="c1">## [1] 0.2 0.0 0.3 1.0</span>
 </pre></div>
 </div>
-<p>Sure, it is quite convenient, but might lead to problems
+<p>Sure, it is quite convenient. Nevertheless, it might lead to problems
 that are hard to diagnose.</p>
 <p>Also note the not-really informative error messages in cases like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">round_rand</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
@@ -639,7 +638,7 @@ is more or less equivalent to:</p>
 </pre></div>
 </div>
 <p>Thus, if all the elements in the given logical vectors are <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>,
-nothing happens and we can safely move on.</p>
+nothing happens. We can move on safely.</p>
 </div>
 <div class="proof proof-type-example" id="id27">
 
@@ -677,7 +676,7 @@ we get a very informative error message.</p>
         <span class="proof-type">Example 9.9</span>
         
     </div><div class="proof-content">
-<p>At other times, we might be interested in argument checking like:</p>
+<p>At other times, we might be interested in the argument checking like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.numeric</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 <span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -692,19 +691,19 @@ we get a very informative error message.</p>
 will all be accepted as <code class="docutils literal notranslate"><span class="pre">4</span></code><a class="footnote-reference brackets" href="#footfactorstop" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
 </div></div><p>We see that there is always a tension between being
 generous/flexible and precise/restrictive.
-Also, for some functions, it will be better to behave differently
-than the others, because of their particular use cases.
+Also, because of their particular use cases,
+for some functions, it will be better to behave differently than the others.
 Too much uniformity is as bad as chaos.
-Overall, we should rely on common sense, but add some lightweight
-foolproof mechanisms.</p>
+We are expected to rely on common sense, but adding
+lightweight foolproof mechanisms is always welcome.</p>
 <p>It is our duty to be explicit about all the assumptions we make
 or exceptions we allow (by writing good documentation;
 see <a class="reference internal" href="#sec-doc-packages"><span class="std std-numref">Section 9.3.2.3</span></a>).</p>
 <p>We will revisit this topic in <a class="reference internal" href="220-s3.html#sec-arg-check-s3"><span class="std std-numref">Section 10.4</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Example exercises related to the improving of the consistency of base R’s
-handling of arguments in different domains include the <strong class="program">vctrs</strong>
+<p>Example exercises related to improving the consistency of base R’s
+argument handling in different domains include the <strong class="program">vctrs</strong>
 and <strong class="program">stringx</strong> packages<a class="footnote-reference brackets" href="#footstringx" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.
 Can these contributions be justified?</p>
 </div>
@@ -714,9 +713,8 @@ Can these contributions be justified?</p>
         <span class="proof-type">Exercise 9.10</span>
         
     </div><div class="proof-content">
-<p>Reflect on how you would handle the following scenarios
-(and how base R and other
-packages or languages you know deals with them):</p>
+<p>Reflect on how you would act in the following scenarios
+(and how base R and other packages or languages you know deal with them):</p>
 <ul class="simple">
 <li><p>a vectorised mathematical function
 (empty vectors? non-numeric inputs? what if it is equipped
@@ -736,11 +734,11 @@ but not the second (why such a restriction? when?).</p></li>
 <section id="putting-outputs-into-context">
 <h3><span class="section-number">9.2.2. </span>Putting outputs into context<a class="headerlink" href="#putting-outputs-into-context" title="Permalink to this heading">#</a></h3>
 <p>The functions we write do not exist in a vacuum.
-We should put them into a much broader context: how are they going to be used
-when combined with other tools?</p>
-<p>As a general rule, our functions should generate outputs of <em>predictable</em>
-kind, so that when we write and read the code chunks that utilise them,
-we can easily deduce what is going to happen.</p>
+We should put them into a much broader context: how will they be
+combined with other tools?</p>
+<p>As a general rule, our functions are expected to generate outputs of
+a <em>predictable</em> kind. This way, we can easily deduce what will happen
+in the code chunks that utilise them.</p>
 <div class="proof proof-type-example" id="id30">
 
     <div class="proof-title">
@@ -768,7 +766,7 @@ can return a list, an atomic vector, or a matrix.</p>
 </pre></div>
 </div>
 <p>Further, the index operator with <code class="docutils literal notranslate"><span class="pre">drop=TRUE</span></code>, which is the default,
-may output an atomic vector. But it may as well
+may output an atomic vector. However, it may as well
 yield a matrix or a data frame.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># an example matrix</span>
 <span class="c1">##      [,1] [,2]</span>
@@ -787,14 +785,18 @@ yield a matrix or a data frame.</p>
 </pre></div>
 </div>
 </div></div><p>We proclaim that the default functions’ behaviour should be to return
-the object of the most generic kind possible (if there are other options),
-and then to either have a further argument which must be explicitly
-set if we really wish to simplify the output, or we should ask the user
-to call a simplifier explicitly.</p>
-<p>In the latter case, the simplifier should probably fail issuing an error
-if it is unable to neaten the object or at least
-apply some brute force solution (e.g., or “fill the gaps” somehow
-itself, possibly with a warning).</p>
+the object of the most generic kind possible (if there are other options).
+Then:</p>
+<ul class="simple">
+<li><p>either we equip the function with a further argument which must be
+explicitly set if we <em>really</em> wish to simplify the output,</p></li>
+<li><p>or we ask the user to call a simplifier explicitly after the
+function call.
+In this case, if the simplifier cannot neaten the object,
+it should probably fail by issuing an error or at least try
+to apply some brute force solution (e.g., “fill the gaps” somehow
+itself, preferably with a warning).</p></li>
+</ul>
 <div class="proof proof-type-example" id="id31">
 
     <div class="proof-title">
@@ -810,11 +812,10 @@ itself, possibly with a warning).</p>
 <span class="c1">## [2,] NA   &quot;4&quot;</span>
 </pre></div>
 </div>
-</div></div><p>Ideally, a function should perform one
-(and only one) well-defined task.
-If a function tends to generate objects of different kinds,
-depending on the arguments provided, maybe it is better to write two
-functions instead?</p>
+</div></div><p>Ideally, a function is expected to perform one (and only one)
+well-defined task. If a function tends to generate objects of different
+kinds, depending on the arguments provided, it might be better to write two
+functions instead.</p>
 <div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
@@ -844,7 +845,7 @@ in whatever way they like
 (see <a class="reference internal" href="#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>,
 <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>, and
 <a class="reference internal" href="340-lazy.html#sec-metaprogramming-implement"><span class="std std-numref">Section 17.5</span></a>),</p></li>
-<li><p>printing, plotting, file reading, database access have apparent
+<li><p>printing, plotting, file reading, and database access have apparent
 consequences with regard to the state of some external resources.</p></li>
 </ul>
 </div>
@@ -853,7 +854,7 @@ consequences with regard to the state of some external resources.</p></li>
 <p>Each function must return some value,
 but there are several instances (e.g., plotting, printing),
 where this does not make sense.</p>
-<p>In such a case, we should consider returning
+<p>In such a case, we may consider returning
 <strong class="command">invisible</strong><code class="code docutils literal notranslate"><span class="pre">(NULL)</span></code>, a <code class="docutils literal notranslate"><span class="pre">NULL</span></code> whose <em>first</em> printing
 will be suppressed.</p>
 <p>Compare the following:</p>
@@ -890,7 +891,7 @@ where you define a function called <strong class="command">nlargest</strong> whi
 a few largest elements in a given atomic vector.</p>
 <p>From within another script, call
 <strong class="command">source</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;mylib.R&quot;)</span></code>
-(note that relative paths to refer to the current working director;
+(note that relative paths refer to the current working directory;
 (compare <a class="reference internal" href="120-numeric.html#sec-scan"><span class="std std-numref">Section 2.1.6</span></a>)
 and then write a few lines of code where you test <strong class="command">nlargest</strong>
 on some example inputs.</p>
@@ -900,17 +901,17 @@ on some example inputs.</p>
 <p>When a function library grows substantially, or when there is a need for
 equipping it with the relevant manual pages<a class="footnote-reference brackets" href="#footalwaysdocument" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>
 (<a class="reference internal" href="#sec-doc-packages"><span class="std std-numref">Section 9.3.2.3</span></a>) or compiled code (<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>),
-turning it into an own R package (<a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>)
-might be a good idea (even if it is
-only for our own or small team’s purpose).</p>
+turning it into an R package (<a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>)
+might be a good idea. This is the case even if it is only for our own
+or small team’s purpose.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Note that you <em>do not have to</em> publish your package on CRAN<a class="footnote-reference brackets" href="#footcranpolicy" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.
 Many users are tempted to submit whatever they have been tinkering
 around with for a while. Have mercy on the busy CRAN maintainers
-and do not contribute to the information overload,
-unless you have come up with something potentially useful for other R
-users (make it less about you, and more about the community;
+and do not contribute to the information overload
+unless you have come up with something potentially of service for other R
+users (make it less about you and more about the community;
 thank you in advance).
 R packages can always be hosted on and installed from, for instance,
 GitLab or GitHub.</p>
@@ -924,7 +925,7 @@ some special files and subdirectories:</p>
 its version, authors, dependencies upon other packages, license, etc.;</p></li>
 <li><p><code class="file docutils literal notranslate"><span class="pre">NAMESPACE</span></code> – a text file containing directives
 stating which objects are to be exported so that they are
-available to the package users,
+available to the package users
 and which names are to be imported from other packages;</p></li>
 <li><p><code class="file docutils literal notranslate"><span class="pre">R</span></code> – a directory with R scripts (.R files),
 which define, e.g., functions, example datasets, etc.;</p></li>
@@ -936,7 +937,7 @@ see <a class="reference internal" href="#sec-doc-packages"><span class="std std-
 see <a class="reference internal" href="#sec-testing"><span class="std std-numref">Section 9.3.3.2</span></a>.</p></li>
 </ul>
 <p>See Section 1 in <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">59</a>]</span> for more
-details and other options: there is no need for us to repeat
+details and other options. We do not need to repeat
 the information from the official manual as everyone can read it themself.</p>
 <div class="proof proof-type-exercise" id="id34">
 
@@ -969,10 +970,10 @@ see also <a class="reference internal" href="330-environment.html#sec-package-na
         <span class="proof-type">Exercise 9.16</span>
         
     </div><div class="proof-content">
-<p>Create your own package <strong class="program">mypkg</strong> featuring some of the solutions
+<p>Create your own package <strong class="program">mypkg</strong> featuring the solutions
 to the exercises you have solved whilst studying the material
 in the previous chapters.
-When in doubt, refer to the official manual, <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">59</a>]</span>.</p>
+When in doubt, refer to the official manual <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">59</a>]</span>.</p>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
@@ -984,7 +985,7 @@ R<span class="w"> </span>CMD<span class="w"> </span>INSTALL<span class="w"> </sp
 </pre></div>
 </div>
 <p>Also, some users could potentially benefit from
-creating own Makefiles that help automate the processes
+creating their own Makefiles that help automate the processes
 of building, testing, checking, etc.</p>
 </div>
 </section>
@@ -994,17 +995,17 @@ of building, testing, checking, etc.</p>
 is critical, even if we just write for ourselves.
 Most programmers sooner or later will note that they find it
 hard to determine what a piece of code is doing after they
-took a break from it. In some sense, we always write for external audiences,
-which includes our future self.</p>
+take a break from it. In some sense, we always write for external audiences,
+which includes our future selves.</p>
 <p>The help system is one of the stronger assets of the R environment.
-By far we should have interacted with many man pages and
+By far, we most likely have interacted with many documentation pages and
 got a good idea of what constitutes an informative documentation
 piece.</p>
 <p>From the technical side, R Documentation (.Rd) files
-should be emplaced in the <code class="file docutils literal notranslate"><span class="pre">man</span></code> subdirectory of a source package.
+are located in the <code class="file docutils literal notranslate"><span class="pre">man</span></code> subdirectory of a source package.
 All exported objects (e.g., functions) should be described clearly.
 Additional topics can be covered too.</p>
-<p>During the package install, the .Rd files are converted to various
+<p>During the package installation, the .Rd files are converted to various
 output formats, e.g., HTML or plain text, and displayed upon a call to
 the well-known <strong class="command">help</strong> function.</p>
 <p>Documentation files use a LaTeX-like syntax, which looks quite obscure
@@ -1017,9 +1018,9 @@ especially keeping track of the changes to the <code class="docutils literal not
 commands.
 Rarely do we recommend the use of third-party packages,
 because base R facilities are usually good enough,
-but <strong class="program">roxygen2</strong> might be worth a try,
+but <strong class="program">roxygen2</strong> might be worth a try
 because it really makes the developers’ lives easier.
-Most importantly, it allows for documentation to be specified alongside
+Most importantly, it allows the documentation to be specified alongside
 the functions’ definitions, which is much more natural.</p>
 </div>
 <div class="proof proof-type-exercise" id="id36">
@@ -1036,26 +1037,26 @@ the functions’ definitions, which is much more natural.</p>
 <p>Below we mention some good development practices
 related to maintaining quality code.
 This is an important topic, but writing about them is tedious
-to the same extent that reading about them is boring,
+to the same extent that reading about them is boring
 because it is the more-artistic part of software engineering.
-After all, these are some heuristics that are learnt best by observing
+After all, they are some heuristics that are learnt best by observing
 and mimicking what the others are doing (and hence
-the exercises below will encourage to do so).</p>
+the exercises below will encourage us to do so).</p>
 <section id="managing-changes-and-working-collaboratively">
 <h4><span class="section-number">9.3.3.1. </span>Managing changes and working collaboratively<a class="headerlink" href="#managing-changes-and-working-collaboratively" title="Permalink to this heading">#</a></h4>
-<p>It is a good idea to employ some source code version control system,
+<p>We are recommended to employ some source code version control system,
 such as <strong class="program">git</strong>, to keep track of the changes made to the software.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>It is worth investing some time and effort to learn how
+<p>It is worth investing time and effort to learn how
 to use <strong class="program">git</strong> from the command line;
 see <a class="reference external" href="https://git-scm.com/doc">https://git-scm.com/doc</a>.</p>
 </div>
 <p>There are a few hosting providers for <strong class="program">git</strong> repositories,
-with GitLab and GitHub being particularly popular choices amongst
-open-source software developers.</p>
-<p>Not only do they support working collaboratively on the projects,
-they also are equipped with additional tools for reporting bugs,
+with GitLab and GitHub being particularly popular among
+open-source software developers.
+They support working collaboratively on the projects
+and are equipped with additional tools for reporting bugs,
 suggesting feature requests, etc.</p>
 <div class="proof proof-type-exercise" id="id37">
 
@@ -1063,7 +1064,7 @@ suggesting feature requests, etc.</p>
         <span class="proof-type">Exercise 9.18</span>
         
     </div><div class="proof-content">
-<p>Find where the source code of some of your favourite R packages
+<p>Find where the source code of your favourite R packages
 or other open-source projects is hosted.
 Explore the corresponding repositories, feature trackers, wikis,
 discussion boards, etc.
@@ -1080,7 +1081,7 @@ test-driven development when writing own functions.</p>
         <span class="proof-type">Exercise 9.19</span>
         
     </div><div class="proof-content">
-<p>Assume that, for some reasons, we were asked to write a function to compute
+<p>Assume that, for some reason, we were asked to write a function to compute
 the root mean square (quadratic mean) of a given numeric vector.
 Before implementing  the actual routine, it is a good idea
 to reflect upon what we want to achieve, especially how we
@@ -1105,10 +1106,8 @@ move forward quietly.</p>
 <p>Implement your own version of the <strong class="command">sample</strong> function
 (assuming <code class="docutils literal notranslate"><span class="pre">replace=TRUE</span></code>), using calls to <strong class="command">runif</strong>.
 Start by writing a few unit tests.</p>
-</div></div><p>There are also a couple of R packages that support
-writing and executing unit tests, including
-<strong class="program">testthat</strong>, <strong class="program">tinytest</strong> (which is
-a lighter-weight version of the former),
+</div></div><p>A couple of R packages support writing and executing unit tests,
+including <strong class="program">testthat</strong>, <strong class="program">tinytest</strong>,
 <strong class="program">RUnit</strong>, or <strong class="program">realtest</strong>.
 However, in the most typical use cases, relying
 on <strong class="command">stopifnot</strong> is powerful enough.</p>
@@ -1127,23 +1126,23 @@ in your example package.</p>
 <p>(*)
 R includes a built-in mechanism to check a couple of code quality
 areas: running <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span> <span class="pre">pkg_directory</span></code> from the command line
-(preferably using the most recent version of R) can suggest a number
-of improvements.</p>
+(preferably using the most recent version of R) can suggest
+several improvements.</p>
 <p>Also, it is possible to use various continuous integration techniques
 that are automatically triggered when pushing changes to our software
 repositories; see GitLab CI or GitHub Actions.
-For instance, it is possible to run a package build, install,
-and check process upon every <strong class="program">git</strong> commit.
+For instance, running a package build, install,
+and check process is possible upon every <strong class="program">git</strong> commit.
 Also, CRAN features some continuous integration services, including
-checking the package on a range of different platforms.</p>
+checking the package on various platforms.</p>
 </div>
 </section>
 <section id="debugging">
 <h4><span class="section-number">9.3.3.3. </span>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">#</a></h4>
 <p>For all his life, the current author has been debugging his programs
 primarily by manually printing the state of the suspicious variables
-(<strong class="command">printf</strong> and the like) in different areas of the code.
-Hahaha, so old school. Yet, weirdly efficient.</p>
+(<strong class="command">printf</strong> and the like) in different code areas.
+Hahaha lololol, so old school. Yet, weirdly efficient.</p>
 <p>R has an interactive debugger; see the <strong class="command">browser</strong> function.
 Also, refer to Section 9 of <span id="id13">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">63</a>]</span> for more details.</p>
 <p>Some IDEs (e.g., <strong class="program">RStudio</strong>) support this feature, too; see
@@ -1156,10 +1155,10 @@ long time executing only a small portion of code.
 The <strong class="command">Rprof</strong> function can be a helpful tool to identify which chunks
 might need a rewrite, for instance, using a compiled language
 (<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>).</p>
-<p>Please remember, though, that not only implementations of algorithms
-that have hight computational complexity can form a bottleneck,
-but also data input and output (such as reading files from disk,
-printing messages, on the console, querying Web APIs, etc.).</p>
+<p>Please remember, though, that bottlenecks are
+not only formed by using algorithms with high computational
+complexity, but also data input and output (such as reading files from disk,
+printing messages on the console, querying Web APIs, etc.).</p>
 </section>
 </section>
 </section>
@@ -1195,9 +1194,9 @@ backticks let us refer to them in any context.</p>
 </section>
 <section id="dollar">
 <span id="sec-dollar"></span><h3><span class="section-number">9.4.2. </span>Dollar, `<strong class="command">$</strong>` (*)<a class="headerlink" href="#dollar" title="Permalink to this heading">#</a></h3>
-<p>The dollar operator, `<strong class="command">$</strong>`, can be used as an alternative
+<p>The dollar operator, `<strong class="command">$</strong>`, can be an alternative
 accessor to a single element in a named list<a class="footnote-reference brackets" href="#footdollar" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">label</span></code> is a syntactically valid name, then <code class="docutils literal notranslate"><span class="pre">x$label</span></code>
+<p>If the <code class="docutils literal notranslate"><span class="pre">label</span></code> is a syntactically valid name, then <code class="docutils literal notranslate"><span class="pre">x$label</span></code>
 does the same job as <code class="docutils literal notranslate"><span class="pre">x[[&quot;label&quot;]]</span></code> (saving five keystrokes:
 such a burden!).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">spam</span><span class="o">=</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eggs</span><span class="o">=</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">`eggs and spam`</span><span class="o">=</span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">best.spam.ever</span><span class="o">=</span><span class="s">&quot;d&quot;</span><span class="p">)</span>
@@ -1207,15 +1206,15 @@ such a burden!).</p>
 <span class="c1">## [1] &quot;d&quot;</span>
 </pre></div>
 </div>
-<p>Nonstandard names must still be enclosed in backticks</p>
+<p>Nonstandard names must still be enclosed in backticks:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">$</span><span class="n">`eggs and spam`</span><span class="w">  </span><span class="c1"># x[[&quot;eggs and spam&quot;]] is okay as usual</span>
 <span class="c1">## [1] &quot;c&quot;</span>
 </pre></div>
 </div>
-<p>We are minimalist-by-design here. Thence, we will tend to avoid this
-operator, as it does not really increase the expressive power of our
-function repertoire. Also, it neither works on atomic vectors
-nor on matrices.</p>
+<p>We are minimalist by design here. Thence, we will avoid this
+operator, as it does not increase the expressive power of our
+function repertoire. Also, it works on neither atomic vectors
+nor matrices.</p>
 <p>Furthermore, it does not work with names that are generated programmatically:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">what</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span>
 <span class="n">x</span><span class="o">$</span><span class="n">what</span><span class="w"> </span><span class="c1"># the same as x[[&quot;what&quot;]] – we don&#39;t want this</span>
@@ -1237,7 +1236,7 @@ label extremely problematic:</p>
 <p>It is generally a bad programming practice, because the result depends
 on the names of other items in <code class="docutils literal notranslate"><span class="pre">x</span></code> (which might change later)
 and can decrease code readability.
-The only reason why we have obtained a warning message was because
+The only reason why we obtained a warning message was because
 this book enforces the
 <strong class="command">options</strong><code class="code docutils literal notranslate"><span class="pre">(warnPartialMatchDollar=TRUE)</span></code> setting,
 which, sadly, is not the default.</p>
@@ -1286,9 +1285,9 @@ is evaluated. Then, the last value is returned as the result of that call.</p>
 </section>
 <section id="if">
 <h3><span class="section-number">9.4.4. </span>`<strong class="command">if</strong>`<a class="headerlink" href="#if" title="Permalink to this heading">#</a></h3>
-<p><strong class="command">if</strong> is a function, too; as mentioned in <a class="reference internal" href="180-flow.html#sec-if"><span class="std std-numref">Section 8.1</span></a>,
-it returns the value corresponding
-to the expression evaluated conditionally. Hence, we may write:</p>
+<p><strong class="command">if</strong> is a function, too. As mentioned in <a class="reference internal" href="180-flow.html#sec-if"><span class="std std-numref">Section 8.1</span></a>,
+it returns the value corresponding to the expression
+that is evaluated conditionally. Hence, we may write:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;head&quot;</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="s">&quot;tail&quot;</span>
 <span class="c1">## [1] &quot;head&quot;</span>
 </pre></div>
@@ -1325,7 +1324,7 @@ and <code class="docutils literal notranslate"><span class="pre">x[[i]]</span></
 code (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>)
 or access the corresponding manual pages (see, e.g.,
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>),
-but also write some expressions in a more concise manner.
+but also write some expressions more concisely.
 For instance,</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="o">:</span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="o">:</span><span class="m">23</span><span class="p">)</span>
 <span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">`[`</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># 1 is a further argument passed to `[`</span>
@@ -1337,16 +1336,16 @@ For instance,</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Unsurprisingly, the assignment operator, `<strong class="command">&lt;-</strong>`, is also
-a function. It returns the assigned value, invisibly.</p>
+a function. It returns the assigned value invisibly.</p>
 <p>Knowing that `<strong class="command">&lt;-</strong>` binds right to left (compare <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Syntax&quot;)</span></code>), this is why the expression “<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;-</span> <span class="pre">b</span> <span class="pre">&lt;-</span> <span class="pre">1</span></code>”
 results in both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> being assigned 1:
 it is equivalent to
 “`<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> </code>`<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;b&quot;,</span> <span class="pre">1))</span></code>”
 and “`<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;b&quot;,</span> <span class="pre">1)</span></code>” returns 1.</p>
-<p>Owing to the pass-by-value semantics (<a class="reference internal" href="#sec-pass-by-value"><span class="std std-numref">Section 9.5.1</span></a>)
-we can also expect that we will always be (with the exception
-of environments, <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>)
-assigning a <em>copy</em> of the value on the right-hand side.</p>
+<p>Owing to the pass-by-value semantics (<a class="reference internal" href="#sec-pass-by-value"><span class="std std-numref">Section 9.5.1</span></a>),
+we can also expect that we will always be
+assigning a <em>copy</em> of the value on the right-hand side
+(with the exception of environments; <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="w">  </span><span class="c1"># makes a copy (but delayed, on demand, for performance reasons)</span>
 <span class="n">y</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NA_real_</span><span class="w">  </span><span class="c1"># modify every 2nd element</span>
@@ -1359,7 +1358,7 @@ assigning a <em>copy</em> of the value on the right-hand side.</p>
 <p>This is especially worth pointing out to Python (amongst others)
 programmers, where the above assignment would mean that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>
 both refer to the same (shared) object in the computer’s memory.</p>
-<p>However, with no harm done to semantics, the actual copying of <code class="docutils literal notranslate"><span class="pre">x</span></code>
+<p>However, with no harm done to semantics, copying <code class="docutils literal notranslate"><span class="pre">x</span></code>
 is postponed until absolutely necessary (<a class="reference internal" href="330-environment.html#sec-copy-on-demand"><span class="std std-numref">Section 16.1.4</span></a>).
 This is efficient both time- and memory-wise.</p>
 </div>
@@ -1375,13 +1374,11 @@ named like `<strong class="command">%myopname%</strong>`:</p>
 </div>
 <p>Recall that `<strong class="command">%%</strong>` and `<strong class="command">%/%</strong>` are built-in operators
 denoting division remainder and integer division.
-Rarely will we be defining our own operators, but
-when we encounter a similar one next time, we will no longer be surprised.
-For instance, in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>, we will learn
+Also, in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>, we will learn
 about `<strong class="command">%*%</strong>`, which implements matrix multiplication.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>, we will note that most existing operators
+<p><a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a> notes that most existing operators
 can be overloaded for objects of different types.</p>
 </div>
 </section>
@@ -1390,7 +1387,7 @@ can be overloaded for objects of different types.</p>
 <span id="sec-replacementfun"></span><h3><span class="section-number">9.4.6. </span>Replacement functions<a class="headerlink" href="#replacement-functions" title="Permalink to this heading">#</a></h3>
 <p>Functions generally do not change the state
 of their arguments. However, there is some syntactic sugar
-that allows us to replace objects or parts thereof with new content.
+that allows us to replace objects or their parts with new content.
 We call them <em>replacement functions</em>.</p>
 <p>For instance, three of the following calls <em>replace</em>
 the input <code class="docutils literal notranslate"><span class="pre">x</span></code> with its modified version:</p>
@@ -1413,9 +1410,9 @@ at least two parameters:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">value</span></code> (as the last parameter;
 the object on the right-hand side of the `<strong class="command">&lt;-</strong>` operator).</p></li>
 </ul>
-<p>Most often, we will be interacting with existing
-replacement functions, not creating our own ones.
-But knowing how to do the latter is key to understanding
+<p>We will most often interact with <em>existing</em> replacement functions,
+not create our own ones.
+But knowing how to do the latter is vital to understanding
 this language feature.</p>
 <p>For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`add&lt;-`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">where</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
@@ -1492,10 +1489,10 @@ see also <a class="reference internal" href="150-indexing.html#sec-insert-new-el
 <span class="c1">## [1] 1 2 3</span>
 </pre></div>
 </div>
-<p>Despite the fact that, semantically speaking,
+<p>Although, semantically speaking,
 calling `<strong class="command">[&lt;-</strong>` results in the creation of a new
 vector (a modified version of the original one),
-we may luckily expect some performance optimisations happening
+we may luckily expect some performance optimisations
 behind the scenes.</p>
 <div class="proof proof-type-exercise" id="id41">
 
@@ -1519,11 +1516,10 @@ at the end of a given vector, modifying it in place.</p>
 </div></div></section>
 <section id="replacing-attributes">
 <h4><span class="section-number">9.4.6.3. </span>Replacing attributes<a class="headerlink" href="#replacing-attributes" title="Permalink to this heading">#</a></h4>
-<p>Many replacement functions deal with the re-setting of objects’
-attributes (<a class="reference internal" href="140-list.html#sec-attribute"><span class="std std-numref">Section 4.4</span></a>).</p>
-<p>In particular, for each special attribute,
-there is also its replacement version, e.g.,
-`<strong class="command">names&lt;-</strong>`,
+<p>There are many replacement functions to reset object
+attributes (<a class="reference internal" href="140-list.html#sec-attribute"><span class="std std-numref">Section 4.4</span></a>).
+In particular, each special attribute has its replacement procedure,
+e.g., `<strong class="command">names&lt;-</strong>`,
 `<strong class="command">class&lt;-</strong>`,
 `<strong class="command">dim&lt;-</strong>`,
 `<strong class="command">levels&lt;-</strong>`,
@@ -1536,8 +1532,8 @@ etc.</p>
 </pre></div>
 </div>
 <div style="margin-top: 1em"></div><p>Individual (arbitrary, including non-special ones) attributes can be
-set using `<strong class="command">attr&lt;-</strong>` and all of them can be established
-by means of a single call to `<strong class="command">attributes&lt;-</strong>`.</p>
+set using `<strong class="command">attr&lt;-</strong>`, and all of them can be established
+via a single call to `<strong class="command">attributes&lt;-</strong>`.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span>
 <span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s">&quot;oval&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">smell</span><span class="o">=</span><span class="s">&quot;meaty&quot;</span><span class="p">)</span>
 <span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">attributes</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">taste</span><span class="o">=</span><span class="s">&quot;umami&quot;</span><span class="p">)</span>
@@ -1570,7 +1566,7 @@ in its removal:</p>
 <span class="c1">## [1] &quot;spam&quot;</span>
 </pre></div>
 </div>
-<p>Which can be useful in contexts such as:</p>
+<p>Which can be worthwhile in contexts such as:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">some_attrib</span><span class="o">=</span><span class="s">&quot;value&quot;</span><span class="p">)</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">`attributes&lt;-`</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
@@ -1620,7 +1616,7 @@ equivalent to?</p>
         <span class="proof-type">Exercise 9.24</span>
         
     </div><div class="proof-content">
-<p>Write a (very handy!) function `<strong class="command">recode&lt;-</strong>` which
+<p>Write a (convenient!) function `<strong class="command">recode&lt;-</strong>` which
 replaces specific elements in a character
 vector with some other ones, allowing the following
 interface:</p>
@@ -1735,13 +1731,13 @@ by <em>value</em>, i.e., as if their copy was made.</p>
 <span class="c1">## [1] 1 2 3 4 5</span>
 </pre></div>
 </div>
-<p>If the above was not the case, the state of <code class="docutils literal notranslate"><span class="pre">x</span></code> would have been
+<p>If the above were not the case, the state of <code class="docutils literal notranslate"><span class="pre">x</span></code> would have
 changed after the call.</p>
 </section>
 <section id="variable-scope">
 <h3><span class="section-number">9.5.2. </span>Variable scope<a class="headerlink" href="#variable-scope" title="Permalink to this heading">#</a></h3>
-<p>Function arguments, as well as any other variables we create
-inside a function’s body, are <em>relative</em> to each call to that function.</p>
+<p>Function arguments and any other variables we create
+inside a function’s body are <em>relative</em> to each call to that function.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test_change</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="m">+1</span>
@@ -1803,11 +1799,11 @@ a corresponding <span class="math notranslate nohighlight">\(y\)</span> can be d
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55ac4935b8b8&gt;</span>
+<span class="c1">## &lt;environment: 0x5621fd99a330&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55ac494cd618&gt;</span>
+<span class="c1">## &lt;environment: 0x5621fdb22140&gt;</span>
 </pre></div>
 </div>
 <p>we might wonder how they can produce different results: it is
@@ -1820,20 +1816,20 @@ data that is referred to upon their calls:</p>
 <span class="c1">##  [1] 0.000 0.001 0.008 0.027 0.064 0.125 0.216 0.343 0.512 0.729 1.000</span>
 </pre></div>
 </div>
-<p>This and many more we will explore in great detail in the third part
+<p>We will explore this and many more in detail in the third part
 of this book.</p>
 </section>
 <section id="default-arguments">
 <span id="sec-default-args"></span><h3><span class="section-number">9.5.4. </span>Default arguments<a class="headerlink" href="#default-arguments" title="Permalink to this heading">#</a></h3>
 <p>We have already mentioned above that when designing functions
-performing complex tasks, we will sometimes be
+performing complex tasks we will sometimes be
 faced with a design problem: how to find a sweet spot between
 being generous/mindful of the diverse needs of our users
 and making the API neither overwhelming nor oversimplistic.</p>
 <p>We know that it is best if a function performs a single
-well-specified task, but also allows its behaviour to be tweaked, if one
-wishes to do so.
-This principle can be facilitated by the use of <em>default arguments</em>.</p>
+well-specified task. Moreover, it is nice if it also
+allows its behaviour to be tweaked if one wishes to do so.
+The use of <em>default arguments</em> can facilitate this principle.</p>
 <p>For instance, <strong class="command">log</strong> computes logarithms,
 by default, the natural ones.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">log</span><span class="p">(</span><span class="m">2.718</span><span class="p">)</span><span class="w">  </span><span class="c1"># the same as log(2.78, base=exp(1)) — default base</span>
@@ -1849,7 +1845,7 @@ by default, the natural ones.</p>
         
     </div><div class="proof-content">
 <p>Study the documentation of the following functions and note
-the default values that they define:
+the default values they define:
 <strong class="command">round</strong>, <strong class="command">hist</strong>,
 <strong class="command">grep</strong>, and
 <strong class="command">download.file</strong>.</p>
@@ -1864,11 +1860,11 @@ the default values that they define:
 </pre></div>
 </div>
 <p>Most often, default arguments are just constants, e.g., <code class="docutils literal notranslate"><span class="pre">1</span></code>.
-Generally, though, they can be any R expressions,
-also including a reference to other arguments
-passed to the same function; see more in <a class="reference internal" href="340-lazy.html#sec-default-args-eval"><span class="std std-numref">Section 17.2</span></a>.</p>
-<p>Note that default arguments will most often appear
-and the end of the parameter list, but see
+Generally, though, they can be any R expressions:
+also ones that include a reference to other arguments
+passed to the same function; see <a class="reference internal" href="340-lazy.html#sec-default-args-eval"><span class="std std-numref">Section 17.2</span></a>.</p>
+<p>Note that default arguments most often appear
+at the end of the parameter list, but see
 <a class="reference internal" href="#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a> (on replacement functions)
 for a well-justified exception.</p>
 </section>
@@ -1879,7 +1875,7 @@ prior to a call. In R, though, they are only computed when actually needed.
 We call it <em>lazy</em> or <em>delayed</em> evaluation.
 Recall that in <a class="reference internal" href="180-flow.html#sec-short-circuit-ops"><span class="std std-numref">Section 8.1.4</span></a>, we introduced
 the short-circuit evaluation operators `<strong class="command">||</strong>` (or) and
-`<strong class="command">&amp;&amp;</strong>` (and). They are able to do their job precisely
+`<strong class="command">&amp;&amp;</strong>` (and). They can do their job precisely
 thanks to this mechanism.</p>
 <div class="proof proof-type-example" id="id47">
 
@@ -1916,7 +1912,7 @@ thanks to this mechanism.</p>
 </pre></div>
 </div>
 <p>Note that an argument is evaluated once, and its value is stored
-for further reference. If that was not the case,
+for further reference. If that were not the case,
 we would see two messages like <code class="docutils literal notranslate"><span class="pre">and</span> <span class="pre">now...</span></code>.</p>
 </div></div><p>We will elaborate on this in <a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>.</p>
 </section>
@@ -1968,7 +1964,7 @@ is by redirecting them to <strong class="command">list</strong>.</p>
 What we can do with these arguments is only limited by our creativity
 (in particular, recall from <a class="reference internal" href="170-function.html#sec-do-call-intro"><span class="std std-numref">Section 7.2.2</span></a>
 the very powerful <strong class="command">do.call</strong> function).
-Still, there are two major use cases of the ellipsis<a class="footnote-reference brackets" href="#footpykwargs" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>:</p>
+Still, there are two primary use cases of the ellipsis<a class="footnote-reference brackets" href="#footpykwargs" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>:</p>
 <ul>
 <li><p>create a new object by combining an arbitrary number of other objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">   </span><span class="c1"># 3 arguments</span>
@@ -2064,12 +2060,12 @@ Inspect its source code. Note a call to the two aforementioned functions.</p>
 <p>Similarly, call
 <strong class="command">shapiro.test</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">rlnorm</strong><code class="code docutils literal notranslate"><span class="pre">(100)))</span></code> and take note of the <code class="docutils literal notranslate"><span class="pre">data:</span></code> field.</p>
 </div></div><p>A function is free to do with such an expression whatever it likes.
-For instance, it can change it and then evaluate it in a very
-different context. Thanks to such a language feature,
-certain operations can be expressed much more compactly.
+For instance, it can modify the expression and then evaluate it in a very
+different context. Such a language feature allows
+certain operations to be expressed much more compactly.
 In theory, it is a potent tool. Unfortunately,
-it is easy to find many practical examples where it has been
-over/misused and made the learning or using of R confusing.</p>
+it is easy to find many practical examples where it was
+over/misused and made learning or using R confusing.</p>
 <div class="proof proof-type-example" id="id53">
 
     <div class="proof-title">
@@ -2096,12 +2092,12 @@ For instance:</p>
 <span class="c1">## 136 virginica          7.7         3.0            0.77</span>
 </pre></div>
 </div>
-<p>Note that none of the arguments (except <code class="docutils literal notranslate"><span class="pre">iris</span></code>) makes sense
+<p>None of the arguments (except <code class="docutils literal notranslate"><span class="pre">iris</span></code>) makes sense
 outside of the function call contexts.
 In particular, neither <code class="docutils literal notranslate"><span class="pre">Sepal.Length</span></code> nor <code class="docutils literal notranslate"><span class="pre">Sepal.Width</span></code>
 variables exist.</p>
 <p>The two functions took the liberty to interpret the arguments passed
-how they felt like. They have created their own virtual reality within
+how they felt. They created their own virtual reality within
 our well-defined world.
 The reader must refer to their documentation to discover
 the meaning of such special syntax.</p>
@@ -2129,32 +2125,32 @@ Consider the following example:</p>
 </div>
 <p>In this setting, <strong class="command">match.arg</strong> only allows an actual parameter
 from a given set of choices but selects the first
-option, if the argument is missing.</p>
-<p>Unfortunately, we have to learn this behaviour by heart, because
-actually looking at the above source code gives us no clue
-about this being possible whatsoever.
-If such an expression was normally evaluated, we would either be using
-the default argument or whatever the user passed as <code class="docutils literal notranslate"><span class="pre">x</span></code> (but
-then the function would not know about the range of possible choices).
+option if the argument is missing.</p>
+<p>Unfortunately, we have to learn this behaviour by heart because
+looking at the above source code gives us no clue
+about this being possible.
+If such an expression was normally evaluated, we would use
+either the default argument or whatever the user passed as <code class="docutils literal notranslate"><span class="pre">x</span></code> (but
+then the function would not know the range of possible choices).
 A call to
 “<strong class="command">match.arg</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;))</span></code>”
 could guarantee the desired functionality and would be much more readable.
 Instead, metaprogramming techniques allowed <strong class="command">match.arg</strong> to access
-the enclosing function’s default argument list without our explicitly
+the enclosing function’s default argument list without explicitly
 referring to them.</p>
 </div>
 <p>One may ask: why is it so? The only sensible answer to this will be
 “because its programmer decided it must be this way”.
 Let us contemplate this for a while.
-In cases like these, we are dealing not with some
+In cases like these, we are not dealing with some
 base R language design choice that we might like or dislike,
 but which we should just accept as an inherent feature.
-Rather, we are struggling intellectually because of some
+Instead, we are struggling intellectually because of some
 programmer’s (mis)use (in good faith…) of R’s flexibility itself.
 They have introduced a slang/dialect on top of our mother tongue,
 whose meaning is valid only within this function.
 Blame the middleman, not the environment, please.</p>
-<p>This is why here we generally advocate for avoiding
+<p>This is why we generally advocate for avoiding
 relying on metaprogramming-based techniques wherever possible.
 We shall elaborate on this in the third part of this book.</p>
 </section>
@@ -2232,7 +2228,7 @@ List the names corresponding to some replacement functions.</p>
 </div></div><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Apply the principle of test-driven development
-when solving the remaining exercises (or those which you have
+when solving the remaining exercises (or those you have
 skipped intentionally).</p>
 </div>
 <div class="proof proof-type-exercise" id="id58">
@@ -2241,7 +2237,7 @@ skipped intentionally).</p>
         <span class="proof-type">Exercise 9.39</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of the <strong class="command">Position</strong>
+<p>Implement your version of the <strong class="command">Position</strong>
 and <strong class="command">Find</strong> functions.
 Evaluation should stop as soon as the first element
 fulfilling a given predicate has been found.</p>
@@ -2251,7 +2247,7 @@ fulfilling a given predicate has been found.</p>
         <span class="proof-type">Exercise 9.40</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of the <strong class="command">Reduce</strong> function.</p>
+<p>Implement your version of the <strong class="command">Reduce</strong> function.</p>
 </div></div><div class="proof proof-type-exercise" id="id60">
 
     <div class="proof-title">
@@ -2298,7 +2294,7 @@ there are three such pairs: (0, 2), (0, 1), (1, 6).</p>
 </aside>
 <aside class="footnote brackets" id="footfunc" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>If some non-trivial operation is missing, we can
+<p>If some nontrivial operation is missing, we can
 always implement it at the C language level; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footquick" role="note">
@@ -2311,7 +2307,7 @@ and fun. At the same time, do not allow your users to become
 independent too easily. Instead, make them rely on your
 product lines/proprietary solutions/payable services etc.</p>
 <p>The free software movement, with its do-it-yourself approach,
-emphasises on users’ becoming autonomous. This does not contradict the
+emphasises users’ becoming autonomous. This does not contradict the
 user-friendliness (but that many open-source projects could benefit
 from becoming less exclusive is a different story, and this book tries
 to make a change in this area).</p>
@@ -2349,8 +2345,8 @@ can cause further deviations to this rule (see below).</p>
 </aside>
 <aside class="footnote brackets" id="footshadow" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">10</a><span class="fn-bracket">]</span></span>
-<p>In <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>, we will discuss this
-topic in-depth; objects are bound to their names within environments.
+<p><a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a> discusses this
+topic in-depth: objects are bound to their names within environments.
 Moreover, R uses lexical (static) scoping, which is not necessarily
 intuitive, especially taking into account that a function’s environment
 can always be changed.</p>
@@ -2399,7 +2395,7 @@ in a function’s parameter list.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-28T20:19:07+1000.
+              Last updated on 2023-04-30T15:50:16+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2422,9 +2418,9 @@ in a function’s parameter list.</p>
             <ul>
 <li><a class="reference internal" href="#">9. Designing functions</a><ul>
 <li><a class="reference internal" href="#principles-of-sustainable-design">9.1. Principles of sustainable design</a><ul>
-<li><a class="reference internal" href="#to-write-or-to-abstain">9.1.1. To write or to abstain</a></li>
-<li><a class="reference internal" href="#to-pamper-or-to-challenge">9.1.2. To pamper or to challenge</a></li>
-<li><a class="reference internal" href="#to-build-or-to-reuse">9.1.3. To build or to reuse</a></li>
+<li><a class="reference internal" href="#to-write-or-abstain">9.1.1. To write or abstain</a></li>
+<li><a class="reference internal" href="#to-pamper-or-challenge">9.1.2. To pamper or challenge</a></li>
+<li><a class="reference internal" href="#to-build-or-reuse">9.1.3. To build or reuse</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#managing-data-flow">9.2. Managing data flow</a><ul>
