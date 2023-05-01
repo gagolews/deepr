@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -307,7 +309,7 @@ Like lists, they can be classified as recursive data structures;
 compare the diagram in <a class="reference internal" href="340-lazy.html#fig-data-types-full"><span class="std std-numref">Figure 17.2</span></a>.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Each object of type <em>environment</em> consists of:</p>
+<p>Each object of the type <code class="docutils literal notranslate"><span class="pre">environment</span></code> consists of:</p>
 <ul class="simple">
 <li><p>a <em>frame</em><a class="footnote-reference brackets" href="#footdf" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> (<a class="reference internal" href="#sec-frame-env"><span class="std std-numref">Section 16.1</span></a>), which
 stores a set of <em>bindings</em> that associate variable names with their
@@ -357,7 +359,7 @@ look-and-feel also in the case of element extraction:</p>
 <h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Permalink to this heading">#</a></h3>
 <p>Let us note that the printing of an environment is quite awkward:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span><span class="w">  </span><span class="c1"># same with str(e1)</span>
-<span class="c1">## &lt;environment: 0x55a63d7b01f8&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc339ee1f8&gt;</span>
 </pre></div>
 </div>
 <p>This is the address where <code class="docutils literal notranslate"><span class="pre">e1</span></code> is stored
@@ -414,7 +416,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 <span class="c1">## $z</span>
 <span class="c1">## NULL</span>
 <span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="n">whatever</span><span class="o">=</span><span class="s">&quot;it&#39;s not going to be printed anyway&quot;</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x55a63d36b698&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc335a9698&gt;</span>
 <span class="nf">as.list</span><span class="p">(</span><span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="m">3</span><span class="p">)))</span><span class="w">  </span><span class="c1"># no duplicates allowed</span>
 <span class="c1">## $y</span>
 <span class="c1">## [1] 2</span>
@@ -444,7 +446,7 @@ they cannot be referred to via a numeric index;</p></li>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A list may be considered a <em>sequence</em>,
-but an environment frame is only in fact a <em>set</em> (a bag) of
+but an environment frame is only, in fact, a <em>set</em> (a bag) of
 <em>key–value pairs</em>.
 In most numerical computing applications,
 we would rather store, iterate over, and process all the elements
@@ -470,14 +472,14 @@ of objects in a given container:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Let us assume that <code class="docutils literal notranslate"><span class="pre">some_container</span></code> is large, say, of size <span class="math notranslate nohighlight">\(n\)</span>,
+<p>Let us assume that <code class="docutils literal notranslate"><span class="pre">some_container</span></code> is large, say, of size <span class="math">\(n\)</span>,
 e.g., it is generated on the fly by reading some data stream.
 Then, the run-time of the above algorithm will depend on the
 data structure used.
 If <code class="docutils literal notranslate"><span class="pre">counter</span></code> is a list, then, theoretically, the worst-case performance
-will be <span class="math notranslate nohighlight">\(O(n^2)\)</span> (if all keys are unique).
+will be <span class="math">\(O(n^2)\)</span> (if all keys are unique).
 On the other hand, for environments, it will be faster
-by an order of magnitude: down to amortised <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
+by an order of magnitude: down to amortised <span class="math">\(O(n)\)</span>.</p>
 </div></div><div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
@@ -549,9 +551,9 @@ an assign- and pass-by-reference strategies.</p>
 <p>then the names <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are bound with exactly the same object
 in computer’s memory:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x55a63c597e80&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc327d5e80&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x55a63c597e80&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc327d5e80&gt;</span>
 </pre></div>
 </div>
 <p>Therefore:</p>
@@ -564,7 +566,7 @@ in computer’s memory:</p>
 </div>
 <p>The same happens when we pass an environment to a function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># pass-by-reference (`y` is `x`, remember?)</span>
-<span class="c1">## &lt;environment: 0x55a63c597e80&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc327d5e80&gt;</span>
 <span class="n">x</span><span class="p">[[</span><span class="s">&quot;a&quot;</span><span class="p">]]</span><span class="w">   </span><span class="c1"># `x` has changed</span>
 <span class="c1">## [1] 3</span>
 </pre></div>
@@ -636,7 +638,7 @@ for object-oriented programming.</p>
 called <em>reference classes</em><a class="footnote-reference brackets" href="#footr5" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.
 It was first introduced in R version 2.12.0.</p>
 <p>Reference classes are implemented using S4 classes with the data part
-being of type <code class="docutils literal notranslate"><span class="pre">environment</span></code>.
+being of the type <code class="docutils literal notranslate"><span class="pre">environment</span></code>.
 Thanks to this, we get a more typical object-oriented experience,
 where methods can modify the data they act on in-place.</p>
 <p>They are a theoretically interesting concept on its own,
@@ -826,19 +828,19 @@ It can be fetched and set using the <strong class="command">parent.env</strong> 
 let us create two new environments
 whose enclosures are set explicitly as follows:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e4</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e3</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x55a63cdc5900&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc33003900&gt;</span>
 <span class="p">(</span><span class="n">e5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e4</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x55a63cca95e0&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc32ee75e0&gt;</span>
 </pre></div>
 </div>
 <p>To verify that everything is in order, let us inspect
 the following:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e3</span><span class="p">)</span><span class="w">  </span><span class="c1"># this is the address of e3 by the way</span>
-<span class="c1">## &lt;environment: 0x55a63d3bc310&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc335fa268&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e4</span><span class="p">)</span><span class="w">  </span><span class="c1"># e3 is the enclosing environment of e4</span>
-<span class="c1">## &lt;environment: 0x55a63d3bc310&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc335fa268&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e5</span><span class="p">)</span><span class="w">  </span><span class="c1"># e4 is the enclosing environment of e5</span>
-<span class="c1">## &lt;environment: 0x55a63cdc5900&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc33003900&gt;</span>
 </pre></div>
 </div>
 <p>Also, let us bind two different objects with the name `<code class="docutils literal notranslate"><span class="pre">y</span></code>` in <code class="docutils literal notranslate"><span class="pre">e5</span></code>
@@ -920,7 +922,7 @@ until successful:</p>
 <section id="looking-for-functions">
 <h3><span class="section-number">16.2.4. </span>Looking for functions<a class="headerlink" href="#looking-for-functions" title="Permalink to this heading">#</a></h3>
 <p>Interestingly, if a name is used in place of a function to be called,
-the object sought is always<a class="footnote-reference brackets" href="#footc" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> of mode <code class="docutils literal notranslate"><span class="pre">function</span></code>.</p>
+the object sought is always<a class="footnote-reference brackets" href="#footc" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> of the mode <code class="docutils literal notranslate"><span class="pre">function</span></code>.</p>
 <p>Consider a similar expression to the above, but this
 time including name `<code class="docutils literal notranslate"><span class="pre">y</span></code>` playing a different role:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr_y2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="nf">y</span><span class="p">())</span><span class="w">  </span><span class="c1"># a call to something named `y`</span>
@@ -990,14 +992,14 @@ the enclosures recursively.</p>
 <span class="w">    </span><span class="n">ecur</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">parent.env</span><span class="p">(</span><span class="n">ecur</span><span class="p">)</span><span class="w">  </span><span class="c1"># advance to its enclosure</span>
 <span class="p">}</span>
 <span class="c1">## &lt;environment: R_GlobalEnv&gt; ()</span>
-<span class="c1">## &lt;environment: 0x55a63d5efbb8&gt; (.marekstuff)</span>
+<span class="c1">## &lt;environment: 0x55dc3382dbb8&gt; (.marekstuff)</span>
 <span class="c1">## &lt;environment: package:stats&gt; (package:stats)</span>
 <span class="c1">## &lt;environment: package:graphics&gt; (package:graphics)</span>
 <span class="c1">## &lt;environment: package:grDevices&gt; (package:grDevices)</span>
 <span class="c1">## &lt;environment: package:utils&gt; (package:utils)</span>
 <span class="c1">## &lt;environment: package:datasets&gt; (package:datasets)</span>
 <span class="c1">## &lt;environment: package:methods&gt; (package:methods)</span>
-<span class="c1">## &lt;environment: 0x55a63b682b80&gt; (Autoloads)</span>
+<span class="c1">## &lt;environment: 0x55dc318c0b80&gt; (Autoloads)</span>
 <span class="c1">## &lt;environment: base&gt; ()                     `&lt;` found here!</span>
 <span class="c1">## &lt;environment: R_EmptyEnv&gt; ()</span>
 <span class="c1">## Error in parent.env(ecur): the empty environment has no parent</span>
@@ -1103,7 +1105,7 @@ in <a class="reference internal" href="#sec-package-namespace"><span class="std 
 <p class="admonition-title">Note</p>
 <p>It turns out that we can also plug into the search path
 arbitrary environments<a class="footnote-reference brackets" href="#footattachenv" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a> and, by similarity thereto,
-named lists. Recalling that data frames are in fact built upon
+named lists. Recalling that data frames are, in fact, built upon
 the latter (<a class="reference internal" href="240-data-frame.html#sec-df-representation"><span class="std std-numref">Section 12.1.6</span></a>), some
 users rely on this technique to free themselves from the
 onerous burden of typing the object name each time its column
@@ -1116,10 +1118,10 @@ is to be referred to:</p>
 <p>Here, the <code class="docutils literal notranslate"><span class="pre">iris</span></code> list was converted to an environment,
 and the necessary enclosures were set accordingly:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">()))</span>
-<span class="c1">## &lt;environment: 0x55a63d68aa20&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc338c8a20&gt;</span>
 <span class="c1">##  - attr(*, &quot;name&quot;)= chr &quot;iris&quot;</span>
 <span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">())))</span>
-<span class="c1">## &lt;environment: 0x55a63d5efbb8&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc3382dbb8&gt;</span>
 <span class="c1">##  - attr(*, &quot;name&quot;)= chr &quot;.marekstuff&quot;</span>
 </pre></div>
 </div>
@@ -1207,7 +1209,7 @@ path again:</p>
 <span class="n">Sepal.Length</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
-<p>This of course does not modify the original <code class="docutils literal notranslate"><span class="pre">iris</span></code> nor
+<p>It does not modify the original <code class="docutils literal notranslate"><span class="pre">iris</span></code> nor
 its converted-to-an-environment copy that we can find in the search
 path. Instead, a new vector named <code class="docutils literal notranslate"><span class="pre">Sepal.Length</span></code> has been created
 in the current environment:</p>
@@ -1269,7 +1271,7 @@ and we go back to the previous environment from the call stack.</p>
 <p>First call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x55a63d669b08&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc338a7be8&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 4</span>
 <span class="c1">##  $ x: num 2</span>
@@ -1278,7 +1280,7 @@ and we go back to the previous environment from the call stack.</p>
 <p>Second call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x55a63da1c910&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc33c5a9f0&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 9</span>
 <span class="c1">##  $ x: num 3</span>
@@ -1317,7 +1319,7 @@ If this was true, we would have access to the local variables
 of the caller from within the callee.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Objects of type <code class="docutils literal notranslate"><span class="pre">closure</span></code>, i.e., user-defined<a class="footnote-reference brackets" href="#footprimitive" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></a> functions,
+<p>Objects of the type <code class="docutils literal notranslate"><span class="pre">closure</span></code>, i.e., user-defined<a class="footnote-reference brackets" href="#footprimitive" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></a> functions,
 consist of three components:</p>
 <ul class="simple">
 <li><p>a list of formal arguments (compare <strong class="command">formals</strong>
@@ -1392,8 +1394,8 @@ one that also happens to define `<code class="docutils literal notranslate"><spa
 
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span>
 <span class="nf">test</span><span class="p">()</span>
-<span class="c1">## test: current env: &lt;environment: 0x55a63d3ef198&gt;</span>
-<span class="c1">## subtest: enclosing env: &lt;environment: 0x55a63d3ef198&gt;</span>
+<span class="c1">## test: current env: &lt;environment: 0x55dc3362d320&gt;</span>
+<span class="c1">## subtest: enclosing env: &lt;environment: 0x55dc3362d320&gt;</span>
 <span class="c1">## x = spam</span>
 <span class="c1">## subtest: enclosing env: &lt;environment: R_GlobalEnv&gt;</span>
 <span class="c1">## x = bacon</span>
@@ -1439,7 +1441,7 @@ To recall:</p>
 <span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55a63d8e22d0&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc33b20500&gt;</span>
 </pre></div>
 </div>
 <p>The variables `<code class="docutils literal notranslate"><span class="pre">x</span></code>`, `<code class="docutils literal notranslate"><span class="pre">y</span></code>`, etc. that <strong class="command">f1</strong>’s source code
@@ -1474,17 +1476,17 @@ used after the call, so it will not be garbage-collected.</p>
 <p>Example calls:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">square</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x55a63bc21c28&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc31e5fd78&gt;</span>
 <span class="p">(</span><span class="n">cube</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x55a63c1961c0&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc323d4310&gt;</span>
 <span class="nf">cube</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] 8</span>
 <span class="nf">square</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] 4</span>
 </pre></div>
 </div>
-<p>The underlying environment can of course be modified:</p>
+<p>The underlying environment can, of course, be modified:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">assign</span><span class="p">(</span><span class="s">&quot;p&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="n">envir</span><span class="o">=</span><span class="nf">environment</span><span class="p">(</span><span class="n">cube</span><span class="p">))</span>
 <span class="nf">cube</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># so much for the cube</span>
 <span class="c1">## [1] 128</span>
@@ -1675,7 +1677,7 @@ refer to <strong class="command">prepare_message</strong> directly.</p>
 <div style="margin-top: 1em"></div><p>Now, it will be educative to inspect the enclosure
 of “<code class="docutils literal notranslate"><span class="pre">namespace:rpackagedemo</span></code>”:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">parent.env</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x55a63d16a478&gt;</span>
+<span class="c1">## &lt;environment: 0x55dc333a82f0&gt;</span>
 <span class="c1">## attr(,&quot;name&quot;)</span>
 <span class="c1">## [1] &quot;imports:rpackagedemo&quot;</span>
 <span class="nf">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
@@ -1770,7 +1772,7 @@ its outputs suit your taste better.</p>
 <p>Let us go back to the <strong class="program">rpackagedemo</strong> example.
 Looking at its <code class="file docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file, we see that it defines
 two <strong class="command">print</strong> methods: for printing S3 objects
-of classes <code class="docutils literal notranslate"><span class="pre">koala</span></code> and <code class="docutils literal notranslate"><span class="pre">kangaroo</span></code>.</p>
+of the classes <code class="docutils literal notranslate"><span class="pre">koala</span></code> and <code class="docutils literal notranslate"><span class="pre">kangaroo</span></code>.</p>
 <p>The package is attached to the search path. Therefore, we can access
 these methods via a call to the corresponding generic:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">structure</span><span class="p">(</span><span class="s">&quot;Tiny Teddy&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;koala&quot;</span><span class="p">))</span>
@@ -1913,7 +1915,7 @@ Convert the dependency lists to a list of character vectors
 (preferably using regular expressions; see <a class="reference internal" href="160-character.html#sec-regex"><span class="std std-numref">Section 6.2.4</span></a>).</p>
 <p>Then, generate a list of reverse dependencies: what packages depend
 on each given package.</p>
-<p>Use an object of type environment (a hash table)
+<p>Use an object of the type <code class="docutils literal notranslate"><span class="pre">environment</span></code> (a hash table)
 to map the package names to numeric IDs (indexes). This will greatly
 speed up the processing (compare it to a named list-based implementation).</p>
 </div></div><div class="proof proof-type-exercise" id="id51">
@@ -1969,15 +1971,15 @@ regarding the way enclosing environments are referred to as.</p>
 <aside class="footnote brackets" id="footquickhash" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
 <p>Element lookup, insertion, and deletion
-in hash tables takes amortised <span class="math notranslate nohighlight">\(O(1)\)</span> time.</p>
+in hash tables takes amortised <span class="math">\(O(1)\)</span> time.</p>
 </aside>
 <aside class="footnote brackets" id="footlisttime" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
 <p>Accessing elements by position (numeric index)
-in lists takes <span class="math notranslate nohighlight">\(O(1)\)</span> time.
+in lists takes <span class="math">\(O(1)\)</span> time.
 Worst-case scenario for the element look-up by name (non-existence)
 is linear with respect to the container size.
-Also, inserting new elements at the end takes amortised <span class="math notranslate nohighlight">\(O(1)\)</span> time.</p>
+Also, inserting new elements at the end takes amortised <span class="math">\(O(1)\)</span> time.</p>
 </aside>
 <aside class="footnote brackets" id="footdelayed" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">5</a><span class="fn-bracket">]</span></span>
@@ -2110,7 +2112,7 @@ see Section 1 in <span id="id29">[<a class="reference internal" href="999-bibli
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2176,7 +2178,8 @@ see Section 1 in <span id="id29">[<a class="reference internal" href="999-bibli
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>

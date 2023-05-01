@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -301,7 +303,7 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 </div></blockquote>
 <p>In this and the remaining chapters, we will learn some hocus-pocus
 that should only be of interest to the advanced-to-be<a class="footnote-reference brackets" href="#footbegend" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and
-open-minded R programmers who would really like to understand what
+open-minded R programmers who would like to understand what
 is going on under our language’s hood.
 In particular, we will inspect the mechanisms behind
 why certain functions do something very different from what
@@ -362,18 +364,18 @@ in a language like R can be classified into two groups:</p>
 <li><p><em>names</em> (symbols, identifiers),</p></li>
 </ul>
 </li>
-<li><p><em>compound expressions</em> – combinations of <span class="math notranslate nohighlight">\(n+1\)</span> expressions
+<li><p><em>compound expressions</em> – combinations of <span class="math">\(n+1\)</span> expressions
 (simple or compound) of the form:</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
+<div class="math">
 \[(f, e_1, e_2, \dots, e_n).\]</div>
 </div>
 </li>
 </ul>
 <p>As we will soon see, compound expressions are used to
-represent a <em>call</em> to <span class="math notranslate nohighlight">\(f\)</span> (an <em>operator</em>) on a sequence of arguments
-<span class="math notranslate nohighlight">\(e_1,e_2,\dots,e_n\)</span> (<em>operands</em>). This is why, equivalently, we will also
-be denoting them with <span class="math notranslate nohighlight">\(f(e_1,e_2,\dots,e_n)\)</span>.</p>
+represent a <em>call</em> to <span class="math">\(f\)</span> (an <em>operator</em>) on a sequence of arguments
+<span class="math">\(e_1,e_2,\dots,e_n\)</span> (<em>operands</em>). This is why, equivalently, we will also
+be denoting them with <span class="math">\(f(e_1,e_2,\dots,e_n)\)</span>.</p>
 <p>On the other hand, <em>names</em> such as `<code class="docutils literal notranslate"><span class="pre">x</span></code>`, `<code class="docutils literal notranslate"><span class="pre">iris</span></code>`, `<code class="docutils literal notranslate"><span class="pre">sum</span></code>`,
 and `<code class="docutils literal notranslate"><span class="pre">spam</span></code>`, have no meaning without an explicitly stated context,
 which will be a topic that we will explore in <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.
@@ -428,7 +430,7 @@ evaluating a given command:</p>
 <span class="c1">## c(1, 2.71828182845905, exp(1), 3.14159265358979, pi)</span>
 </pre></div>
 </div>
-<div style="margin-top: 1em"></div><p>Objects of type <code class="docutils literal notranslate"><span class="pre">expression</span></code> can be thought of as list-like objects
+<div style="margin-top: 1em"></div><p>Objects of the type <code class="docutils literal notranslate"><span class="pre">expression</span></code> can be thought of as list-like objects
 that consist of simple or compound expressions.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">exprs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expression</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">spam</span><span class="p">,</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="m">+2</span><span class="p">))</span>
 <span class="c1">## expression(1, spam, mean(x) + 2)</span>
@@ -500,8 +502,8 @@ respectively.</p>
 <h2><span class="section-number">15.3. </span>Calls as combinations of expressions<a class="headerlink" href="#calls-as-combinations-of-expressions" title="Permalink to this heading">#</a></h2>
 <p>We have mentioned that calls (compound expressions)
 are combinations of simple or compound expressions
-of the form <span class="math notranslate nohighlight">\((f, e_1, \dots, e_n)\)</span>.</p>
-<p>That the first expression on the list, denoted above with <span class="math notranslate nohighlight">\(f\)</span>,
+of the form <span class="math">\((f, e_1, \dots, e_n)\)</span>.</p>
+<p>That the first expression on the list, denoted above with <span class="math">\(f\)</span>,
 plays a special role, is exactly seen in the following examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.call</span><span class="p">(</span><span class="nf">expression</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
 <span class="c1">## f(x)</span>
@@ -528,9 +530,8 @@ and language constructs such as <strong class="command">if</strong> and
 </div>
 <section id="browsing-parse-trees">
 <h3><span class="section-number">15.3.1. </span>Browsing parse trees<a class="headerlink" href="#browsing-parse-trees" title="Permalink to this heading">#</a></h3>
-<p>We can access the individual expressions constituting an object
-of type call using square brackets.
-For example:</p>
+<p>Square brackets gives us access to the individual expressions constituting
+an object of the type <code class="docutils literal notranslate"><span class="pre">call</span></code>. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="m">1</span><span class="o">+</span><span class="n">x</span><span class="p">)</span>
 <span class="n">expr</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span>
 <span class="c1">## `+`</span>
@@ -549,11 +550,11 @@ it can consist of other compound expressions.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>can be rewritten using the <span class="math notranslate nohighlight">\(f(...)\)</span> notation like:</p>
+<p>can be rewritten using the <span class="math">\(f(...)\)</span> notation like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`while`</span><span class="p">(</span><span class="nf">`&lt;`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="nf">`{`</span><span class="p">(</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;i =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">`&lt;-`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nf">`+`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))))</span>
 </pre></div>
 </div>
-<p>Equivalently, in the Polish (prefix;  <span class="math notranslate nohighlight">\((f, ...)\)</span>; traditionally used
+<p>Equivalently, in the Polish (prefix;  <span class="math">\((f, ...)\)</span>; traditionally used
 in Lisp) notation it will look like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="w">    </span><span class="n">`while`</span><span class="p">,</span>
@@ -622,7 +623,7 @@ parse tree:</p>
 This includes the ability to arbitrarily manipulate it on the fly.
 This is because, just like on lists, we can freely use the
 replacement versions of `<strong class="command">[</strong>` and `<strong class="command">[[</strong>` on
-objects of type call.</p>
+objects of the type <code class="docutils literal notranslate"><span class="pre">call</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="p">[[</span><span class="m">2</span><span class="p">]][[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;&lt;=&quot;</span><span class="p">)</span>
 <span class="n">expr</span><span class="p">[[</span><span class="m">3</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
@@ -886,8 +887,8 @@ Call <strong class="command">sys.function</strong> inside its body to reveal tha
 <ul class="simple">
 <li><p>What is a simple expression? What is a compound expression?
 Give a few examples.</p></li>
-<li><p>What is the difference between an object of type call and
-that of type expression?</p></li>
+<li><p>What is the difference between an object of the type <code class="docutils literal notranslate"><span class="pre">call</span></code> and
+that of the type <code class="docutils literal notranslate"><span class="pre">expression</span></code>?</p></li>
 <li><p>What does <strong class="command">formals</strong> and <strong class="command">body</strong> return
 when called on a function object?</p></li>
 <li><p>How to test if an argument to a function was given at all?
@@ -1013,7 +1014,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1066,7 +1067,8 @@ returns a modified version of itself.</p>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>

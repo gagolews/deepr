@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -395,12 +397,12 @@ because it returns <code class="docutils literal notranslate"><span class="pre">
 <span id="sec-fp"></span><h3><span class="section-number">3.2.3. </span>Dealing with round-off errors (*)<a class="headerlink" href="#dealing-with-round-off-errors" title="Permalink to this heading">#</a></h3>
 <p>In mathematics, real numbers are merely an idealisation.
 In practice, however, it is impossible to store them with
-infinite precision (think <span class="math notranslate nohighlight">\(\pi=3.1415926535897932384626433...\)</span>):
+infinite precision (think <span class="math">\(\pi=3.1415926535897932384626433...\)</span>):
 computer memory is limited, and our time is precious.</p>
 <p>Therefore, a widely agreed-upon consensus had to be reached.
 In R, we rely on the so-called <em>double-precision floating point format</em>.
 The <em>floating point</em> means that the numbers can be both small (close to zero)
-and large: <span class="math notranslate nohighlight">\(\pm 2.23\times 10^{-308}\)</span> and <span class="math notranslate nohighlight">\(\pm 1.79\times 10^{308}\)</span>
+and large: <span class="math">\(\pm 2.23\times 10^{-308}\)</span> and <span class="math">\(\pm 1.79\times 10^{308}\)</span>
 are both acceptable.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -435,7 +437,7 @@ being written in the computer-friendly <em>binary</em>, not the human-aligned
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">0.1</span></code> cannot be represented exactly because it cannot be written
 as a finite series of reciprocals of powers of 2
-(it holds <span class="math notranslate nohighlight">\(0.1=2^{-4}+2^{-5}+2^{-8}+2^{-9}+\dots\)</span>).
+(it holds <span class="math">\(0.1=2^{-4}+2^{-5}+2^{-8}+2^{-9}+\dots\)</span>).
 This leads to surprising results such as:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0.3</span>
 <span></span><span class="c1">## [1] FALSE</span>
@@ -455,7 +457,7 @@ Actually, we experience something more like:</p>
 </pre></div>
 </div>
 </li>
-<li><p>All integers between <span class="math notranslate nohighlight">\(-2^{53}\)</span> and <span class="math notranslate nohighlight">\(2^{53}\)</span> all stored
+<li><p>All integers between <span class="math">\(-2^{53}\)</span> and <span class="math">\(2^{53}\)</span> all stored
 exactly: this is good news.
 However, the next integer is beyond the representable range:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span>
@@ -500,7 +502,7 @@ subtraction, and multiplication are always precise.</p>
 e.g., division or <strong class="command">sqrt</strong>), we need to be very
 careful with comparisons, especially involving testing for
 equality, `<strong class="command">==</strong>`.</p>
-<p>The sole fact that <span class="math notranslate nohighlight">\(\sin \pi = 0\)</span>, mathematically speaking,
+<p>The sole fact that <span class="math">\(\sin \pi = 0\)</span>, mathematically speaking,
 does not mean that we should expect that:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>
 <span class="c1">## [1] FALSE</span>
@@ -508,16 +510,16 @@ does not mean that we should expect that:</p>
 </div>
 <p>Instead, they are so close to each other that we can
 <em>treat the difference between them as negligible</em>.
-Thus, in practice, instead of testing if <span class="math notranslate nohighlight">\(x = y\)</span>,
+Thus, in practice, instead of testing if <span class="math">\(x = y\)</span>,
 we will be considering:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(|x-y|\)</span> (absolute error) or</p></li>
-<li><p><span class="math notranslate nohighlight">\(\frac{|x-y|}{|y|}\)</span> (relative error; which takes the order of
+<li><p><span class="math">\(|x-y|\)</span> (absolute error) or</p></li>
+<li><p><span class="math">\(\frac{|x-y|}{|y|}\)</span> (relative error; which takes the order of
 magnitude of the numbers into account
-but obviously cannot be applied if <span class="math notranslate nohighlight">\(y\)</span> is very close to <span class="math notranslate nohighlight">\(0\)</span>),</p></li>
+but obviously cannot be applied if <span class="math">\(y\)</span> is very close to <span class="math">\(0\)</span>),</p></li>
 </ul>
 <p>and determining if these are less than some assumed error margin,
-<span class="math notranslate nohighlight">\(\varepsilon&gt;0\)</span>, say, <span class="math notranslate nohighlight">\(10^{-8}\)</span> or <span class="math notranslate nohighlight">\(2^{-26}\)</span>.</p>
+<span class="math">\(\varepsilon&gt;0\)</span>, say, <span class="math">\(10^{-8}\)</span> or <span class="math">\(2^{-26}\)</span>.</p>
 <p>For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">abs</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">-26</span>
 <span class="c1">## [1] TRUE</span>
@@ -551,10 +553,10 @@ pinpoint the <em>exact</em> solution.</p>
 <p>The relational operators such as `<strong class="command">==</strong>` and `<strong class="command">&gt;</strong>`
 accept only <em>two</em> arguments. Their chaining is forbidden.
 A test that we would mathematically write
-as <span class="math notranslate nohighlight">\(0 \le x \le 1\)</span> (or <span class="math notranslate nohighlight">\(x\in[0, 1]\)</span>) cannot be expressed
+as <span class="math">\(0 \le x \le 1\)</span> (or <span class="math">\(x\in[0, 1]\)</span>) cannot be expressed
 as “<code class="docutils literal notranslate"><span class="pre">0&lt;=x&lt;=1</span></code>” in R.</p>
 <p>Therefore, we need a way to combine two logical conditions
-so as to be able to state that “<span class="math notranslate nohighlight">\(x\ge 0\)</span> <em>and, at the same time</em>, <span class="math notranslate nohighlight">\(x\le 1\)</span>”.</p>
+so as to be able to state that “<span class="math">\(x\ge 0\)</span> <em>and, at the same time</em>, <span class="math">\(x\le 1\)</span>”.</p>
 <p>In such situations, the following logical operators
 and functions come in handy:</p>
 <ul class="simple">
@@ -701,15 +703,15 @@ is equivalent to “<code class="docutils literal notranslate"><span class="pre"
 Some further simplifications are enabled by
 other properties of the binary operations:</p>
 <ul class="simple">
-<li><p>commutativity (symmetry), e.g., <span class="math notranslate nohighlight">\(a+b = b+a\)</span>, <span class="math notranslate nohighlight">\(a*b=b*a\)</span>,</p></li>
+<li><p>commutativity (symmetry), e.g., <span class="math">\(a+b = b+a\)</span>, <span class="math">\(a*b=b*a\)</span>,</p></li>
 <li><p>associativity, e.g.,
-<span class="math notranslate nohighlight">\((a+b)+c = a+(b+c)\)</span>, <span class="math notranslate nohighlight">\(\max(\max(a, b), c)=\max(a, \max(b, c))\)</span>,</p></li>
+<span class="math">\((a+b)+c = a+(b+c)\)</span>, <span class="math">\(\max(\max(a, b), c)=\max(a, \max(b, c))\)</span>,</p></li>
 <li><p>distributivity, e.g.,
-<span class="math notranslate nohighlight">\(a*b+a*c = a*(b+c)\)</span>, <span class="math notranslate nohighlight">\(\min(\max(a,b), \max(a,c))=\max(a, \min(b, c))\)</span>,</p></li>
+<span class="math">\(a*b+a*c = a*(b+c)\)</span>, <span class="math">\(\min(\max(a,b), \max(a,c))=\max(a, \min(b, c))\)</span>,</p></li>
 </ul>
 <p>and relations, including:</p>
 <ul class="simple">
-<li><p>transitivity, e.g., if <span class="math notranslate nohighlight">\(a\le b\)</span> and <span class="math notranslate nohighlight">\(b\le c\)</span> then surely <span class="math notranslate nohighlight">\(a \le c\)</span>.</p></li>
+<li><p>transitivity, e.g., if <span class="math">\(a\le b\)</span> and <span class="math">\(b\le c\)</span> then surely <span class="math">\(a \le c\)</span>.</p></li>
 </ul>
 <div class="proof proof-type-exercise" id="id6">
 
@@ -740,18 +742,18 @@ based on some logical condition.</p>
 <p>A call to <strong class="command">ifelse</strong><code class="code docutils literal notranslate"><span class="pre">(l,</span> <span class="pre">t,</span> <span class="pre">f)</span></code>, where <code class="docutils literal notranslate"><span class="pre">l</span></code> is a logical vector,
 returns a vector <code class="docutils literal notranslate"><span class="pre">y</span></code> such that:</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<div class="math">
+\[
 y_i = \left\{
 \begin{array}{ll}
-t_i &amp; \text{if } l_i \text{ is TRUE }, \\
-f_i &amp; \text{if } l_i \text{ is FALSE }. \\
+t_i & \text{if } l_i \text{ is TRUE }, \\
+f_i & \text{if } l_i \text{ is FALSE }. \\
 \end{array}
 \right.
-\end{split}\]</div>
+\]</div>
 </div>
-<p>In other words, the <span class="math notranslate nohighlight">\(i\)</span>-th element of the result vector
-is equal to <span class="math notranslate nohighlight">\(t_i\)</span> if <span class="math notranslate nohighlight">\(l_i\)</span> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and to <span class="math notranslate nohighlight">\(f_i\)</span> otherwise.</p>
+<p>In other words, the <span class="math">\(i\)</span>-th element of the result vector
+is equal to <span class="math">\(t_i\)</span> if <span class="math">\(l_i\)</span> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and to <span class="math">\(f_i\)</span> otherwise.</p>
 <p>For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">6</span><span class="p">))</span><span class="w">  </span><span class="c1"># example vector</span>
 <span class="c1">## [1] -0.560476 -0.230177  1.558708  0.070508  0.129288  1.715065</span>
@@ -824,9 +826,9 @@ variable:</p>
         <span class="proof-type">Exercise 3.3</span>
         
     </div><div class="proof-content">
-<p><a class="reference internal" href="#fig-ex-mixture"><span class="std std-numref">Figure 3.1</span></a>  depicts a realisation of the mixture <span class="math notranslate nohighlight">\(Z=0.2 X + 0.8 Y\)</span>
-of two normal distributions <span class="math notranslate nohighlight">\(X\sim\mathrm{N}(-2, 0.5)\)</span>
-and <span class="math notranslate nohighlight">\(Y\sim\mathrm{N}(3, 1)\)</span>.</p>
+<p><a class="reference internal" href="#fig-ex-mixture"><span class="std std-numref">Figure 3.1</span></a>  depicts a realisation of the mixture <span class="math">\(Z=0.2 X + 0.8 Y\)</span>
+of two normal distributions <span class="math">\(X\sim\mathrm{N}(-2, 0.5)\)</span>
+and <span class="math">\(Y\sim\mathrm{N}(3, 1)\)</span>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100000</span>
 <span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ifelse</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="nf">hist</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="m">101</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
@@ -843,14 +845,14 @@ the normal distribution that has the expected value of -2
 with probability 20%, and from the one with the expectation of 3 otherwise.</p>
 <p>Inspired by the above, generate the following Gaussian mixtures:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\frac{2}{3} X + \frac{1}{3} Y\)</span>, where <span class="math notranslate nohighlight">\(X\sim\mathrm{N}(100, 16)\)</span>
-and <span class="math notranslate nohighlight">\(Y\sim\mathrm{N}(116, 8)\)</span>,</p></li>
-<li><p><span class="math notranslate nohighlight">\(0.3 X + 0.4 Y + 0.3 Z\)</span>, where <span class="math notranslate nohighlight">\(X\sim\mathrm{N}(-10, 2)\)</span>,
-<span class="math notranslate nohighlight">\(Y\sim\mathrm{N}(0, 2)\)</span>, and <span class="math notranslate nohighlight">\(Z\sim\mathrm{N}(10, 2)\)</span>.</p></li>
+<li><p><span class="math">\(\frac{2}{3} X + \frac{1}{3} Y\)</span>, where <span class="math">\(X\sim\mathrm{N}(100, 16)\)</span>
+and <span class="math">\(Y\sim\mathrm{N}(116, 8)\)</span>,</p></li>
+<li><p><span class="math">\(0.3 X + 0.4 Y + 0.3 Z\)</span>, where <span class="math">\(X\sim\mathrm{N}(-10, 2)\)</span>,
+<span class="math">\(Y\sim\mathrm{N}(0, 2)\)</span>, and <span class="math">\(Z\sim\mathrm{N}(10, 2)\)</span>.</p></li>
 </ul>
-<p>(*) On a side note, knowing that if <span class="math notranslate nohighlight">\(X\)</span> follows <span class="math notranslate nohighlight">\(\mathrm{N}(0, 1)\)</span>,
-then the scaled-shifted <span class="math notranslate nohighlight">\(\sigma X+\mu\)</span> is distributed
-<span class="math notranslate nohighlight">\(\mathrm{N}(\mu, \sigma)\)</span>,
+<p>(*) On a side note, knowing that if <span class="math">\(X\)</span> follows <span class="math">\(\mathrm{N}(0, 1)\)</span>,
+then the scaled-shifted <span class="math">\(\sigma X+\mu\)</span> is distributed
+<span class="math">\(\mathrm{N}(\mu, \sigma)\)</span>,
 the above can be equivalently written as:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span>
 <span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="o">*</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span>
@@ -876,10 +878,10 @@ vaccine is proven effective” is obviously true?</p></li>
 a tendency to generate warnings and how to rewrite it so as to
 prevent that from happening?</p></li>
 <li><p>What is the interpretation of “<strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(x</span> <span class="pre">&gt;=</span> <span class="pre">0</span> <span class="pre">&amp;</span> <span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">1)</span></code>”?</p></li>
-<li><p>For some integer <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, how to verify whether <span class="math notranslate nohighlight">\(0 &lt; x &lt; 100\)</span>,
-<span class="math notranslate nohighlight">\(0 &lt; y &lt; 100\)</span>, and <span class="math notranslate nohighlight">\(x &lt; y\)</span>, all at the same time?</p></li>
-<li><p>Mathematically, for all real <span class="math notranslate nohighlight">\(x, y &gt; 0\)</span>,
-it holds <span class="math notranslate nohighlight">\(\log xy = \log x + \log y\)</span>.
+<li><p>For some integer <span class="math">\(x\)</span> and <span class="math">\(y\)</span>, how to verify whether <span class="math">\(0 &lt; x &lt; 100\)</span>,
+<span class="math">\(0 &lt; y &lt; 100\)</span>, and <span class="math">\(x &lt; y\)</span>, all at the same time?</p></li>
+<li><p>Mathematically, for all real <span class="math">\(x, y &gt; 0\)</span>,
+it holds <span class="math">\(\log xy = \log x + \log y\)</span>.
 Why then
 “<strong class="command">all</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(x*y)</span> <span class="pre">==</span> </code><strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(x)+</span></code><strong class="command">log</strong><code class="code docutils literal notranslate"><span class="pre">(y))</span></code>” can sometimes return <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>?
 How to fix this?</p></li>
@@ -890,8 +892,8 @@ help page) and many other ones listed in, e.g., the GNU GSL library
 <span id="id5">[<a class="reference internal" href="999-bibliography.html#id30" title="Galassi, M., Theiler, J., and others. (2021).  GNU Scientific Library Reference Manual. URL: https://www.gnu.org/software/gsl/.">27</a>]</span>?
 Is our referring to them a violation of the beloved
 “let us be minimalist” approach?</p></li>
-<li><p>If we know that <span class="math notranslate nohighlight">\(x\)</span> may be subject to error,
-how to test whether <span class="math notranslate nohighlight">\(x&gt;0\)</span> in a robust manner?</p></li>
+<li><p>If we know that <span class="math">\(x\)</span> may be subject to error,
+how to test whether <span class="math">\(x&gt;0\)</span> in a robust manner?</p></li>
 <li><p>Is “<code class="docutils literal notranslate"><span class="pre">y&lt;-5</span></code>” the same as “<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&lt;-</span> <span class="pre">5</span></code>” or rather “<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&lt;</span> <span class="pre">-5</span></code>”?</p></li>
 </ul>
 </div></div><div class="proof proof-type-exercise" id="id11">
@@ -909,38 +911,38 @@ and <strong class="command">all.equal</strong>? Is the last one properly vectori
         <span class="proof-type">Exercise 3.6</span>
         
     </div><div class="proof-content">
-<p>Compute the cross-entropy loss between a numeric vector <span class="math notranslate nohighlight">\(\boldsymbol{p}\)</span> with values in the interval <span class="math notranslate nohighlight">\((0, 1)\)</span>
-and a logical vector <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span>, both of length <span class="math notranslate nohighlight">\(n\)</span>
+<p>Compute the cross-entropy loss between a numeric vector <span class="math">\(\boldsymbol{p}\)</span> with values in the interval <span class="math">\((0, 1)\)</span>
+and a logical vector <span class="math">\(\boldsymbol{y}\)</span>, both of length <span class="math">\(n\)</span>
 (you can generate them randomly or manually, it does not matter,
 it is just an exercise):</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
+<div class="math">
 \[
 \mathcal{L}(\boldsymbol{p}, \boldsymbol{y}) = \frac{1}{n} \sum_{i=1}^n \ell_i,
 \]</div>
 </div>
 <p>where</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<div class="math">
+\[
 \ell_i =
 \left\{
 \begin{array}{ll}
--\log p_i     &amp; \text{if } y_i \text{ is TRUE }, \\
--\log (1-p_i) &amp; \text{if } y_i \text{ is FALSE }. \\
+-\log p_i     & \text{if } y_i \text{ is TRUE }, \\
+-\log (1-p_i) & \text{if } y_i \text{ is FALSE }. \\
 \end{array}
 \right.
-\end{split}\]</div>
+\]</div>
 </div>
 <p>Interpretation: in classification problems,
-<span class="math notranslate nohighlight">\(y_i\in\{\text{FALSE}, \text{TRUE}\}\)</span>
-denotes the true class of the <span class="math notranslate nohighlight">\(i\)</span>-th object
-(say, whether the <span class="math notranslate nohighlight">\(i\)</span>-th hospital patient is symptomatic)
-and <span class="math notranslate nohighlight">\(p_i\in(0, 1)\)</span> a machine learning algorithm’s
-<em>confidence</em> that <span class="math notranslate nohighlight">\(i\)</span> belongs to class <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>
+<span class="math">\(y_i\in\{\text{FALSE}, \text{TRUE}\}\)</span>
+denotes the true class of the <span class="math">\(i\)</span>-th object
+(say, whether the <span class="math">\(i\)</span>-th hospital patient is symptomatic)
+and <span class="math">\(p_i\in(0, 1)\)</span> a machine learning algorithm’s
+<em>confidence</em> that <span class="math">\(i\)</span> belongs to class <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>
 (e.g., how sure a decision tree model is that the corresponding
-person is unwell). Ideally, if <span class="math notranslate nohighlight">\(y_i\)</span> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <span class="math notranslate nohighlight">\(p_i\)</span> should be close to 1
-and to <span class="math notranslate nohighlight">\(0\)</span> otherwise. The cross-entropy loss quantifies by how much
+person is unwell). Ideally, if <span class="math">\(y_i\)</span> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <span class="math">\(p_i\)</span> should be close to 1
+and to <span class="math">\(0\)</span> otherwise. The cross-entropy loss quantifies by how much
 a classifier differs from the omniscient one.
 The use of the logarithm penalises strong beliefs in the wrong answer.</p>
 </div></div><p>By the way, if we have solved any of the exercises encountered so far
@@ -1000,7 +1002,7 @@ operation chains.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1055,7 +1057,8 @@ operation chains.</p>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>

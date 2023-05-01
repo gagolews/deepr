@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -333,7 +335,7 @@ something different from the kind of input it was fed with).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
-Numeric vectors are reported as being either of type
+Numeric vectors are reported as being either of the type
 <code class="docutils literal notranslate"><span class="pre">double</span></code> (double-precision floating-point numbers)
 or <code class="docutils literal notranslate"><span class="pre">integer</span></code> (32-bit; it is a subset of <code class="docutils literal notranslate"><span class="pre">double</span></code>);
 see <a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>.
@@ -432,11 +434,11 @@ can apply coercion by themselves (or act as if they do so):</p>
         
     </div><div class="proof-content">
 <p>In one of the previous exercises, we computed the cross-entropy loss
-between a logical vector <span class="math notranslate nohighlight">\(\boldsymbol{y}\in\{0, 1\}^n\)</span>
-and a numeric vector  <span class="math notranslate nohighlight">\(\boldsymbol{p}\in(0, 1)^n\)</span>.
+between a logical vector <span class="math">\(\boldsymbol{y}\in\{0, 1\}^n\)</span>
+and a numeric vector  <span class="math">\(\boldsymbol{p}\in(0, 1)^n\)</span>.
 This measure can be equivalently defined as:</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
+<div class="math">
 \[
 \mathcal{L}(\boldsymbol{p}, \boldsymbol{y}) = -\frac{1}{n}\left(\sum_{i=1}^n y_i\log(p_i)+ (1-y_i)\log(1-p_i) \right).
 \]</div>
@@ -448,7 +450,7 @@ and compute the cross-entropy loss between, say,
 “<code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&lt;-</span> </code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span></code>” for some <code class="docutils literal notranslate"><span class="pre">n</span></code>.
 Note how seamlessly we are translating between
 <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>/<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>s and 0/1s in the above equation (in particular,
-where we let <span class="math notranslate nohighlight">\(1-y_i\)</span> mean the logical negation of <span class="math notranslate nohighlight">\(y_i\)</span>).</p>
+where we let <span class="math">\(1-y_i\)</span> mean the logical negation of <span class="math">\(y_i\)</span>).</p>
 </div></div></section>
 </section>
 <section id="lists">
@@ -519,7 +521,7 @@ when fed with arguments of mixed types, tries to determine
 the common type that retains the sense of data.
 If coercion to an atomic vector is not possible, the result
 will be a list.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">identity</span><span class="p">)</span><span class="w">  </span><span class="c1"># `identity` is an object of type &quot;function&quot;</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">identity</span><span class="p">)</span><span class="w">  </span><span class="c1"># `identity` is an object of the type &quot;function&quot;</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">##</span>
@@ -599,7 +601,7 @@ in a way that can sometimes result in a matrix.</p>
 </section>
 <section id="null">
 <h2><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">NULL</span></code><a class="headerlink" href="#null" title="Permalink to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">NULL</span></code> object (the one and only object of type “<code class="docutils literal notranslate"><span class="pre">NULL</span></code>”)
+<p>The <code class="docutils literal notranslate"><span class="pre">NULL</span></code> object (the one and only object of the type “<code class="docutils literal notranslate"><span class="pre">NULL</span></code>”)
 can be used as a placeholder for any other R object
 or designate the absence of such.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">month.name</span><span class="p">)</span>
@@ -1052,7 +1054,7 @@ given as their inputs.</p>
 <li><p>That is the meaning of “<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(TRUE,</span> <span class="pre">FALSE)</span> <span class="pre">*</span> <span class="pre">1:10</span></code>”?</p></li>
 <li><p>What does “<strong class="command">sum</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>”
 compute when <code class="docutils literal notranslate"><span class="pre">x</span></code> is a numeric vector?</p></li>
-<li><p>We said that atomic vectors of type <code class="docutils literal notranslate"><span class="pre">character</span></code> are the
+<li><p>We said that atomic vectors of the type <code class="docutils literal notranslate"><span class="pre">character</span></code> are the
 most general ones. Therefore, is
 “<strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>”
 the same as “<strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>”, regardless of
@@ -1129,6 +1131,8 @@ to get a single list that features all atomic vectors as its elements
 snapshots to disk so that they can be later restored very quickly
 via a call to <strong class="command">saveRDS</strong>.
 Verify whether this function preserves object attributes.</p>
+<p>See also <strong class="command">dput</strong> and <strong class="command">dget</strong> which work with
+objects’ textual representation in the form executable R code.</p>
 </div></div><div class="proof proof-type-exercise" id="id13">
 
     <div class="proof-title">
@@ -1190,7 +1194,7 @@ see <a class="reference internal" href="210-design.html#sec-replacementfun"><spa
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1248,7 +1252,8 @@ see <a class="reference internal" href="210-design.html#sec-replacementfun"><spa
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>

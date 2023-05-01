@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -966,16 +968,16 @@ gives <code class="docutils literal notranslate"><span class="pre">z[i]</span></
 is between <code class="docutils literal notranslate"><span class="pre">y[j]</span></code> (by default, inclusive)
 and <code class="docutils literal notranslate"><span class="pre">y[j+1]</span></code> (by default, exclusive).</p>
 <p>For example, a sequence of five knots
-<span class="math notranslate nohighlight">\(\boldsymbol{y}=(-\infty, 0.25, 0.5, 0.75, \infty)\)</span>
+<span class="math">\(\boldsymbol{y}=(-\infty, 0.25, 0.5, 0.75, \infty)\)</span>
 splits the real line into the following four intervals:</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<div class="math">
+\[
 \begin{array}{cccc}
-[-\infty, 0.25) &amp; [0.25, 0.5) &amp; [0.5, 0.75) &amp; [0.75, \infty) \\
-\text{\scriptsize (1)} &amp; \text{\scriptsize (2)} &amp; \text{\scriptsize (3)} &amp; \text{\scriptsize (4)} \\
+[-\infty, 0.25) & [0.25, 0.5) & [0.5, 0.75) & [0.75, \infty) \\
+\text{\scriptsize (1)} & \text{\scriptsize (2)} & \text{\scriptsize (3)} & \text{\scriptsize (4)} \\
 \end{array}
-\end{split}\]</div>
+\]</div>
 </div>
 <p>Hence, for instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">findInterval</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.4</span><span class="p">,</span><span class="w"> </span><span class="m">0.66</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.75</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">))</span>
@@ -989,8 +991,8 @@ splits the real line into the following four intervals:</p>
         
     </div><div class="proof-content">
 <p>Refer to the manual of <strong class="command">findInterval</strong> to verify the function’s behaviour
-when we do not include <span class="math notranslate nohighlight">\(\pm\infty\)</span> as endpoints
-and how to make <span class="math notranslate nohighlight">\(\infty\)</span> classified as a member of the fourth interval.</p>
+when we do not include <span class="math">\(\pm\infty\)</span> as endpoints
+and how to make <span class="math">\(\infty\)</span> classified as a member of the fourth interval.</p>
 </div></div><div class="proof proof-type-exercise" id="id16">
 
     <div class="proof-title">
@@ -998,8 +1000,8 @@ and how to make <span class="math notranslate nohighlight">\(\infty\)</span> cla
         
     </div><div class="proof-content">
 <p>Using a call to <strong class="command">findInterval</strong>, write a statement
-that generates a logical vector whose <em>i</em>-th element indicates
-whether <code class="docutils literal notranslate"><span class="pre">x[i]</span></code> is in the interval <span class="math notranslate nohighlight">\([0.25, 0.5]\)</span>.
+that generates a logical vector whose <span class="math">\(i\)</span>-th element indicates
+whether <code class="docutils literal notranslate"><span class="pre">x[i]</span></code> is in the interval <span class="math">\([0.25, 0.5]\)</span>.
 Was this easier to write than an expression involving
 `<strong class="command">&lt;=</strong>` and `<strong class="command">&gt;=</strong>`?</p>
 </div></div></section>
@@ -1110,9 +1112,10 @@ The experiment’s aim was to measure the effect of different vitamin C
 <span class="c1">##  [1] 23.6 18.5 33.9 25.5 26.4 32.5 26.7 21.5 23.3 29.5</span>
 </pre></div>
 </div>
-<p>Other synonyms are of course possible, e.g.,
-<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(ToothGrowth[[1]],</span> <span class="pre">ToothGrowth[-1])</span></code>,
-<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(ToothGrowth[[1]],</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(ToothGrowth[[2]],</span> <span class="pre">ToothGrowth[[3]]))</span></code>, etc.
+<p>Other synonyms are, of course, possible, e.g.,
+<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(ToothGrowth[[1]],</span> <span class="pre">ToothGrowth[-1])</span></code>
+and
+<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(ToothGrowth[[1]],</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(ToothGrowth[[2]],</span> <span class="pre">ToothGrowth[[3]]))</span></code>.
 We recommend meditating upon our conscious use of
 double vs single square brackets here.</p>
 <p>Functions such as <strong class="command">Map</strong> (<a class="reference internal" href="170-function.html#sec-fun-prog"><span class="std std-numref">Section 7.2</span></a>)
@@ -1238,7 +1241,7 @@ which we will exercise in <a class="reference internal" href="240-data-frame.htm
 <p class="admonition-title">Note</p>
 <p>(*)
 Calling <strong class="command">order</strong> on a permutation
-(a vector that is an arbitrary arrangement of <em>n</em> consecutive
+(a vector that is an arbitrary arrangement of <span class="math">\(n\)</span> consecutive
 natural numbers) determines its <em>inverse</em>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">)</span>
 <span class="nf">order</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1561,13 +1564,13 @@ Ensure the code works for vectors of length less than five.</p>
     </div><div class="proof-content">
 <p>We can compute a <em>trimmed</em> mean of some <code class="docutils literal notranslate"><span class="pre">x</span></code>
 by setting the <code class="docutils literal notranslate"><span class="pre">trim</span></code> argument to the <strong class="command">mean</strong> function.
-Compute a similar robust estimator of location – the <em>p</em>-winsorised mean,
-<span class="math notranslate nohighlight">\(p\in[0, 0.5]\)</span> defined as the arithmetic mean of all elements
-in <code class="docutils literal notranslate"><span class="pre">x</span></code> clipped to the <span class="math notranslate nohighlight">\([Q_p, Q_{1-p}]\)</span> interval,
-where <span class="math notranslate nohighlight">\(Q_p\)</span> is the vector’s <em>p</em>-quantile;
+Compute a similar robust estimator of location – the <span class="math">\(p\)</span>-winsorised mean,
+<span class="math">\(p\in[0, 0.5]\)</span> defined as the arithmetic mean of all elements
+in <code class="docutils literal notranslate"><span class="pre">x</span></code> clipped to the <span class="math">\([Q_p, Q_{1-p}]\)</span> interval,
+where <span class="math">\(Q_p\)</span> is the vector’s <span class="math">\(p\)</span>-quantile;
 see <strong class="command">quantile</strong>.
 For example, if <code class="docutils literal notranslate"><span class="pre">x</span></code> is (8, 5, 2, 9, 7, 4, 6, 1, 3),
-we have <span class="math notranslate nohighlight">\(Q_{0.25}=3\)</span> and <span class="math notranslate nohighlight">\(Q_{0.75}=7\)</span> and hence the <span class="math notranslate nohighlight">\(0.25\)</span>-winsorised mean
+we have <span class="math">\(Q_{0.25}=3\)</span> and <span class="math">\(Q_{0.75}=7\)</span> and hence the <span class="math">\(0.25\)</span>-winsorised mean
 will be equal to the arithmetic mean of (7, 5, 3, 7, 7, 4, 6, 3, 3).</p>
 </div></div><div class="proof proof-type-exercise" id="id30">
 
@@ -1575,18 +1578,18 @@ will be equal to the arithmetic mean of (7, 5, 3, 7, 7, 4, 6, 3, 3).</p>
         <span class="proof-type">Exercise 5.22</span>
         
     </div><div class="proof-content">
-<p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> be two vectors of the same length, <span class="math notranslate nohighlight">\(n\)</span>, and no ties.
+<p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> be two vectors of the same length, <span class="math">\(n\)</span>, and no ties.
 Compute the Spearman rank correlation coefficient given by:</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
+<div class="math">
 \[
 \varrho(\mathbf{x},\mathbf{y})
 =
 1-\frac{6 \sum_{i=1}^n d_i^2}{n (n^2-1)},
 \]</div>
 </div>
-<p>where <span class="math notranslate nohighlight">\(d_i=r_i-s_i\)</span>, <span class="math notranslate nohighlight">\(i=1,\dots,n\)</span>,
-and <span class="math notranslate nohighlight">\(r_i\)</span> and <span class="math notranslate nohighlight">\(s_i\)</span> denote the rank of <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span>, respectively.
+<p>where <span class="math">\(d_i=r_i-s_i\)</span>, <span class="math">\(i=1,\dots,n\)</span>,
+and <span class="math">\(r_i\)</span> and <span class="math">\(s_i\)</span> denote the rank of <span class="math">\(x_i\)</span> and <span class="math">\(y_i\)</span>, respectively.
 See also the built-in <strong class="command">cor</strong>.</p>
 </div></div><div class="proof proof-type-exercise" id="id31">
 
@@ -1595,12 +1598,12 @@ See also the built-in <strong class="command">cor</strong>.</p>
         
     </div><div class="proof-content">
 <p>(*)
-Given two vectors <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> of the same length <span class="math notranslate nohighlight">\(n\)</span>,
+Given two vectors <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> of the same length <span class="math">\(n\)</span>,
 a call to <strong class="command">approx</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">...)</span></code> can be used to
 interpolate linearly between
-the points <span class="math notranslate nohighlight">\((x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\)</span>.
-We can use it whenever we wish to generate new <span class="math notranslate nohighlight">\(y\)</span>s for previously
-unobserved <span class="math notranslate nohighlight">\(x\)</span>s (somewhere “in-between” the data we already have).
+the points <span class="math">\((x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\)</span>.
+We can use it whenever we wish to generate new <span class="math">\(y\)</span>s for previously
+unobserved <span class="math">\(x\)</span>s (somewhere “in-between” the data we already have).
 Moreover, <strong class="command">spline</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">...)</span></code> can perform a cubic spline interpolation, which is smoother; see <a class="reference internal" href="#fig-approx"><span class="std std-numref">Figure 5.2</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w">  </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">)</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w">  </span><span class="m">0</span><span class="p">)</span>
@@ -1665,8 +1668,8 @@ ties in <code class="docutils literal notranslate"><span class="pre">y</span></c
 <p>should choose either the first (<code class="docutils literal notranslate"><span class="pre">&quot;b&quot;</span></code>), last  (<code class="docutils literal notranslate"><span class="pre">&quot;e&quot;</span></code>), or random
 (<code class="docutils literal notranslate"><span class="pre">&quot;b&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;d&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;e&quot;</span></code> with equal probability)
 element from <code class="docutils literal notranslate"><span class="pre">x</span></code> fulfilling the above property.
-Make sure your code works
-for <code class="docutils literal notranslate"><span class="pre">x</span></code> being of type character or numeric as well as an empty vector.</p>
+Make sure your code works for <code class="docutils literal notranslate"><span class="pre">x</span></code> being of the type <code class="docutils literal notranslate"><span class="pre">character</span></code> or <code class="docutils literal notranslate"><span class="pre">numeric</span></code>
+as well as an empty vector.</p>
 </div></div><div class="proof proof-type-exercise" id="id36">
 
     <div class="proof-title">
@@ -1683,7 +1686,7 @@ for a numeric vector <code class="docutils literal notranslate"><span class="pre
         
     </div><div class="proof-content">
 <p>Based on <strong class="command">match</strong> and <strong class="command">unique</strong>,
-implement your own versions of  <strong class="command">union</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>,
+implement your versions of  <strong class="command">union</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>,
 <strong class="command">intersect</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>, <strong class="command">setdiff</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>,
 <strong class="command">is.element</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>, and <strong class="command">setequal</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>
 for <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> being non-empty numeric vectors.</p>
@@ -1758,7 +1761,7 @@ here; compare <a class="reference internal" href="220-s3.html#sec-s3-direct-meth
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1827,7 +1830,8 @@ here; compare <a class="reference internal" href="220-s3.html#sec-s3-direct-meth
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>

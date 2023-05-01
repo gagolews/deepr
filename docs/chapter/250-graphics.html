@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -448,8 +450,8 @@ are available); strings longer than one will be truncated.</p></li>
 <span class="w">    </span><span class="n">pch</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Spanish Inquisition&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;9&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">xy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expand.grid</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>
-<span class="nf">text</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="m">-1</span><span class="p">),</span><span class="w"> </span><span class="n">pos</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">0.89</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="o">=</span><span class="m">0.75</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;darkgray&quot;</span><span class="p">)</span>
-<span class="nf">points</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="m">-1</span><span class="p">),</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;yellow&quot;</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="p">(</span><span class="nf">NROW</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="m">-1</span><span class="p">),</span><span class="w"> </span><span class="n">pos</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">0.89</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="o">=</span><span class="m">0.75</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;darkgray&quot;</span><span class="p">)</span>
+<span class="nf">points</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="p">(</span><span class="nf">NROW</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="m">-1</span><span class="p">),</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;yellow&quot;</span><span class="p">)</span>
 <span class="c1">## Warning in plot.xy(xy.coords(x, y), type = type, ...): unimplemented pch</span>
 <span class="c1">##     value &#39;26&#39;</span>
 </pre></div>
@@ -537,7 +539,7 @@ truth using the <em>sine</em> function; see <a class="reference internal" href="
         <span class="proof-type">Exercise 13.4</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of the <strong class="command">segments</strong> function,
+<p>Implement your version of the <strong class="command">segments</strong> function,
 using a call to <strong class="command">lines</strong>.</p>
 </div></div><div class="proof proof-type-exercise" id="id25">
 
@@ -601,7 +603,7 @@ we can produce self-intersecting or otherwise degenerate shapes.</p>
         <span class="proof-type">Exercise 13.7</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of the <strong class="command">rect</strong> function,
+<p>Implement your version of the <strong class="command">rect</strong> function,
 using a call to <strong class="command">polygon</strong>.</p>
 </div></div></section>
 <section id="text">
@@ -633,7 +635,7 @@ symbols and formulae. It relies
 on some quirky syntax that we enter using unevaluated R expressions
 (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>). Still, it should be enough to meet our most basic
 needs. For instance, passing “<strong class="command">quote</strong><code class="code docutils literal notranslate"><span class="pre">(beta[i]^j)</span></code>”
-as the <code class="docutils literal notranslate"><span class="pre">labels</span></code> argument to <strong class="command">text</strong>, will output “<span class="math notranslate nohighlight">\(\beta_i^j\)</span>”.
+as the <code class="docutils literal notranslate"><span class="pre">labels</span></code> argument to <strong class="command">text</strong>, will output “<span class="math">\(\beta_i^j\)</span>”.
 See <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;plotmath&quot;)</span></code> for more details.</p>
 <p>For more sophisticated mathematical typesetting, see <strong class="program">tikzDevice</strong>
 that we mention in <a class="reference internal" href="#sec-grdevices"><span class="std std-numref">Section 13.2.7</span></a>.
@@ -658,7 +660,7 @@ contour plots; see <a class="reference internal" href="#sec-heat-map"><span clas
 <p>Optionally, bilinear interpolation
 can be applied if the drawing area is larger than the bitmap size
 and we would like to smoothen the colour transitions out.
-<a class="reference internal" href="#fig-gradient"><span class="std std-numref">Figure 13.9</span></a> presents a very stretched 4-by-3 pixel
+<a class="reference internal" href="#fig-gradient"><span class="std std-numref">Figure 13.9</span></a> presents a very stretched <span class="math">\(4\times 3\)</span> pixel
 image, with and without interpolation.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">));</span><span class="w"> </span><span class="nf">plot.new</span><span class="p">();</span><span class="w"> </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="n">I</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="n">nrow</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>
@@ -729,8 +731,8 @@ predefined tags known to the <strong class="command">colours</strong> function:<
 <li><p>An <code class="docutils literal notranslate"><span class="pre">&quot;#rrggbb&quot;</span></code> string, specifying a position in the
 <a class="reference external" href="https://en.wikipedia.org/wiki/RGB_color_model">RGB</a>
 colour space; three series of hexadecimal numbers of two digits each,
-i.e., between <span class="math notranslate nohighlight">\(\text{00}_\text{hex}=0\)</span>
-(off) and <span class="math notranslate nohighlight">\(\text{FF}_\text{hex}=255\)</span> (full on),
+i.e., between <span class="math">\(\text{00}_\text{hex}=0\)</span>
+(off) and <span class="math">\(\text{FF}_\text{hex}=255\)</span> (full on),
 giving the intensity of the red, green, and blue channels<a class="footnote-reference brackets" href="#footrgb" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>;</p>
 <p>In practice, the <strong class="command">col2rgb</strong> and <strong class="command">rgb</strong> functions
 can be used to convert between the decimal and hexadecimal
@@ -752,8 +754,8 @@ representations:</p>
 </div>
 </li>
 <li><p>An <code class="docutils literal notranslate"><span class="pre">&quot;#rrggbbaa&quot;</span></code> string, like above, but with the added alpha channel
-(two additional hexadecimal digits): from <span class="math notranslate nohighlight">\(\text{00}_\text{hex}=0\)</span>
-denoting fully transparent, to <span class="math notranslate nohighlight">\(\text{FF}_\text{hex}=255\)</span>
+(two additional hexadecimal digits): from <span class="math">\(\text{00}_\text{hex}=0\)</span>
+denoting fully transparent, to <span class="math">\(\text{FF}_\text{hex}=255\)</span>
 indicating fully visible (“lit”) colour;
 see <a class="reference internal" href="#fig-primitives-demo"><span class="std std-numref">Figure 13.2</span></a> for an example.</p>
 <p>Note that semi-transparency (translucency) can significantly enhance
@@ -801,7 +803,7 @@ magenta, yellow, grey; see<a class="footnote-reference brackets" href="#footbwon
 </figure>
 </div></div><p>As choosing usable colours requires some talents that most
 programmers lack, we will find ourselves relying
-on some built-in, good-enough colour sets.
+on the built in colour sets.
 <strong class="command">palette.pals</strong> and <strong class="command">hcl.pals</strong>
 return the names of the available <em>discrete</em> (qualitative)
 palettes. Then, <strong class="command">palette.colors</strong> and <strong class="command">hcl.colors</strong>
@@ -910,7 +912,7 @@ ranges on the respective axes;
 by default, they are extended by 4% in each direction (for aesthetic
 reasons; see, e.g., <a class="reference internal" href="#fig-margins1"><span class="std std-numref">Figure 13.12</span></a>),
 but see the <code class="docutils literal notranslate"><span class="pre">xaxs</span></code> and <code class="docutils literal notranslate"><span class="pre">yaxs</span></code> graphics parameters;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">asp</span></code> – aspect ratio <span class="math notranslate nohighlight">\((y/x)\)</span>; defaults to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, i.e.,
+<li><p><code class="docutils literal notranslate"><span class="pre">asp</span></code> – aspect ratio <span class="math">\((y/x)\)</span>; defaults to <code class="docutils literal notranslate"><span class="pre">NA</span></code>, i.e.,
 no adjustment;
 use <code class="docutils literal notranslate"><span class="pre">asp=1</span></code> for circles to look like ones, and not ovals;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">log</span></code> – switches logarithmic scaling on particular axes:
@@ -924,7 +926,7 @@ use <code class="docutils literal notranslate"><span class="pre">asp=1</span></c
     </div><div class="proof-content">
 <p>The graphics parameter <code class="docutils literal notranslate"><span class="pre">usr</span></code> can be used to read (and set)
 the extremes of the user coordinates in the form
-<span class="math notranslate nohighlight">\((x_1, x_2, y_1, y_2)\)</span>.</p>
+<span class="math">\((x_1, x_2, y_1, y_2)\)</span>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot.new</span><span class="p">()</span>
 <span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">),</span><span class="w"> </span><span class="n">log</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">yaxs</span><span class="o">=</span><span class="s">&quot;i&quot;</span><span class="p">)</span>
 <span class="nf">par</span><span class="p">(</span><span class="s">&quot;usr&quot;</span><span class="p">)</span>
@@ -935,14 +937,14 @@ the extremes of the user coordinates in the form
 We have turned this behaviour off for the y-axis, which uses
 the base-10 logarithmic scale. In this case, its actual range is
 <code class="docutils literal notranslate"><span class="pre">10^</span></code><strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;usr&quot;)[3:4]</span></code>,
-because <span class="math notranslate nohighlight">\(\log_{10} 1=0\)</span> and <span class="math notranslate nohighlight">\(\log_{10} 1000=3\)</span>.</p>
+because <span class="math">\(\log_{10} 1=0\)</span> and <span class="math">\(\log_{10} 1000=3\)</span>.</p>
 </div></div><div class="proof proof-type-exercise" id="id40">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.14</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of the <strong class="command">abline</strong> function.</p>
+<p>Implement your version of the <strong class="command">abline</strong> function.</p>
 </div></div></section>
 <section id="axes">
 <span id="sec-axis"></span><h3><span class="section-number">13.2.4. </span>Axes<a class="headerlink" href="#axes" title="Permalink to this heading">#</a></h3>
@@ -1064,7 +1066,7 @@ the edges of the figure and device region in user coordinates.</p>
 <p>(*) Note that we cannot use <strong class="command">mtext</strong> to print
 text on the right inner margin rotated by 180 degrees
 as compared to what we see in <a class="reference internal" href="#fig-margins1"><span class="std std-numref">Figure 13.12</span></a>.
-Implement your own version of this function that will allow you to
+Write your version of this function that will allow you to
 do so.
 Hint: use <strong class="command">text</strong>, the <code class="docutils literal notranslate"><span class="pre">cin</span></code> graphics parameter,
 and what you can read from <a class="reference internal" href="#fig-user-coords"><span class="std std-numref">Figure 13.14</span></a>.</p>
@@ -1087,7 +1089,7 @@ the <code class="docutils literal notranslate"><span class="pre">mfg</span></cod
         
     </div><div class="proof-content">
 <p><a class="reference internal" href="#fig-margins2"><span class="std std-numref">Figure 13.15</span></a> depicts an example page with four figures
-aligned on a 2-by-2 grid.</p>
+aligned on a <span class="math">\(2\times 2\)</span> grid.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">oma</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">1.2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">  </span><span class="c1"># outer margins (default 0)</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># a 2x2 plot grid</span>
 
@@ -1297,8 +1299,8 @@ using the functions discusses in the previous section.</p>
         <span class="proof-type">Exercise 13.23</span>
         
     </div><div class="proof-content">
-<p>Draw a plot of the <span class="math notranslate nohighlight">\(y=\sin x\)</span> function using a call to <strong class="command">plot</strong>.
-Then, call <strong class="command">lines</strong> to depict <span class="math notranslate nohighlight">\(y=\cos x\)</span>. Add a legend.
+<p>Draw a plot of the <span class="math">\(y=\sin x\)</span> function using a call to <strong class="command">plot</strong>.
+Then, call <strong class="command">lines</strong> to depict <span class="math">\(y=\cos x\)</span>. Add a legend.
 Later, do the same using a single call to <strong class="command">matplot</strong>.</p>
 </div></div><div class="proof proof-type-example" id="id55">
 
@@ -1307,7 +1309,7 @@ Later, do the same using a single call to <strong class="command">matplot</stron
         
     </div><div class="proof-content">
 <p>Semi-transparency may convey additional information.
-In <a class="reference internal" href="#fig-semitrans-scatter"><span class="std std-numref">Figure 13.18</span></a>, we draw two scatter plots of
+<a class="reference internal" href="#fig-semitrans-scatter"><span class="std std-numref">Figure 13.18</span></a> shows two scatter plots of
 weight vs height of adult females. If the points are fully opaque,
 we cannot judge what is the density around them.
 On the other hand, translucent symbols somewhat imitate
@@ -1501,7 +1503,7 @@ see <a class="reference internal" href="#fig-bar-plot-titanic"><span class="std 
         <span class="proof-type">Exercise 13.32</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of <strong class="command">barplot</strong>,
+<p>Implement your version of <strong class="command">barplot</strong>,
 but where the bars are placed exactly at the positions
 specified by the user, e.g., allowing the bar midpoints to be
 consecutive integers.</p>
@@ -1660,7 +1662,7 @@ see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-
 <h3><span class="section-number">13.3.3. </span>Box-and-whisker plots<a class="headerlink" href="#box-and-whisker-plots" title="Permalink to this heading">#</a></h3>
 <p>We have already seen a chart generated by <strong class="command">boxplot</strong>
 in <a class="reference internal" href="150-indexing.html#fig-toothgrowth-boxplot"><span class="std std-numref">Figure 5.1</span></a>. Tinkering with it will
-give us some good practice, which in turn shall make us perfect.</p>
+give us some robust practice, which in turn shall make us perfect.</p>
 <div class="proof proof-type-exercise" id="id78">
 
     <div class="proof-title">
@@ -1700,8 +1702,8 @@ of a point set).</p>
 </div></div></section>
 <section id="contour-plots-and-heat-maps">
 <span id="sec-heat-map"></span><h3><span class="section-number">13.3.4. </span>Contour plots and heat maps<a class="headerlink" href="#contour-plots-and-heat-maps" title="Permalink to this heading">#</a></h3>
-<p>When plotting a function of two variables like <span class="math notranslate nohighlight">\(z=f(x, y)\)</span>,
-the magnitude of the <span class="math notranslate nohighlight">\(z\)</span> component can be expressed using colour
+<p>When plotting a function of two variables like <span class="math">\(z=f(x, y)\)</span>,
+the magnitude of the <span class="math">\(z\)</span> component can be expressed using colour
 brightness or hue.</p>
 <p><strong class="command">image</strong> is a convenient wrapper around <strong class="command">rasterImage</strong>
 which can be used to draw contour plots, two-dimensional histograms,
@@ -1713,8 +1715,8 @@ heatmaps, etc.</p>
         
     </div><div class="proof-content">
 <p><a class="reference internal" href="#fig-contour"><span class="std std-numref">Figure 13.27</span></a> presents a filled contour plot
-of Himmelblau’s function, <span class="math notranslate nohighlight">\(f(x,y)=(x^{2}+y-11)^{2}+(x+y^{2}-7)^{2}\)</span>,
-for <span class="math notranslate nohighlight">\(x\in[-5, 5]\)</span> and <span class="math notranslate nohighlight">\(y\in[-4, 4]\)</span>.
+of Himmelblau’s function, <span class="math">\(f(x,y)=(x^{2}+y-11)^{2}+(x+y^{2}-7)^{2}\)</span>,
+for <span class="math">\(x\in[-5, 5]\)</span> and <span class="math">\(y\in[-4, 4]\)</span>.
 A call to <strong class="command">contour</strong> adds labelled contour lines
 (which is actually a nontrivial operation).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">250</span><span class="p">)</span>
@@ -1747,13 +1749,13 @@ in the <code class="docutils literal notranslate"><span class="pre">nhanes</span
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">o</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># order of rows/cols (by similarity)</span>
 <span class="n">R</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cor</span><span class="p">(</span><span class="n">nhanes</span><span class="p">[</span><span class="n">o</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">])</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2.8</span><span class="p">,</span><span class="w"> </span><span class="m">7.6</span><span class="p">,</span><span class="w"> </span><span class="m">1.2</span><span class="p">,</span><span class="w"> </span><span class="m">7.6</span><span class="p">),</span><span class="w"> </span><span class="n">ann</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="nf">image</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">R</span><span class="p">,</span>
-<span class="w">    </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="m">+0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span>
+<span class="nf">image</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">NROW</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">NCOL</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">R</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="nf">NROW</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="m">+0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">),</span>
 <span class="w">    </span><span class="n">zlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span>
 <span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="nf">hcl.colors</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BluGrn&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rev</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span>
 <span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">asp</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">axes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="nf">axis</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">nrow</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">R</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span><span class="w"> </span><span class="n">las</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">tick</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="nf">axis</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">R</span><span class="p">)[[</span><span class="m">2</span><span class="p">]],</span><span class="w"> </span><span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">tick</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">axis</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">NROW</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">R</span><span class="p">)[[</span><span class="m">1</span><span class="p">]],</span><span class="w"> </span><span class="n">las</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">tick</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">axis</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">NCOL</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">R</span><span class="p">)[[</span><span class="m">2</span><span class="p">]],</span><span class="w"> </span><span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">tick</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="nf">text</span><span class="p">(</span><span class="nf">arrayInd</span><span class="p">(</span><span class="nf">seq_along</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>
 <span class="w">    </span><span class="n">labels</span><span class="o">=</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.2f&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">),</span>
 <span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)[</span><span class="nf">abs</span><span class="p">(</span><span class="n">R</span><span class="o">&lt;</span><span class="m">0.8</span><span class="p">)</span><span class="m">+1</span><span class="p">],</span>
@@ -1939,7 +1941,7 @@ The choice is not only more aesthetic than when pure red, green, etc.
 was used (before R 4.0.0),
 but also is expected to be more friendly to people who have
 some colour vision deficiencies
-(ca. every 1 in 12 men (8%) and 1 in 200 women (0.5%),
+(roughly every 1 in 12 men (8%) and 1 in 200 women (0.5%),
 especially in the red-green or blue-yellow spectrum;
 see <span id="id14">[<a class="reference internal" href="999-bibliography.html#id5" title="Okabe, M. and Ito, K. (2002).  Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. URL: https://jfly.uni-koeln.de/color/.">46</a>]</span> for more details).</p>
 </aside>
@@ -1988,7 +1990,7 @@ should note that its online version displays this figure
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2052,7 +2054,8 @@ should note that its online version displays this figure
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>

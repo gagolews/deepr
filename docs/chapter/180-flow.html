@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -659,7 +661,7 @@ reload an already loaded package. Therefore, the message will only
 be seen once per R session.</p>
 </div></div><p>Related functions include <strong class="command">stopifnot</strong> discussed
 in <a class="reference internal" href="210-design.html#sec-fun-io"><span class="std std-numref">Section 9.2</span></a> and <strong class="command">on.exit</strong> mentioned
-in <a class="reference internal" href="340-lazy.html#sec-on-exit"><span class="std std-numref">Section 17.4</span></a>; see <a class="reference internal" href="210-design.html#sec-code-quality"><span class="std std-numref">Section 9.3.3</span></a>
+in <a class="reference internal" href="340-lazy.html#sec-on-exit"><span class="std std-numref">Section 17.4</span></a>; see <a class="reference internal" href="210-design.html#sec-code-quality"><span class="std std-numref">Section 9.3.4</span></a>
 for some code debugging tips.</p>
 </section>
 <section id="repeated-evaluation">
@@ -725,20 +727,20 @@ some variable that the <code class="docutils literal notranslate"><span class="p
         
     </div><div class="proof-content">
 <p>Implement a simple linear congruential pseudorandom number generator
-that, given some seed <span class="math notranslate nohighlight">\(X_0\in [0, m)\)</span>,
-outputs a sequence <span class="math notranslate nohighlight">\((X_1,X_2,\dots)\)</span> defined by:</p>
+that, given some seed <span class="math">\(X_0\in [0, m)\)</span>,
+outputs a sequence <span class="math">\((X_1,X_2,\dots)\)</span> defined by:</p>
 <div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
+<div class="math">
 \[
 X_i = (a X_{i-1} + c) \mod m,
 \]</div>
 </div>
-<p>with, e.g.,  <span class="math notranslate nohighlight">\(a=75\)</span>, <span class="math notranslate nohighlight">\(c=74\)</span>, and <span class="math notranslate nohighlight">\(m=2^{16}+1\)</span>
+<p>with, e.g.,  <span class="math">\(a=75\)</span>, <span class="math">\(c=74\)</span>, and <span class="math">\(m=2^{16}+1\)</span>
 (here, <em>mod</em> is the division reminder, `<strong class="command">%%</strong>`).
 Note that this generator has poor statistical properties
 and its use in practice is discouraged.
-In particular, after some number of operations <span class="math notranslate nohighlight">\(k\)</span>,
-we will find a cycle such that <span class="math notranslate nohighlight">\(X_k=X_1, X_{k+1}=X_2, \dots\)</span>.</p>
+In particular, after some number of operations <span class="math">\(k\)</span>,
+we will find a cycle such that <span class="math">\(X_k=X_1, X_{k+1}=X_2, \dots\)</span>.</p>
 </div></div></section>
 <section id="for">
 <h3><span class="section-number">8.3.2. </span><strong class="command">for</strong><a class="headerlink" href="#for" title="Permalink to this heading">#</a></h3>
@@ -998,21 +1000,21 @@ especially for <em>big</em> data (e.g., <span id="id4">[<a class="reference inte
 (sequences) or matrices/data frames (tabular data).
 Therefore, we might be interested in determining how many
 <em>primitive operations</em> need to be performed as a function
-of their length <em>n</em> or the number of rows <em>n</em> and columns <em>p</em>,
+of their length <span class="math">\(n\)</span> or the number of rows <span class="math">\(n\)</span> and columns <span class="math">\(m\)</span>,
 respectively.</p>
-<p>For instance, the <em>O</em> (Big-Oh) notation can express
+<p>For instance, the <span class="math">\(O\)</span> (Big-Oh) notation can express
 the upper bounds for time/resource consumption in asymptotic cases.
-For instance, we say that the time complexity is <span class="math notranslate nohighlight">\(O(n^2)\)</span>,
-if for large <span class="math notranslate nohighlight">\(n\)</span>, the number of operations to perform
+For instance, we say that the time complexity is <span class="math">\(O(n^2)\)</span>,
+if for large <span class="math">\(n\)</span>, the number of operations to perform
 will be proportional to <em>at most</em> the square of
-the vector size (more precisely, there exists <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(C&gt;0\)</span>
-such that for all <span class="math notranslate nohighlight">\(n&gt;m\)</span>, the number of operations is <span class="math notranslate nohighlight">\(\le Cn^2\)</span>).</p>
+the vector size (more precisely, there exists <span class="math">\(m\)</span> and <span class="math">\(C&gt;0\)</span>
+such that for all <span class="math">\(n&gt;m\)</span>, the number of operations is <span class="math">\(\le Cn^2\)</span>).</p>
 <p>Therefore, if we have two algorithms that solve the same task,
-one that has <span class="math notranslate nohighlight">\(O(n^2)\)</span> time complexity, and other of <span class="math notranslate nohighlight">\(O(n^3)\)</span>,
+one that has <span class="math">\(O(n^2)\)</span> time complexity, and other of <span class="math">\(O(n^3)\)</span>,
 it is better to choose the former
 because for large problem sizes, we expect it to be faster.</p>
 <p>Moreover, whether time grows proportionally to
-<span class="math notranslate nohighlight">\(\log n\)</span>, <span class="math notranslate nohighlight">\(\sqrt{n}\)</span>, <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(n\log n\)</span>, <span class="math notranslate nohighlight">\(n^2\)</span>, <span class="math notranslate nohighlight">\(n^3\)</span>, or <span class="math notranslate nohighlight">\(2^n\)</span>,
+<span class="math">\(\log n\)</span>, <span class="math">\(\sqrt{n}\)</span>, <span class="math">\(n\)</span>, <span class="math">\(n\log n\)</span>, <span class="math">\(n^2\)</span>, <span class="math">\(n^3\)</span>, or <span class="math">\(2^n\)</span>,
 can be informative in predicting how big the data can be if we have
 a fixed deadline or not too much space left on the disk.</p>
 <div class="proof proof-type-exercise" id="id16">
@@ -1024,7 +1026,7 @@ a fixed deadline or not too much space left on the disk.</p>
 <p>The <strong class="command">hclust</strong> function determines a hierarchical clustering
 of a dataset. It is fed with an object that stores the distance
 between all the pairs of input points.
-There are <span class="math notranslate nohighlight">\(n(n-1)/2\)</span>  (i.e., <span class="math notranslate nohighlight">\(O(n^2)\)</span>) unique point pairs for any given <em>n</em>.
+There are <span class="math">\(n(n-1)/2\)</span>  (i.e., <span class="math">\(O(n^2)\)</span>) unique point pairs for any given <span class="math">\(n\)</span>.
 One numeric scalar (<code class="docutils literal notranslate"><span class="pre">double</span></code> type) takes 8 bytes of storage.
 If you have 16 GB of RAM, what is the largest dataset that you
 can cluster on your machine using this function?</p>
@@ -1040,12 +1042,12 @@ see, e.g., <strong class="command">help</strong><code class="code docutils liter
 <p>A course in data structures in algorithms, which this one is not,
 will give us plenty of opportunities to implement many algorithms ourselves.
 This way, we can gain a lot of insights and intuitions.</p>
-<p>For instance, this is a <span class="math notranslate nohighlight">\(O(n)\)</span>-time algorithm:</p>
+<p>For instance, this is a <span class="math">\(O(n)\)</span>-time algorithm:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 <span class="w">    </span><span class="n">expression</span>
 </pre></div>
 </div>
-<p>and this is one runs in <span class="math notranslate nohighlight">\(O(n^2)\)</span> time:</p>
+<p>and this is one runs in <span class="math">\(O(n^2)\)</span> time:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 <span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 <span class="w">        </span><span class="n">expression</span>
@@ -1062,13 +1064,13 @@ it is a glue language for rapid prototyping.</p>
 <span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">[[</span><span class="n">j</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p>can be seen as <span class="math notranslate nohighlight">\(O(n^3)\)</span> if each element in the lists <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>
-as well as <code class="docutils literal notranslate"><span class="pre">z</span></code> itself are atomic vectors of length <em>n</em>.</p>
+<p>can be seen as <span class="math">\(O(n^3)\)</span> if each element in the lists <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>
+as well as <code class="docutils literal notranslate"><span class="pre">z</span></code> itself are atomic vectors of length <span class="math">\(n\)</span>.</p>
 <p>Similarly,</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>is <span class="math notranslate nohighlight">\(O(n^2)\)</span> if <code class="docutils literal notranslate"><span class="pre">x</span></code> is a list of <em>n</em> atomic vectors, each of length <em>n</em>.</p>
+<p>is <span class="math">\(O(n^2)\)</span> if <code class="docutils literal notranslate"><span class="pre">x</span></code> is a list of <span class="math">\(n\)</span> atomic vectors, each of length <span class="math">\(n\)</span>.</p>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A quite common statistical scenario
@@ -1080,7 +1082,7 @@ involves generating a data buffer of a fixed size:</p>
 </div>
 <p>This notation, however, involves growing the <code class="docutils literal notranslate"><span class="pre">ret</span></code> array
 in each iteration. Luckily, since R version 3.4.0,
-each such size extension has amortised <span class="math notranslate nohighlight">\(O(1)\)</span> time
+each such size extension has amortised <span class="math">\(O(1)\)</span> time
 because some more memory is internally reserved for its
 prospective growth (dynamic arrays; see, e.g., Chapter 17 of <span id="id5">[<a class="reference internal" href="999-bibliography.html#id67" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., and Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">14</a>]</span>).</p>
 <p>However, it would still be better to pre-allocate the output vector
@@ -1133,12 +1135,6 @@ established connections of different types, e.g., <strong class="command">file</
 only by thousands of lines/records at a time,
 parsing and cleansing them, and exporting them to SQL databases
 (which we will exercise in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>).</p>
-<p>Also note that the always-open text connections
-<strong class="command">stdout</strong> and <strong class="command">stderr</strong> (for writing)
-and <strong class="command">stdin</strong> (for reading) are by default mapped to
-the “terminal/console” and “keyboard”, respectively.
-Call <strong class="command">scan</strong>, <strong class="command">cat</strong>, and <strong class="command">stop</strong>
-to interact with such sources/targets.</p>
 </div>
 </section>
 </section>
@@ -1212,8 +1208,8 @@ the type and form of <code class="docutils literal notranslate"><span class="pre
     </div><div class="proof-content">
 <p>Implement <strong class="command">shift_left</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">n)</span></code> and
 <strong class="command">shift_right</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">n)</span></code>.
-The former function gets rid of the first <em>n</em> observations in <code class="docutils literal notranslate"><span class="pre">x</span></code>
-and adds <em>n</em> missing values at the end of the resulting vector,
+The former function gets rid of the first <span class="math">\(n\)</span> observations in <code class="docutils literal notranslate"><span class="pre">x</span></code>
+and adds <span class="math">\(n\)</span> missing values at the end of the resulting vector,
 e.g., <strong class="command">shift_left</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5),</span> <span class="pre">2)</span></code>
 is <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">NA,</span> <span class="pre">NA)</span></code>.
 On the other hand,
@@ -1225,7 +1221,7 @@ On the other hand,
         <span class="proof-type">Exercise 8.16</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of <strong class="command">diff</strong>.</p>
+<p>Implement your version of <strong class="command">diff</strong>.</p>
 </div></div><div class="proof proof-type-exercise" id="id23">
 
     <div class="proof-title">
@@ -1306,7 +1302,7 @@ benefit from a rewrite in C or C++ (<a class="reference internal" href="310-comp
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1361,7 +1357,8 @@ benefit from a rewrite in C or C++ (<a class="reference internal" href="310-comp
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>

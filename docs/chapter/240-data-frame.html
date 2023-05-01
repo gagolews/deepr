@@ -33,6 +33,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
@@ -299,13 +301,13 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
 </div></blockquote>
-<p>Most matrices are built on top of atomic vectors and hence
+<p>Most matrices are built on top of atomic vectors. Hence, they only
 allow items of the same type to be arranged into rows and columns.
 Data frames (objects of S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>,
 first introduced in <span id="id2">[<a class="reference internal" href="999-bibliography.html#id51" title="Chambers, J.M. and Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">13</a>]</span>), on the other hand,
 are collections of vectors of the same lengths or matrices with identical
 row counts, hence allowing to represent structured<a class="footnote-reference brackets" href="#footstructured" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
-data of possibly heterogeneous types, for instance:</p>
+data of possibly heterogeneous types. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span><span class="w">  </span><span class="c1"># `iris` is an example built-in data frame</span>
 <span class="c1">## [1] &quot;data.frame&quot;</span>
 <span class="n">iris</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">51</span><span class="p">,</span><span class="w"> </span><span class="m">101</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">  </span><span class="c1"># 3 chosen rows from `iris`</span>
@@ -315,27 +317,27 @@ data of possibly heterogeneous types, for instance:</p>
 <span class="c1">## 101          6.3         3.3          6.0         2.5  virginica</span>
 </pre></div>
 </div>
-<p>is a mix of numeric and factor-type data.</p>
-<p>The good news is that not only data frames are built upon
-named lists (e.g., to extract a column we can refer to `<strong class="command">[[</strong>`),
-but also many functions recognise them to be matrix-like,
+<p>It is a mix of numeric and factor-type data.</p>
+<p>The good news is that not only are data frames built upon
+named lists (e.g., to extract a column, we can refer to `<strong class="command">[[</strong>`),
+but also many functions recognise them to be matrix-like
 (e.g., to select specific rows and columns, two indexes
 can be passed to `<strong class="command">[</strong>` like in the example above).
 Hence, it will soon turn out that we already know a lot about
 how to perform basic data wrangling activities, even if we do not
-full realise it now.</p>
+fully realise it now.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Some of us will approach this chapter biased by what we know from elsewhere,
-including our experience with some popular third-party packages
-for data frame processing.
-The art is to filter out  that information as noise
-(at least, for the time being).
-We will show how powerful base R vocabulary is and how
-much can be implied from the material covered in the preceding chapters.
-And yes, this book is like a good thriller/drama/love story:
-it is meant to be read from the beginning to end, so please go
-back to the start of this comprehensive course if you happened
+<p>Some readers will approach this chapter biased by what they
+know from elsewhere, including their experience with some popular
+third-party packages for data frame processing.
+The art is to filter out that information as noise
+(for the time being, at least).
+We will show how robust base R vocabulary is and how
+much can be implied from the material covered in the preceding chapters.</p>
+<p>Yes, this book is like a breathtaking thriller/drama/love story:
+it is meant to be read from the beginning to the end.
+Please go back to the start of this comprehensive course if you happened
 to pop in here by accident or driven by “but I need to know <em>now</em>”.
 Good morning.</p>
 </div>
@@ -343,7 +345,7 @@ Good morning.</p>
 <h2><span class="section-number">12.1. </span>Creating data frames<a class="headerlink" href="#creating-data-frames" title="Permalink to this heading">#</a></h2>
 <section id="data-frame-and-as-data-frame">
 <h3><span class="section-number">12.1.1. </span><strong class="command">data.frame</strong> and <strong class="command">as.data.frame</strong><a class="headerlink" href="#data-frame-and-as-data-frame" title="Permalink to this heading">#</a></h3>
-<p>Most frequently, we create data frames based on a series of logical,
+<p>Most frequently, data frames are based on a series of logical,
 numeric, or characters vectors of identical lengths.
 In such a scenario, the <strong class="command">data.frame</strong> function is particularly
 worthwhile.</p>
@@ -363,8 +365,8 @@ worthwhile.</p>
 </pre></div>
 </div>
 <p>Note that shorter vectors were recycled.
-That the diverse column types were retained and no coercion
-has been made, can be verified, e.g., by calling:</p>
+We can verify that the diverse column types were retained and no coercion
+was made, by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## &#39;data.frame&#39;:	6 obs. of  4 variables:</span>
 <span class="c1">##  $ a: logi  TRUE FALSE TRUE FALSE TRUE FALSE</span>
@@ -383,9 +385,9 @@ directly by calling (compare <a class="reference internal" href="#sec-df-ops"><s
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>For many reasons (see, e.g., <a class="reference internal" href="#sec-stringsasfactors"><span class="std std-numref">Section 12.1.5</span></a>
-and <a class="reference internal" href="#sec-df-representation"><span class="std std-numref">Section 12.1.6</span></a>), we recommend to have the
-type of each column always checked,
-for instance by calling the <strong class="command">str</strong> function.</p>
+and <a class="reference internal" href="#sec-df-representation"><span class="std std-numref">Section 12.1.6</span></a>), we recommend having
+the type of each column always checked, e.g.,
+by calling the <strong class="command">str</strong> function.</p>
 </div>
 <div style="margin-top: 1em"></div><p>Many objects, such as matrices, can easily be coerced to data frames
 using particular <strong class="command">as.data.frame</strong> methods.</p>
@@ -413,7 +415,7 @@ using particular <strong class="command">as.data.frame</strong> methods.</p>
 than a data frame with (as it will soon turn out) the default
 <code class="docutils literal notranslate"><span class="pre">row.names</span></code>.</p>
 <div style="margin-top: 1em"></div><p>Named lists are amongst other candidates for a meaningful conversion.
-Consider an example list, where each element
+Consider an example list where each element
 is a vector of the same length as the other ones:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Map</span><span class="p">(</span>
 <span class="w">    </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -434,7 +436,7 @@ is a vector of the same length as the other ones:</p>
 <span class="c1">##  4.900  6.500  6.588  7.900</span>
 </pre></div>
 </div>
-<p>Each list element will be turned to a separate column:</p>
+<p>Each list element will be turned into a separate column:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.data.frame</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w">  </span><span class="c1"># as.data.frame.list</span>
 <span class="c1">##        setosa versicolor virginica</span>
 <span class="c1">## Min     4.300      4.900     4.900</span>
@@ -450,8 +452,8 @@ fond of lists of vectors of incompatible lengths:</p>
 <span class="c1">##     = TRUE, : arguments imply differing number of rows: 1, 2, 3</span>
 </pre></div>
 </div>
-<p>The above vectors could have been recycled with a warning, but
-they were not.</p>
+<p>The above vectors could have been recycled with a warning.
+But they were not.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="m">21</span><span class="p">))</span><span class="w">  </span><span class="c1"># recycling rule okay</span>
 <span class="c1">##   a  b  c</span>
 <span class="c1">## 1 1 11 21</span>
@@ -479,7 +481,7 @@ Here is an example contingency table together with its
 <span class="c1">## 6    1    8    0</span>
 </pre></div>
 </div>
-<p>Actually, <strong class="command">as.data.frame.table</strong> is so handy that
+<p><strong class="command">as.data.frame.table</strong> is so handy that
 we might want to call it directly on any array.
 This way, we can convert it from the so-called <em>wide</em> format
 to the <em>long</em> one; see <a class="reference internal" href="#sec-reshape"><span class="std std-numref">Section 12.3.6</span></a> for more details.</p>
@@ -502,8 +504,8 @@ which determines all combinations of a given series of vectors.</p>
 in a data frame; the popular choices include
 <code class="docutils literal notranslate"><span class="pre">Date</span></code>, <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code>, and <code class="docutils literal notranslate"><span class="pre">factor</span></code>.
 It is worth noting that the <strong class="command">data.frame</strong> function calls
-the corresponding <strong class="command">as.data.frame</strong> method,
-and <strong class="command">format</strong> is used whilst printing the columns.</p>
+the corresponding <strong class="command">as.data.frame</strong> method.
+Also, <strong class="command">format</strong> is used whilst printing the columns.</p>
 <div class="proof proof-type-example" id="id19">
 
     <div class="proof-title">
@@ -529,9 +531,9 @@ an S3 class <code class="docutils literal notranslate"><span class="pre">spam</s
 <span class="w">    </span><span class="n">c</span><span class="o">=</span><span class="nf">Sys.Date</span><span class="p">()</span><span class="m">+1</span><span class="o">:</span><span class="m">3</span>
 <span class="p">)</span>
 <span class="c1">##     a     b          c</span>
-<span class="c1">## 1 *a*  spam 2023-05-01</span>
-<span class="c1">## 2 *b* bacon 2023-05-02</span>
-<span class="c1">## 3 *c*  spam 2023-05-03</span>
+<span class="c1">## 1 *a*  spam 2023-05-02</span>
+<span class="c1">## 2 *b* bacon 2023-05-03</span>
+<span class="c1">## 3 *c*  spam 2023-05-04</span>
 </pre></div>
 </div>
 </div></div></section>
@@ -542,9 +544,8 @@ an S3 class <code class="docutils literal notranslate"><span class="pre">spam</s
 in the context of stacking matrices; <a class="reference internal" href="230-matrix.html#sec-cbind-matrix"><span class="std std-numref">Section 11.1.2</span></a>).
 They are used quite eagerly: <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;cbind&quot;)</span></code> states that
 they will be referred to if at least<a class="footnote-reference brackets" href="#footcbinddf" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>
-one of its arguments is a data frame and the other arguments
-are atomic vectors or lists
-(possibly with the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute).</p>
+one of its arguments is a data frame, and the other arguments
+are atomic vectors or lists (possibly with the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute).</p>
 <p>For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">51</span><span class="p">,</span><span class="w"> </span><span class="m">101</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">)]</span><span class="w">  </span><span class="c1"># whatever</span>
 <span class="nf">cbind</span><span class="p">(</span><span class="n">Yummy</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
@@ -554,7 +555,7 @@ are atomic vectors or lists
 <span class="c1">## 101  TRUE          6.3  virginica</span>
 </pre></div>
 </div>
-<p>added a new column to a data frame <code class="docutils literal notranslate"><span class="pre">x</span></code>. Moreover:</p>
+<p>It added a new column to a data frame <code class="docutils literal notranslate"><span class="pre">x</span></code>. Moreover:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;virginica&quot;</span><span class="p">))</span>
 <span class="c1">##     Sepal.Length    Species</span>
 <span class="c1">## 1            5.1     setosa</span>
@@ -563,7 +564,7 @@ are atomic vectors or lists
 <span class="c1">## 11          42.0  virginica</span>
 </pre></div>
 </div>
-<p>added a new row. Note that columns are of different types.
+<p>It added a new row. Note that columns are of different types.
 Hence, the values to row-bind were provided as a generic vector.
 The list can also be named. It can consist of vectors of length greater
 than one, given in any order:</p>
@@ -579,13 +580,12 @@ than one, given in any order:</p>
 <span class="c1">## 2            7.0     setosa</span>
 </pre></div>
 </div>
-<div style="margin-top: 1em"></div><p>Sometimes referring to these methods directly
-will be necessary.
+<div style="margin-top: 1em"></div><p>Sometimes a direct referral to these methods will be necessary.
 Consider an example list of atomic vectors:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">11</span><span class="o">:</span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="m">21</span><span class="o">:</span><span class="m">23</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>First, we call the generic which dispatches to the default method:</p>
+<p>First, we call the generic, which dispatches to the default method:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">do.call</span><span class="p">(</span><span class="n">cbind</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="c1">##      a  b  c</span>
 <span class="c1">## [1,] 1 11 21</span>
@@ -593,7 +593,7 @@ Consider an example list of atomic vectors:</p>
 <span class="c1">## [3,] 3 13 23</span>
 </pre></div>
 </div>
-<p>If we want to ensure we garner a data frame in result, we need to write:</p>
+<p>If we want to ensure we garner a data frame as a result, we need to write:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">do.call</span><span class="p">(</span><span class="n">cbind.data.frame</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="c1">##   a  b  c</span>
 <span class="c1">## 1 1 11 21</span>
@@ -601,7 +601,7 @@ Consider an example list of atomic vectors:</p>
 <span class="c1">## 3 3 13 23</span>
 </pre></div>
 </div>
-<p>This is particularly useful in the context of fetching outputs
+<p>This is particularly useful for fetching outputs
 from <strong class="command">Map</strong> and its friends, which are wrapped inside a list.
 For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">unname</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span>
@@ -628,7 +628,7 @@ For instance:</p>
 <span class="c1">##   ..$ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 3</span>
 </pre></div>
 </div>
-<p>This was nothing more than a fancy way to obtain an illustrative list, which
+<p>It is nothing more than a fancy way to obtain an illustrative list, which
 we may now turn into a data frame by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">do.call</span><span class="p">(</span><span class="n">rbind.data.frame</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">)</span>
 <span class="c1">##   Sepal.Length Sepal.Width    Species</span>
@@ -638,7 +638,7 @@ we may now turn into a data frame by calling:</p>
 </pre></div>
 </div>
 <p>On the other hand, <strong class="command">do.call</strong><code class="code docutils literal notranslate"><span class="pre">(rbind,</span> <span class="pre">l)</span></code> does not return
-a particularly friendly object type:</p>
+an amiable object type:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">)</span>
 <span class="c1">##      Sepal.Length Sepal.Width Species</span>
 <span class="c1">## [1,] 5.006        3.428       setosa</span>
@@ -669,20 +669,20 @@ a particularly friendly object type:</p>
 <h3><span class="section-number">12.1.3. </span>Reading data frames<a class="headerlink" href="#reading-data-frames" title="Permalink to this heading">#</a></h3>
 <p>Structured data can be imported from external sources, such as CSV/TSV
 (comma/tab-separated values) or HDF5 files,
-relational databases supporting SQL (see <a class="reference internal" href="#sec-sql"><span class="std std-numref">Section 12.1.4</span></a>)
+relational databases supporting SQL (see <a class="reference internal" href="#sec-sql"><span class="std std-numref">Section 12.1.4</span></a>),
 web APIs (e.g., through the <strong class="program">curl</strong> and <strong class="program">jsonlite</strong>
 packages), spreadsheets <span id="id6">[<a class="reference internal" href="999-bibliography.html#id14" title="R Development Core Team. (2023).  R Data Import/Export. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-data.html.">60</a>]</span>, and so on.</p>
 <p>In particular, <strong class="command">read.csv</strong> and the like
 fetch data from plain text files
-consisting of records where fields are separated
-by commas, semicolons, tabs, etc.</p>
+consisting of records, where commas, semicolons, tabs, etc. separate
+the fields.</p>
 <p>For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="nf">runif</span><span class="p">(</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># example data frame</span>
 <span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tempfile</span><span class="p">()</span><span class="w">  </span><span class="c1"># temporary file name</span>
 <span class="nf">write.csv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">  </span><span class="c1"># export</span>
 </pre></div>
 </div>
-<p>This created a CSV file which looks like:</p>
+<p>It created a CSV file that looks like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">readLines</span><span class="p">(</span><span class="n">f</span><span class="p">),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># print file contents</span>
 <span class="c1">## &quot;a&quot;,&quot;b&quot;</span>
 <span class="c1">## 0.287577520124614,TRUE</span>
@@ -710,16 +710,16 @@ and <code class="docutils literal notranslate"><span class="pre">row.names</span
 Further, note that reading from compressed files is supported directly.</p>
 </div></div><div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>CSV is by far the most portable and user-friendly format for exchanging
+<p>CSV is the most portable and user-friendly format for exchanging
 matrix-like objects between different programs and computing languages
-(e.g., Python, Julia, LibreOffice Calc, etc.).
+(Python, Julia, LibreOffice Calc, etc.).
 Such files can be opened in any text editor.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>As mentioned in <a class="reference internal" href="180-flow.html#sec-time-complexity"><span class="std std-numref">Section 8.3.5</span></a>,
-it is possible to process data frames on a chunk-by-chunk basis,
-which is beneficial especially when data do not fit into memory
+we can process data frames on a chunk-by-chunk basis,
+This is beneficial especially when data do not fit into memory
 (compare the <code class="docutils literal notranslate"><span class="pre">nrows</span></code> argument to <strong class="command">read.csv</strong>).</p>
 </div>
 </section>
@@ -744,13 +744,13 @@ instance of an SQLite database.</p>
 <span class="n">con</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dbConnect</span><span class="p">(</span><span class="n">RSQLite</span><span class="o">::</span><span class="nf">SQLite</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;:memory:&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This returns an object representing a database connection
+<p>It returned an object representing a database connection
 which we can refer to in further communication.</p>
 <p>An easy way to create a database table is to call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">dbWriteTable</span><span class="p">(</span><span class="n">con</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mtcars&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mtcars</span><span class="p">)</span><span class="w">  </span><span class="c1"># `mtcars` is a toy built-in data frame</span>
 </pre></div>
 </div>
-<p>Alternatively, <strong class="command">dbExecute</strong> could have been referred to in order
+<p>Alternatively, <strong class="command">dbExecute</strong> could have been called
 to send SQL statements such as <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">...</span></code> followed by a series
 of <code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">...</span></code>.</p>
 <p>Some data retrieval can now follow:</p>
@@ -767,7 +767,7 @@ of <code class="docutils literal notranslate"><span class="pre">INSERT</span> <s
 <span class="c1">## 5   8  0  15.100 209.21</span>
 </pre></div>
 </div>
-<p>This gives us an ordinary R data frame which we can process in the same
+<p>It gave us an ordinary R data frame. We can process it in the same
 fashion as any other object of this kind.</p>
 <p>At the end, the database connection must be closed.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">dbDisconnect</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
@@ -781,7 +781,7 @@ fashion as any other object of this kind.</p>
     </div><div class="proof-content">
 <p>Database passwords must never be stored in plain text files,
 let alone in R scripts in version-controlled repositories.
-Consider a few ways for fetching credentials programmatically:</p>
+Consider a few ways to fetch credentials programmatically:</p>
 <ul class="simple">
 <li><p>using environment variables (see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Sys.getenv&quot;)</span></code>),</p></li>
 <li><p>using the <strong class="program">keyring</strong> package,</p></li>
@@ -793,17 +793,17 @@ a platform-independent command-line utility).</p></li>
 </div></div></section>
 <section id="strings-as-factors">
 <span id="sec-stringsasfactors"></span><h3><span class="section-number">12.1.5. </span>Strings as factors?<a class="headerlink" href="#strings-as-factors" title="Permalink to this heading">#</a></h3>
-<p>The following is so critical that we will devote a separate subsection
-to discuss it, so that we always remain vigilant (such is life:
+<p>The following is so critical that we devote a separate section
+to discuss it so we always remain vigilant (such is life:
 maintaining some level of mindfulness is often a good idea).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Some functions related to data frames
 automatically convert character vectors to factors.
 This behaviour is frequently controlled by the
-<code class="docutils literal notranslate"><span class="pre">stringsAsFactors</span></code> argument thereto.</p>
+<code class="docutils literal notranslate"><span class="pre">stringsAsFactors</span></code> argument.</p>
 </div>
-<p>This is particularly problematic due to the fact that, when printed,
+<p>This is particularly problematic because, when printed,
 factor and character columns look identical:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;U&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;V&quot;</span><span class="p">)),</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;U&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;V&quot;</span><span class="p">)))</span>
 <span class="c1">##   a b</span>
@@ -815,8 +815,8 @@ factor and character columns look identical:</p>
 For example, passing factors as indexers in `<strong class="command">[</strong>`
 or converting them with <strong class="command">as.numeric</strong> might
 give counterintuitive (for the uninformed) results.
-Also, new factor levels must be added
-manually when we want to extend them with more diverse data. This
+Also, when we want to extend factors by previously unobserved data,
+new levels must manually be added. This
 can cause some unexpected behaviour in contexts such as:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;W&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;W&quot;</span><span class="p">))</span>
 <span class="c1">## Warning in `[&lt;-.factor`(`*tmp*`, ri, value = &quot;W&quot;): invalid factor level,</span>
@@ -827,18 +827,18 @@ can cause some unexpected behaviour in contexts such as:</p>
 <span class="c1">## 3 &lt;NA&gt; W</span>
 </pre></div>
 </div>
-<p>It is therefore a good habit to have the data types always checked,
-for instance:</p>
+<p>Therefore, always having the data types checked is a praiseworthy habit.
+For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## &#39;data.frame&#39;:	2 obs. of  2 variables:</span>
 <span class="c1">##  $ a: Factor w/ 2 levels &quot;U&quot;,&quot;V&quot;: 1 2</span>
 <span class="c1">##  $ b: chr  &quot;U&quot; &quot;V&quot;</span>
 </pre></div>
 </div>
-<p>Before R 4.0, a number of functions,
+<p>Before R 4.0, some functions,
 including <strong class="command">data.frame</strong> and <strong class="command">read.csv</strong>
 had the <code class="docutils literal notranslate"><span class="pre">stringsAsFactors</span></code> argument defaulting to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.
-This is no longer the case for many of them.</p>
+It is no longer the case for many of them.</p>
 <p>However, exceptions to this rule still exist, e.g.,
 including <strong class="command">as.data.frame.table</strong> and <strong class="command">expand.grid</strong>.
 Besides, some built-in example data frames  have factor-typed
@@ -847,7 +847,7 @@ columns inherited from the old days, e.g.:</p>
 <span class="c1">## [1] &quot;factor&quot;</span>
 </pre></div>
 </div>
-<p>We observe that the <code class="docutils literal notranslate"><span class="pre">Species</span></code> column in <code class="docutils literal notranslate"><span class="pre">iris</span></code> is not of type <code class="docutils literal notranslate"><span class="pre">character</span></code>.
+<p>We observe that the <code class="docutils literal notranslate"><span class="pre">Species</span></code> column in <code class="docutils literal notranslate"><span class="pre">iris</span></code> is not of the type <code class="docutils literal notranslate"><span class="pre">character</span></code>.
 Thence, adding a new variety might be oblique:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">51</span><span class="p">,</span><span class="w"> </span><span class="m">101</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">  </span><span class="c1"># example subset</span>
 <span class="nf">levels</span><span class="p">(</span><span class="n">iris2</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]])</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">iris2</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]]),</span><span class="w"> </span><span class="s">&quot;croatica&quot;</span><span class="p">)</span>
@@ -860,20 +860,20 @@ Thence, adding a new variety might be oblique:</p>
 </pre></div>
 </div>
 <p>Alternatively, we could have simply converted the <code class="docutils literal notranslate"><span class="pre">Species</span></code> column
-to <code class="docutils literal notranslate"><span class="pre">character</span></code>.</p>
+to the type <code class="docutils literal notranslate"><span class="pre">character</span></code>.</p>
 </section>
 <section id="internal-representation">
 <span id="sec-df-representation"></span><h3><span class="section-number">12.1.6. </span>Internal representation<a class="headerlink" href="#internal-representation" title="Permalink to this heading">#</a></h3>
 <p>Objects of S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> are built upon lists
-of vectors of the same length or matrices with identical row counts,
-which define consecutive columns thereof.
+of vectors of the same length or matrices with identical row counts.
+Such lists define their consecutive columns.
 Apart from <code class="docutils literal notranslate"><span class="pre">class</span></code>, they must be equipped with the following
 special attributes:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">names</span></code> – a character vector (as usual in any named list)
 labelling the columns or their groups,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">row.names</span></code> – a character or integer vector
-with no duplicates nor missing values, doing what advertised.</p></li>
+with no duplicates nor missing values, doing what is advertised.</p></li>
 </ul>
 <p>Therefore, a data frame can be created from scratch by
 calling, for example:</p>
@@ -889,7 +889,7 @@ calling, for example:</p>
 </pre></div>
 </div>
 <p>Here is a data frame based on a length-5 list,
-a matrix with five rows, and a length-5 numeric vector,
+a matrix with five rows, and a length-5 numeric vector
 with some fancy row names on top:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span>
 <span class="w">    </span><span class="nf">list</span><span class="p">(</span>
@@ -908,9 +908,9 @@ with some fancy row names on top:</p>
 <span class="c1">## aubergine -4, -3, -2, -1  15  25 0.94047</span>
 </pre></div>
 </div>
-<p>In general, the columns of type <code class="docutils literal notranslate"><span class="pre">list</span></code> can contain anything, e.g., other
+<p>In general, the columns of the type <code class="docutils literal notranslate"><span class="pre">list</span></code> can contain anything, e.g., other
 lists or R functions. Including atomic vectors
-of varying lengths just like above allows for creating something à la
+of varying lengths, just like above, allows for creating something à la
 <em>ragged arrays</em> –  a pretty handy scenario.</p>
 <p>The issue with matrix entries, on the other hand,
 is that they appear as if they were
@@ -920,18 +920,17 @@ by the index operator (see <a class="reference internal" href="#sec-df-idx"><spa
 Therefore, from this perspective, the above data frame has three columns,
 not four. Such compound columns can be output by <strong class="command">aggregate</strong>
 (see <a class="reference internal" href="#sec-df-ops"><span class="std std-numref">Section 12.3</span></a>), amongst others.
-They can be valuable too in certain contexts,
-as such <em>column groups</em> can be easily accessed as a whole,
-and then batch-processed in the same way.</p>
+They are valuable in certain contexts:
+the <em>column groups</em> can be easily accessed as a whole
+and batch-processed in the same way.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Unfortunately, data frames with list or matrix columns cannot be normally
 created with the <strong class="command">data.frame</strong> nor <strong class="command">cbind</strong>
-functions which might explain why they are less popular.
-This behaviour is dictated by the particular underlying
-<strong class="command">as.data.frame</strong> methods
-which are called by both of them.
-As a curiosity, see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;I&quot;)</span></code> though.</p>
+functions. This might explain why they are less popular.
+This behaviour is dictated by the underlying
+<strong class="command">as.data.frame</strong> methods, which they both call.
+As a curiosity, see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;I&quot;)</span></code>, though.</p>
 </div>
 <div class="proof proof-type-exercise" id="id23">
 
@@ -939,8 +938,8 @@ As a curiosity, see <strong class="command">help</strong><code class="code docut
         <span class="proof-type">Exercise 12.5</span>
         
     </div><div class="proof-content">
-<p>Verify that for a data frame featuring a matrix column, the latter does not
-require column names (the second <code class="docutils literal notranslate"><span class="pre">dimnames</span></code>) set.</p>
+<p>Verify that if a data frame has a matrix column,
+the matrix does not need to have any column names (the second <code class="docutils literal notranslate"><span class="pre">dimnames</span></code>).</p>
 </div></div><div style="margin-top: 1em"></div><p>The <code class="docutils literal notranslate"><span class="pre">names</span></code> and <code class="docutils literal notranslate"><span class="pre">row.names</span></code> attributes are special in the sense
 of <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>. In particular, they
 can be accessed or modified by the corresponding functions.</p>
@@ -977,17 +976,16 @@ of consecutive natural numbers, for example:</p>
         <span class="proof-type">Exercise 12.7</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of <strong class="command">expand.grid</strong>.</p>
+<p>Implement your version of <strong class="command">expand.grid</strong>.</p>
 </div></div><div class="proof proof-type-exercise" id="id26">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 12.8</span>
         
     </div><div class="proof-content">
-<p>Implement your own version of <strong class="command">xtabs</strong>, but which
-does not rely on a formula interface
+<p>Write a version of <strong class="command">xtabs</strong> that does not rely on a formula interface
 (compare <a class="reference internal" href="220-s3.html#sec-formula-intro"><span class="std std-numref">Section 10.3.4</span></a>).
-Allow three parameters: a data frame, the name of the “counts” column
+Allow three parameters: a data frame, the name of the “counts” column,
 and the names of the cross-classifying variables.
 Hence,
 <strong class="command">my_xtabs</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">&quot;Freq&quot;,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Var1&quot;,</span> <span class="pre">&quot;Var2&quot;))</span></code>
@@ -1032,7 +1030,7 @@ operators behave as expected. `<strong class="command">[[</strong>` fetches
 <span class="c1">## [1] 0.287578 0.788305 0.408977 0.883017 0.940467 0.045556</span>
 </pre></div>
 </div>
-<p>and `<strong class="command">[</strong>` returns a data frame (a list with extras)
+<p>`<strong class="command">[</strong>` returns a data frame (a list with extras)
 comprised of the specified elements:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">]</span><span class="w">  </span><span class="c1"># or x[1]</span>
 <span class="c1">##          a</span>
@@ -1069,36 +1067,37 @@ operators can be used to add new or replace existing columns.</p>
         <span class="proof-type">Example 12.9</span>
         
     </div><div class="proof-content">
-<p>Some spam for thought to show how much we already know – a few common use cases
-of indexing and vectorised functions:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># for a more compact display</span>
+<p>Some spam for thought to show how much we already know.
+Here are a few common use cases of indexing using
+some popular vectorised functions.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># example data frame (more compact display)</span>
 </pre></div>
 </div>
-<p>Move column <code class="docutils literal notranslate"><span class="pre">a</span></code> to the end:</p>
+<p>Move the column <code class="docutils literal notranslate"><span class="pre">a</span></code> to the end:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="nf">unique</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">fromLast</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)]</span>
 <span class="c1">##          b c    d1    d2       a</span>
 <span class="c1">## 1 0.070508 A FALSE FALSE 0.28758</span>
 </pre></div>
 </div>
-<p>Remove column <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code>:</p>
+<p>Remove the columns <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="nf">match</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">))]</span>
 <span class="c1">##          b    d1    d2</span>
 <span class="c1">## 1 0.070508 FALSE FALSE</span>
 </pre></div>
 </div>
-<p>All columns between <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code>:</p>
+<p>Select all columns between <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="nf">match</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="o">:</span><span class="nf">match</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">))]</span>
 <span class="c1">##         a        b c</span>
 <span class="c1">## 1 0.28758 0.070508 A</span>
 </pre></div>
 </div>
-<p>Names starting with <code class="docutils literal notranslate"><span class="pre">d</span></code>:</p>
+<p>Fetch the columns with names starting with <code class="docutils literal notranslate"><span class="pre">d</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="nf">grep</span><span class="p">(</span><span class="s">&quot;^d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">))]</span>
 <span class="c1">##      d1    d2</span>
 <span class="c1">## 1 FALSE FALSE</span>
 </pre></div>
 </div>
-<p>Change name of column <code class="docutils literal notranslate"><span class="pre">c</span></code> to <code class="docutils literal notranslate"><span class="pre">z</span></code>:</p>
+<p>Change the name of column <code class="docutils literal notranslate"><span class="pre">c</span></code> to <code class="docutils literal notranslate"><span class="pre">z</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="w">  </span><span class="c1"># in-place</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="c1">##         a        b z    d1    d2</span>
@@ -1118,7 +1117,7 @@ of indexing and vectorised functions:</p>
 over  `<strong class="command">[[</strong>`, but we do not.
 By default, the former supports partial matching of column names
 which might be appealing when R is used interactively.
-Nonetheless, it does not work on matrices, nor it
+Nonetheless, it does not work on matrices nor it
 allows for programmatically generated names. It is also
 trickier to use on non-syntactically valid labels;
 compare <a class="reference internal" href="210-design.html#sec-backtick"><span class="std std-numref">Section 9.4.1</span></a>.</p>
@@ -1130,7 +1129,7 @@ compare <a class="reference internal" href="210-design.html#sec-backtick"><span 
         
     </div><div class="proof-content">
 <p>Write a function <strong class="command">names_replace</strong> that changes
-the name of a data frame columns based on a translation table
+the names of columns based on a translation table
 given in a <code class="docutils literal notranslate"><span class="pre">from=to</span></code> fashion, for instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">names_replace</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="n">...to.do...</span>
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
@@ -1144,11 +1143,11 @@ given in a <code class="docutils literal notranslate"><span class="pre">from=to<
 <h3><span class="section-number">12.2.2. </span>Data frames are matrix-like<a class="headerlink" href="#data-frames-are-matrix-like" title="Permalink to this heading">#</a></h3>
 <p>Data frames can be considered “generalised” matrices. They store data
 of any kind (possibly mixed) organised in a tabular fashion.
-Some functions mentioned in the previous chapter will hence
+Some functions mentioned in the previous chapter will
 be overloaded for the data frame case.
 These include: <strong class="command">dim</strong> (despite the lack of the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute),
 <strong class="command">NROW</strong>, <strong class="command">NCOL</strong>, and
-<strong class="command">dimnames</strong> (which is of course based on <code class="docutils literal notranslate"><span class="pre">row.names</span></code>
+<strong class="command">dimnames</strong> (which is, of course, based on <code class="docutils literal notranslate"><span class="pre">row.names</span></code>
 and <code class="docutils literal notranslate"><span class="pre">names</span></code>).</p>
 <p>For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
@@ -1190,7 +1189,7 @@ equipped with the ability to take two indexers:</p>
 </pre></div>
 </div>
 <div style="margin-top: 1em"></div><p>Recall the <code class="docutils literal notranslate"><span class="pre">drop</span></code> argument to `<strong class="command">[</strong>` and its effects
-on matrix indexing. It the current case,
+on matrix indexing. In the current case,
 its behaviour will be similar with regard to the
 operations on individual columns:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w">              </span><span class="c1"># synonym: x[[1]], because drop=TRUE</span>
@@ -1206,7 +1205,7 @@ operations on individual columns:</p>
 </pre></div>
 </div>
 <p>Also, note that when we extract a single row and more than one column,
-<code class="docutils literal notranslate"><span class="pre">drop</span></code> does not really apply. It is because columns (unlike in matrices)
+<code class="docutils literal notranslate"><span class="pre">drop</span></code> does not apply. It is because columns (unlike in matrices)
 can potentially be of different types:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1"># two numeric columns but the result is still a numeric</span>
 <span class="c1">##         a        b</span>
@@ -1223,7 +1222,7 @@ can potentially be of different types:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Once again let us take note of logical indexing featuring missing values:</p>
+<p>Once again, let us take note of logical indexing featuring missing values:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="p">[[</span><span class="s">&quot;d1&quot;</span><span class="p">]],</span><span class="w"> </span><span class="p">]</span>
 <span class="c1">##            a       b    c   d1   d2</span>
 <span class="c1">## 2    0.78831 0.12929    B TRUE TRUE</span>
@@ -1238,7 +1237,7 @@ can potentially be of different types:</p>
 it explicitly indicates that something is missing
 (we are selecting a “don’t know”; hence, the result is “don’t know” as well).
 Unfortunately, this comes with no warning.
-As we rarely check manually for missing values in the outputs,
+As we rarely manually check missing values in the outputs,
 our absent-mindedness can lead to code bugs.</p>
 </div>
 <p>By far, we might have already noted that
@@ -1251,8 +1250,8 @@ attribute. For instance:</p>
 <span class="c1">## 2 0.78831  0.12929 B  TRUE  TRUE</span>
 </pre></div>
 </div>
-<p>It is a version of <code class="docutils literal notranslate"><span class="pre">x</span></code> comprised of only top three values in the <code class="docutils literal notranslate"><span class="pre">u</span></code> column.
-Indexing by means of character vectors will refer to
+<p>It is a version of <code class="docutils literal notranslate"><span class="pre">x</span></code> comprised of only the top three values in
+the <code class="docutils literal notranslate"><span class="pre">u</span></code> column. Indexing by means of character vectors will refer to
 <code class="docutils literal notranslate"><span class="pre">row.names</span></code> and <code class="docutils literal notranslate"><span class="pre">names</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span><span class="p">[</span><span class="s">&quot;5&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">)]</span>
 <span class="c1">##         a       b</span>
@@ -1261,7 +1260,7 @@ Indexing by means of character vectors will refer to
 </div>
 <p>Note that this is not the same as
 “<code class="docutils literal notranslate"><span class="pre">xs[5,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;)]</span></code>”,
-despite the fact that <code class="docutils literal notranslate"><span class="pre">row.names</span></code> is formally an integer vector here.</p>
+even though <code class="docutils literal notranslate"><span class="pre">row.names</span></code> is formally an integer vector here.</p>
 <div style="margin-top: 1em"></div><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If a data frame features a matrix, we need to use the index/extract
@@ -1278,10 +1277,9 @@ operator twice in order to access a specific sub-column:</p>
 <p>In other words, neither “<code class="docutils literal notranslate"><span class="pre">x[[&quot;Sepal.Length.Min&quot;]]</span></code>”
 nor “<code class="docutils literal notranslate"><span class="pre">x[,</span> <span class="pre">&quot;Sepal.Length.Min&quot;]</span></code>” works.</p>
 </div>
-<p>As far as the replacement version of the index operator
-is concerned, it is a quite flexible tool,
-allowing the new content to be a vector, a data frame,
-a list, or even a matrix.</p>
+<p>Regarding the replacement version of the index operator,
+it is a quite flexible tool. It allows the new content to be a vector,
+a data frame, a list, or even a matrix.</p>
 <div class="proof proof-type-exercise" id="id29">
 
     <div class="proof-title">
@@ -1323,18 +1321,16 @@ a standalone column of a given name, for instance:</p>
 <section id="common-operations">
 <span id="sec-df-ops"></span><h2><span class="section-number">12.3. </span>Common operations<a class="headerlink" href="#common-operations" title="Permalink to this heading">#</a></h2>
 <p>Below we review the most commonly applied operations
-related to data frame wrangling.
-We have a few dedicated functions or methods overloaded
-for the <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> class. However,
+related to data frame wrangling. We have a few dedicated functions
+or methods overloaded for the <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> class. However,
 we have already mastered the necessary skills to deal with
-this kind of objects through our hard work,
-in particular involving the solving of the exercises
-in the preceding chapters.
+such objects through our hard work: in particular, by solving
+all the exercises listed in the preceding chapters.
 Let us repeat: data frames are just lists exhibiting matrix-like behaviour.</p>
 <section id="ordering-rows">
 <span id="sec-df-order"></span><h3><span class="section-number">12.3.1. </span>Ordering rows<a class="headerlink" href="#ordering-rows" title="Permalink to this heading">#</a></h3>
 <p>Ordering rows in a data frame with respect to different
-criteria can be easily achieved by means of the <strong class="command">order</strong> function
+criteria can be easily achieved through the <strong class="command">order</strong> function
 and the two-argument version of `<strong class="command">[</strong>`.</p>
 <p>For instance, here are the top six cars in terms of the
 time (in seconds) to complete a 402-metre race:</p>
@@ -1351,8 +1347,8 @@ time (in seconds) to complete a 402-metre race:</p>
 <span class="c1">## 6 21.0   6  160 110 3.90 2.62 16.46  0  1    4    4      Mazda RX4</span>
 </pre></div>
 </div>
-<p><strong class="command">order</strong> uses a stable sorting algorithm, therefore
-sorting with respect to a different criterion will not break
+<p><strong class="command">order</strong> uses a stable sorting algorithm. Therefore,
+any sorting with respect to a different criterion will not break
 the <em>relative</em> ordering of <code class="docutils literal notranslate"><span class="pre">qsec</span></code> in row groups with ties:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars6</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">mtcars6</span><span class="p">[[</span><span class="s">&quot;cyl&quot;</span><span class="p">]]),</span><span class="w"> </span><span class="p">]</span>
 <span class="c1">##    mpg cyl disp  hp drat   wt  qsec vs am gear carb          model</span>
@@ -1392,7 +1388,7 @@ the <em>relative</em> ordering of <code class="docutils literal notranslate"><sp
 </div>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Mixing a increasing and decreasing ordering is tricky
+<p>Mixing increasing and decreasing ordering is tricky
 as the <code class="docutils literal notranslate"><span class="pre">decreasing</span></code> argument to <strong class="command">order</strong>
 currently does not accept multiple flags
 in all the contexts. Perhaps the easiest way to change the ordering
@@ -1409,7 +1405,7 @@ to be sorted decreasingly.</p>
 </pre></div>
 </div>
 <p>For factor and character columns, <strong class="command">xtfrm</strong>
-can be used to convert them to sort keys first.</p>
+can convert them to sort keys first.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mtcars6</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">mtcars6</span><span class="p">[[</span><span class="s">&quot;cyl&quot;</span><span class="p">]],</span><span class="w"> </span><span class="o">-</span><span class="nf">xtfrm</span><span class="p">(</span><span class="n">mtcars6</span><span class="p">[[</span><span class="s">&quot;model&quot;</span><span class="p">]])),</span><span class="w"> </span><span class="p">]</span>
 <span class="c1">##    mpg cyl disp  hp drat   wt  qsec vs am gear carb          model</span>
 <span class="c1">## 6 21.0   6  160 110 3.90 2.62 16.46  0  1    4    4      Mazda RX4</span>
@@ -1464,7 +1460,7 @@ the repeating rows.</p>
 <h3><span class="section-number">12.3.3. </span>Joining (merging) data frames<a class="headerlink" href="#joining-merging-data-frames" title="Permalink to this heading">#</a></h3>
 <p>The <strong class="command">merge</strong> function can perform the JOIN operation
 that some readers might know from SQL<a class="footnote-reference brackets" href="#footjoin" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>. It matches the items in
-the columns that two given data frames somewhat share,
+the columns that two given data frames somewhat share
 and then returns their combination.</p>
 <div class="proof proof-type-example" id="id32">
 
@@ -1480,7 +1476,7 @@ with the information about the open-source projects
 its title, scope, web site, and so forth) they are engaged in
 (based on a third data frame featuring <code class="docutils literal notranslate"><span class="pre">developer_id</span></code> and <code class="docutils literal notranslate"><span class="pre">project_id</span></code>
 pairs).</p>
-</div></div><p>As an simple illustration, consider the two following objects:</p>
+</div></div><p>As a simple illustration, consider the two following objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
 <span class="w">    </span><span class="n">u</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;b0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b3&quot;</span><span class="p">),</span>
 <span class="w">    </span><span class="n">v</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a3&quot;</span><span class="p">)</span>
@@ -1525,7 +1521,7 @@ data frame will be included in the result:</p>
 <span class="c1">## 4 a4 &lt;NA&gt; c3</span>
 </pre></div>
 </div>
-<p>And the <em>full outer join</em> is their set-theoretic union:</p>
+<p>The <em>full outer join</em> is their set-theoretic union:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">merge</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">all.x</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">all.y</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># by=&quot;v&quot;</span>
 <span class="c1">##    v    u    w</span>
 <span class="c1">## 1 a0   b0   c0</span>
@@ -1549,12 +1545,12 @@ implement a very basic version of <strong class="command">merge</strong>.</p>
 <h3><span class="section-number">12.3.4. </span>Aggregating and transforming columns<a class="headerlink" href="#aggregating-and-transforming-columns" title="Permalink to this heading">#</a></h3>
 <p>Let us discuss how to perform data aggregation or
 engineer features.
-Despite the fact that we already know how to access individual
+Although we already know how to access individual
 columns with `<strong class="command">[</strong>` and process them using
 the many vectorised functions, we still have something interesting
 to add about the said matter.</p>
 <p>It would be tempting to try implementing such operations with
-<strong class="command">apply</strong>. Unfortunately, currently this function coerces its
+<strong class="command">apply</strong>. Unfortunately, currently, this function coerces its
 argument to a matrix. Hence, we should refrain from applying it on
 data frames whose columns are of mixed types<a class="footnote-reference brackets" href="#footapplydf" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.</p>
 <p>However, taking into account that data frames are special lists,
@@ -1611,8 +1607,8 @@ we can always call <strong class="command">Map</strong> and its relatives.</p>
 <span class="c1">## 100%          6.5         3.5          6.0         2.5</span>
 </pre></div>
 </div>
-<p>Note that the latter called <strong class="command">simplify2array</strong> automatically,
-thus the result is a matrix.</p>
+<p>Note that the latter called <strong class="command">simplify2array</strong> automatically.
+Thus, the result is a matrix.</p>
 <p>On the other hand, standardisation of all the numeric features
 can be performed, e.g., via a call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris_sample</span><span class="p">[]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -1631,8 +1627,8 @@ can be performed, e.g., via a call:</p>
 </div></div></section>
 <section id="handling-missing-values">
 <h3><span class="section-number">12.3.5. </span>Handling missing values<a class="headerlink" href="#handling-missing-values" title="Permalink to this heading">#</a></h3>
-<p>The <strong class="command">is.na</strong> method for objects of class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>
-returns a logical matrix of the same dimensionality<a class="footnote-reference brackets" href="#footnotmatrix" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>
+<p>The <strong class="command">is.na</strong> method for objects of the class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>
+returns a logical matrix of the same dimensionality<a class="footnote-reference brackets" href="#footnotmatrix" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>,
 indicating whether the corresponding items are missing or not.
 Of course, this function can still be called on individual
 columns as well.</p>
@@ -1645,8 +1641,8 @@ with missing values.</p>
         
     </div><div class="proof-content">
 <p>Given a data frame,
-use <strong class="command">is.na</strong> and other functions such as <strong class="command">apply</strong>,
-<strong class="command">approx</strong>, etc., to:</p>
+use <strong class="command">is.na</strong> and other functions such as <strong class="command">apply</strong> or
+<strong class="command">approx</strong> to:</p>
 <ol class="arabic simple">
 <li><p>remove all rows that feature at least one missing value,</p></li>
 <li><p>remove all rows that only consist of missing values,</p></li>
@@ -1657,8 +1653,8 @@ averages,</p></li>
 with values that linearly interpolate
 between the preceding and succeeding well-defined
 observations (of use in time series), e.g.,
-the blanks in <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0.60,</span> <span class="pre">0.62,</span> <span class="pre">NA,</span> <span class="pre">0.64,</span> <span class="pre">NA,</span> <span class="pre">NA,</span> <span class="pre">0.58)</span></code> should
-be filled so as to obtain
+the blanks in <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0.60,</span> <span class="pre">0.62,</span> <span class="pre">NA,</span> <span class="pre">0.64,</span> <span class="pre">NA,</span> <span class="pre">NA,</span> <span class="pre">0.58)</span></code>
+should be filled to obtain
 <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0.60,</span> <span class="pre">0.62,</span> <span class="pre">0.63,</span> <span class="pre">0.64,</span> <span class="pre">0.62,</span> <span class="pre">0.60,</span> <span class="pre">0.58)</span></code>.</p></li>
 </ol>
 </div></div></section>
@@ -1691,9 +1687,9 @@ class can be called directly on any array:</p>
 <span class="c1">## 6   Z   v 0.05</span>
 </pre></div>
 </div>
-<p>This is an instance of reshaping an array,
-and more precisely, <em>stacking</em>: converting from a <em>wide</em>
-(okay, in this example, not so wide, as we  have only two columns)
+<p>It is an instance of array <em>reshaping</em>.
+More precisely, we call it <em>stacking</em>: we converted from a <em>wide</em>
+(okay, in this example, not so wide, as we have only two columns)
 to a <em>long</em> format.</p>
 <p>This can be also achieved by means of the <strong class="command">reshape</strong> function
 which is more flexible and operates directly on data frames
@@ -1716,7 +1712,7 @@ which is more flexible and operates directly on data frames
 </pre></div>
 </div>
 <p>Maybe the default column names are not superb, but we can
-always adjust them manually afterwards.</p>
+adjust them manually afterwards.</p>
 <p>The reverse operation is called <em>unstacking</em>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">reshape</span><span class="p">(</span><span class="n">stacked</span><span class="p">,</span><span class="w"> </span><span class="n">idvar</span><span class="o">=</span><span class="s">&quot;Row&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">timevar</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">direction</span><span class="o">=</span><span class="s">&quot;wide&quot;</span><span class="p">)</span>
 <span class="c1">##     Row Col.u Col.v</span>
@@ -1751,8 +1747,8 @@ with two columns, for instance:</p>
 <p>Reshape (stack) the built-in <code class="docutils literal notranslate"><span class="pre">WorldPhones</span></code> dataset.
 Then, reshape (unstack) the stacked <code class="docutils literal notranslate"><span class="pre">WorldPhones</span></code> dataset.
 Further, unstack the stacked set but first
-remove<a class="footnote-reference brackets" href="#footcrosseddesign" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> five random rows from it, and then randomly
-permute all the  remaining rows. Fill the missing entries with <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.</p>
+remove<a class="footnote-reference brackets" href="#footcrosseddesign" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> five random rows from it and then randomly
+permute all the remaining rows. Fill in the missing entries with <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.</p>
 </div></div><div class="proof proof-type-exercise" id="id38">
 
     <div class="proof-title">
@@ -1779,14 +1775,14 @@ Convert it to a long data frame.</p>
     </div><div class="proof-content">
 <p>Perform what follows on the data frame defined below:</p>
 <ol class="arabic simple">
-<li><p>convert the second column from character to a list of character vectors
-(split at <code class="docutils literal notranslate"><span class="pre">&quot;,&quot;</span></code>);</p></li>
-<li><p>extract first elements from each of the vectors;</p></li>
-<li><p>extract last elements;</p></li>
+<li><p>convert the second column from <code class="docutils literal notranslate"><span class="pre">character</span></code> to a list of
+character vectors (split at <code class="docutils literal notranslate"><span class="pre">&quot;,&quot;</span></code>);</p></li>
+<li><p>extract the first elements from each of the vectors;</p></li>
+<li><p>extract the last elements;</p></li>
 <li><p>(*) unstack the data frame;</p></li>
 <li><p>(*) stack it back to a data frame featuring a list;</p></li>
-<li><p>convert the list back to a character column (concatenate with <code class="docutils literal notranslate"><span class="pre">&quot;,&quot;</span></code>
-as separator).</p></li>
+<li><p>convert the list back to a character column
+(concatenate with <code class="docutils literal notranslate"><span class="pre">&quot;,&quot;</span></code> as separator).</p></li>
 </ol>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
 <span class="w">    </span><span class="n">name</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Kat&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Ron&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Jo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Mary&quot;</span><span class="p">),</span>
@@ -1806,8 +1802,8 @@ as separator).</p></li>
         
     </div><div class="proof-content">
 <p>Write a function that converts all matrix-based columns in a given
-data frame to separate, atomic columns.
-Also, write a function to that does the opposite: one that groups all
+data frame to separate atomic columns.
+Also, write a function that does the opposite: one that groups all
 columns with similar prefixes and turns them into matrices.</p>
 </div></div></section>
 <section id="aggregating-data-in-groups">
@@ -1835,7 +1831,7 @@ which returns a list of data frames.</p>
 <span class="c1">## 4 40 spam 1</span>
 </pre></div>
 </div>
-<p>This split <code class="docutils literal notranslate"><span class="pre">x</span></code> with respect to the <code class="docutils literal notranslate"><span class="pre">u</span></code> column serving as the grouping
+<p>It split <code class="docutils literal notranslate"><span class="pre">x</span></code> with respect to the <code class="docutils literal notranslate"><span class="pre">u</span></code> column, which served as the grouping
 variable. On the other hand:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;u&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;v&quot;</span><span class="p">)])</span><span class="w">  </span><span class="c1"># sep=&quot;.&quot;</span>
 <span class="c1">## $eggs.1</span>
@@ -1857,9 +1853,9 @@ variable. On the other hand:</p>
 <span class="c1">## 2 20 spam 2</span>
 </pre></div>
 </div>
-<p>partitioned with respect to a combination of two factor-like
+<p>It partitioned with respect to a combination of two factor-like
 sequences. Note that a non-existing level pair <code class="docutils literal notranslate"><span class="pre">(eggs,</span> <span class="pre">2)</span></code>
-results in an empty data frame.</p>
+resulted in an empty data frame.</p>
 <div class="proof proof-type-exercise" id="id42">
 
     <div class="proof-title">
@@ -1870,8 +1866,8 @@ results in an empty data frame.</p>
 be used to break a matrix into a list of matrices (rowwisely).
 Given a matrix, perform its train-test split: allocate, say,
 70% of the rows at random into one matrix and the remaining 30%
-into another one.</p>
-</div></div><p>If the aggregation of grouped data in numeric columns is needed,
+into another.</p>
+</div></div><p>If we need to aggregate grouped data in numeric columns,
 <strong class="command">sapply</strong> is quite convenient. To recall, it is a combination of
 <strong class="command">lapply</strong> (one-vector version of <strong class="command">Map</strong>) and
 <strong class="command">simplify2array</strong> (<a class="reference internal" href="230-matrix.html#sec-simplify2array"><span class="std std-numref">Section 11.1.3</span></a>).</p>
@@ -1911,15 +1907,15 @@ explicitly or pass <code class="docutils literal notranslate"><span class="pre">
 <span class="c1">## Max          7.9         3.8</span>
 </pre></div>
 </div>
-<p>This yields a three-dimensional array which is particularly handy
-if we now would like to access specific results by name:</p>
+<p>It yielded a three-dimensional array, which is particularly handy if we
+now wish to access specific results by name:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="p">[,</span><span class="w"> </span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;setosa&quot;</span><span class="p">]</span>
 <span class="c1">## Min Max</span>
 <span class="c1">## 4.3 5.8</span>
 </pre></div>
 </div>
 <p>Also, the previously mentioned <strong class="command">as.data.frame.table</strong> method
-works like a charm on it (up to the column names):</p>
+works on it like a charm (up to the column names):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.data.frame.table</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="c1">##    Var1         Var2       Var3 Freq</span>
 <span class="c1">## 1   Min Sepal.Length     setosa  4.3</span>
@@ -1956,7 +1952,7 @@ the combined levels will be concatenated to a single string:</p>
 </div>
 <p>Also, the name of the aggregated column (<code class="docutils literal notranslate"><span class="pre">len</span></code>) has been included.
 This behaviour yields a result that may be deemed convenient
-in some contexts, but not necessarily so in other ones.</p>
+in some contexts but not necessarily so in others.</p>
 </div>
 <div class="proof proof-type-exercise" id="id43">
 
@@ -1968,11 +1964,11 @@ in some contexts, but not necessarily so in other ones.</p>
 that when they are fed with a vector with all the elements
 being identical, the result is exactly that unique element:
 <strong class="command">min</strong>, <strong class="command">mean</strong>, <strong class="command">median</strong>, and <strong class="command">max</strong>
-behave exactly this way.</p>
+behave this way.</p>
 <p>Overload the <strong class="command">mean</strong> and <strong class="command">median</strong> methods
-for character vectors and factors so that they return <code class="docutils literal notranslate"><span class="pre">NA</span></code> when
-they are fed with a sequence of not all elements being the same
-and the unique value otherwise.</p>
+for character vectors and factors. They should return <code class="docutils literal notranslate"><span class="pre">NA</span></code> when
+fed with a sequence where not all elements are the same.
+Otherwise, they are expected to output the unique value.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mean.character</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="n">...to.do...</span>
 <span class="n">mean.factor</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="n">...to.do...</span>
 </pre></div>
@@ -1990,8 +1986,7 @@ and the unique value otherwise.</p>
 </pre></div>
 </div>
 </div></div><div style="margin-top: 1em"></div><p>The built-in <strong class="command">aggregate</strong> method can assist us in
-a situation where a single function is to be applied on
-all columns in a data frame.</p>
+when a single function is to be applied on all columns in a data frame.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">aggregate</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="m">-5</span><span class="p">],</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="m">5</span><span class="p">],</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># not: ...[[5]]</span>
 <span class="c1">##      Species Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class="c1">## 1     setosa        5.006       3.428        1.462       0.246</span>
@@ -2008,8 +2003,8 @@ all columns in a data frame.</p>
 </pre></div>
 </div>
 <p>Note that the second argument, <code class="docutils literal notranslate"><span class="pre">by</span></code>, must be list-like
-(therefore also a data frame is accepted),
-not a factor nor an atomic vector.
+(this includes data frames).
+Neither a factor nor an atomic vector are acceptable.
 Also, if the function being applied returns many values, they
 will be wrapped into a matrix column:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">aggregate</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="m">5</span><span class="p">],</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">Min</span><span class="o">=</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">Max</span><span class="o">=</span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">))))</span>
@@ -2026,18 +2021,18 @@ will be wrapped into a matrix column:</p>
 <span class="c1">## [3,] 2.2 3.8</span>
 </pre></div>
 </div>
-<p>It is actually handy, because by referring to
-<code class="docutils literal notranslate"><span class="pre">x[[&quot;Sepal.Width&quot;]]</span></code> we have access to all the stats for this column.
-Further, if many columns are being aggregated at the same
-time, we can process all the summaries in the same way.</p>
+<p>It is actually handy because by referring to
+<code class="docutils literal notranslate"><span class="pre">x[[&quot;Sepal.Width&quot;]]</span></code>, we have access to all the stats for this column.
+Further, if many columns are being aggregated simultaneously,
+we can process all the summaries in the same way.</p>
 <div class="proof proof-type-exercise" id="id44">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 12.26</span>
         
     </div><div class="proof-content">
-<p>Check out the built-in <strong class="command">by</strong>
-function which supports some basic split-apply-bind use cases.
+<p>Check out the built-in <strong class="command">by</strong> function,
+which supports some basic split-apply-bind use cases.
 Note the particularly peculiar behaviour of the
 <strong class="command">print</strong> method for the <code class="docutils literal notranslate"><span class="pre">by</span></code> class.</p>
 </div></div><p>The most flexible scenario involves applying a custom function
@@ -2164,9 +2159,9 @@ List names are there for a more dramatic effect.</p>
 </div>
 <p>This brings fun back to R programming in the sad times when
 many things are given to us on a plate.</p>
-<p>By the way, the above has not been tested thoroughly,
-it is a proof of concept; as usual, testing, debugging, and extending
-is left as an exercise to the reader.</p>
+<p>By the way, the above has not been tested thoroughly.
+It is a proof of concept. As usual, testing, debugging, and extending
+are left as an exercise for the reader.</p>
 </div></div><div class="proof proof-type-example" id="id47">
 
     <div class="proof-title">
@@ -2221,8 +2216,9 @@ on every column of each data frame in a given list
 <span class="c1">## 6   VC  2.0 len 18.5 33.9</span>
 </pre></div>
 </div>
-<p>We really want our API be bloated, hence let us introduce a <em>convenience</em>
-function being a specialised version of the above:</p>
+<p>We really want our API to be bloated.
+Hence, let us introduce a <em>convenience</em>
+function, which is a specialised version of the above:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mean.list_dfs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">aggregate.list_dfs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">Mean</span><span class="o">=</span><span class="nf">mean</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)))</span>
 <span class="nf">mean</span><span class="p">(</span><span class="nf">group_by</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="m">51</span><span class="o">:</span><span class="m">150</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)],</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">))</span>
@@ -2237,10 +2233,10 @@ function being a specialised version of the above:</p>
 <section id="transforming-data-in-groups">
 <span id="sec-df-group-by-transform"></span><h3><span class="section-number">12.3.8. </span>Transforming data in groups<a class="headerlink" href="#transforming-data-in-groups" title="Permalink to this heading">#</a></h3>
 <p>Some variables will sometimes need to be transformed relative to what is
-happening in subsets of a dataset. This is the case, e.g., where we decide
+happening in a dataset’s subsets. This is the case, e.g., where we decide
 that missing values should be replaced by the corresponding
-within-group averages, or want to compute the relative ranks or z-scores.</p>
-<p>If the losing of the original ordering of rows is not an issue, the
+within-group averages or want to compute the relative ranks or z-scores.</p>
+<p>If the loss of the original ordering of rows is not an issue, the
 standard split-apply-bind will suffice.</p>
 <p>An example data frame:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
@@ -2360,7 +2356,7 @@ of a sample data frame split by a combination of two factors:</p>
 <span class="c1">## 0.5.VC.10      70   VC  0.5</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="150-indexing.html#sec-order"><span class="std std-numref">Section 5.4.4</span></a>, we mentioned that
+<p><a class="reference internal" href="150-indexing.html#sec-order"><span class="std std-numref">Section 5.4.4</span></a> mentioned that
 by calling <strong class="command">order</strong>, we can determine the inverse of a given
 permutation. Hence, we can call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="nf">order</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="s">&quot;supp&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">x</span><span class="p">[[</span><span class="s">&quot;dose&quot;</span><span class="p">]])),</span><span class="w"> </span><span class="p">]</span><span class="w">  </span><span class="c1"># not: dose, supp</span>
@@ -2382,23 +2378,23 @@ et voilà.</p>
 </div></div></section>
 <section id="metaprogramming-based-techniques">
 <span id="sec-metaprogramming-df"></span><h3><span class="section-number">12.3.9. </span>Metaprogramming-based techniques (*)<a class="headerlink" href="#metaprogramming-based-techniques" title="Permalink to this heading">#</a></h3>
-<p>In <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>, we mentioned that
-due to R’s being equipped with the ability
-to write programs that manipulate unevaluated expressions,
-some functions can provide us with <em>convenient</em><a class="footnote-reference brackets" href="#footdtspeed" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> interfaces
+<p><a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a> mentioned that
+R is equipped with the ability to write programs that manipulate
+unevaluated expressions. As a consequence,
+some functions provide us with <em>convenient</em><a class="footnote-reference brackets" href="#footdtspeed" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> interfaces
 to a few common operations. These include
 <strong class="command">transform</strong>, {command<code class="docutils literal notranslate"><span class="pre">subset</span></code>, <strong class="command">with</strong>,
 and basically every procedure accepting a formula.
-Also, the popular <strong class="program">data.table</strong> and <strong class="program">dplyr</strong> packages
-fall into this class (<a class="reference internal" href="#sec-tidyverse"><span class="std std-numref">Section 12.3.10</span></a>).</p>
-<p>However, we have already noted that each such method must be studied
-separately. This is because they can arbitrarily interpret
-the <em>form</em> of the arguments passed thereto,
+The popular <strong class="program">data.table</strong> and <strong class="program">dplyr</strong> packages
+also fall into this class (<a class="reference internal" href="#sec-tidyverse"><span class="std std-numref">Section 12.3.10</span></a>).</p>
+<p>However, we have already noted that each method must be studied
+separately. It can arbitrarily interpret the <em>form</em> of the passed arguments
 without taking into account their <em>real</em> meaning.
-This is why we try to avoid<a class="footnote-reference brackets" href="#footbaseavoid" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> them in this course:
-we can do perfectly without them.
-Withal, they are not only interesting on their own,
-but also quite popular in other users’ code, hence the honourable mention.
+Hence, we avoid<a class="footnote-reference brackets" href="#footbaseavoid" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> them in this course, as
+we can do perfectly without them.</p>
+<p>Withal, they are thought-provoking on their own.
+Furthermore, they are quite popular in other users’ code.
+This is why they deserve an honourable mention.
 Learning them in more detail is left to the kind reader as an optional
 exercise.</p>
 <div class="proof proof-type-example" id="id50">
@@ -2420,7 +2416,7 @@ to the <strong class="command">subset</strong> function:</p>
 </pre></div>
 </div>
 <p>Neither <code class="docutils literal notranslate"><span class="pre">Sepal.Length&gt;7.5</span></code> nor <code class="docutils literal notranslate"><span class="pre">-(Sepal.Width:Petal.Width)</span></code> make sense
-as standalone R expressions, because we have not defined
+as standalone R expressions because we have not defined
 the named variables used therein:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Sepal.Length</span><span class="o">&gt;</span><span class="m">7.5</span><span class="w">            </span><span class="c1"># utter nonsense</span>
 <span class="c1">## Error in eval(expr, envir, enclos): object &#39;Sepal.Length&#39; not found</span>
@@ -2428,15 +2424,15 @@ the named variables used therein:</p>
 <span class="c1">## Error in eval(expr, envir, enclos): object &#39;Sepal.Width&#39; not found</span>
 </pre></div>
 </div>
-<p>Only from <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;subset&quot;)</span></code>, we can learn that this tool generously
-decides that the second expression plays the role of a row selector
-and the third one removes all the columns between the two
+<p>Only from <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;subset&quot;)</span></code> we can learn that this tool generously
+decides that the second expression plays the role of a row selector.
+Moreover, the third one removes all the columns between the two
 given ones.</p>
 <p>In our course, we pay attention to developing transferable skills.
 Assuming that R is not the only language we are going to learn during
-of our long and happy lives, it is much more likely that in the next
-environment, we will rather be writing
-something more of the more basic form:</p>
+our long and happy lives, it is much more likely that in the next
+environment, we will be writing something more of the more basic form
+instead:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">between</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">which</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="nf">which</span><span class="p">(</span><span class="n">to</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
 <span class="n">iris</span><span class="p">[</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">]]</span><span class="o">&gt;</span><span class="m">7.5</span><span class="p">,</span>
 <span class="w">    </span><span class="o">-</span><span class="nf">between</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">iris</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Petal.Width&quot;</span><span class="p">)]</span>
@@ -2450,8 +2446,8 @@ something more of the more basic form:</p>
 </pre></div>
 </div>
 <p>Let us stress again that this is a book on how to become
-a great chef who proudly uses produce from sustainable sources,
-and not how to order ultra-processed food from DeliverNoodlesQuickly.com.</p>
+a great chef who proudly uses sustainably-sourced produce,
+not how to order ultra-processed food from DeliverNoodlesQuickly.com.</p>
 </div></div><div class="proof proof-type-example" id="id51">
 
     <div class="proof-title">
@@ -2475,7 +2471,7 @@ features as if they were ordinary variables:</p>
 (see <a class="reference internal" href="330-environment.html#sec-attach"><span class="std std-numref">Section 16.2.6</span></a>) so that the columns can be accessed
 by name. Nevertheless, we cannot alter their contents.
 As an alternative, <strong class="command">with</strong> and <strong class="command">within</strong> may be referred
-to if writing <code class="docutils literal notranslate"><span class="pre">df[[&quot;...&quot;]]</span></code> each time is so difficult to us
+to if writing <code class="docutils literal notranslate"><span class="pre">df[[&quot;...&quot;]]</span></code> each time is so difficult for us
 (it should not be):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">within</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">mtcars</span><span class="p">),</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">log_hp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span>
@@ -2531,11 +2527,11 @@ or “one thing as a function of other things”.</p>
 <span class="c1">## Valiant              123.1  4.6540 0.049455....</span>
 </pre></div>
 </div>
-<p>If these seem esoteric, it is because that is exactly the case.
+<p>If these seem esoteric, it is because that is precisely the case.
 We need to consult the corresponding functions’ manuals
-to be able to understand what they do.
+to understand what they do.
 And, as we do not recommend their use by beginner programmers,
-we are not going to explain them here.</p>
+we will not explain them here.</p>
 </div></div><div class="proof proof-type-exercise" id="id53">
 
     <div class="proof-title">
@@ -2545,52 +2541,53 @@ we are not going to explain them here.</p>
 <p>In the last example, the peculiar printing of the last column
 is due to which method’s being overloaded?</p>
 </div></div><p>In the third part of this book, we will return to these functions
-as they will serve as a very interesting illustration of how to implement
+as they will serve as an amusing illustration of how to implement
 our own procedures that rely on metaprogramming techniques.</p>
 </section>
 <section id="a-note-on-the-dplyr-tidyverse-and-data-table-packages">
 <span id="sec-tidyverse"></span><h3><span class="section-number">12.3.10. </span>A note on the <strong class="program">dplyr</strong> (<strong class="program">tidyverse</strong>) and <strong class="program">data.table</strong> packages (*)<a class="headerlink" href="#a-note-on-the-dplyr-tidyverse-and-data-table-packages" title="Permalink to this heading">#</a></h3>
 <p>The popular third-party packages <strong class="program">data.table</strong> and
 <strong class="program">dplyr</strong> implement the most common data frame wrangling procedures.
-Moreover, some of the operations may be much faster for
-larger data sets.</p>
-<p>They both introduce a completely new API for the operations we already
+Some operations may be much faster for larger data sets.</p>
+<p>They both introduce an entirely new API for the operations we already
 know well how to perform. Furthermore, they are heavily based on
-metaprogramming (nonstandard evaluation).
-A good way to learn them is by solving some of the exercises
+metaprogramming (lazy evaluation).
+A nice way to learn them is by solving some of the exercises
 listed below.</p>
-<p>Note that <strong class="program">dplyr</strong> is part of a huge system of
-interdependent packages called <strong class="program">tidyverse</strong> which tend to
-do things their own way and which became quite invasive over the last years.
-Nevertheless, R programmers ought to remember that they are <em>able</em> to do
+<p>Note that <strong class="program">dplyr</strong> is part of a vast system of
+interdependent packages called <strong class="program">tidyverse</strong>, which tend to
+do things their own way. They became quite invasive over the last few years.</p>
+<p>Still, R programmers ought to remember that they are <em>able</em> to do
 without them. What is more, they also <em>need</em> to rely on other solutions
 when processing other prominent data structures is required,
 e.g., of fancy lists and matrices.
 Base R always comes first as the most fundamental layer.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Some functions we may find helpful will (annoyingly to base R users)
-return objects of class <code class="docutils literal notranslate"><span class="pre">tibble</span></code> (<code class="docutils literal notranslate"><span class="pre">tbl_df</span></code>)
+<p>Some functions we may find helpful (annoyingly to base R users)
+return objects of the class <code class="docutils literal notranslate"><span class="pre">tibble</span></code> (<code class="docutils literal notranslate"><span class="pre">tbl_df</span></code>)
 (e.g., <strong class="program">haven</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">read.xpt</strong> that
 reads <strong class="program">SAS</strong> data files).
-However, those are in fact <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> subclasses
-and we can always use <strong class="command">as.data.frame</strong> to get our
+However, these are, in fact, subclasses of <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>.
+We can always use <strong class="command">as.data.frame</strong> to get our
 favourite objects back.</p>
 </div>
 <p>Also, we cannot stress enough that it is SQL that we recommend
-to learn as perhaps the most powerful interface to
-more considerable amounts of data, and also one that gives
-skills which can be used at a later time in other programming
+learning as perhaps the most powerful interface to
+more considerable amounts of data.
+It will give us the skills that can be used later in other programming
 environments.</p>
-<p>Base R has long time ago proven to be a versatile tool for rapid prototyping, calling specialised procedures
+<p>Base R (and its predecessor, S) has long ago proven
+to be a versatile tool for rapid prototyping, calling specialised procedures
 written in C or Java, and wrangling data that <em>fit into memory</em>.
 For larger problems, techniques for working with batches of data, sampling
-methods, or aggregating data stored elsewhere is often the way to go,
+methods, or aggregating data stored elsewhere are often the way to go,
 especially when building machine learning models
 or visualisation<a class="footnote-reference brackets" href="#footlargeplot" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a> is required.
-Usually, the most recent data will be stored in normalised databases
-and you will need to join a few tables in order to fetch
-something of interest in the current analysis context.</p>
+Usually, the most recent data will be stored in normalised databases,
+and we will need to join a few tables to fetch
+something interesting from the perspective of the
+current analysis context.</p>
 </section>
 </section>
 <section id="exercises">
@@ -2649,11 +2646,11 @@ and
 <ul class="simple">
 <li><p>How to extract the rows where <code class="docutils literal notranslate"><span class="pre">checked</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>?</p></li>
 <li><p>How to extract a subset comprised only of <code class="docutils literal notranslate"><span class="pre">ID</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code>-something columns?</p></li>
-<li><p>How to extract the rows for which <code class="docutils literal notranslate"><span class="pre">ID</span></code> is like 3 letters
-and then 5 digits (e.g., <code class="docutils literal notranslate"><span class="pre">XYZ12345</span></code>)?</p></li>
+<li><p>How to extract the rows for which <code class="docutils literal notranslate"><span class="pre">ID</span></code> is like three letters
+and then five digits (e.g., <code class="docutils literal notranslate"><span class="pre">XYZ12345</span></code>)?</p></li>
 <li><p>How to select all the numeric columns in one go?</p></li>
 <li><p>Assuming that the <code class="docutils literal notranslate"><span class="pre">ID</span></code>s are like three letters and then five digits,
-how to add two columns: <code class="docutils literal notranslate"><span class="pre">ID3</span></code> (the letters) and <code class="docutils literal notranslate"><span class="pre">ID5</span></code> (the five digits).</p></li>
+how to add two columns: <code class="docutils literal notranslate"><span class="pre">ID3</span></code> (the letters) and <code class="docutils literal notranslate"><span class="pre">ID5</span></code> (the five digits)?</p></li>
 <li><p>How to get rid of all the columns between <code class="docutils literal notranslate"><span class="pre">x3</span></code> and <code class="docutils literal notranslate"><span class="pre">y7</span></code>?</p></li>
 <li><p>How to check where both <code class="docutils literal notranslate"><span class="pre">lat</span></code> and <code class="docutils literal notranslate"><span class="pre">long</span></code> in <code class="docutils literal notranslate"><span class="pre">coords</span></code> are positive?</p></li>
 <li><p>How to add the row indicating the number of <code class="docutils literal notranslate"><span class="pre">features</span></code>?</p></li>
@@ -2694,7 +2691,8 @@ and trunk diameters (<code class="docutils literal notranslate"><span class="pre
 of five horse chestnuts with the smallest diameters at breast height.
 The output data frame must be sorted with respect to
 <code class="docutils literal notranslate"><span class="pre">Diameter.Breast.Height</span></code>, decreasingly.</p></li>
-<li><p>Create a new data frame that gives the number of trees planted in each year.</p></li>
+<li><p>Create a new data frame that gives the number of trees planted
+each year.</p></li>
 <li><p>Compute the average age (in years, based on <code class="docutils literal notranslate"><span class="pre">Year.Planted</span></code>;
 using  <strong class="command">aggregate</strong>) of the trees of genera (each genus separately):
 Eucalyptus, Platanus, Ficus, Acer, and Quercus.
@@ -2711,7 +2709,7 @@ Consider the historic data dumps of
 <a class="reference external" href="https://travel.stackexchange.com/">https://travel.stackexchange.com/</a>
 available <a class="reference external" href="https://github.com/gagolews/teaching-data/tree/master/travel_stackexchange_com_2017">here</a>.
 Export the CSV files located therein to an SQLite database.
-Then, write some R code that correspond to the following SQL queries
+Then, write some R code that corresponds to the following SQL queries
 (use <strong class="command">dbGetQuery</strong> to verify your results):</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--- 1)</span>
 <span class="k">SELECT</span>
@@ -2873,7 +2871,7 @@ Then, write some R code that correspond to the following SQL queries
     </div><div class="proof-content">
 <p>(*)
 Generate a CSV file featuring some random data arranged in
-a few columns of the size at least two times larger than your available RAM.
+a few columns of a size at least two times larger than your available RAM.
 Then, export the CSV file to an SQLite database.
 Use file connections (<a class="reference internal" href="180-flow.html#sec-time-complexity"><span class="std std-numref">Section 8.3.5</span></a>) and the
 <code class="docutils literal notranslate"><span class="pre">nrow</span></code> argument to <strong class="command">read.table</strong>
@@ -2896,24 +2894,23 @@ to an SQLite database.</p>
 <aside class="footnote brackets" id="footstructured" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
 <p>We are already highly skilled in dealing with
-unstructured data and turning it to something that is much
-more regular: the numerous functions for processing
-numeric and character vectors as well as lists that
-we have covered in the first part of this book
+unstructured data and turning them into something that is much
+more regular: the numerous functions that
+we have covered in the first part of this book,
 allow us to extract meaningful data from text,
 handle missing values, engineer features, and so forth.</p>
 </aside>
 <aside class="footnote brackets" id="footcolattr" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
-<p>Also, the attributes of objects stored as matrix columns will
+<p>The attributes of objects stored as matrix columns will
 generally be preserved (even if they are not displayed
 by <strong class="command">print</strong>; see <strong class="command">str</strong> though).</p>
 </aside>
 <aside class="footnote brackets" id="footcbinddf" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
 <p>This is a clear violation of the rule that an S3 generic
-dispatches on the type of only one (usually: first) argument;
-an exception made for the sake of the questionable
+dispatches on the type of only one argument (usually: the first).
+It is an exception made for the sake of the questionable
 user <em>convenience</em>.
 Also, note that there is no <strong class="command">cbind.default</strong> method available:
 it is hardcoded at the C language level.</p>
@@ -2931,11 +2928,11 @@ by setting too short a <code class="docutils literal notranslate"><span class="p
 <p>This is a strong word.
 This implication relies on an implicit assumption
 that the primitive functions <strong class="command">length</strong> and <strong class="command">names</strong>
-have not be contaminated by treating data frames differently than
+have not been contaminated by treating data frames differently than
 named lists. Luckily, that is indeed not the case.
-Also, despite the fact that we have the index operators specially
+Although we have the index operators specially
 overloaded for the <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> class, they behave quite
-reasonably and, as we will see, they allow for a mix of
+reasonably. As we will see, they allow for a mix of
 list- and matrix-like behaviours.</p>
 </aside>
 <aside class="footnote brackets" id="footpandassetindex" role="note">
@@ -2946,12 +2943,12 @@ and <strong class="command">pandas.DataFrame.reset_index</strong> in Python.</p>
 <aside class="footnote brackets" id="footjoin" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">7</a><span class="fn-bracket">]</span></span>
 <p>JOIN is the reverse operation to
-data normalisation known from theory of relational databases,
-which itself reduces data redundancy and increases their integrity.
+data normalisation known from the relational database theory.
+It reduces data redundancy and increases their integrity.
 What data scientists need for succeeding with their daily activities
-(analysis, visualisation, processing) is thus the opposite of what
+(analysis, visualisation, processing) is sometimes the opposite of what
 the art of data management focuses on (efficient collection and storage).
-Readers are encouraged to learn about various normalisation
+The readers are encouraged to learn about various normalisation
 forms from, e.g., <span id="id18">[<a class="reference internal" href="999-bibliography.html#id70" title="Date, C.J. (2003).  An Introduction to Database Systems. Pearson.">16</a>]</span> or any other course covering this
 topic.</p>
 </aside>
@@ -2970,15 +2967,15 @@ a matrix column.</p>
 <p>The original dataset can be thought of as
 representing a fully crossed design experiment
 (all combinations of two grouping variables are present).
-Its truncated version is like an incomplete cross design.</p>
+Its truncated version is like an incomplete cross-design.</p>
 </aside>
 <aside class="footnote brackets" id="footdtspeed" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">11</a><span class="fn-bracket">]</span></span>
-<p>Furthermore, in some third-party packages,
-they can sometimes be faster and more memory efficient
-(on larger datasets), as it is usually the case with more
+<p>Furthermore, some third-party packages
+can sometimes be faster and more memory efficient
+(on larger datasets), as is usually the case with more
 specialised tools. However, in many daily programming contexts,
-the speed of the data wrangling operations is not that often an issue.
+the speed of the data wrangling operations is not often an issue.
 Remember that we always have SQL-supporting
 relational databases at our disposal.</p>
 </aside>
@@ -3000,9 +2997,10 @@ as, e.g., variables in data may accidentally override local variables.</em></p>
 <aside class="footnote brackets" id="footlargeplot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">13</a><span class="fn-bracket">]</span></span>
 <p>For example, drawing a scatter plot
-of one billion points barely makes sense and may result
-in unreadable images of large file sizes. They need to be sampled
-or summarised (e.g., binned) somehow first.</p>
+of one billion points makes little sense. It may result
+in unreadable images of large file sizes. They first
+need to be sampled or summarised somehow (e.g., binned);
+see <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a>.</p>
 </aside>
 </aside>
 </section>
@@ -3043,7 +3041,7 @@ or summarised (e.g., binned) somehow first.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-04-30T15:50:16+1000.
+              Last updated on 2023-05-01T22:08:20+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -3109,5 +3107,8 @@ or summarised (e.g., binned) somehow first.</p>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/proof.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
     </body>
 </html>
