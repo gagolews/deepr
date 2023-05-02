@@ -306,9 +306,8 @@ that should only be of interest to the advanced-to-be<a class="footnote-referenc
 open-minded R programmers who would like to understand what
 is going on under our language’s hood.
 In particular, we will inspect the mechanisms behind
-why certain functions do something very different from what
-we would expect them to do, if a <em>standard</em> evaluation
-scheme was followed
+why certain functions act differently from what we would expect them to do
+if a <em>standard</em> evaluation scheme was followed
 (compare <strong class="command">subset</strong> and <strong class="command">transform</strong>
 mentioned in <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>).</p>
 <p>Namely, in <em>normal</em> programming languages, when we write something like:</p>
@@ -327,30 +326,29 @@ the above never means anything else than:</p>
 </div>
 <p>But R was heavily inspired by the S language from whom it
 has taken the notion of lazy arguments (<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>).
-Being equipped with the ability to apply a set of
+It is equipped with the ability to apply a set of
 techniques referred to as <em>metaprogramming</em> (computing on the language,
-reflection), we can define functions that can peek outside their small world,
-and clearly see the code fragment that was used to generate the arguments
-passed thereto. Having access to such <em>unevaluated expressions</em>, we
+reflection). With it, we can define functions that can peek outside their
+small world and clearly see the code fragment passed as their arguments.
+Having access to such <em>unevaluated expressions</em>, we
 can do to them whatever we please: print, modify,
 evaluate on different data, or ignore whatsoever.</p>
-<p>In theory, this enables the implementing of many
-<em>potentially helpful</em><a class="footnote-reference brackets" href="#footlazygood" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>
-beginner-friendly features, which allow us to express certain
+<p>In theory, this enables implementing many <em>potentially helpful</em><a class="footnote-reference brackets" href="#footlazygood" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>
+beginner-friendly features and express certain
 requests in a more concise manner. For instance, that the y-axis labels
-in <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a> could be generated automatically is exactly
-due to the fact that <strong class="command">plot</strong> was able to see not only
-a vector like <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1.0000,</span> <span class="pre">1.0101,</span> <span class="pre">1.0202,</span> <span class="pre">1.0305,</span> <span class="pre">...)</span></code>,
+in <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a> could be generated automatically is
+precisely because <strong class="command">plot</strong> was able to see not only
+a vector like <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1.0000,</span> <span class="pre">1.0101,</span> <span class="pre">1.0202,</span> <span class="pre">1.0305,</span> <span class="pre">...)</span></code>
 but also the expression that generated it, <strong class="command">exp</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>.</p>
-<p>But, as a form of <em>untamed freedom of expression</em><a class="footnote-reference brackets" href="#footimho" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>,
+<p>Nonetheless, as a form of <em>untamed freedom of expression</em><a class="footnote-reference brackets" href="#footimho" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>,
 metaprogramming has the potential to result in chaos, confusion,
 and division in the user community.
 In particular, we can introduce a microlanguage
 within our language that people outside our circle will not be able
 to understand.</p>
-<p>Therefore, cursed be us, for we are about to start eating from tree of the
-knowledge of good and evil. But remember: with great power comes great
-responsibility.</p>
+<p>Therefore, cursed be us, for we are about to start eating from
+the tree of the knowledge of good and evil. But remember:
+with great power comes great fun (and responsibility).</p>
 <section id="expressions-at-a-glance">
 <span id="sec-expr-theory"></span><h2><span class="section-number">15.1. </span>Expressions at a glance<a class="headerlink" href="#expressions-at-a-glance" title="Permalink to this heading">#</a></h2>
 <p>At the most general level, expressions (statements)
@@ -372,15 +370,15 @@ in a language like R can be classified into two groups:</p>
 </div>
 </li>
 </ul>
-<p>As we will soon see, compound expressions are used to
+<p>As we will soon see, compound expressions
 represent a <em>call</em> to <span class="math">\(f\)</span> (an <em>operator</em>) on a sequence of arguments
-<span class="math">\(e_1,e_2,\dots,e_n\)</span> (<em>operands</em>). This is why, equivalently, we will also
-be denoting them with <span class="math">\(f(e_1,e_2,\dots,e_n)\)</span>.</p>
+<span class="math">\(e_1,e_2,\dots,e_n\)</span> (<em>operands</em>). It is why, equivalently, we
+denote them with <span class="math">\(f(e_1,e_2,\dots,e_n)\)</span>.</p>
 <p>On the other hand, <em>names</em> such as `<code class="docutils literal notranslate"><span class="pre">x</span></code>`, `<code class="docutils literal notranslate"><span class="pre">iris</span></code>`, `<code class="docutils literal notranslate"><span class="pre">sum</span></code>`,
-and `<code class="docutils literal notranslate"><span class="pre">spam</span></code>`, have no meaning without an explicitly stated context,
-which will be a topic that we will explore in <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.
+and `<code class="docutils literal notranslate"><span class="pre">spam</span></code>` have no meaning without an explicitly stated context.
+This will be a topic we will explore in <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.
 Prior to that, we treat them as meaning-less.</p>
-<p>Hence, for the time being, in this chapter we are only interested
+<p>Hence, for the time being, we are only interested
 in the <em>syntax</em> or <em>grammar</em> of our language, not the <em>semantics</em>.
 We are abstract in the sense that, in the expression
 “<strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(rates)+2</span></code>”<a class="footnote-reference brackets" href="#footsugar" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>,
@@ -402,7 +400,7 @@ in the sense of <em>compound expressions</em> above;</p></li>
 of simple or compound expressions (constants, names, or calls).</p></li>
 </ul>
 <p>One way to create a simple or compound expression
-is by <em>quoting</em>, where we ask the interpreter to refrain itself from
+is by <em>quoting</em>, where interpreter is asked to refrain from
 evaluating a given command:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">quote</span><span class="p">(</span><span class="n">spam</span><span class="p">)</span><span class="w">  </span><span class="c1"># name (symbol)</span>
 <span class="c1">## spam</span>
@@ -418,7 +416,7 @@ evaluating a given command:</p>
 <span class="c1">## spam</span>
 </pre></div>
 </div>
-<p>And calls can be built programmatically by invoking:</p>
+<p>Calls can be built programmatically by invoking:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">call</span><span class="p">(</span><span class="s">&quot;sin&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="o">/</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## sin(1.5707963267949)</span>
 </pre></div>
@@ -503,8 +501,8 @@ respectively.</p>
 <p>We have mentioned that calls (compound expressions)
 are combinations of simple or compound expressions
 of the form <span class="math">\((f, e_1, \dots, e_n)\)</span>.</p>
-<p>That the first expression on the list, denoted above with <span class="math">\(f\)</span>,
-plays a special role, is exactly seen in the following examples:</p>
+<p>The first expression on the list, denoted above with <span class="math">\(f\)</span>,
+plays a special role. It is precisely seen in the following examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.call</span><span class="p">(</span><span class="nf">expression</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
 <span class="c1">## f(x)</span>
 <span class="nf">as.call</span><span class="p">(</span><span class="nf">expression</span><span class="p">(</span><span class="n">`+`</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
@@ -530,7 +528,7 @@ and language constructs such as <strong class="command">if</strong> and
 </div>
 <section id="browsing-parse-trees">
 <h3><span class="section-number">15.3.1. </span>Browsing parse trees<a class="headerlink" href="#browsing-parse-trees" title="Permalink to this heading">#</a></h3>
-<p>Square brackets gives us access to the individual expressions constituting
+<p>Square brackets give us access to the individual expressions constituting
 an object of the type <code class="docutils literal notranslate"><span class="pre">call</span></code>. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="m">1</span><span class="o">+</span><span class="n">x</span><span class="p">)</span>
 <span class="n">expr</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span>
@@ -540,7 +538,7 @@ an object of the type <code class="docutils literal notranslate"><span class="pr
 </pre></div>
 </div>
 <p>A compound expression was defined recursively:
-it can consist of other compound expressions.</p>
+it may consist of other compound expressions.</p>
 <p>For instance, the following expression:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span>
 <span class="w">    </span><span class="nf">while </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -554,8 +552,9 @@ it can consist of other compound expressions.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`while`</span><span class="p">(</span><span class="nf">`&lt;`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="nf">`{`</span><span class="p">(</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;i =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">`&lt;-`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nf">`+`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))))</span>
 </pre></div>
 </div>
-<p>Equivalently, in the Polish (prefix;  <span class="math">\((f, ...)\)</span>; traditionally used
-in Lisp) notation it will look like:</p>
+<p>Equivalently, in the Polish notation
+(the prefix notation; <span class="math">\((f, ...)\)</span>; traditionally used in Lisp),
+it will look like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="w">    </span><span class="n">`while`</span><span class="p">,</span>
 <span class="w">    </span><span class="p">(</span><span class="n">`&lt;`</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span>
@@ -620,7 +619,7 @@ parse tree:</p>
 <section id="manipulating-calls">
 <h3><span class="section-number">15.3.2. </span>Manipulating calls<a class="headerlink" href="#manipulating-calls" title="Permalink to this heading">#</a></h3>
 <p>The R language is <em>homoiconic</em>: it can treat code as data.
-This includes the ability to arbitrarily manipulate it on the fly.
+This includes the ability to manipulate it on the fly.
 This is because, just like on lists, we can freely use the
 replacement versions of `<strong class="command">[</strong>` and `<strong class="command">[[</strong>` on
 objects of the type <code class="docutils literal notranslate"><span class="pre">call</span></code>.</p>
@@ -644,7 +643,7 @@ objects of the type <code class="docutils literal notranslate"><span class="pre"
 </div>
 <p>We know from the first part of this book that calling <strong class="command">print</strong>
 on a function will reveal its source code.</p>
-<p>It turns out that we can easily get access to the list of parameters
+<p>It turns out that we can get access to the list of parameters
 in the form of a named list<a class="footnote-reference brackets" href="#footpairlist" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">formals</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="c1">## $x</span>
@@ -662,7 +661,7 @@ are stored as ordinary list elements
 <span class="c1">## x + y</span>
 </pre></div>
 </div>
-<p>It is an object of the now-well-known class <code class="docutils literal notranslate"><span class="pre">call</span></code>.
+<p>It is an object of the now well-known class <code class="docutils literal notranslate"><span class="pre">call</span></code>.
 Thus, we can customise it as we please:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># change from `+` to `*`</span>
 <span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.call</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)),</span><span class="w"> </span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)))</span>
@@ -692,10 +691,10 @@ the expression used to generate a function’s argument.</p>
 <span class="nf">test</span><span class="p">()</span><span class="w">  </span><span class="c1"># it is not an error</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>, we will note that arguments are
+<p><a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a> notes that arguments are
 evaluated only on demand (lazily): <strong class="command">substitute</strong> triggers
 no computations. This opens the possibility to implement
-functions that interpret their input in whichever way they like;
+functions that interpret their input whichever way they like;
 see <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>,
 <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>, and
 <a class="reference internal" href="340-lazy.html#sec-metaprogramming-implement"><span class="std std-numref">Section 17.5</span></a> for examples.</p>
@@ -705,7 +704,7 @@ see <a class="reference internal" href="210-design.html#sec-metaprogramming-intr
         <span class="proof-type">Example 15.3</span>
         
     </div><div class="proof-content">
-<p><strong class="command">library</strong> (see <a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>) allows to specify the
+<p><strong class="command">library</strong> (see <a class="reference internal" href="170-function.html#sec-packages"><span class="std std-numref">Section 7.3.1</span></a>) allows specifying the
 name of the package to be loaded both in the form of a character string
 and a <em>name</em>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># preferred</span>
@@ -741,7 +740,7 @@ Study the source code of <strong class="command">plot.default</strong>,
 <strong class="command">wilcox.test.default</strong> and the aforementioned
 <strong class="command">library</strong>.
 Explain why they do that. Propose a solution to achieve the same
-functionality without the use of reflection techniques.</p>
+functionality without using reflection techniques.</p>
 </div></div></section>
 <section id="checking-if-an-argument-is-missing">
 <span id="sec-missing-arg"></span><h3><span class="section-number">15.4.3. </span>Checking if an argument is missing<a class="headerlink" href="#checking-if-an-argument-is-missing" title="Permalink to this heading">#</a></h3>
@@ -773,12 +772,13 @@ with <strong class="command">is.null</strong> constitute a reasonable alternativ
 </div></div></section>
 <section id="determining-how-a-function-was-called">
 <span id="sec-sys-call"></span><h3><span class="section-number">15.4.4. </span>Determining how a function was called<a class="headerlink" href="#determining-how-a-function-was-called" title="Permalink to this heading">#</a></h3>
-<p>Even though this somewhat touches the topics discussed in the next chapters,
-it is worth knowing that <strong class="command">sys.call</strong> can take a look at the
+<p>Even though this somewhat touches on the topics discussed
+in the two following chapters,
+it is worth knowing that <strong class="command">sys.call</strong> can look at the
 call stack and determine how the current function was invoked.</p>
 <p>Moreover, <strong class="command">match.call</strong> takes us a step further:
-it returns a call with argument names matched to the list
-of a function’s formal parameters.</p>
+it returns a call with argument names matched to
+a function’s formal parameters list.</p>
 <p>For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">)</span>
 <span class="p">{</span>
@@ -792,7 +792,7 @@ of a function’s formal parameters.</p>
 <span class="c1">## test(x = &quot;spam&quot;, y = &quot;bacon&quot;, &quot;eggs&quot;, u = &quot;ham&quot; &lt; &quot;jam&quot;, b = x)</span>
 </pre></div>
 </div>
-<p>Another example, where we see that we can
+<p>Another example where we see that we can
 access the call stack much more deeply:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
@@ -820,9 +820,8 @@ access the call stack much more deeply:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>It will be educative to formalise the order of matching
-function parameters <em>to</em> the passed arguments.
-As described in Section 4.3 in <span id="id8">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">63</a>]</span>,
+<p>Let us formalise the order of matching function parameters <em>to</em> the passed
+arguments. As described in Section 4.3 in <span id="id8">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">63</a>]</span>,
 it proceeds as follows:</p>
 <ol class="arabic simple">
 <li><p>keyword arguments with names matched exactly,
@@ -864,7 +863,7 @@ each match must be unambiguous,</p></li>
         <span class="proof-type">Exercise 15.6</span>
         
     </div><div class="proof-content">
-<p>A function can<a class="footnote-reference brackets" href="#footinception" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> see how it has been defined by its maker.
+<p>A function can<a class="footnote-reference brackets" href="#footinception" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> see how it was defined by its maker.
 Call <strong class="command">sys.function</strong> inside its body to reveal that.</p>
 </div></div><div class="proof proof-type-exercise" id="id19">
 
@@ -889,7 +888,7 @@ Call <strong class="command">sys.function</strong> inside its body to reveal tha
 Give a few examples.</p></li>
 <li><p>What is the difference between an object of the type <code class="docutils literal notranslate"><span class="pre">call</span></code> and
 that of the type <code class="docutils literal notranslate"><span class="pre">expression</span></code>?</p></li>
-<li><p>What does <strong class="command">formals</strong> and <strong class="command">body</strong> return
+<li><p>What do <strong class="command">formals</strong> and <strong class="command">body</strong> return
 when called on a function object?</p></li>
 <li><p>How to test if an argument to a function was given at all?
 Provide a use case for such a verification.</p></li>
@@ -909,8 +908,7 @@ Give a few examples of functions that use this technique.</p></li>
 <p>Write a function that takes the dot-dot-dot argument (<a class="reference internal" href="210-design.html#sec-ellipsis"><span class="std std-numref">Section 9.5.6</span></a>).
 Using <strong class="command">match.call</strong> (amongst others), determine the list
 of all the expressions passed via `<strong class="command">...</strong>`.
-Note that some of them might be named (just like in one
-of the above examples).
+Note that some might be named (just like in one of the above examples).
 The solution is given in <a class="reference internal" href="340-lazy.html#sec-ellipsis-eval"><span class="std std-numref">Section 17.3</span></a>.</p>
 </div></div><div class="proof proof-type-exercise" id="id22">
 
@@ -920,7 +918,7 @@ The solution is given in <a class="reference internal" href="340-lazy.html#sec-e
     </div><div class="proof-content">
 <p>Write a function <strong class="command">check_if_calls</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">fun_list)</span></code>
 that takes another function <code class="docutils literal notranslate"><span class="pre">{command}</span></code>f<code class="docutils literal notranslate"><span class="pre">on</span> <span class="pre">input.</span> <span class="pre">Then,</span> <span class="pre">it</span> <span class="pre">verifies</span> <span class="pre">if</span></code><strong class="command">f</strong> calls any of the functions
-(refers to by their names) from a character vector <code class="docutils literal notranslate"><span class="pre">fun_list</span></code>.</p>
+(referred to by their names) from a character vector <code class="docutils literal notranslate"><span class="pre">fun_list</span></code>.</p>
 </div></div><hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footbegend" role="note">
@@ -949,7 +947,7 @@ form.”</p>
 <aside class="footnote brackets" id="footimho" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
 <p>In the current author’s opinion, R (as a whole, in the sense of
-<a class="reference internal" href="000-preface.html#sec-r-env"><span class="std std-ref">R (GNU S) as a language and an environment</span></a>) would be better-off if an ordinary programmer
+<a class="reference internal" href="000-preface.html#sec-r-env"><span class="std std-ref">R (GNU S) as a language and an environment</span></a>) would be better off if an ordinary programmer
 was not exposed so much to functions heavily relying on metaprogramming.
 A healthy user can perfectly do without (and thus refrain from using)
 them. The fact that we call them <em>advanced</em> will not make us <em>cool</em>
@@ -965,8 +963,8 @@ see <a class="reference internal" href="210-design.html#sec-operfun"><span class
 <aside class="footnote brackets" id="footpairlist" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
 <p>Actually, a special internal datatype called
-<code class="docutils literal notranslate"><span class="pre">pairlist</span></code> which is rarely seen in R; see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">62</a>]</span>
-and <span id="id12">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">59</a>]</span> for information how to deal with them at the C level.
+<code class="docutils literal notranslate"><span class="pre">pairlist</span></code>, which is rarely seen in R; see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">62</a>]</span> and
+<span id="id12">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">59</a>]</span> for information on how to deal with them at the C level.
 From this course’s perspective, seeing pairlists
 as named lists is perfectly fine.</p>
 </aside>
@@ -1014,7 +1012,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-01T22:08:20+1000.
+              Last updated on 2023-05-02T22:07:12+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
