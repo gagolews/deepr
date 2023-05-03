@@ -444,8 +444,9 @@ when we need to go beyond either <code class="docutils literal notranslate"><spa
 <p>This evaluates all conditions <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, … (in this order)
 until the first positive case is found
 and then executes the corresponding <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
-<p>Note that the above is nothing else than a series of nested
-<strong class="command">if</strong> statements:</p>
+<p>It is worth stressing that the above is nothing else than a series
+of nested <strong class="command">if</strong> statements but written in a more
+readable<a class="footnote-reference brackets" href="#footswitch" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> manner:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">expression_a</span>
 <span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="p">{</span>
@@ -461,7 +462,6 @@ and then executes the corresponding <code class="docutils literal notranslate"><
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>but written in a less readable<a class="footnote-reference brackets" href="#footswitch" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> manner.</p>
 <div class="proof proof-type-exercise" id="id8">
 
     <div class="proof-title">
@@ -572,7 +572,7 @@ of the second one is necessary
 <p>For instance,
 “<strong class="command">is.vector</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">&amp;&amp;</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">&gt;</span> <span class="pre">0</span> <span class="pre">&amp;&amp;</span> <span class="pre">x[[1]]</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>” is a safe test that takes into account
 that “<code class="docutils literal notranslate"><span class="pre">x[[1]]</span></code>” has only the desired meaning for objects that
-are not non-empty vectors.</p>
+are not nonempty vectors.</p>
 <p>Some other examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">{</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;cherries&quot;</span><span class="p">);</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">}</span>
 <span class="c1">## spamham</span>
@@ -612,7 +612,7 @@ we just have a bug in our code, or:</p>
 <p>Three types of <em>conditions</em> are frequently observed:</p>
 <ul class="simple">
 <li><p>errors – they stop the flow of execution,</p></li>
-<li><p>warnings – non-critical, but can be turned into errors
+<li><p>warnings – not critical, but can be turned into errors
 (see <code class="docutils literal notranslate"><span class="pre">warn</span></code> in <strong class="command">option</strong>),</p></li>
 <li><p>messages – they transmit some diagnostic information.</p></li>
 </ul>
@@ -656,7 +656,7 @@ we just have a bug in our code, or:</p>
 <p>At the time of writing of this book,
 the <strong class="program">data.table</strong> package emits a message upon attachment.
 Call <strong class="command">suppressMessages</strong> to silence it.
-Note that consecutive calls to <strong class="command">library</strong> do not
+However, consecutive calls to <strong class="command">library</strong> do not
 reload an already loaded package. Therefore, the message will only
 be seen once per R session.</p>
 </div></div><p>Related functions include <strong class="command">stopifnot</strong> discussed
@@ -737,7 +737,7 @@ X_i = (a X_{i-1} + c) \mod m,
 </div>
 <p>with, e.g.,  <span class="math">\(a=75\)</span>, <span class="math">\(c=74\)</span>, and <span class="math">\(m=2^{16}+1\)</span>
 (here, <em>mod</em> is the division reminder, `<strong class="command">%%</strong>`).
-Note that this generator has poor statistical properties
+This generator has poor statistical properties
 and its use in practice is discouraged.
 In particular, after some number of operations <span class="math">\(k\)</span>,
 we will find a cycle such that <span class="math">\(X_k=X_1, X_{k+1}=X_2, \dots\)</span>.</p>
@@ -774,7 +774,7 @@ in a given <code class="docutils literal notranslate"><span class="pre">vector</
 <span class="c1">## 2 1, 2 2, 2 3,</span>
 </pre></div>
 </div>
-<p>Note that the iterator still exists after the loop’s watch has ended:</p>
+<p>The iterator still exists after the loop’s watch has ended:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="c1">## [1] 2</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
@@ -845,8 +845,7 @@ as <strong class="command">Map</strong><code class="code docutils literal notran
     </div><div class="proof-content">
 <p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> be two lists and <strong class="command">f</strong> be a function.
 Here is the most basic version of
-<strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">y)</span></code>.
-Note that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> might be of different lengths.</p>
+<strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">y)</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">ny</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="w"> </span><span class="n">ny</span><span class="p">)</span>
@@ -855,7 +854,8 @@ Note that <code class="docutils literal notranslate"><span class="pre">x</span><
 <span class="w">    </span><span class="n">ret</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">nx</span><span class="p">)</span><span class="m">+1</span><span class="p">]],</span><span class="w"> </span><span class="n">y</span><span class="p">[[((</span><span class="n">i</span><span class="m">-1</span><span class="p">)</span><span class="o">%%</span><span class="n">ny</span><span class="p">)</span><span class="m">+1</span><span class="p">]])</span>
 </pre></div>
 </div>
-<p>Feel free to upgrade the above by adding a warning like
+<p>Note that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> might be of different lengths.
+Feel free to upgrade the above code by adding a warning like
 <em>the longer argument is not a multiple of the length of the shorter one</em>.
 Also, rewrite it without using the modulo operator, `<strong class="command">%%</strong>`.</p>
 </div></div></section>
@@ -891,7 +891,7 @@ the logical condition occurs).</p>
 <p>Computes the sum of the elements in <code class="docutils literal notranslate"><span class="pre">x</span></code>
 that are less than or equal to 0.1 from the beginning,
 stopping at the first element less than 0.01.</p>
-<p>Note that we have used the frequently occurring design pattern:</p>
+<p>We have used a frequently occurring design pattern:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
 <span class="w">        </span><span class="n">next</span>
@@ -908,7 +908,7 @@ stopping at the first element less than 0.01.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>but avoids introducing a nested block of expressions.</p>
+<p>but which avoids introducing a nested block of expressions.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
@@ -988,8 +988,7 @@ that flattens a given list:</p>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
 </pre></div>
 </div>
-<p>Note that <strong class="command">return</strong> is a function: the round brackets
-are obligatory,</p>
+<p><strong class="command">return</strong> is a function: the round brackets are obligatory.</p>
 </section>
 <section id="a-note-on-time-and-space-complexity-of-algorithms">
 <span id="sec-time-complexity"></span><h3><span class="section-number">8.3.5. </span>A note on time and space complexity of algorithms (*)<a class="headerlink" href="#a-note-on-time-and-space-complexity-of-algorithms" title="Permalink to this heading">#</a></h3>
@@ -1086,8 +1085,8 @@ each such size extension has amortised <span class="math">\(O(1)\)</span> time
 because some more memory is internally reserved for its
 prospective growth (dynamic arrays; see, e.g., Chapter 17 of <span id="id5">[<a class="reference internal" href="999-bibliography.html#id67" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., and Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">14</a>]</span>).</p>
 <p>However, it would still be better to pre-allocate the output vector
-and grant it the desired final size already upon creation.</p>
-<p>Note that we can construct vectors of specific lengths and types
+and grant it the desired final size already upon creation.
+We can construct vectors of specific lengths and types
 in an efficient way (more efficient than with <strong class="command">rep</strong>) by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numeric</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] 0 0 0</span>
@@ -1140,7 +1139,7 @@ parsing and cleansing them, and exporting them to SQL databases
 </section>
 <section id="exercises">
 <h2><span class="section-number">8.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<p>Note that, from now on, we must stay alert.
+<p>From now on, we must stay alert.
 Many, if not all, of the following tasks, can still be implemented
 without the explicit use of the R loops but
 based only on the operations covered in the previous chapters.
@@ -1302,7 +1301,7 @@ benefit from a rewrite in C or C++ (<a class="reference internal" href="310-comp
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-02T22:07:12+1000.
+              Last updated on 2023-05-03T18:18:43+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

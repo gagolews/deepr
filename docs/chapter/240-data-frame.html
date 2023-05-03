@@ -364,7 +364,7 @@ worthwhile.</p>
 <span class="c1">## 6 FALSE 6 0.74261 eggs</span>
 </pre></div>
 </div>
-<p>Note that shorter vectors were recycled.
+<p>The shorter vectors were recycled.
 We can verify that the diverse column types were retained and no coercion
 was made, by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -531,9 +531,9 @@ an S3 class <code class="docutils literal notranslate"><span class="pre">spam</s
 <span class="w">    </span><span class="n">c</span><span class="o">=</span><span class="nf">Sys.Date</span><span class="p">()</span><span class="m">+1</span><span class="o">:</span><span class="m">3</span>
 <span class="p">)</span>
 <span class="c1">##     a     b          c</span>
-<span class="c1">## 1 *a*  spam 2023-05-02</span>
-<span class="c1">## 2 *b* bacon 2023-05-03</span>
-<span class="c1">## 3 *c*  spam 2023-05-04</span>
+<span class="c1">## 1 *a*  spam 2023-05-04</span>
+<span class="c1">## 2 *b* bacon 2023-05-05</span>
+<span class="c1">## 3 *c*  spam 2023-05-06</span>
 </pre></div>
 </div>
 </div></div></section>
@@ -1098,14 +1098,14 @@ some popular vectorised functions.</p>
 </pre></div>
 </div>
 <p>Change the name of column <code class="docutils literal notranslate"><span class="pre">c</span></code> to <code class="docutils literal notranslate"><span class="pre">z</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="w">  </span><span class="c1"># in-place</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;z&quot;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="c1">##         a        b z    d1    d2</span>
 <span class="c1">## 1 0.28758 0.070508 A FALSE FALSE</span>
 </pre></div>
 </div>
 <p>Change names: <code class="docutils literal notranslate"><span class="pre">d2</span></code> to <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">d1</span></code> to <code class="docutils literal notranslate"><span class="pre">v</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="nf">match</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;d2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;d1&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">))]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;u&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># in-place</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="nf">match</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;d2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;d1&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">))]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;v&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;u&quot;</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="c1">##         a        b z     u     v</span>
 <span class="c1">## 1 0.28758 0.070508 A FALSE FALSE</span>
@@ -1119,7 +1119,7 @@ By default, the former supports partial matching of column names
 which might be appealing when R is used interactively.
 Nonetheless, it does not work on matrices nor it
 allows for programmatically generated names. It is also
-trickier to use on non-syntactically valid labels;
+trickier to use on not syntactically valid labels;
 compare <a class="reference internal" href="210-design.html#sec-backtick"><span class="std std-numref">Section 9.4.1</span></a>.</p>
 </div>
 <div class="proof proof-type-exercise" id="id28">
@@ -1204,7 +1204,7 @@ operations on individual columns:</p>
 <span class="c1">## 6 0.045556</span>
 </pre></div>
 </div>
-<p>Also, note that when we extract a single row and more than one column,
+<p>When we extract a single row and more than one column,
 <code class="docutils literal notranslate"><span class="pre">drop</span></code> does not apply. It is because columns (unlike in matrices)
 can potentially be of different types:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1"># two numeric columns but the result is still a numeric</span>
@@ -1236,7 +1236,7 @@ can potentially be of different types:</p>
 <p>The default behaviour is consistent with many other R functions:
 it explicitly indicates that something is missing
 (we are selecting a “don’t know”; hence, the result is “don’t know” as well).
-Unfortunately, this comes with no warning.
+Regretfully, this comes with no warning.
 As we rarely manually check missing values in the outputs,
 our absent-mindedness can lead to code bugs.</p>
 </div>
@@ -1258,7 +1258,7 @@ the <code class="docutils literal notranslate"><span class="pre">u</span></code>
 <span class="c1">## 5 0.94047 -1.2651</span>
 </pre></div>
 </div>
-<p>Note that this is not the same as
+<p>This is not the same as
 “<code class="docutils literal notranslate"><span class="pre">xs[5,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;)]</span></code>”,
 even though <code class="docutils literal notranslate"><span class="pre">row.names</span></code> is formally an integer vector here.</p>
 <div style="margin-top: 1em"></div><div class="admonition note">
@@ -1499,7 +1499,7 @@ where we list only the matching pairs:</p>
 <span class="c1">## 3 a2 b2 c2</span>
 </pre></div>
 </div>
-<p>Note that the common column (or, more generally, columns) is included only
+<p>The common column (or, more generally, columns) is included only
 once in the result.</p>
 <p>The <em>left join</em> guarantees that all elements in the first
 data frame will be included in the result:</p>
@@ -1607,9 +1607,9 @@ we can always call <strong class="command">Map</strong> and its relatives.</p>
 <span class="c1">## 100%          6.5         3.5          6.0         2.5</span>
 </pre></div>
 </div>
-<p>Note that the latter called <strong class="command">simplify2array</strong> automatically.
+<p>The latter called <strong class="command">simplify2array</strong> automatically.
 Thus, the result is a matrix.</p>
-<p>On the other hand, standardisation of all the numeric features
+<p>On the other hand, the standardisation of all the numeric features
 can be performed, e.g., via a call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">iris_sample</span><span class="p">[]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="nf">else </span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">/</span><span class="nf">sd</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1854,7 +1854,7 @@ variable. On the other hand:</p>
 </pre></div>
 </div>
 <p>It partitioned with respect to a combination of two factor-like
-sequences. Note that a non-existing level pair <code class="docutils literal notranslate"><span class="pre">(eggs,</span> <span class="pre">2)</span></code>
+sequences. A nonexistent level pair <code class="docutils literal notranslate"><span class="pre">(eggs,</span> <span class="pre">2)</span></code>
 resulted in an empty data frame.</p>
 <div class="proof proof-type-exercise" id="id42">
 
@@ -2002,8 +2002,7 @@ when a single function is to be applied on all columns in a data frame.</p>
 <span class="c1">## 6   VC  2.0 26.14</span>
 </pre></div>
 </div>
-<p>Note that the second argument, <code class="docutils literal notranslate"><span class="pre">by</span></code>, must be list-like
-(this includes data frames).
+<p>The second argument, <code class="docutils literal notranslate"><span class="pre">by</span></code>, must be list-like (this includes data frames).
 Neither a factor nor an atomic vector are acceptable.
 Also, if the function being applied returns many values, they
 will be wrapped into a matrix column:</p>
@@ -2278,9 +2277,8 @@ standard split-apply-bind will suffice.</p>
 <span class="c1">## v.5 10.0 2  0.70711 v</span>
 </pre></div>
 </div>
-<p>Note that only the <em>relative</em> ordering of rows within groups
-has been retained. Overall, the rows are
-in a different order.</p>
+<p>Only the <em>relative</em> ordering of rows within groups
+has been retained. Overall, the rows are in a different order.</p>
 <p>If this is an issue, we can use the <strong class="command">unsplit</strong> function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unsplit</span><span class="p">(</span>
 <span class="w">    </span><span class="nf">lapply</span><span class="p">(</span>
@@ -2548,13 +2546,13 @@ our own procedures that rely on metaprogramming techniques.</p>
 <span id="sec-tidyverse"></span><h3><span class="section-number">12.3.10. </span>A note on the <strong class="program">dplyr</strong> (<strong class="program">tidyverse</strong>) and <strong class="program">data.table</strong> packages (*)<a class="headerlink" href="#a-note-on-the-dplyr-tidyverse-and-data-table-packages" title="Permalink to this heading">#</a></h3>
 <p>The popular third-party packages <strong class="program">data.table</strong> and
 <strong class="program">dplyr</strong> implement the most common data frame wrangling procedures.
-Some operations may be much faster for larger data sets.</p>
+Some operations may be much faster for larger datasets.</p>
 <p>They both introduce an entirely new API for the operations we already
 know well how to perform. Furthermore, they are heavily based on
 metaprogramming (lazy evaluation).
 A nice way to learn them is by solving some of the exercises
 listed below.</p>
-<p>Note that <strong class="program">dplyr</strong> is part of a vast system of
+<p><strong class="program">dplyr</strong> is part of a vast system of
 interdependent packages called <strong class="program">tidyverse</strong>, which tend to
 do things their own way. They became quite invasive over the last few years.</p>
 <p>Still, R programmers ought to remember that they are <em>able</em> to do
@@ -2986,7 +2984,7 @@ from using them. <strong class="command">help</strong><code class="code docutils
 similarly): <em>This is a convenience function intended for use
 interactively. For programming, it is better to use the standard
 subsetting functions like `<strong class="command">[</strong>`, and in particular the
-non-standard evaluation of argument <strong class="command">subset</strong> can have
+nonstandard evaluation of argument <strong class="command">subset</strong> can have
 unanticipated consequences.</em>
 The same in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;with&quot;)</span></code>:
 <em>For</em> interactive <em>use, this is very effective and nice to read.
@@ -3041,7 +3039,7 @@ see <a class="reference internal" href="250-graphics.html#chap-graphics"><span c
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-02T22:07:12+1000.
+              Last updated on 2023-05-03T18:18:43+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

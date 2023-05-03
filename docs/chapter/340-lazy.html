@@ -314,7 +314,7 @@ They are only computed when their <em>values</em> are first needed.
 As we can take the expressions used to generate them
 (via <strong class="command">substitute</strong>; see <a class="reference internal" href="320-language.html#sec-substitute"><span class="std std-numref">Section 15.4.2</span></a>),
 we shall see that we can ignore their meaning in the original (caller’s)
-context, and compute them in a very different one.</p>
+context and compute them in a very different one.</p>
 <section id="evaluation-of-function-arguments">
 <span id="sec-lazy-args"></span><h2><span class="section-number">17.1. </span>Evaluation of function arguments<a class="headerlink" href="#evaluation-of-function-arguments" title="Permalink to this heading">#</a></h2>
 <p>We know that calls such as
@@ -400,14 +400,14 @@ Therefore, it was not evaluated.</p>
 <p>On a side note, the `<strong class="command">~</strong>` (formula) operator will be discussed
 in <a class="reference internal" href="#sec-formula"><span class="std std-numref">Section 17.6</span></a>.
 Furthermore, the `<strong class="command">:=</strong>` operator was used
-in an ancient version of R for assignments, but it is still recognised by
-the parser, yet now it has no associated meaning.</p>
+in an ancient version of R for assignments. The parser
+still recognises it, yet now it has no associated meaning.</p>
 </div></div><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>We note what follows.</p>
 <ul>
-<li><p>Either the evaluation of an argument does not happen
-or it is triggered only once (in which case the result is cached).</p></li>
+<li><p>Either the evaluation of an argument does not happen,
+or is triggered only once (in which case the result is cached).</p></li>
 <li><p>Evaluation is <em>delayed</em> until the very first request
 for the underlying value (we call it <em>lazy evaluation</em>).</p></li>
 <li><p>Evaluation takes place in the calling environment (parent frame).</p></li>
@@ -418,11 +418,10 @@ or checking if an argument was provided with
 does not trigger the evaluation.</p></li>
 <li><p>Merely passing arguments further to another function <em>usually</em>
 does not trigger the evaluation.</p>
-<p>We wrote <em>usually</em>, because <code class="docutils literal notranslate"><span class="pre">builtin</span></code> functions
+<p>We wrote <em>usually</em> because functions of the type <code class="docutils literal notranslate"><span class="pre">builtin</span></code>
 (e.g., <strong class="command">c</strong>, <strong class="command">list</strong>,
 <strong class="command">sum</strong>, `<strong class="command">+</strong>`, `<strong class="command">&amp;</strong>`, and `<strong class="command">:</strong>`)
-always evaluate the arguments.
-There is no lazy evaluation in case
+always evaluate the arguments. There is no lazy evaluation in the case
 of the arguments passed to group generics;
 see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code> and <a class="reference internal" href="220-s3.html#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>.
 Furthermore, replacement functions’ <code class="docutils literal notranslate"><span class="pre">values</span></code> arguments
@@ -437,10 +436,10 @@ Furthermore, replacement functions’ <code class="docutils literal notranslate"
         
     </div><div class="proof-content">
 <p>Study the source code of <strong class="command">system.time</strong> and
-note the use of delayed evaluation to measure the duration
+notice the use of delayed evaluation to measure the duration
 of the execution of a given expression.
-Also note the use of <strong class="command">on.exit</strong> (<a class="reference internal" href="#sec-on-exit"><span class="std std-numref">Section 17.4</span></a>)
-to react to possible exceptions.</p>
+Also, <strong class="command">on.exit</strong> (<a class="reference internal" href="#sec-on-exit"><span class="std std-numref">Section 17.4</span></a>)
+reacts to possible exceptions.</p>
 </div></div><div class="proof proof-type-example" id="id13">
 
     <div class="proof-title">
@@ -472,10 +471,10 @@ a given dictionary (a named list or an environment).</p>
 <span class="c1">## spam(!eels@hovercraft[eels@hovercraft](eels@hovercraft))</span>
 </pre></div>
 </div>
-<p>This way, we were not only able to fetch the expression passed as the
-`<code class="docutils literal notranslate"><span class="pre">x</span></code>` argument to the calling function, but also replace every occurrence
+<p>This way, we could fetch the expression passed as the
+`<code class="docutils literal notranslate"><span class="pre">x</span></code>` argument to the calling function and replace every occurrence
 of `<code class="docutils literal notranslate"><span class="pre">x</span></code>` in the expression `<code class="docutils literal notranslate"><span class="pre">ey</span></code>`.</p>
-<p>Note that <strong class="command">substitute</strong> does not evaluate
+<p><strong class="command">substitute</strong> does not evaluate
 its first argument. Hence, if we called
 <strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(ey,</span> <span class="pre">...)</span></code>, we would treat
 `<code class="docutils literal notranslate"><span class="pre">ey</span></code>` as a quoted name.</p>
@@ -522,12 +521,12 @@ from within R, but see <strong class="command">help</strong><code class="code do
         
     </div><div class="proof-content">
 <p>Inspect the definition of <strong class="command">match.fun</strong>.
-Why is it used by, e.g., <strong class="command">apply</strong>,
+Why is it called by, e.g., <strong class="command">apply</strong>,
 <strong class="command">Map</strong>, or <strong class="command">outer</strong>?</p>
 <p>Note that it uses
-<strong class="command">eval.parent</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(FUN)))</span></code> to fetch the expression representing
-the argument passed by the calling function (but it is probably
-very rarely needed there). Compare:</p>
+<strong class="command">eval.parent</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(FUN)))</span></code>
+to fetch the expression representing the argument passed by the calling
+function (but it is probably very rarely needed there). Compare:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">subtest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -550,9 +549,9 @@ very rarely needed there). Compare:</p>
 <p>As we know from <a class="reference internal" href="210-design.html#sec-default-args"><span class="std std-numref">Section 9.5.4</span></a>, default arguments
 are special expressions specified in a function’s parameter list.
 When a function’s body requires the value of an argument
-that was not provided by the caller, the default expression
+that the caller did not provide, the default expression
 will be evaluated <em>in the current (local) environment</em> of the function.
-This is thus different from the case of normally passed arguments, which
+It is thus different from the case of normally passed arguments, which
 are interpreted in the context of the calling environment.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;banana&quot;</span>
 
@@ -601,9 +600,9 @@ where it is explicitly requested, and only when needed.</p>
 </pre></div>
 </div>
 <p>The nice side effect is that the computation of the mean
-may take into account the removal of the missing values, if requested.</p>
+may take into account the removal of the missing values if requested.</p>
 <p>However, as the idea of lazy evaluation of arguments is alien
-to most programmers (especially coming from different languages),
+to most programmers (especially those coming from different languages),
 it might be better to rewrite the above using a call to <strong class="command">missing</strong>
 (<a class="reference internal" href="320-language.html#sec-missing-arg"><span class="std std-numref">Section 15.4.3</span></a>):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sumsq</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">about</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
@@ -639,7 +638,7 @@ it might be better to rewrite the above using a call to <strong class="command">
         <span class="proof-type">Exercise 17.8</span>
         
     </div><div class="proof-content">
-<p>Note that the default arguments to <strong class="command">do.call</strong>,
+<p>The default arguments to <strong class="command">do.call</strong>,
 <strong class="command">list2env</strong>, and <strong class="command">new.env</strong>
 are set to <strong class="command">parent.frame</strong>. What does that mean?</p>
 </div></div><div class="proof proof-type-exercise" id="id19">
@@ -663,7 +662,7 @@ are set to <strong class="command">parent.frame</strong>. What does that mean?</
 is packed into a pairlist of promise expressions. Thus, we can
 relish the benefits of lazy evaluation.
 In particular, we can redirect all `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`-fed arguments
-to another call, as-is.</p>
+to another call as-is.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">subtest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
@@ -691,7 +690,7 @@ to another call, as-is.</p>
 <p>In the documentation of <strong class="command">lapply</strong>, we read that this function
 is called like “<strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">FUN,</span> <span class="pre">...)</span></code>”,
 where `<code class="code docutils literal notranslate"><span class="pre">...</span></code>` are <em>optional arguments to <strong class="command">FUN</strong></em>.
-Verify that whatever is passed via the ellipsis is evaluated only once,
+Verify that whatever is passed via the ellipsis is evaluated only once
 and not on each application of <strong class="command">FUN</strong> on the elements of <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
 </div></div><div class="proof proof-type-example" id="id21">
 
@@ -700,13 +699,13 @@ and not on each application of <strong class="command">FUN</strong> on the eleme
         
     </div><div class="proof-content">
 <p>We know from <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a> that
-many high-level graphical functions rely on multiple calls to
+many high-level graphics functions rely on multiple calls to
 more primitive functions that allow for setting a variety of parameters
 (e.g., via <strong class="command">par</strong>).
-A quite common scenario is for a high-level function
-to submit <em>all</em> the passed arguments to the underlying
-basic routines that then can decide by themselves which items
-they are interested in.</p>
+A common scenario is for a high-level function
+to submit <em>all</em> the passed arguments to more basic routines.
+Each underlying procedure can then decide by itself which items
+it is interested in.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">subtest1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
@@ -770,7 +769,7 @@ in <a class="reference internal" href="320-language.html#sec-sys-call"><span cla
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Objects passed via `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`, even if they are specified as
-keyword arguments, cannot be referred to by their name,
+keyword arguments, cannot be referred to by their name
 as if they were local variables:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="n">zzz</span>
 <span class="nf">test</span><span class="p">(</span><span class="n">zzz</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
@@ -797,10 +796,10 @@ as if they were local variables:</p>
 <section id="on-exit">
 <span id="sec-on-exit"></span><h2><span class="section-number">17.4. </span><strong class="command">on.exit</strong> (*)<a class="headerlink" href="#on-exit" title="Permalink to this heading">#</a></h2>
 <p><strong class="command">on.exit</strong> registers an expression to be evaluated
-at the very end of a call, regardless whether the function
+at the very end of a call, regardless of whether the function
 exited due to an error or not. It might be used to
-reset the temporarily modified graphical parameters (see <strong class="command">par</strong>)
-and system options (<strong class="command">options</strong>),
+reset the temporarily modified graphics parameters
+(see <strong class="command">par</strong>) and system options (<strong class="command">options</strong>)
 or clean up the allocated resources (e.g., close all open file connections).</p>
 <p>For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">reset</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
@@ -838,7 +837,7 @@ or clean up the allocated resources (e.g., close all open file connections).</p>
 <span class="c1">## spam</span>
 </pre></div>
 </div>
-<p>Note that we can always do without <strong class="command">on.exit</strong>,
+<p>We can always do without <strong class="command">on.exit</strong>,
 e.g., by applying proper exception handling techniques;
 see <a class="reference internal" href="180-flow.html#sec-exceptions"><span class="std std-numref">Section 8.2</span></a>.</p>
 <div class="proof proof-type-exercise" id="id24">
@@ -847,12 +846,11 @@ see <a class="reference internal" href="180-flow.html#sec-exceptions"><span clas
         <span class="proof-type">Exercise 17.14</span>
         
     </div><div class="proof-content">
-<p>Note the call to:</p>
+<p>In the definition of <strong class="command">scan</strong>, notice the call to:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">on.exit</span><span class="p">(</span><span class="nf">close</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>in the definition of <strong class="command">scan</strong>.
-Is its purpose to close the file on exit?</p>
+<p>Is its purpose to close the file on exit?</p>
 </div></div><div class="proof proof-type-exercise" id="id25">
 
     <div class="proof-title">
@@ -872,23 +870,23 @@ call the following expressions?</p>
 </div></div></section>
 <section id="metaprogramming-and-laziness-in-action-examples">
 <span id="sec-metaprogramming-implement"></span><h2><span class="section-number">17.5. </span>Metaprogramming and laziness in action: Examples (*)<a class="headerlink" href="#metaprogramming-and-laziness-in-action-examples" title="Permalink to this heading">#</a></h2>
-<p>As we mentioned at the beginning of the previous chapter
-and in <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>
-and <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>,
-due to lazy evaluation, we can define functions that allow
-arbitrary gibberish as their arguments,
-as long as they are syntactically valid R expressions.
+<p>Due to lazy evaluation, we can define functions that allow
+any random gibberish as their arguments as long as they are
+syntactically valid R expressions.
 Nothing but basic decency stops us from interpreting them in
 any way we want. Each such function can become a microverse
-(a microlanguage?) by itself. This might confuse<a class="footnote-reference brackets" href="#footconfuse" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> our users,
-as they will have to analyse its behaviour separately.</p>
-<p>In this section, we will take a look at a few built-in functions relying
-on metaprogramming and laziness, mostly because that studying them is a good
-exercise that help extend our programming skills and deepen our understanding
+(a microlanguage?) by itself. This will surely confuse<a class="footnote-reference brackets" href="#footconfuse" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
+our users, as they will have to analyse every procedure’s behaviour
+separately.</p>
+<p>In this section, we extend on our notes
+from <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a> and <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>.
+We look at a few built-in functions relying on metaprogramming and laziness,
+mostly because studying them is a good exercise.
+It can help extend our programming skills and deepen our understanding
 of the concepts discussed in this part of the book.</p>
-<p>By no means it is an invite to use them in practice.</p>
+<p>By no means is it an invitation to use them in practice.</p>
 <p>Still, R’s computing on the language capabilities
-might be of interest to some advanced programmers (e.g., package
+might interest some advanced programmers (e.g., package
 developers).</p>
 <section id="match-arg">
 <h3><span class="section-number">17.5.1. </span><strong class="command">match.arg</strong><a class="headerlink" href="#match-arg" title="Permalink to this heading">#</a></h3>
@@ -947,7 +945,7 @@ of the function it is enclosed in!</p>
         
     </div><div class="proof-content">
 <p>Study the source code of <strong class="command">match.arg</strong>.
-In particular, note the following fragment:</p>
+In particular, notice the following fragment:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="nf">missing</span><span class="p">(</span><span class="n">choices</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">formal.args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">formals</span><span class="p">(</span><span class="nf">sys.function</span><span class="p">(</span><span class="n">sysP</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sys.parent</span><span class="p">()))</span>
 <span class="w">    </span><span class="n">choices</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">eval</span><span class="p">(</span>
@@ -971,7 +969,7 @@ In particular, note the following fragment:</p>
 </figcaption>
 </figure>
 <p>which results in <a class="reference internal" href="#fig-curve-plot"><span class="std std-numref">Figure 17.1</span></a>.
-Wait a minute… We did not define `<code class="docutils literal notranslate"><span class="pre">x</span></code>` to be
+Wait a minute… We did not define `<code class="docutils literal notranslate"><span class="pre">x</span></code>` as
 a sequence ranging between ca. 0.3 and 3!</p>
 <div class="proof proof-type-exercise" id="id29">
 
@@ -980,7 +978,7 @@ a sequence ranging between ca. 0.3 and 3!</p>
         
     </div><div class="proof-content">
 <p>Study the source code of <strong class="command">curve</strong>.
-Note the following fragment of its definition:</p>
+Take note of the following fragment of its definition:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">function</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="o">=</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="o">=</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="m">101</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1"># ...</span>
@@ -1008,11 +1006,11 @@ Due to this, the <code class="docutils literal notranslate"><span class="pre">en
 <p>evaluates the given expression in something like
 <strong class="command">list2env</strong><code class="code docutils literal notranslate"><span class="pre">(iris,</span> <span class="pre">parent=</span></code><strong class="command">parent.frame</strong><code class="code docutils literal notranslate"><span class="pre">())</span></code>.
 Thus, even though <code class="docutils literal notranslate"><span class="pre">Sepal.Length</span></code> is not a standalone variable,
-it is treated as if it was one <em>inside</em> the <code class="docutils literal notranslate"><span class="pre">iris</span></code> data frame.</p>
-<p>Note that thanks to the enclosure’s being set to the calling frame,
+it is treated as one <em>inside</em> the <code class="docutils literal notranslate"><span class="pre">iris</span></code> data frame.</p>
+<p>The enclosure is set to the calling frame. Hence,
 we can successfully refer to the <strong class="command">head</strong> function located
 somewhere on the search path.
-This is somewhat similar to <strong class="command">attach</strong> (<a class="reference internal" href="330-environment.html#sec-attach"><span class="std std-numref">Section 16.2.6</span></a>),
+This is somewhat similar to <strong class="command">attach</strong> (<a class="reference internal" href="330-environment.html#sec-attach"><span class="std std-numref">Section 16.2.6</span></a>)
 but without modifying the search path.</p>
 <p>The <strong class="command">with</strong> function does exactly the above:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">with.default</span><span class="p">)</span>
@@ -1031,8 +1029,8 @@ but without modifying the search path.</p>
 </div>
 <p>As we evaluate the above in the local (temporary) environment,
 we cannot modify the existing columns of the data frame this way.
-But then the <strong class="command">within</strong> function includes a way to detect
-and reflect any changes made.</p>
+However, the <strong class="command">within</strong> function includes a way to detect
+and apply any changes made.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">within</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">Sepal.Length</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">Sepal.Length</span><span class="o">/</span><span class="m">1000</span>
 <span class="w">    </span><span class="n">Spam</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;yum!&quot;</span>
@@ -1069,8 +1067,8 @@ and reflect any changes made.</p>
 </pre></div>
 </div>
 <p>Note that <strong class="command">evalq</strong><code class="code docutils literal notranslate"><span class="pre">(expr,</span> <span class="pre">...)</span></code> is equivalent to
-<strong class="command">eval</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">quote</strong><code class="code docutils literal notranslate"><span class="pre">(expr),</span> <span class="pre">...)</span></code>,
-and that <strong class="command">vapply</strong><code class="code docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">FUN,</span> <span class="pre">NA,</span> <span class="pre">...)</span></code>
+<strong class="command">eval</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">quote</strong><code class="code docutils literal notranslate"><span class="pre">(expr),</span> <span class="pre">...)</span></code>.
+Also, <strong class="command">vapply</strong><code class="code docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">FUN,</span> <span class="pre">NA,</span> <span class="pre">...)</span></code>
 is like a call to <strong class="command">sapply</strong>, but it guarantees
 that the result is a logical vector.</p>
 </div></div></section>
@@ -1088,8 +1086,8 @@ in a data frame using vectorised functions, for instance:</p>
 <p>If we suspect that this function evaluates
 all expressions passed as `<code class="docutils literal notranslate"><span class="pre">...</span></code>` <em>within</em> the data frame,
 we are brilliantly right.
-Furthermore, there must be some mechanism allowing for the detection
-of newly created variables so that new columns can be added.</p>
+Furthermore, there must be some mechanism to detect
+newly created variables so that new columns can be added.</p>
 <div class="proof proof-type-exercise" id="id31">
 
     <div class="proof-title">
@@ -1119,7 +1117,7 @@ of newly created variables so that new columns can be added.</p>
 </div></div></section>
 <section id="subset">
 <h3><span class="section-number">17.5.5. </span><strong class="command">subset</strong><a class="headerlink" href="#subset" title="Permalink to this heading">#</a></h3>
-<p>The <strong class="command">subset</strong> function can be used to select rows and columns
+<p>The <strong class="command">subset</strong> function selects rows and columns
 of a data frame that meet certain criteria. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">subset</span><span class="p">(</span><span class="n">airquality</span><span class="p">,</span><span class="w"> </span><span class="n">Temp</span><span class="o">&gt;</span><span class="m">95</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Temp</span><span class="o">&lt;</span><span class="m">57</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="n">Month</span><span class="o">:</span><span class="n">Day</span><span class="p">))</span>
 <span class="c1">##     Ozone Solar.R Wind Temp</span>
@@ -1133,7 +1131,7 @@ be evaluated <em>within</em> the data frame. We expect it to reduce itself
 to a logical vector which then can be passed to the index operator.</p>
 <p>The “select all columns except those between the given ones”
 part can be implemented by assigning each column a consecutive
-integer, and then treating them as numeric indexes.</p>
+integer and then treating them as numeric indexes.</p>
 <div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
@@ -1193,11 +1191,11 @@ We can implement its simplified version manually:</p>
 <span class="c1">## [1] 2.75</span>
 </pre></div>
 </div>
-<p>Moreover, at the cost of forcing the evaluation of
-the left-hand side argument (and thus losing the potential benefits
-of lazy evaluation, including the access to the generating expression),
-we can memorise the value of `<code class="docutils literal notranslate"><span class="pre">e1</span></code>` under the name, say, `<code class="docutils literal notranslate"><span class="pre">.</span></code>`
-so that it can be referred to in the right-hand side expression.</p>
+<p>Moreover, we can memorise the value of `<code class="docutils literal notranslate"><span class="pre">e1</span></code>` under the name, say, `<code class="docutils literal notranslate"><span class="pre">.</span></code>`
+so that it can be referred to in the right-hand side expression.
+This comes at the cost of forcing the evaluation of
+the left-hand side argument and thus losing the potential benefits
+of laziness, including access to the generating expression.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`%.&gt;%`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">env</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list2env</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">.</span><span class="o">=</span><span class="n">e1</span><span class="p">),</span><span class="w"> </span><span class="n">parent</span><span class="o">=</span><span class="nf">parent.frame</span><span class="p">())</span>
@@ -1222,15 +1220,14 @@ One more then:</p>
 </div>
 <p>I cannot wait for someone to put this operator into some new R package
 (it is a brilliant idea, by the way, isn’t it?) and then confuse
-thousands of users (“what is this thing?”).</p>
+thousands of users (“What is this thing?”).</p>
 </section>
 <section id="other-ideas">
 <h3><span class="section-number">17.5.7. </span>Other ideas (**)<a class="headerlink" href="#other-ideas" title="Permalink to this heading">#</a></h3>
-<p>Why stop ourselves here?
-We can create a lot more invasive functions that
+<p>Why stop ourselves here? We can create way more invasive functions that
 read some local variables in the calling functions
-(unless they are primitive, because this is R and there
-always have to be exceptions to general rules…).</p>
+(unless they are primitive; in R, there are always exceptions
+to general rules…).</p>
 <p>Here is an operator, thanks to which we can select a range
 of columns in a data frame between two given labels:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`%:%`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
@@ -1253,9 +1250,10 @@ of columns in a data frame between two given labels:</p>
 <span class="c1">## 6         3.9          1.7         0.4</span>
 </pre></div>
 </div>
-<p>This function operates under the assumption that
-it is called as an argument to a non-primitive function
-which took the `<code class="docutils literal notranslate"><span class="pre">x</span></code>` argument being a named vector.</p>
+<p>This operator relies on the assumption that
+it is called in the expression passed as an argument
+to a non-primitive function which also takes a named vector
+`<code class="docutils literal notranslate"><span class="pre">x</span></code>` as an actual parameter. So ugly.</p>
 <div class="proof proof-type-exercise" id="id33">
 
     <div class="proof-title">
@@ -1292,15 +1290,15 @@ which took the `<code class="docutils literal notranslate"><span class="pre">x</
 <li><p><code class="docutils literal notranslate"><span class="pre">x[%:%3,</span> <span class="pre">]</span></code> means “select the first three rows”,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">x[3%:%,</span> <span class="pre">]</span></code> means “select from the third to the end”,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">x[-3%:%,</span> <span class="pre">]</span></code> means “select from the third last to the end”,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">x[%:%-10,</span> <span class="pre">]</span></code> means “select all but last 9”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x[%:%-10,</span> <span class="pre">]</span></code> means “select all but the last nine”.</p></li>
 </ul>
 </div></div><p>The ceiling is the limit. Just please, do not use the above in production.</p>
 </section>
 </section>
 <section id="processing-formulae">
 <span id="sec-formula"></span><h2><span class="section-number">17.6. </span>Processing formulae, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#processing-formulae" title="Permalink to this heading">#</a></h2>
-<p>Formulae were introduced to S in the early 1990s,
-see <span id="id6">[<a class="reference internal" href="999-bibliography.html#id51" title="Chambers, J.M. and Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">13</a>]</span>, originally with the purpose of specifying
+<p>Formulae were introduced to S in the early 1990s <span id="id6">[<a class="reference internal" href="999-bibliography.html#id51" title="Chambers, J.M. and Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">13</a>]</span>.
+Their original raison d’être was to specify
 <em>statistical models</em>; compare <a class="reference internal" href="220-s3.html#sec-formula-intro"><span class="std std-numref">Section 10.3.4</span></a>.</p>
 <p>From the language perspective, they are merely unevaluated
 calls to the `<strong class="command">~</strong>` (tilde) operator.
@@ -1355,11 +1353,11 @@ of elements in a given set of <code class="docutils literal notranslate"><span c
 </pre></div>
 </div>
 </div></div><div style="margin-top: 1em"></div><p>As they are unevaluated expressions, functions can assign any fantastic
-meaning to formulae, and we cannot really do anything about it.
+meaning to formulae. We cannot really do anything about it.
 However, many functions, especially in the <strong class="program">stats</strong>
 and <strong class="program">graphics</strong> packages, rely on a call to <strong class="command">model.frame</strong>
 and related routines. Thanks to this,
-we can at least find some behavioural patters.
+we can at least find some behavioural patterns.
 In particular, <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;formula&quot;)</span></code> lists some typical meanings of operators
 that can be used in a formula.</p>
 <div class="proof proof-type-example" id="id37">
@@ -1438,7 +1436,7 @@ the following very educative exercises.</p>
 <strong class="program">graphics</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">boxplot.formula</strong>,
 <strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">lm</strong>,
 and <strong class="program">stats</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">t.test.formula</strong>
-and take note of how they prepare and process
+and notice how they prepare and process
 the calls to <strong class="command">model.frame</strong>,
 <strong class="command">model.matrix</strong>,
 <strong class="command">model.response</strong>,
@@ -1470,7 +1468,7 @@ but one that allows to specify the function to plot using a formula.</p>
 <li><p>Why do we generally discourage the use of functions relying on
 metaprogramming?</p></li>
 <li><p>How are default arguments evaluated?</p></li>
-<li><p>Is there anything special about formulae, from the language perspective?</p></li>
+<li><p>Is there anything special about formulae from the language perspective?</p></li>
 <li><p>R evaluates function arguments lazily.
 Does it mean that
 “<code class="docutils literal notranslate"><span class="pre">y[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1,</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1,</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1)]</span> <span class="pre">&lt;-</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>”
@@ -1490,29 +1488,28 @@ Or are there cases where evaluation is eager?</p></li>
 <span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="o">**</span><span class="m">2</span>
 <span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="p">}</span>
-</pre></div>
-</div>
-<p>Why the two following calls give different results?</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span>
+
+<span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span>
 <span class="c1">## [1] &quot;c(1, 4, 9, 16, 25)&quot;</span>
 <span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">force_first</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] &quot;1:5&quot;</span>
 </pre></div>
 </div>
+<p>Why did the two above calls yield different results?</p>
 </div></div></section>
 <section id="outro">
 <h2><span class="section-number">17.8. </span>Outro<a class="headerlink" href="#outro" title="Permalink to this heading">#</a></h2>
-<p>Let us recall our first approximation to the classification
+<p>Recall our first approximation to the classification
 of R data types that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.
-As a summary of what we have covered in this book, let us contemplate
-upon <a class="reference internal" href="#fig-data-types-full"><span class="std std-numref">Figure 17.2</span></a>, which gives a much broader picture.</p>
+To summarise what we have covered in this book, let us contemplate
+<a class="reference internal" href="#fig-data-types-full"><span class="std std-numref">Figure 17.2</span></a>, which gives a much broader picture.</p>
 <figure class="align-default" id="id42">
 <span id="fig-data-types-full"></span><img alt="../_images/data-types-full.png" src="../_images/data-types-full.png" />
 <figcaption>
 <p><span class="caption-number">Figure 17.2 </span><span class="caption-text">R data types</span><a class="headerlink" href="#id42" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>If we omitted something, it was most likely on purpose –
+<p>If we omitted something, it was most likely on purpose:
 either we can now study it on our own easily, it is not really
 worth our attention, or it violates our <em>minimalist</em> design principles
 that we explained in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.</p>
@@ -1526,13 +1523,13 @@ we might be interested in reading the following materials:</p>
 </ul>
 <p>What is more, the <code class="docutils literal notranslate"><span class="pre">NEWS</span></code> files available at
 <a class="reference external" href="https://cran.r-project.org/doc/manuals/r-release/">https://cran.r-project.org/doc/manuals/r-release/</a>
-will keep us up to date with new features, bug fixes,
-and deprecated functionality; see also the <strong class="command">news</strong> function.</p>
+will keep us updated with fresh features, bug fixes,
+and newly deprecated functionality; see also the <strong class="command">news</strong> function.</p>
 <p>Please spread the news about this book.
 Also, check out the other open-access textbook by yours truly,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist data wrangling with Python</em></a> <span id="id10">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.
 Thank you.</p>
-<p>Good luck in your further projects!</p>
+<p>Good luck with your further projects!</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footnomemoisation" role="note">
@@ -1546,8 +1543,8 @@ the call <strong class="command">f</strong><code class="code docutils literal no
 <aside class="footnote brackets" id="footconfuse" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
 <p>Novices are prone to overgeneralising when they learn new
-material that they are still far from comfortable with,
-so such exceptions go against this natural coping strategy of theirs.</p>
+material that they are still far from comfortable with.
+Such exceptions go against this natural coping strategy of theirs.</p>
 </aside>
 </aside>
 </section>
@@ -1588,7 +1585,7 @@ so such exceptions go against this natural coping strategy of theirs.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-02T22:07:12+1000.
+              Last updated on 2023-05-03T18:18:43+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
