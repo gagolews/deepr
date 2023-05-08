@@ -29,7 +29,7 @@
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/310-compiled.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
-        <title>14. 🚧🚧 Interfacing compiled code (*) - Deep R Programming</title>
+        <title>14. 🚧🚧 Interfacing compiled code (**) - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
@@ -231,7 +231,7 @@ v0.2.1.9001 (draft)
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">14. 🚧🚧 Interfacing compiled code (*)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">14. 🚧🚧 Interfacing compiled code (**)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="320-language.html">15. Unevaluated expressions (*)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. Environments and evaluation (*)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="340-lazy.html">17. Lazy evaluation (**)</a></li>
@@ -282,7 +282,7 @@ v0.2.1.9001 (draft)
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="interfacing-compiled-code">
-<span id="chap-compiled"></span><h1><span class="section-number">14. </span>🚧🚧 Interfacing compiled code (*)<a class="headerlink" href="#interfacing-compiled-code" title="Permalink to this heading">#</a></h1>
+<span id="chap-compiled"></span><h1><span class="section-number">14. </span>🚧🚧 Interfacing compiled code (**)<a class="headerlink" href="#interfacing-compiled-code" title="Permalink to this heading">#</a></h1>
 <blockquote>
 <div><p><em>The open-access textbook</em>
 Deep R Programming <em>by <a class="reference external" href="https://www.gagolewski.com">Marek Gagolewski</a>
@@ -304,26 +304,68 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
-<p>R is a nice <em>glue</em> language: it is perfect for implementing data wrangling
-pipelines, visualisation, and developing prototypes of data analysis
-algorithms. In other words, it makes connecting larger <em>building blocks</em>
-very easy. Still, for performance reasons<a class="footnote-reference brackets" href="#footwhycompile" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>,
-we recommend moving the more
-computing-intensive tasks to the C, C++, or Fortran level.
-R works very well as a user-friendly interface to compiled code.</p>
-<p>The definitive reference on this topic is Chapter 5 in <span id="id3">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">59</a>]</span>.</p>
+<p>R is an effective <em>glue</em> language: it is suitable for implementing data
+wrangling pipelines, visualisation, and developing prototypes
+of data analysis algorithms. In other words, it makes connecting
+larger <em>building blocks</em> very easy.</p>
+<p>Nevertheless, for performance reasons, we should consider moving
+computing-intensive tasks to the C or C++ level.
+This is particularly the case when we need an algorithm:</p>
+<ul class="simple">
+<li><p>which, when implemented using vectorised R functions,
+has higher memory or time complexity than its straightforward
+implementation,</p></li>
+<li><p>of an <em>iterative</em> nature, one that involves unvectorisable
+<em>for</em> or <em>while</em> loops,</p></li>
+<li><p>which relies on complicated dynamic data structures
+(e.g., hash maps, linked lists, or trees)
+or methods implemented elsewhere and not available
+in R (e.g., other C or C++ libraries).</p></li>
+</ul>
+<p>In this chapter, we will demonstrate that R works very well as
+a user-friendly interface to compiled code written in these
+languages<a class="footnote-reference brackets" href="#footlangs" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>This topic is overall very technical. Hence, we are going to cover
+it in its entirety. The definitive reference is Chapter 5 of <span id="id3">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>;
+but see also Chapter 11 of <span id="id4">[<a class="reference internal" href="999-bibliography.html#id19" title="Chambers, J.M. (2008).  Software for Data Analysis. Programming with R. Springer.">10</a>]</span>.</p>
+<p>Instead, we will focus on writing or interfacing <em>portable</em><a class="footnote-reference brackets" href="#rcpp" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
+function libraries that only rely on simple data structures
+(e.g., arrays of the type <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span></code>).
+Thanks to this, we will be able to reuse
+them in other environments such as Python (e.g., via Cython) or Julia.
+Let us remember that R is one of <em>many</em> languages out there.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Below we assume basic knowledge of the C language; see <span id="id6">[<a class="reference internal" href="999-bibliography.html#id36" title="Kernighan, B.W. and Ritchie, D. (1988).  The C Programming Language. Prentice Hall.">37</a>]</span>.</p>
+<p>Moreover, we assume that the reader’s environment is properly configured
+so that it can build source packages,
+as mentioned in <a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>.
+In particular, W****ws and m**OS should have,
+respectively, <strong class="program">RTools</strong> and <strong class="program">Xcode</strong> installed.</p>
+<p>The reader can choose to skip this chapter now and return to it much later.
+The remaining material is not contingent on the current one.</p>
+</div>
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="footwhycompile" role="note">
+<aside class="footnote brackets" id="footlangs" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
-<p>A well-written, portable function library relying only
-on simple data structures (e.g., arrays of the type <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span></code>)
-can be used in other environments, such as Python (e.g., via Cython)
-of Julia. Let us remember about other programmers yearning for
-the possibility to enjoy our cultivated algorithms.</p>
+<p>Fortran is also supported but will not be covered
+in this book because of its smaller popularity. Some third-party
+packages are gateways to other languages such as Java.</p>
+</aside>
+<aside class="footnote brackets" id="rcpp" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
+<p>And hence we are not interested in the overall very
+convenient <strong class="program">Rcpp</strong> or <strong class="program">cpp11</strong> packages
+which define C++ classes that make the interaction
+with R objects more pleasant.
+(**) If you have time and skills to write a lightweight,
+more abstract version of <strong class="program">Rcpp</strong> that would also
+work with Python and other popular languages,
+please contact the current author.</p>
 </aside>
 </aside>
 </section>
@@ -363,7 +405,7 @@ the possibility to enjoy our cultivated algorithms.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-04T14:19:49+1000.
+              Last updated on 2023-05-08T16:42:16+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

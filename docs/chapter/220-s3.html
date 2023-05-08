@@ -231,7 +231,7 @@ v0.2.1.9001 (draft)
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deepest</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="310-compiled.html">14. 🚧🚧 Interfacing compiled code (*)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="310-compiled.html">14. 🚧🚧 Interfacing compiled code (**)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="320-language.html">15. Unevaluated expressions (*)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="330-environment.html">16. Environments and evaluation (*)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="340-lazy.html">17. Lazy evaluation (**)</a></li>
@@ -319,12 +319,12 @@ although they undoubtedly differ in detail.</p>
 <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code>. Being able to simply call “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>”
 without having to recall that, yes, <code class="docutils literal notranslate"><span class="pre">y</span></code> is a data frame,
 might seem quite appealing.</p>
-<p>This chapter introduces the so-called S3 classes <span id="id2">[<a class="reference internal" href="999-bibliography.html#id51" title="Chambers, J.M. and Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">13</a>]</span>,
-which provide a lightweight object-oriented programming (OOP) approach
+<p>This chapter introduces the so-called S3 classes <span id="id2">[<a class="reference internal" href="999-bibliography.html#id52" title="Chambers, J.M. and Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">13</a>]</span>.
+They provide a lightweight object-oriented programming (OOP) approach
 for automated dispatching of calls to <em>generics</em>
 of the type “<strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>” to concrete <em>methods</em>
 such as “<strong class="command">print.data.frame</strong><code class="code docutils literal notranslate"><span class="pre">(y)</span></code>”,
-based on the <em>class</em> of the object they are invoked upon.</p>
+based on the <em>class</em> of the object they are invoked on.</p>
 <p>S3 classes in their essence are beautifully simple<a class="footnote-reference brackets" href="#foots3design" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. They are
 inspired<a class="footnote-reference brackets" href="#foots3limits" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> by the well-thought-through concepts present in other
 functional programming languages (such as the Common Lisp Object System;
@@ -1004,7 +1004,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-05-03 16:43:06 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-05-08 15:06:51 AEST&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1243,16 +1243,17 @@ as a simple exercise for the kind reader.</p>
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-05-03&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="c1">## [1] &quot;2023-05-08&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
 </div>
-<p>Complex types are built upon basic ones; underneath, what we deal with is:</p>
+<p>Complex types are built on basic ones. Underneath,
+what we deal with here is:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19480    -1     0    NA</span>
+<span class="c1">## [1] 19485    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the <em>UNIX epoch</em>,
@@ -1260,13 +1261,13 @@ as a simple exercise for the kind reader.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-05-03 16:43:07 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-05-08 15:06:51 AEST&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1683096187</span>
+<span class="c1">## [1] 1683522411</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1397,7 +1398,7 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.255   0.013   0.267</span>
+<span class="c1">##   0.256   0.008   0.265</span>
 </pre></div>
 </div>
 <p>The function returns an object of the class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1644,7 +1645,7 @@ in functions such as
 <strong class="command">boxplot</strong> (box-and-whisker plots for a variable
 split by a combination of factors),
 or <strong class="command">plot</strong> (scatter plots);
-see also Chapter 11 in <span id="id29">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">53</a>]</span>.</p>
+see also Chapter 11 of <span id="id29">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">54</a>]</span>.</p>
 <p>For instance, they can be used to describe symbolic relationships such as:</p>
 <ul class="simple">
 <li><p>“<code class="docutils literal notranslate"><span class="pre">y</span></code> as a linear combination of <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, and <code class="docutils literal notranslate"><span class="pre">x3</span></code>”,</p></li>
@@ -1988,9 +1989,9 @@ Was that straightforward?</p>
 <p>Explain why the two following calls yield significantly different
 results and present a workaround:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-05-03&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2023-05-08&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19480&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19485&quot;</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id72">
@@ -2010,7 +2011,7 @@ for our example <code class="docutils literal notranslate"><span class="pre">cat
 <p>(*) Write an R package that defines S3 class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.
 Add a few methods for this class.
 Note the need to use the <code class="docutils literal notranslate"><span class="pre">S3method</span></code> directive
-in the <code class="file docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file; see <span id="id37">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">59</a>]</span>.</p>
+in the <code class="file docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file; see <span id="id37">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>.</p>
 </div></div><div class="proof proof-type-exercise" id="id74">
 
     <div class="proof-title">
@@ -2123,7 +2124,7 @@ and other ones proposed by third-party packages.</p>
 <aside class="footnote brackets" id="footsexptype" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
 <p>Their list is hardcoded at the C language level;
-compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id38">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">62</a>]</span> and
+compare the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <span id="id38">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">63</a>]</span> and
 see also <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footexternalptr" role="note">
@@ -2163,7 +2164,7 @@ Before dispatching to a particular method,
 it creates a couple of hidden variables which give more detail
 on the operation conveyed, e.g., `<code class="docutils literal notranslate"><span class="pre">.Generic</span></code>` or
 `<code class="docutils literal notranslate"><span class="pre">.Class</span></code>`; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;UseMethod&quot;)</span></code> and
-Section 5 in <span id="id39">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">63</a>]</span>.</p>
+Section 5 of <span id="id39">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">64</a>]</span>.</p>
 </aside>
 <aside class="footnote brackets" id="foots3consistency" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">10</a><span class="fn-bracket">]</span></span>
@@ -2285,7 +2286,7 @@ As an exercise, check out its source code.</p>
 </aside>
 <aside class="footnote brackets" id="footfactorint" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">25</a><span class="fn-bracket">]</span></span>
-<p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">63</a>]</span> states: <em>Factors are currently
+<p><span id="id40">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">64</a>]</span> states: <em>Factors are currently
 implemented using an integer
 array to specify the actual levels and a second array of names that are
 mapped to the integers. Rather unfortunately users often make use of the
@@ -2397,7 +2398,7 @@ to understand it anyway.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-04T14:19:49+1000.
+              Last updated on 2023-05-08T16:42:16+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
