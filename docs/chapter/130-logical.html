@@ -372,14 +372,11 @@ compare <a class="reference internal" href="120-numeric.html#sec-op-arith"><span
 <section id="testing-for-na-nan-and-inf">
 <h3><span class="section-number">3.2.2. </span>Testing for <code class="docutils literal notranslate"><span class="pre">NA</span></code>, <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, and <code class="docutils literal notranslate"><span class="pre">Inf</span></code><a class="headerlink" href="#testing-for-na-nan-and-inf" title="Permalink to this heading">#</a></h3>
 <p>Comparisons against missing values and not-numbers yield <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.
-Therefore, instead of the incorrect <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">NA_reals_</span></code> or <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">NaN</span></code>,
-testing for missingness should rather
-be performed via a call to the vectorised <strong class="command">is.na</strong>
-function.</p>
+Therefore, instead of the <em>incorrect</em> <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">NA_real_</span></code>,
+testing for missingness should rather be performed via a call
+to the vectorised <strong class="command">is.na</strong> function.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
-<span class="nf">is.nan</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
-<span class="c1">## [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
 <span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># works for logical vectors, too</span>
 <span class="c1">## [1] FALSE FALSE  TRUE FALSE</span>
 </pre></div>
@@ -411,14 +408,16 @@ are both acceptable.</p>
                <span class="mi">00000000000000000000000000000000000000000000000000</span>
                <span class="mi">00000000000000000000000000000000000000000000000000</span>
                <span class="mi">00000000000000000000000000000000000000000000000000</span>
-               <span class="mi">000000000000000000000000000000000000000000000000000000000223</span>
+               <span class="mi">00000000000000000000000000000000000000000000000000</span>
+               <span class="mi">0000000223</span>
 
-<span class="mf">1.79e308</span> <span class="o">==</span> <span class="mi">17900000000000000000000000000000000000000000000000000000000</span>
-                     <span class="mi">00000000000000000000000000000000000000000000000000</span>
-                     <span class="mi">00000000000000000000000000000000000000000000000000</span>
-                     <span class="mi">00000000000000000000000000000000000000000000000000</span>
-                     <span class="mi">00000000000000000000000000000000000000000000000000</span>
-                     <span class="mi">00000000000000000000000000000000000000000000000000</span>
+<span class="mf">1.79e308</span>  <span class="o">==</span>                                            <span class="mi">179000000</span>
+               <span class="mi">00000000000000000000000000000000000000000000000000</span>
+               <span class="mi">00000000000000000000000000000000000000000000000000</span>
+               <span class="mi">00000000000000000000000000000000000000000000000000</span>
+               <span class="mi">00000000000000000000000000000000000000000000000000</span>
+               <span class="mi">00000000000000000000000000000000000000000000000000</span>
+               <span class="mi">00000000000000000000000000000000000000000000000000</span>
 </pre></div>
 </div>
 <p>These two are quite distant from each other.</p>
@@ -430,7 +429,7 @@ We are, however, able to store only <em>about</em> 15-17 decimal digits:</p>
 </pre></div>
 </div>
 <p>which limits the precision of our computations.
-The <em>about</em> part is – unfortunately – due to the numbers’
+The <em>about</em> part is, unfortunately, due to the numbers’
 being written in the computer-friendly <em>binary</em>, not the human-aligned
 <em>decimal</em> base. This can lead to some unexpected outcomes.</p>
 <p>In particular:</p>
@@ -1002,7 +1001,7 @@ operation chains.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-08T16:42:16+1000.
+              Last updated on 2023-05-09T21:36:46+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

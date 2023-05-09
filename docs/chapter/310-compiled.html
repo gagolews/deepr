@@ -173,7 +173,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -275,7 +275,7 @@ v0.2.1.9001 (draft)
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -322,7 +322,7 @@ implementation,</p></li>
 or methods implemented elsewhere and not available
 in R (e.g., other C or C++ libraries).</p></li>
 </ul>
-<p>In this chapter, we will demonstrate that R works very well as
+<p>In the current chapter, we will demonstrate that R works very well as
 a user-friendly interface to compiled code written in these
 languages<a class="footnote-reference brackets" href="#footlangs" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>This topic is overall very technical. Hence, we are going to cover
@@ -336,16 +336,217 @@ them in other environments such as Python (e.g., via Cython) or Julia.
 Let us remember that R is one of <em>many</em> languages out there.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Below we assume basic knowledge of the C language; see <span id="id6">[<a class="reference internal" href="999-bibliography.html#id36" title="Kernighan, B.W. and Ritchie, D. (1988).  The C Programming Language. Prentice Hall.">37</a>]</span>.</p>
-<p>Moreover, we assume that the reader’s environment is properly configured
-so that it can build source packages,
-as mentioned in <a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>.
-In particular, W****ws and m**OS should have,
-respectively, <strong class="program">RTools</strong> and <strong class="program">Xcode</strong> installed.</p>
-<p>The reader can choose to skip this chapter now and return to it much later.
+<p>Below we assume basic knowledge of the C language; see <span id="id6">[<a class="reference internal" href="999-bibliography.html#id36" title="Kernighan, B.W. and Ritchie, D. (1988).  The C Programming Language. Prentice Hall.">37</a>]</span>.
+The reader can choose to skip this chapter now and return to it much later.
 The remaining material is not contingent on the current one.</p>
+<p>From now on, we take for granted that our environment
+can successfully build source packages with C code, as mentioned in
+<a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>. In particular, W****ws and m**OS should have,
+respectively, <strong class="program">RTools</strong> and <strong class="program">Xcode</strong> installed.</p>
 </div>
-<blockquote>
+<section id="c-code-in-r-packages">
+<h2><span class="section-number">14.1. </span>C code in R packages<a class="headerlink" href="#c-code-in-r-packages" title="Permalink to this heading">#</a></h2>
+<p>Perhaps the most versatile way to interact with portable C code
+is via standalone R packages. For the purpose of the current
+section, we created an example demo project
+available at <a class="reference external" href="https://github.com/gagolews/cpackagedemo">https://github.com/gagolews/cpackagedemo</a>.</p>
+<div class="proof proof-type-exercise" id="id11">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.1</span>
+        
+    </div><div class="proof-content">
+<p>Inspect the structure of <strong class="program">cpackagedemo</strong>.
+Note that C source files are located in its <code class="file docutils literal notranslate"><span class="pre">src/</span></code> subdirectory.
+Build and install the package.
+Call <strong class="command">my_sum</strong> in R to compute the sum of an example
+numeric vector.</p>
+</div></div><p>The package provides an R interface to one function,
+<strong class="command">my_c_sum</strong>, written in the most portable fashion possible.
+Its declaration is included in the <code class="file docutils literal notranslate"><span class="pre">src/cfuns.h</span></code> file:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __CFUNS_H</span>
+<span class="cp">#define __CFUNS_H</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stddef.h&gt;</span>
+
+<span class="kt">double</span><span class="w"> </span><span class="nf">my_c_sum</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>The function accepts a pointer to the start of a numeric sequence
+and its size. It is a standard<a class="footnote-reference brackets" href="#footstride" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> way of representing
+an array of <code class="docutils literal notranslate"><span class="pre">double</span></code>s.</p>
+<p>Its definition is given in <code class="file docutils literal notranslate"><span class="pre">src/cfuns.c</span></code>.
+It is nothing more than a simple sum of all the elements in an array.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;cfuns.h&quot;</span>
+
+<span class="cm">/** Computes the sum of all elements in an array x of size n. */</span>
+<span class="kt">double</span><span class="w"> </span><span class="nf">my_c_sum</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="cm">/* This code does not treat potential missing values specially!</span>
+<span class="cm">           (they are kinds of NaNs). To fix this, add:</span>
+<span class="cm">        if (ISNA(x[i])) return NA_REAL;  // #include &lt;R.h&gt;  */</span>
+<span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div style="margin-top: 1em"></div><p>To make <strong class="command">my_c_sum</strong> available in R,
+we will have to introduce a wrapper around it.
+To recall, an R function accepts objects on <em>any</em> kind
+on input and yields <em>anything</em> as a result.
+R objects, regardless of the type,
+are stored as C structures of type <code class="docutils literal notranslate"><span class="pre">SEXPREC</span></code> <span id="id8">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">63</a>]</span>.
+Usually we get access to them via pointers, which are named
+<code class="docutils literal notranslate"><span class="pre">SEXP</span></code> (S expression).</p>
+<p>And so we declare our R-callable wrapper in <code class="file docutils literal notranslate"><span class="pre">src/rfuns.h</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __RFUNS_H</span>
+<span class="cp">#define __RFUNS_H</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;R.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Rinternals.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Rmath.h&gt;</span>
+
+<span class="n">SEXP</span><span class="w"> </span><span class="nf">my_r_sum</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>The actual definition is included in <code class="file docutils literal notranslate"><span class="pre">src/rfuns.c</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;rfuns.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;cfuns.h&quot;</span>
+
+<span class="cm">/** Wrapper around my_c_sum. */</span>
+<span class="n">SEXP</span><span class="w"> </span><span class="nf">my_r_sum</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="cm">/* It&#39;s the caller who is expected to prepare</span>
+<span class="cm">         * the arguments (doing it at the C level is tedious work). */</span>
+<span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of type &#39;double&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* TODO: Consider missing value (NA) checking</span>
+<span class="cm">     *       as my_c_sum doesn&#39;t do it. */</span>
+
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my_c_sum</span><span class="p">(</span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Rf_ScalarReal</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Although technically possible, preparation of the arguments
+could be done at the C level. For instance, we could check if `<code class="docutils literal notranslate"><span class="pre">x</span></code>`
+is an integer vector, and convert it to one of type <code class="docutils literal notranslate"><span class="pre">double</span></code> if
+necessary (these are two different types; see <a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>).
+But overall, it is very burdensome. Thus, it is better to ensure
+that arguments are of the right form and beautify the outputs in pure R.</p>
+<p>This is why we only assert the enjoyment of <strong class="command">Rf_isReal</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>.
+It guarantees that the <strong class="command">REAL</strong> and <strong class="command">XLENGTH</strong>
+functions correctly return the pointer to the start of the sequence
+and its length, respectively.</p>
+<p>Once <strong class="command">my_c_sum</strong> is called, we have to convert it
+to an R object, here: a newly allocated numeric vector of length one.
+This can be done easily by calling <strong class="command">Rf_ScalarReal</strong>.</p>
+<div style="margin-top: 1em"></div><p>Although optional (see Section 5.4 of <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>),
+we will explicitly register <strong class="command">my_r_sum</strong> as a callable
+function. This way, R will not have to struggle finding
+the specific entry point in the resulting dynamically linked library (DLL).
+We do this in <code class="file docutils literal notranslate"><span class="pre">src/cpackagedemo.c</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;R_ext/Rdynload.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;rfuns.h&quot;</span>
+
+<span class="cm">/** The list of functions available in R via a call to .Call():</span>
+<span class="cm"> *  Each entry is like {exported_name, fun_pointer, number_of_arguments}. */</span>
+<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">R_CallMethodDef</span><span class="w"> </span><span class="n">cCallMethods</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;my_r_sum&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">DL_FUNC</span><span class="p">)</span><span class="o">&amp;</span><span class="n">my_r_sum</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="w">  </span><span class="cm">/* the end of the list */</span>
+<span class="p">};</span>
+
+<span class="cm">/** Registers the list of callable functions. */</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">R_init_cpackagedemo</span><span class="p">(</span><span class="n">DllInfo</span><span class="w"> </span><span class="o">*</span><span class="n">dll</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">R_registerRoutines</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">cCallMethods</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="n">R_useDynamicSymbols</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="w"> </span><span class="n">FALSE</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div style="margin-top: 1em"></div><p>The function can be called from R via a call to <strong class="command">.Call</strong>.
+Its example use is provided in <code class="file docutils literal notranslate"><span class="pre">R/my_sum.R</span></code>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">my_sum</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1"># Prepare input data:</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.double</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Call my_r_sum; Note the C_ prefix (see NAMESPACE):</span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">.Call</span><span class="p">(</span><span class="n">C_my_r_sum</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">PACKAGE</span><span class="o">=</span><span class="s">&quot;cpackagedemo&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Some rather random postprocessing:</span>
+<span class="w">    </span><span class="nf">attr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;what&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">deparse</span><span class="p">(</span><span class="nf">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="w">    </span><span class="n">s</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div style="margin-top: 1em"></div><p>And, finally, here is the <code class="file docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file responsible
+for registering the exported R names and the DLL to use:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">export</span><span class="p">(</span><span class="n">my_sum</span><span class="p">)</span>
+<span class="nf">useDynLib</span><span class="p">(</span><span class="n">cpackagedemo</span><span class="p">,</span><span class="w"> </span><span class="n">.registration</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">.fixes</span><span class="o">=</span><span class="s">&quot;C_&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div style="margin-top: 1em"></div><p>Once the package is built and installed
+(e.g., by running “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">INSTALL</span> <span class="pre">&lt;pkgdir&gt;</span></code>” in the
+terminal), we can test it by calling:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;cpackagedemo&quot;</span><span class="p">)</span>
+<span class="nf">my_sum</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="o">/</span><span class="m">100</span><span class="p">)</span>
+<span class="c1">## [1] 0.49856</span>
+<span class="c1">## attr(,&quot;what&quot;)</span>
+<span class="c1">## [1] &quot;runif(100)/100&quot;</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id12">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.2</span>
+        
+    </div><div class="proof-content">
+<p>Extend the package (on your local computer)
+by adding a function to compute the location of the greatest
+element in a numeric vector (like in <strong class="command">which.max</strong>).</p>
+</div></div><div class="proof proof-type-exercise" id="id13">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.3</span>
+        
+    </div><div class="proof-content">
+<p>(*) “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>”
+can be used to compile a list source files, without turning them
+into standalone packages; see <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>.
+Then, <strong class="command">dyn.load</strong> loads the resulting DLL.
+Try them on <code class="file docutils literal notranslate"><span class="pre">src/cfuns.c</span></code> and <code class="file docutils literal notranslate"><span class="pre">src/rfuns.c</span></code>.</p>
+</div></div></section>
+<section id="to-do">
+<h2><span class="section-number">14.2. </span>🚧 … to do …<a class="headerlink" href="#to-do" title="Permalink to this heading">#</a></h2>
+<p>… to do … working on it …</p>
+</section>
+<section id="exercises">
+<h2><span class="section-number">14.3. </span>🚧 Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<div class="proof proof-type-exercise" id="id14">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.4</span>
+        
+    </div><div class="proof-content">
+<p>Answer the following questions:</p>
+<ul class="simple">
+<li><p>…</p></li>
+</ul>
+</div></div><div style="margin-top: 1em"></div><blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
 <hr class="footnotes docutils" />
@@ -367,7 +568,18 @@ more abstract version of <strong class="program">Rcpp</strong> that would also
 work with Python and other popular languages,
 please contact the current author.</p>
 </aside>
+<aside class="footnote brackets" id="footstride" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">3</a><span class="fn-bracket">]</span></span>
+<p>(*) A slightly more sophisticated representation
+(used, e.g., in GNU GSL and <strong class="program">numpy</strong>) deals with
+a <em>sliced</em> array, where we additionally store
+the so-called stride. Instead of inspecting elements
+one after another, we advance the iterator by a given step size.
+This way, we could apply the same function on selected rows
+of a matrix (if in column-major order).</p>
 </aside>
+</aside>
+</section>
 </section>
 
         </article>
@@ -405,7 +617,7 @@ please contact the current author.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-08T16:42:16+1000.
+              Last updated on 2023-05-09T21:36:46+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -414,8 +626,29 @@ please contact the current author.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            In this chapter
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">14. 🚧🚧 Interfacing compiled code (**)</a><ul>
+<li><a class="reference internal" href="#c-code-in-r-packages">14.1. C code in R packages</a></li>
+<li><a class="reference internal" href="#to-do">14.2. 🚧 … to do …</a></li>
+<li><a class="reference internal" href="#exercises">14.3. 🚧 Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
