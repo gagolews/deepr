@@ -304,13 +304,16 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
-<p>R is an effective <em>glue</em> language: it is suitable for implementing data
-wrangling pipelines, visualisation, and developing prototypes
-of data analysis algorithms. In other words, it makes connecting
-larger <em>building blocks</em> very easy.</p>
-<p>Nevertheless, for performance reasons, we should consider moving
+<p>R is an effective <em>glue</em> language. It is suitable for implementing
+whole data wrangling pipelines: from data import through processing,
+analysis, and visualisation to export. It makes using and connecting
+larger <em>building blocks</em> very convenient.</p>
+<p>R is also a qualified tool for developing quick and dirty
+prototypes of standalone, general-purpose algorithms,
+especially if they are of <em>numerical</em> nature.
+Nevertheless, for performance reasons, we should consider moving
 computing-intensive tasks to the C or C++ level.
-This is particularly the case when we need an algorithm:</p>
+This is particularly the case when we need a method:</p>
 <ul class="simple">
 <li><p>which, when implemented using vectorised R functions,
 has higher memory or time complexity than its straightforward
@@ -326,8 +329,8 @@ in R (e.g., other C or C++ libraries).</p></li>
 a user-friendly interface to compiled code written in these
 languages<a class="footnote-reference brackets" href="#footlangs" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>This topic is overall very technical. Hence, we are going to cover
-it in its entirety. The definitive reference is Chapter 5 of <span id="id3">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>;
-but see also Chapter 11 of <span id="id4">[<a class="reference internal" href="999-bibliography.html#id19" title="Chambers, J.M. (2008).  Software for Data Analysis. Programming with R. Springer.">10</a>]</span>.</p>
+it in its entirety. Instead, refer to Chapters 5 and 6 of <span id="id3">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>
+for the definitive reference; but see also Chapter 11 of <span id="id4">[<a class="reference internal" href="999-bibliography.html#id19" title="Chambers, J.M. (2008).  Software for Data Analysis. Programming with R. Springer.">10</a>]</span>.</p>
 <p>Instead, we will focus on writing or interfacing <em>portable</em><a class="footnote-reference brackets" href="#rcpp" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
 function libraries that only rely on simple data structures
 (e.g., arrays of the type <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span></code>).
@@ -344,13 +347,15 @@ can successfully build source packages with C code, as mentioned in
 <a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>. In particular, W****ws and m**OS should have,
 respectively, <strong class="program">RTools</strong> and <strong class="program">Xcode</strong> installed.</p>
 </div>
-<section id="c-code-in-r-packages">
-<h2><span class="section-number">14.1. </span>C code in R packages<a class="headerlink" href="#c-code-in-r-packages" title="Permalink to this heading">#</a></h2>
+<section id="c-code-in-r">
+<h2><span class="section-number">14.1. </span>C code in R<a class="headerlink" href="#c-code-in-r" title="Permalink to this heading">#</a></h2>
+<section id="source-files-for-compiled-code-in-r-packages">
+<h3><span class="section-number">14.1.1. </span>Source files for compiled code in R packages<a class="headerlink" href="#source-files-for-compiled-code-in-r-packages" title="Permalink to this heading">#</a></h3>
 <p>Perhaps the most versatile way to interact with portable C code
 is via standalone R packages. For the purpose of the current
 section, we created an example demo project
 available at <a class="reference external" href="https://github.com/gagolews/cpackagedemo">https://github.com/gagolews/cpackagedemo</a>.</p>
-<div class="proof proof-type-exercise" id="id11">
+<div class="proof proof-type-exercise" id="id14">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.1</span>
@@ -399,11 +404,9 @@ It is nothing more than a simple sum of all the elements in an array.</p>
 we will have to introduce a wrapper around it.
 To recall, an R function accepts objects on <em>any</em> kind
 on input and yields <em>anything</em> as a result.
-R objects, regardless of the type,
-are stored as C structures of type <code class="docutils literal notranslate"><span class="pre">SEXPREC</span></code> <span id="id8">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">63</a>]</span>.
-Usually we get access to them via pointers, which are named
-<code class="docutils literal notranslate"><span class="pre">SEXP</span></code> (S expression).</p>
-<p>And so we declare our R-callable wrapper in <code class="file docutils literal notranslate"><span class="pre">src/rfuns.h</span></code>:</p>
+In the next section, we will explain that we get access
+to R objects via special pointers of type <code class="docutils literal notranslate"><span class="pre">SEXP</span></code> (S expression).</p>
+<p>And so we can declare our R-callable wrapper in <code class="file docutils literal notranslate"><span class="pre">src/rfuns.h</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __RFUNS_H</span>
 <span class="cp">#define __RFUNS_H</span>
 
@@ -453,7 +456,7 @@ and its length, respectively.</p>
 <p>Once <strong class="command">my_c_sum</strong> is called, we have to convert it
 to an R object, here: a newly allocated numeric vector of length one.
 This can be done easily by calling <strong class="command">Rf_ScalarReal</strong>.</p>
-<div style="margin-top: 1em"></div><p>Although optional (see Section 5.4 of <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>),
+<div style="margin-top: 1em"></div><p>Although optional (see Section 5.4 of <span id="id8">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>),
 we will explicitly register <strong class="command">my_r_sum</strong> as a callable
 function. This way, R will not have to struggle finding
 the specific entry point in the resulting dynamically linked library (DLL).
@@ -484,7 +487,7 @@ Its example use is provided in <code class="file docutils literal notranslate"><
 <span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">is.double</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="w">    </span><span class="c1"># Call my_r_sum; Note the C_ prefix (see NAMESPACE):</span>
+<span class="w">    </span><span class="c1"># Call my_r_sum; Note the &quot;C_&quot; prefix (see NAMESPACE):</span>
 <span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">.Call</span><span class="p">(</span><span class="n">C_my_r_sum</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">PACKAGE</span><span class="o">=</span><span class="s">&quot;cpackagedemo&quot;</span><span class="p">)</span>
 
 <span class="w">    </span><span class="c1"># Some rather random postprocessing:</span>
@@ -509,7 +512,7 @@ terminal), we can test it by calling:</p>
 <span class="c1">## [1] &quot;runif(100)/100&quot;</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id12">
+<div class="proof proof-type-exercise" id="id15">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.2</span>
@@ -518,35 +521,445 @@ terminal), we can test it by calling:</p>
 <p>Extend the package (on your local computer)
 by adding a function to compute the location of the greatest
 element in a numeric vector (like in <strong class="command">which.max</strong>).</p>
-</div></div><div class="proof proof-type-exercise" id="id13">
+</div></div></section>
+<section id="r-cmd-shlib">
+<h3><span class="section-number">14.1.2. </span><code class="code docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span></code><a class="headerlink" href="#r-cmd-shlib" title="Permalink to this heading">#</a></h3>
+<p>The “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>” command can be used to compile
+one or more source files, without turning them into standalone packages;
+see <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>. Then, <strong class="command">dyn.load</strong> loads the resulting DLL.</p>
+<div class="proof proof-type-exercise" id="id16">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.3</span>
         
     </div><div class="proof-content">
-<p>(*) “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>”
-can be used to compile a list source files, without turning them
-into standalone packages; see <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>.
-Then, <strong class="command">dyn.load</strong> loads the resulting DLL.
-Try them on <code class="file docutils literal notranslate"><span class="pre">src/cfuns.c</span></code> and <code class="file docutils literal notranslate"><span class="pre">src/rfuns.c</span></code>.</p>
+<p>(*) Compile <code class="file docutils literal notranslate"><span class="pre">src/cfuns.c</span></code> and <code class="file docutils literal notranslate"><span class="pre">src/rfuns.c</span></code> from our
+demo package using “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>”.
+Call <strong class="command">dyn.load</strong>.
+Write an R function that uses <strong class="command">.Call</strong> to invoke
+<strong class="command">my_r_sum</strong> from the second source file.</p>
+</div></div><p>The <code class="docutils literal notranslate"><span class="pre">SHLIB</span></code> approach is convenient for learning C programming,
+including running simple examples. We will thus use it
+for didactic reasons in this chapter.
+The <code class="file docutils literal notranslate"><span class="pre">inst/examples/csource.R</span></code> file in our demo package
+includes the implementation of an R function called <strong class="command">csource</strong>.
+It compiles a given C source file,
+loads the resulting DLL, and
+extracts and executes a designated R code chunk
+(preferably defining a function that refers to <strong class="command">.Call</strong>).</p>
+<p>Here is an example source file, <code class="file docutils literal notranslate"><span class="pre">inst/examples/helloworld.c</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* The necessary header files are automatically included by `csource`. */</span>
+
+<span class="n">SEXP</span><span class="w"> </span><span class="nf">C_hello</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Rprintf</span><span class="p">(</span><span class="s">&quot;The mill&#39;s closed. There&#39;s no more work. We&#39;re destitute.</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="w">        </span><span class="s">&quot;I&#39;m afraid I&#39;ve no choice but to sell you all &quot;</span>
+<span class="w">        </span><span class="s">&quot;for scientific experiments.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">R_NilValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/**R</span>
+<span class="cm"># This chunk will be extracted and executed by `csource`.</span>
+
+<span class="cm">hello &lt;- function()</span>
+<span class="cm">    invisible(.Call(&quot;C_hello&quot;, PACKAGE=&quot;helloworld&quot;))</span>
+
+<span class="cm">R**/</span>
+</pre></div>
+</div>
+<p>Let us compile it and call the R function defined there.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">source</span><span class="p">(</span><span class="s">&quot;~/R/cpackagedemo/inst/examples/csource.R&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># defines csource</span>
+<span class="nf">csource</span><span class="p">(</span><span class="s">&quot;~/R/cpackagedemo/inst/examples/helloworld.c&quot;</span><span class="p">)</span>
+<span class="nf">hello</span><span class="p">()</span>
+<span class="c1">## The mill&#39;s closed. There&#39;s no more work. We&#39;re destitute.</span>
+<span class="c1">## I&#39;m afraid I&#39;ve no choice but to sell you all for scientific experiments.</span>
+</pre></div>
+</div>
+<div class="proof proof-type-example" id="id17">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 14.4</span>
+        
+    </div><div class="proof-content">
+<p>(*) It might be very educative to study the implementation
+of <strong class="command">csource</strong>. By now, we should be able to write such
+functions ourselves (a few hours’ worth of work),
+let alone read with understanding.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compiles a C source file using R CMD SHLIB,</span>
+<span class="c1"># loads the resulting DLL, and executes the embedded R code.</span>
+<span class="n">csource</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span>
+<span class="w">    </span><span class="n">fname</span><span class="p">,</span>
+<span class="w">    </span><span class="n">libname</span><span class="o">=</span><span class="nf">regmatches</span><span class="p">(</span><span class="nf">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span>
+<span class="w">        </span><span class="nf">regexpr</span><span class="p">(</span><span class="s">&quot;[^.]*(?=\\..*)&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)),</span>
+<span class="w">    </span><span class="n">shlibargs</span><span class="o">=</span><span class="nf">character</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">headers</span><span class="o">=</span><span class="nf">paste0</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;#include &lt;R.h&gt;\n&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;#include &lt;Rinternals.h&gt;\n&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;#include &lt;Rmath.h&gt;\n&quot;</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">R</span><span class="o">=</span><span class="nf">file.path</span><span class="p">(</span><span class="nf">R.home</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;bin/R&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">file.exists</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">libname</span><span class="p">),</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">libname</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">shlibargs</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">headers</span><span class="p">))</span>
+<span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Read the source file:</span>
+<span class="w">    </span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="nf">readLines</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Set up output file names:</span>
+<span class="w">    </span><span class="n">tmpdir</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">normalizePath</span><span class="p">(</span><span class="nf">tempdir</span><span class="p">(),</span><span class="w"> </span><span class="n">winslash</span><span class="o">=</span><span class="s">&quot;/&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># tempdir on Win uses \</span>
+<span class="w">    </span><span class="n">dynlib_ext</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">.Platform</span><span class="p">[[</span><span class="s">&quot;dynlib.ext&quot;</span><span class="p">]]</span>
+<span class="w">    </span><span class="n">libpath</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">file.path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">libname</span><span class="p">,</span><span class="w"> </span><span class="n">dynlib_ext</span><span class="p">))</span>
+<span class="w">    </span><span class="n">cfname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">file.path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">libname</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.c&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="n">rfname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">file.path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">libname</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.R&quot;</span><span class="p">))</span>
+
+<span class="w">    </span><span class="c1"># Separate the /**R ... &lt;R code&gt; ... **/ chunk from C code:</span>
+<span class="w">    </span><span class="n">rpart</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">regexec</span><span class="p">(</span><span class="s">&quot;(?smi)^/\\*\\*R\\s?(.*)R\\*\\*/$&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span>
+<span class="w">    </span><span class="n">rpart_start</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rpart</span>
+<span class="w">    </span><span class="n">rpart_len</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attr</span><span class="p">(</span><span class="n">rpart</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;match.length&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="n">rpart_start</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">rpart_len</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">stop</span><span class="p">(</span><span class="s">&quot;enclose R code between /**R and R**/&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">rcode</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">substr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">rpart_start</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">rpart_start</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">+</span><span class="n">rpart_len</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="m">-1</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="n">rcode</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="o">=</span><span class="n">rfname</span><span class="p">,</span><span class="w"> </span><span class="n">append</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">ccode</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span>
+<span class="w">        </span><span class="n">headers</span><span class="p">,</span>
+<span class="w">        </span><span class="nf">substr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">rpart_start</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="m">-1</span><span class="p">),</span>
+<span class="w">        </span><span class="nf">substr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">rpart_start</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="o">+</span><span class="n">rpart_len</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="nf">nchar</span><span class="p">(</span><span class="n">f</span><span class="p">)),</span>
+<span class="w">        </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;\n&quot;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="n">ccode</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="o">=</span><span class="n">cfname</span><span class="p">,</span><span class="w"> </span><span class="n">append</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Prepare the &quot;R CMD SHLIB ...&quot; command:</span>
+<span class="w">    </span><span class="n">shlibargs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;CMD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SHLIB&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;-o %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">libpath</span><span class="p">),</span>
+<span class="w">        </span><span class="n">cfname</span><span class="p">,</span>
+<span class="w">        </span><span class="n">shlibargs</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Compile and load the DLL, run the extracted R script:</span>
+<span class="w">    </span><span class="n">retval</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">FALSE</span>
+<span class="w">    </span><span class="n">oldwd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">setwd</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">tryCatch</span><span class="p">({</span>
+<span class="w">        </span><span class="nf">if </span><span class="p">(</span><span class="n">libpath</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">sapply</span><span class="p">(</span><span class="nf">getLoadedDLLs</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;[[&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;path&quot;</span><span class="p">))</span>
+<span class="w">            </span><span class="nf">dyn.unload</span><span class="p">(</span><span class="n">libpath</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">stopifnot</span><span class="p">(</span><span class="m">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">system2</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="n">shlibargs</span><span class="p">))</span>
+<span class="w">        </span><span class="nf">dyn.load</span><span class="p">(</span><span class="n">libpath</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">source</span><span class="p">(</span><span class="n">rfname</span><span class="p">)</span>
+<span class="w">        </span><span class="n">retval</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">TRUE</span>
+<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="n">error</span><span class="o">=</span><span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">e</span><span class="p">),</span><span class="w"> </span><span class="n">file</span><span class="o">=</span><span class="nf">stderr</span><span class="p">())</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="nf">setwd</span><span class="p">(</span><span class="n">oldwd</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">invisible</span><span class="p">(</span><span class="n">retval</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div></div></section>
+</section>
+<section id="basic-r-types-in-c">
+<h2><span class="section-number">14.2. </span>🚧 Basic R Types in C<a class="headerlink" href="#basic-r-types-in-c" title="Permalink to this heading">#</a></h2>
+<section id="sexptype">
+<h3><span class="section-number">14.2.1. </span><code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code><a class="headerlink" href="#sexptype" title="Permalink to this heading">#</a></h3>
+<p>All R objects are stored as instances of the C language structure
+<code class="docutils literal notranslate"><span class="pre">SEXPREC</span></code>; see Section 1 of <span id="id10">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">63</a>]</span>.
+Usually, we access them via pointers,
+which are of the type named <code class="docutils literal notranslate"><span class="pre">SEXP</span></code> (S expression).</p>
+<p>C functions referred to via <strong class="command">.Call</strong>
+take the very generic <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s on input and yield one <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>
+as result. One of the said structure’s fields represents
+the actual R object type (<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> numbers);
+see <a class="reference internal" href="#tab-sexp-types"><span class="std std-numref">Table 14.1</span></a> for a selection.</p>
+<div class="table-wrapper colwidths-given docutils container" id="id18">
+<span id="tab-sexp-types"></span><span id="tab-sexp-types"></span><table class="docutils align-default" id="id18">
+<caption><span class="caption-number">Table 14.1 </span><span class="caption-text">Basic R types in C</span><a class="headerlink" href="#id18" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 36%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong><code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code></strong></p></th>
+<th class="head"><p><strong>Type in R</strong> (<strong class="command">typeof</strong>)</p></th>
+<th class="head"><p><strong>Test in C</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NILSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code></p></td>
+<td><p><strong class="command">Rf_isNull</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> <em>(true for <code class="docutils literal notranslate"><span class="pre">R_NilValue</span></code> only)</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RAWSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">raw</span></code></p></td>
+<td><p><strong class="command">TYPEOF</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">==</span> <span class="pre">RAWSXP</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LGLSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">logical</span></code></p></td>
+<td><p><strong class="command">Rf_isLogical</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INTSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">integer</span></code></p></td>
+<td><p><strong class="command">Rf_isInteger</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">REALSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><strong class="command">Rf_isReal</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CPLXSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">complex</span></code></p></td>
+<td><p><strong class="command">Rf_isComplex</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">STRSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">character</span></code></p></td>
+<td><p><strong class="command">Rf_isString</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VECSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p></td>
+<td><p><strong class="command">Rf_isVectorList</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">char</span></code> <em>(scalar string; internal)</em></p></td>
+<td><p><strong class="command">TYPEOF</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">==</span> <span class="pre">CHARSXP</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">EXTPTRSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">externalptr</span></code> <em>(internal)</em></p></td>
+<td><p><strong class="command">TYPEOF</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">==</span> <span class="pre">EXTPTRSXP</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="proof proof-type-example" id="id19">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 14.5</span>
+        
+    </div><div class="proof-content">
+<p>To illustrate that any R object is available as a <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>,
+consider <code class="file docutils literal notranslate"><span class="pre">inst/examples/sexptype.c</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_test_sexptype</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Rprintf</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;type of x: %s (SEXPTYPE=%d)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Rf_type2char</span><span class="p">(</span><span class="n">TYPEOF</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+<span class="w">        </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">TYPEOF</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">R_NilValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/**R</span>
+<span class="cm">test_sexptype &lt;- function(x)</span>
+<span class="cm">    invisible(.Call(&quot;C_test_sexptype&quot;, x, PACKAGE=&quot;sexptype&quot;))</span>
+<span class="cm">R**/</span>
+</pre></div>
+</div>
+<p>Example calls:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">csource</span><span class="p">(</span><span class="s">&quot;~/R/cpackagedemo/inst/examples/sexptype.c&quot;</span><span class="p">)</span>
+<span class="nf">test_sexptype</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span>
+<span class="c1">## type of x: integer (SEXPTYPE=13)</span>
+<span class="nf">test_sexptype</span><span class="p">(</span><span class="kc">NA</span><span class="p">)</span>
+<span class="c1">## type of x: logical (SEXPTYPE=10)</span>
+<span class="nf">test_sexptype</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
+<span class="c1">## type of x: character (SEXPTYPE=16)</span>
+</pre></div>
+</div>
+<p>We should refer to particular <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s
+via their descriptive names (constants; e.g., <code class="docutils literal notranslate"><span class="pre">STRSXP</span></code>),
+not their numeric identifiers (e.g., 16);
+see Section 1.1.1 of <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">63</a>]</span> for the complete list<a class="footnote-reference brackets" href="#footsexptype" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
+</div></div></section>
+<section id="accessing-vector-elements">
+<h3><span class="section-number">14.2.2. </span>🚧 Accessing vector elements<a class="headerlink" href="#accessing-vector-elements" title="Permalink to this heading">#</a></h3>
+<p><a class="reference internal" href="#tab-sexp-array"><span class="std std-numref">Table 14.2</span></a> lists the most important vector-like
+<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s (atomic and generic) together with their corresponding C
+types and the functions to access the underlying array pointers.
+A call to <strong class="command">XLENGTH</strong> returns the length of a given
+sequence.</p>
+<p>We have already seen an example of a function processing a numeric vector
+above: see <strong class="command">my_r_sum</strong>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>With raw, logical, integer, floating-point, and complex vectors,
+we get direct access to data which might be shared amongst many objects
+(compare <a class="reference internal" href="330-environment.html#sec-copy-on-demand"><span class="std std-numref">Section 16.1.4</span></a>).
+<code class="docutils literal notranslate"><span class="pre">SEXPREC</span></code>s are simply passed by pointers (since <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s are
+exactly them). We must thus refrain<a class="footnote-reference brackets" href="#footmod" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>
+ourselves from modifying the objects passed as function parameters.
+For ways to create new vectors, e.g., for storing auxiliary
+or return values, see below.</p>
+</div>
+<div class="proof proof-type-example" id="id20">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 14.6</span>
+        
+    </div><div class="proof-content">
+<p>Consider <code class="file docutils literal notranslate"><span class="pre">inst/examples/sharedmem.c</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_test_sharedmem</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a non-empty vector of type &#39;double&#39;&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="cm">/* Never do it! The underlying array `x`</span>
+<span class="cm">                      may be shared by many objects. Always make a copy. */</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">R_NilValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/**R</span>
+<span class="cm">test_sharedmem &lt;- function(x)</span>
+<span class="cm">    invisible(.Call(&quot;C_test_sharedmem&quot;, x, PACKAGE=&quot;sharedmem&quot;))</span>
+<span class="cm">R**/</span>
+</pre></div>
+</div>
+<p>And now, calling the above function on an example vector:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">csource</span><span class="p">(</span><span class="s">&quot;~/R/cpackagedemo/inst/examples/sharedmem.c&quot;</span><span class="p">)</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span>
+<span class="nf">test_sharedmem</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="c1">## [1] 2</span>
+</pre></div>
+</div>
+<p>modifies <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code> in place! This is not the semantics that
+we are used to interacting with in R. Always make a copy.</p>
+</div></div><p>… to do …</p>
+<p><strong class="command">VECTOR_ELT</strong>…
+<strong class="command">STRING_ELT</strong>…
+Note that lists (<code class="docutils literal notranslate"><span class="pre">VECSXP</span></code>) are comprised of <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s of any type
+and character vectors feature <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>s.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>, <strong class="command">XLENGTH</strong> returns the number of bytes (not necessarily characters) not including the trailing 0.</p>
+<div class="table-wrapper colwidths-given docutils container" id="id21">
+<span id="tab-sexp-array"></span><span id="tab-sexp-array"></span><table class="docutils align-default" id="id21">
+<caption><span class="caption-number">Table 14.2 </span><span class="caption-text">Basic array-like R types and their elements in C</span><a class="headerlink" href="#id21" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 64%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong><code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code></strong></p></th>
+<th class="head"><p><strong>Array element type</strong></p></th>
+<th class="head"><p><strong>Pointer access</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RAWSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">typedef</span> <span class="pre">unsigned</span> <span class="pre">char</span> <span class="pre">Rbyte;</span></code></p></td>
+<td><p><strong class="command">RAW</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LGLSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code> <em>(use the <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, and <code class="docutils literal notranslate"><span class="pre">NA_LOGICAL</span></code> constants)</em></p></td>
+<td><p><strong class="command">LOGICAL</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INTSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><strong class="command">INTEGER</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">REALSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><strong class="command">REAL</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CPLXSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">typedef</span> <span class="pre">struct</span> <span class="pre">{ double r;</span> <span class="pre">double i; }</span> <span class="pre">Rcomplex;</span></code></p></td>
+<td><p><strong class="command">COMPLEX</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">STRSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SEXP</span></code> <em>(array of <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s of type <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>)</em></p></td>
+<td><p><em>(not directly)</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VECSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SEXP</span></code> <em>(array of <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s of any <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>)</em></p></td>
+<td><p><em>(not directly)</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char*</span></code> <em>(read only; trailing 0; check encoding)</em></p></td>
+<td><p><strong class="command">CHAR</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a class="reference internal" href="#tab-sexp-na"><span class="std std-numref">Table 14.3</span></a>…</p>
+<div class="table-wrapper colwidths-given docutils container" id="id22">
+<span id="tab-sexp-na"></span><span id="tab-sexp-na"></span><table class="docutils align-default" id="id22">
+<caption><span class="caption-number">Table 14.3 </span><span class="caption-text">Representation of missing values</span><a class="headerlink" href="#id22" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong><code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code></strong></p></th>
+<th class="head"><p><strong>Missing value</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RAWSXP</span></code></p></td>
+<td><p><em>(none)</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LGLSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NA_LOGICAL</span></code> <em>(equal to <code class="docutils literal notranslate"><span class="pre">INT_MIN</span></code>)</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INTSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NA_INTEGER</span></code> <em>(equal to <code class="docutils literal notranslate"><span class="pre">INT_MIN</span></code>)</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">REALSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NA_REAL</span></code> <em>(a special <code class="docutils literal notranslate"><span class="pre">NaN</span></code>;
+test with <strong class="command">ISNA</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">REAL</strong><code class="code docutils literal notranslate"><span class="pre">(x)[i])</span></code>)</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CPLXSXP</span></code></p></td>
+<td><p>a pair of <code class="docutils literal notranslate"><span class="pre">NA_REAL</span></code>s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NA_STRING</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="memory-allocation">
+<span id="sec-memory-management"></span><h3><span class="section-number">14.2.3. </span>🚧 Memory allocation<a class="headerlink" href="#memory-allocation" title="Permalink to this heading">#</a></h3>
+<p>… to do … working on it …</p>
+</section>
 <section id="to-do">
-<h2><span class="section-number">14.2. </span>🚧 … to do …<a class="headerlink" href="#to-do" title="Permalink to this heading">#</a></h2>
+<h3><span class="section-number">14.2.4. </span>🚧 … to do …<a class="headerlink" href="#to-do" title="Permalink to this heading">#</a></h3>
+<p>… to do … working on it …</p>
+</section>
+</section>
+<section id="handling-compound-types">
+<h2><span class="section-number">14.3. </span>🚧 Handling Compound Types<a class="headerlink" href="#handling-compound-types" title="Permalink to this heading">#</a></h2>
+<p>… to do … working on it …</p>
+</section>
+<section id="external-pointers">
+<span id="sec-xptr"></span><h2><span class="section-number">14.4. </span>🚧 External pointers<a class="headerlink" href="#external-pointers" title="Permalink to this heading">#</a></h2>
 <p>… to do … working on it …</p>
 </section>
 <section id="exercises">
-<h2><span class="section-number">14.3. </span>🚧 Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id14">
+<h2><span class="section-number">14.5. </span>🚧 Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<p>… to do … working on it …</p>
+<div class="proof proof-type-exercise" id="id23">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 14.4</span>
+        <span class="proof-type">Exercise 14.7</span>
         
     </div><div class="proof-content">
 <p>Answer the following questions:</p>
 <ul class="simple">
 <li><p>…</p></li>
 </ul>
-</div></div><div style="margin-top: 1em"></div><blockquote>
+</div></div><div class="proof proof-type-exercise" id="id24">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.8</span>
+        
+    </div><div class="proof-content">
+<p>(*) Download R’s source code from <a class="reference external" href="https://stat.ethz.ch/R/daily/">CRAN</a>
+or its <a class="reference external" href="https://svn.r-project.org/R/trunk/"><strong class="program">Subversion</strong></a> (SVN)
+repository. Explore the header files the <code class="file docutils literal notranslate"><span class="pre">src/include/</span></code> subdirectory.
+They are part of the callable API.</p>
+</div></div><blockquote>
 <div><p>🚧 <strong>This chapter is under construction. Please come back later.</strong></p>
 </div></blockquote>
 <hr class="footnotes docutils" />
@@ -577,6 +990,18 @@ the so-called stride. Instead of inspecting elements
 one after another, we advance the iterator by a given step size.
 This way, we could apply the same function on selected rows
 of a matrix (if in column-major order).</p>
+</aside>
+<aside class="footnote brackets" id="footsexptype" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">4</a><span class="fn-bracket">]</span></span>
+<p><code class="file docutils literal notranslate"><span class="pre">src/include/Rinternals.h</span></code> in the
+R source code repository;
+see, e.g., <a class="reference external" href="https://svn.r-project.org/R/trunk/">https://svn.r-project.org/R/trunk/</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footmod" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">5</a><span class="fn-bracket">]</span></span>
+<p>(*) Unless we know what we are doing, e.g., we are certain
+that we deal with a local variable in an R function
+that invokes our <strong class="command">.Call</strong>.</p>
 </aside>
 </aside>
 </section>
@@ -617,7 +1042,7 @@ of a matrix (if in column-major order).</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-09T21:36:46+1000.
+              Last updated on 2023-05-12T17:20:38+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -639,9 +1064,21 @@ of a matrix (if in column-major order).</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">14. 🚧🚧 Interfacing compiled code (**)</a><ul>
-<li><a class="reference internal" href="#c-code-in-r-packages">14.1. C code in R packages</a></li>
-<li><a class="reference internal" href="#to-do">14.2. 🚧 … to do …</a></li>
-<li><a class="reference internal" href="#exercises">14.3. 🚧 Exercises</a></li>
+<li><a class="reference internal" href="#c-code-in-r">14.1. C code in R</a><ul>
+<li><a class="reference internal" href="#source-files-for-compiled-code-in-r-packages">14.1.1. Source files for compiled code in R packages</a></li>
+<li><a class="reference internal" href="#r-cmd-shlib">14.1.2. <code class="code docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-r-types-in-c">14.2. 🚧 Basic R Types in C</a><ul>
+<li><a class="reference internal" href="#sexptype">14.2.1. <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code></a></li>
+<li><a class="reference internal" href="#accessing-vector-elements">14.2.2. 🚧 Accessing vector elements</a></li>
+<li><a class="reference internal" href="#memory-allocation">14.2.3. 🚧 Memory allocation</a></li>
+<li><a class="reference internal" href="#to-do">14.2.4. 🚧 … to do …</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-compound-types">14.3. 🚧 Handling Compound Types</a></li>
+<li><a class="reference internal" href="#external-pointers">14.4. 🚧 External pointers</a></li>
+<li><a class="reference internal" href="#exercises">14.5. 🚧 Exercises</a></li>
 </ul>
 </li>
 </ul>
