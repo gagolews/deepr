@@ -299,9 +299,9 @@ It should be read from the beginning to the end.
 Refer to the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a> for general introductory remarks.</em>
 <em>Also, check out my other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">25</a>]</span>.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo, Melbourne. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">26</a>]</span>.</em></p>
 </div></blockquote>
-<p>In <a class="reference internal" href="170-function.html#chap-function"><span class="std std-numref">Chapter 7</span></a>, we learnt how to write our own
+<p>In <a class="reference internal" href="170-function.html#chap-function"><span class="std std-numref">Chapter 7</span></a>, we learnt how to compose our own
 functions. This skill is vital to enforcing the good
 development practice of avoiding code repetition: running the
 same command sequence on different data.</p>
@@ -318,20 +318,20 @@ we will need to make many compromises. This is because
 improving things with regard to one criterion sometimes makes them
 worse with respect to other aspects<a class="footnote-reference brackets" href="#footparetooptim" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
 (also those that we are not aware of).
-Also, not everything that counts can and will be counted.
-Below are some observations, ideas, and food for thought.</p>
+Moreover, not everything that counts can nor will be counted.</p>
+<p>Below we provide some observations, ideas, and food for thought.</p>
 <section id="to-write-or-abstain">
 <h3><span class="section-number">9.1.1. </span>To write or abstain<a class="headerlink" href="#to-write-or-abstain" title="Permalink to this heading">#</a></h3>
-<p>Functions we write ourselves can often be considered
+<p>Our functions can often be considered
 merely creative combinations of the building blocks available in base R
 or a few high-quality add-on packages<a class="footnote-reference brackets" href="#footfunc" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Some are simpler than
 others. Thus, there is a question if a new operation
 should be introduced at all: whether we are faced with the case of
 multiplying entities without necessity.</p>
 <p>On the one hand, the DRY (don’t repeat yourself) principle tells us that
-the most frequently used (say, at least three times) code chunks
+the most frequently used code chunks (say, called at least thrice)
 should be generalised in the form of a new function.
-As far as complex operations are concerned,
+As far as <em>complex</em> operations are concerned,
 this is definitely a correct approach.</p>
 <p>On the other hand, not every generalisation is necessarily welcome.
 Let us say we are tired of writing
@@ -417,7 +417,7 @@ The least we can do is to be explicit about it.</p>
 <p>Recall that it took us some time to arrive at <strong class="command">order</strong>
 and subsetting via `<strong class="command">[</strong>`. Assuming that we read this
 book from the beginning to the end and solve all the
-exercises, which we should, we are now able to implement
+exercises, which we should, we are now able to author
 the said <strong class="command">nlargest</strong> (and lots of other functions) ourselves,
 using a single line of code.
 This will also pay off in many scenarios that we will be facing
@@ -452,8 +452,7 @@ since:</p>
 <li><p>the dependencies might not be available on every platform
 or may behave differently across various system configurations,</p></li>
 <li><p>they may be huge (and can depend on other external software too),</p></li>
-<li><p>their APIs may be altered, which could result in our project’s not
-working anymore,</p></li>
+<li><p>their APIs may be altered, which can cause our code to break,</p></li>
 <li><p>their functionality can change, which can lead to some unexpected
 behaviours.</p></li>
 </ul>
@@ -593,12 +592,11 @@ if they are well thought-out and adequately documented.
 Some programmers will opt for high uniformity/compatibility across
 numerous tools, but there are cases where some exceptions/diversity
 do more good than harm.</p>
-<p>Yet, the functions we write
-might be part of a more complicated data flow pipeline.
-It might happen that some other function generates a value that
+<p>Yet, our functions might be part of a more complicated data flow pipeline.
+It might happen that some other procedure generates a value that
 we did not expect (because of a bug therein or because we did
-not study its manual). The problem starts when
-this <em>unthinkable</em> value is used as input to our function.
+not study its manual). The problem arises when
+this <em>unthinkable</em> value passed to our function.
 In our case, this would correspond to the said <span class="math">\(n\)</span>’s or <span class="math">\(d\)</span>’s being
 determined programmatically.</p>
 <div class="proof proof-type-example" id="id26">
@@ -670,7 +668,7 @@ nothing happens. We can move on safely.</p>
 <span class="c1">## Error in round_rand2(5, &quot;1&quot;): is.numeric(d) is not TRUE</span>
 </pre></div>
 </div>
-<p>This implements the strictest test for “a single positive integer”
+<p>It is the strictest test for “a single positive integer”
 possible. In the case of any violation of the underlying condition,
 we get a very informative error message.</p>
 </div></div><div class="proof proof-type-example" id="id28">
@@ -736,11 +734,10 @@ but not the second (why such a restriction? when?).</p></li>
 </div></div></section>
 <section id="putting-outputs-into-context">
 <h3><span class="section-number">9.2.2. </span>Putting outputs into context<a class="headerlink" href="#putting-outputs-into-context" title="Permalink to this heading">#</a></h3>
-<p>The functions we write do not exist in a vacuum.
-We should put them into a much broader context: how will they be
-combined with other tools?</p>
-<p>As a general rule, our functions are expected to generate outputs of
-a <em>predictable</em> kind. This way, we can easily deduce what will happen
+<p>Our functions do not exist in a vacuum. We should put them into a much
+broader context: how can they be combined with other tools?</p>
+<p>As a general rule, we ought to generate outputs of a <em>predictable</em> kind.
+This way, we can easily deduce what will happen
 in the code chunks that utilise them.</p>
 <div class="proof proof-type-example" id="id30">
 
@@ -816,9 +813,9 @@ itself, preferably with a warning).</p></li>
 </pre></div>
 </div>
 </div></div><p>Ideally, a function is expected to perform one (and only one)
-well-defined task. If a function tends to generate objects of different
-kinds, depending on the arguments provided, it might be better to write two
-functions instead.</p>
+well-defined task. If it tends to generate objects of different
+kinds, depending on the arguments provided, it might be better to
+compose two or more separate procedures instead.</p>
 <div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
@@ -939,7 +936,7 @@ see <a class="reference internal" href="#sec-doc-packages"><span class="std std-
 <li><p><code class="file docutils literal notranslate"><span class="pre">tests</span></code> – optional; tests to run on the package check,
 see <a class="reference internal" href="#sec-testing"><span class="std std-numref">Section 9.3.4.2</span></a>.</p></li>
 </ul>
-<p>See Section 1 of <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span> for more
+<p>See Section 1 of <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">62</a>]</span> for more
 details and other options. We do not need to repeat
 the information from the official manual
 as all readers can read it themselves.</p>
@@ -977,7 +974,7 @@ see also <a class="reference internal" href="330-environment.html#sec-package-na
 <p>Create your own package <strong class="program">mypkg</strong> featuring the solutions
 to the exercises you have solved whilst studying the material
 in the previous chapters.
-When in doubt, refer to the official manual <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>.</p>
+When in doubt, refer to the official manual <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">62</a>]</span>.</p>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
@@ -999,8 +996,8 @@ of building, testing, checking, etc.</p>
 is critical, even if we just write for ourselves.
 Most programmers sooner or later will notice that they find it
 hard to determine what a piece of code is doing after they
-take a break from it. In some sense, we always write for external audiences,
-which includes our future selves.</p>
+take a break from it. In some sense, we always communicate with
+external audiences, which includes our future selves.</p>
 <p>The help system is one of the stronger assets of the R environment.
 By far, we most likely have interacted with many documentation pages and
 got a general idea of what constitutes an informative documentation
@@ -1014,7 +1011,7 @@ output formats, e.g., HTML or plain text, and displayed on a call to
 the well-known <strong class="command">help</strong> function.</p>
 <p>Documentation files use a LaTeX-like syntax, which looks quite obscure
 to an untrained eye. The relevant commands are explained in very detail
-in Section 2 of <em>Writing R Extensions</em> <span id="id11">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>.</p>
+in Section 2 of <em>Writing R Extensions</em> <span id="id11">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">62</a>]</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The process of writing .Rd files by hand might be tedious,
@@ -1152,7 +1149,7 @@ test-driven development when writing own functions.</p>
         <span class="proof-type">Exercise 9.20</span>
         
     </div><div class="proof-content">
-<p>Assume that, for some reason, we were asked to write a function to compute
+<p>Assume that, for some reason, we were asked to compose a function to compute
 the root mean square (quadratic mean) of a given numeric vector.
 Before implementing the actual routine, we need
 to reflect upon what we want to achieve, especially how we
@@ -1189,7 +1186,7 @@ on <strong class="command">stopifnot</strong> is powerful enough.</p>
         
     </div><div class="proof-content">
 <p>(*)
-Consult the <em>Writing R Extensions</em> manual <span id="id12">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">60</a>]</span>
+Consult the <em>Writing R Extensions</em> manual <span id="id12">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">62</a>]</span>
 about where and how to include unit tests
 in your example package.</p>
 </div></div><div class="admonition note">
@@ -1215,7 +1212,7 @@ primarily by manually printing the state of the suspicious variables
 (<strong class="command">printf</strong> and the like) in different code areas.
 Hahaha lololol, so old school. Yet, weirdly efficient.</p>
 <p>R has an interactive debugger; see the <strong class="command">browser</strong> function.
-Also, refer to Section 9 of <span id="id13">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">64</a>]</span> for more details.</p>
+Also, refer to Section 9 of <span id="id13">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">66</a>]</span> for more details.</p>
 <p>Some IDEs (e.g., <strong class="program">RStudio</strong>) support this feature, too; see
 their corresponding documentation.</p>
 </section>
@@ -1398,10 +1395,8 @@ For instance:</p>
 <p>Also, <code class="docutils literal notranslate"><span class="pre">x[i]</span></code> is equivalent to `<strong class="command">[</strong>`<code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">i)</span></code>
 and <code class="docutils literal notranslate"><span class="pre">x[[i]]</span></code> maps to `<strong class="command">[[</strong>`<code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">i)</span></code>.</p>
 <p>Knowing this will not only enable us to manipulate unevaluated R
-code (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>)
-or access the corresponding manual pages (see, e.g.,
-<strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>),
-but also write some expressions more concisely.
+code (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>) or access the corresponding manual pages
+(see, e.g., <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>), but also verbalise some expressions more concisely.
 For instance,</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="o">:</span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="o">:</span><span class="m">23</span><span class="p">)</span>
 <span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">`[`</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># 1 is a further argument passed to `[`</span>
@@ -1414,9 +1409,9 @@ For instance,</p>
 <p class="admonition-title">Note</p>
 <p>Unsurprisingly, the assignment operator, `<strong class="command">&lt;-</strong>`, is also
 a function. It returns the assigned value invisibly.</p>
-<p>Knowing that `<strong class="command">&lt;-</strong>` binds right to left (compare <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Syntax&quot;)</span></code>), this is why the expression “<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;-</span> <span class="pre">b</span> <span class="pre">&lt;-</span> <span class="pre">1</span></code>”
-results in both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> being assigned 1:
-it is equivalent to
+<p>`<strong class="command">&lt;-</strong>` binds right to left (compare <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Syntax&quot;)</span></code>).
+Thus, the expression “<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;-</span> <span class="pre">b</span> <span class="pre">&lt;-</span> <span class="pre">1</span></code>” assigns 1 to both <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">a</span></code>.
+It is equivalent to
 “`<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> </code>`<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;b&quot;,</span> <span class="pre">1))</span></code>”
 and “`<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;b&quot;,</span> <span class="pre">1)</span></code>” returns 1.</p>
 <p>Owing to the pass-by-value semantics (<a class="reference internal" href="#sec-pass-by-value"><span class="std std-numref">Section 9.5.1</span></a>),
@@ -1517,7 +1512,7 @@ works as if we have called
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
-According to <span id="id15">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">64</a>]</span>,
+According to <span id="id15">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">66</a>]</span>,
 a call “<strong class="command">add</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">3)</span> <span class="pre">&lt;-</span> <span class="pre">1000</span></code>” is a syntactic
 sugar precisely for:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`*tmp*`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span><span class="w">  </span><span class="c1"># temporary substitution</span>
@@ -1566,10 +1561,9 @@ see also <a class="reference internal" href="150-indexing.html#sec-insert-new-el
 <span class="c1">## [1] 1 2 3</span>
 </pre></div>
 </div>
-<p>Although, semantically speaking,
-calling `<strong class="command">[&lt;-</strong>` results in the creation of a new
-vector (a modified version of the original one),
-we may luckily expect some performance optimisations
+<p>Semantically speaking, calling `<strong class="command">[&lt;-</strong>` breeds a new
+vector (a modified version of the original one).
+Luckily, we may expect some performance optimisations
 behind the scenes.</p>
 <div class="proof proof-type-exercise" id="id42">
 
@@ -1747,7 +1741,7 @@ details in <a class="reference internal" href="230-matrix.html#chap-matrix"><spa
 </pre></div>
 </div>
 <p>This changes the <code class="docutils literal notranslate"><span class="pre">x</span></code> object. For each of the following subtasks,
-write a single call that alters
+compose a single call that alters
 <strong class="command">names</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">dimnames</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>
 without modifying <code class="docutils literal notranslate"><span class="pre">x</span></code> in place but returning
 a recoded copy of:</p>
@@ -1876,11 +1870,11 @@ a corresponding <span class="math">\(y\)</span> can be determined for any <span 
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55f13fcbc1e0&gt;</span>
+<span class="c1">## &lt;environment: 0x559c858e4de8&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55f13edfa350&gt;</span>
+<span class="c1">## &lt;environment: 0x559c84a3ab30&gt;</span>
 </pre></div>
 </div>
 <p>we might wonder how they can produce different results: it is
@@ -2381,8 +2375,8 @@ given as the script’s arguments (via <strong class="command">commandArgs</stro
 </aside>
 <aside class="footnote brackets" id="footfunc" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>If some nontrivial operation is missing, we can
-always implement it at the C language level; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
+<p>If some nontrivial, basic operation is missing, we can
+implement it at the C language level; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footquick" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
@@ -2482,7 +2476,7 @@ in a function’s parameter list.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-05-12T17:20:38+1000.
+              Last updated on 2023-05-15T21:18:39+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
