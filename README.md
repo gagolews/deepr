@@ -6,7 +6,7 @@
 **comprehensive course on one of the most popular languages for data science**
 (statistical computing, graphics, machine learning, data wrangling and
 analytics). It **introduces the base language**
-in-depth. It is aimed at ambitious students, practitioners, and researchers
+in-depth. It is aimed at ambitious students, professionals, and researchers
 who want to become **independent users** of this powerful environment.
 
 > Any remarks and bug fixes are appreciated. Please submit them via
