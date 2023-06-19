@@ -41,7 +41,7 @@ URL: <https://deepr.gagolewski.com/>.
 
 ## About the Author
 
-Dr habil. [Marek Gagolewski][1]
+Dr habil. [Marek Gagolewski][1]
 is currently a Senior Lecturer in Data Science/Applied AI
 at Deakin University in Melbourne, Australia
 and an Associate Professor at the Systems
@@ -64,9 +64,9 @@ in outlets such as *Proceedings of the National Academy of Sciences (PNAS)*,
 In his "spare" time, he writes books for his students
 (check out his [*Minimalist Data Wrangling with Python*](https://datawranglingpy.gagolewski.com/))
 and develops open-source (libre) data analysis software, such as
-[`stringi`](https://stringi.gagolewski.com) (one of the most often downloaded
+[`stringi`](https://stringi.gagolewski.com/) (one of the most often downloaded
 R packages),
-[`genieclust`](https://genieclust.gagolewski.com) (a fast and robust
+[`genieclust`](https://genieclust.gagolewski.com/) (a fast and robust
 hierarchical clustering algorithm in both Python and R),
 and many [others](https://github.com/gagolews).
 
@@ -79,5 +79,5 @@ This material is licensed under the Creative Commons
 [Attribution-NonCommercial-NoDerivatives 4.0 International][2] License
 (CC BY-NC-ND 4.0).
 
-[1]: https://www.gagolewski.com
+[1]: https://www.gagolewski.com/
 [2]: https://creativecommons.org/licenses/by-nc-nd/4.0/
