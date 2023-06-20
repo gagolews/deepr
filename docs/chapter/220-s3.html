@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.0.9002 (draft)
+v0.9.0.9003 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -757,9 +757,7 @@ of our custom type:</p>
         <span class="proof-type">Exercise 10.6</span>
         
     </div><div class="proof-content">
-<p>Overload the <strong class="command">unique</strong>
-and
-<strong class="command">rep</strong>
+<p>Overload the <strong class="command">unique</strong> and <strong class="command">rep</strong>
 methods for objects of the class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.</p>
 </div></div><div class="proof proof-type-example" id="id47">
 
@@ -774,20 +772,20 @@ when they see:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.categorical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">666</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)))</span>
 <span class="c1">## [1] &quot;4&quot;   &quot;9&quot;   &quot;100&quot; &quot;9&quot;   &quot;9&quot;   &quot;100&quot; &quot;42&quot;  &quot;666&quot; &quot;4&quot;</span>
 <span class="c1">## Categories: 100, 4, 42, 666, 9</span>
-<span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># as.double.default(x)</span>
+<span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># synonym: as.numeric(x), here: calls as.double.default(x)</span>
 <span class="c1">## [1] 2 5 1 5 5 1 3 4 2</span>
 </pre></div>
 </div>
-<p>Hence, we might want to introduce:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.double.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
+<p>Hence, we might want to introduce a new method:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">as.double.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span><span class="w">  </span><span class="c1"># not: as.numeric.categorical</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1"># as.double.default(as.character.categorical(x))</span>
 <span class="w">    </span><span class="nf">as.double</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Which now yields:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># as.double.categorical(x)</span>
+<p>It now yields:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># or as.numeric(x); calls as.double.categorical(x)</span>
 <span class="c1">## [1]   4   9 100   9   9 100  42 666   4</span>
 </pre></div>
 </div>
@@ -998,7 +996,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-06-19 15:25:28 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-06-20 14:48:26 AEST&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1237,7 +1235,7 @@ as a simple exercise for the studious reader.</p>
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class can be used to represent… dates.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-06-19&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="c1">## [1] &quot;2023-06-20&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
@@ -1247,7 +1245,7 @@ what we deal with here is:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19527    -1     0    NA</span>
+<span class="c1">## [1] 19528    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the <em>UNIX epoch</em>,
@@ -1255,13 +1253,13 @@ what we deal with here is:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class
 can be used to represent date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-06-19 15:25:28 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-06-20 14:48:26 AEST&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1687152329</span>
+<span class="c1">## [1] 1687236506</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1392,7 +1390,7 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.238   0.023   0.261</span>
+<span class="c1">##   0.237   0.020   0.258</span>
 </pre></div>
 </div>
 <p>The function returns an object of the class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1538,7 +1536,7 @@ and <strong class="command">read.csv</strong>) had the <code class="docutils lit
 vectors’ being automatically converted to factors when, e.g.,
 creating data frames (compare <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>).
 Luckily, this is no longer the case, but they can still be
-encountered sporadically: for instance,
+encountered sporadically. For instance,
 the built-in <code class="docutils literal notranslate"><span class="pre">iris</span></code> dataset has the fifth column of the class:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]])</span>
 <span class="c1">## [1] &quot;factor&quot;</span>
@@ -1718,7 +1716,7 @@ documentation page) that <code class="docutils literal notranslate"><span class=
 <span class="c1">## 2 1 3</span>
 </pre></div>
 </div>
-<p>It makes sense, too: a character vector consisting of
+<p>It also makes sense: a character vector consisting of
 number-strings has been fed on input.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">numtable</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">))</span>
 <span class="c1">## Warning in numtable(c(&quot;a&quot;, &quot;e&quot;, &quot;z&quot;, &quot;z&quot;, &quot;a&quot;, &quot;z&quot;)): NAs introduced by</span>
@@ -1946,7 +1944,7 @@ In the long run, multiplying entities without necessity is unsustainable.</p>
         <span class="proof-type">Exercise 10.29</span>
         
     </div><div class="proof-content">
-<p>Answer the following questions:</p>
+<p>Answer the following questions.</p>
 <ul class="simple">
 <li><p>How to display the source code of the default methods
 for <strong class="command">head</strong> and <strong class="command">tail</strong>?</p></li>
@@ -1983,9 +1981,9 @@ Was that straightforward?</p>
     </div><div class="proof-content">
 <p>Explain why the two following calls return significantly different results.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-06-19&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2023-06-20&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19527&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19528&quot;</span>
 </pre></div>
 </div>
 <p>Propose a workaround.</p>
@@ -2392,7 +2390,7 @@ to understand it anyway.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-19T20:53:03+1000.
+              Last updated on 2023-06-20T15:57:23+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

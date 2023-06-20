@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.0.9002 (draft)
+v0.9.0.9003 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -326,21 +326,20 @@ sequence.</p>
 <span class="c1">## [1]  4  5  6  7  8  9 10</span>
 </pre></div>
 </div>
-<p>Both functions work on lists, too<a class="footnote-reference brackets" href="#foothead" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
+<p>Both functions work on lists too<a class="footnote-reference brackets" href="#foothead" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
 They are useful, e.g., when we wish to preview the contents
 of a <em>big</em> object.</p>
 </section>
 <section id="subsetting-and-extracting-from-vectors">
 <h2><span class="section-number">5.2. </span>Subsetting and extracting from vectors<a class="headerlink" href="#subsetting-and-extracting-from-vectors" title="Permalink to this heading">#</a></h2>
-<p>Given a vector <code class="docutils literal notranslate"><span class="pre">x</span></code>, “<code class="docutils literal notranslate"><span class="pre">x[i]</span></code>” returns its subset
+<p>Given a vector <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">x[i]</span></code> returns its subset
 comprised of elements indicated by the indexer <code class="docutils literal notranslate"><span class="pre">i</span></code>, which
 can be a <em>single</em> vector of:</p>
 <ul class="simple">
 <li><p>nonnegative integers (gives the positions of
 elements to retrieve),</p></li>
 <li><p>negative integers (gives the positions to omit),</p></li>
-<li><p>logical values (states whether the corresponding element should
-be fetched or skipped),</p></li>
+<li><p>logical values (states which items should be fetched or skipped),</p></li>
 <li><p>character strings (locates the elements with specific names).</p></li>
 </ul>
 <section id="nonnegative-indexes">
@@ -394,13 +393,9 @@ that the indexer can also be of length greater than one.</p>
 <span class="c1">## numeric(0)</span>
 </pre></div>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Subsetting with `<strong class="command">[</strong>` yields an object of the same type.</p>
-</div>
 <p>When applied on lists, the index operator always returns a list as well,
 even if we ask for a single element:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1"># a list that includes the 2nd element</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1"># a list that includes the second element</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 11 12</span>
 <span class="n">y</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)]</span><span class="w">  </span><span class="c1"># not the same as x[1, 3] (a different story)</span>
@@ -413,18 +408,30 @@ even if we ask for a single element:</p>
 </div>
 <p>If we wish to <em>extract</em> a component, i.e., to dig into what is inside
 a list at a specific location, we can refer to `<strong class="command">[[</strong>`:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[[</span><span class="m">2</span><span class="p">]]</span><span class="w">  </span><span class="c1"># extract the 2nd element</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[[</span><span class="m">2</span><span class="p">]]</span><span class="w">  </span><span class="c1"># extract the second element</span>
 <span class="c1">## [1] 11 12</span>
 </pre></div>
 </div>
 <p>This is exactly why R displays “<code class="docutils literal notranslate"><span class="pre">[[1]]</span></code>”, “<code class="docutils literal notranslate"><span class="pre">[[2]]</span></code>”, etc.
-when printing out lists on the console.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Calling “<code class="docutils literal notranslate"><span class="pre">x[[i]]</span></code>” on an <em>atomic</em> vector, where <code class="docutils literal notranslate"><span class="pre">i</span></code> is a single
-value, has almost<a class="footnote-reference brackets" href="#footattraalmost" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> the same effect as “<code class="docutils literal notranslate"><span class="pre">x[i]</span></code>”.
+when lists are printed.</p>
+<p>On a side note, calling <code class="docutils literal notranslate"><span class="pre">x[[i]]</span></code> on an <em>atomic</em> vector, where <code class="docutils literal notranslate"><span class="pre">i</span></code> is a single
+value, has almost<a class="footnote-reference brackets" href="#footattraalmost" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> the same effect as <code class="docutils literal notranslate"><span class="pre">x[i]</span></code>.
 However, `<strong class="command">[[</strong>` generates an error if the subscript
 is out of bounds.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Let us reflect on the operators’ behaviour in the case of nonexistent items:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[</span><span class="m">4</span><span class="p">]</span>
+<span class="c1">## [1] NA</span>
+<span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[</span><span class="m">4</span><span class="p">]</span>
+<span class="c1">## [[1]]</span>
+<span class="c1">## NULL</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[[</span><span class="m">4</span><span class="p">]]</span>
+<span class="c1">## Error in c(1, 2, 3)[[4]]: subscript out of bounds</span>
+<span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[[</span><span class="m">4</span><span class="p">]]</span>
+<span class="c1">## Error in list(1, 2, 3)[[4]]: subscript out of bounds</span>
+</pre></div>
+</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -447,21 +454,6 @@ because <code class="docutils literal notranslate"><span class="pre">y[[1]]</spa
 </pre></div>
 </div>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Let us reflect on the operators’ behaviour in the case of nonexistent items:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[</span><span class="m">4</span><span class="p">]</span>
-<span class="c1">## [1] NA</span>
-<span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[</span><span class="m">4</span><span class="p">]</span>
-<span class="c1">## [[1]]</span>
-<span class="c1">## NULL</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[[</span><span class="m">4</span><span class="p">]]</span>
-<span class="c1">## Error in c(1, 2, 3)[[4]]: subscript out of bounds</span>
-<span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)[[</span><span class="m">4</span><span class="p">]]</span>
-<span class="c1">## Error in list(1, 2, 3)[[4]]: subscript out of bounds</span>
-</pre></div>
-</div>
-</div>
 </section>
 <section id="negative-indexes">
 <h3><span class="section-number">5.2.2. </span>Negative indexes<a class="headerlink" href="#negative-indexes" title="Permalink to this heading">#</a></h3>
@@ -473,7 +465,7 @@ This way, we can <em>exclude</em> the elements at given positions:</p>
 <span class="c1">##</span>
 <span class="c1">## [[2]]</span>
 <span class="c1">## [1] 21 22 23</span>
-<span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)]</span>
+<span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)]</span><span class="w">  </span><span class="c1"># all but the first three</span>
 <span class="c1">## [1]  40  50  60  70  80  90 100</span>
 <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="o">:</span><span class="m">100</span><span class="p">)]</span><span class="w">  </span><span class="c1"># 0, repeated, out of bound indexes</span>
 <span class="c1">## [1] 30 40 50 60 70</span>
@@ -520,12 +512,12 @@ or <code class="docutils literal notranslate"><span class="pre">NULL</span></cod
 </pre></div>
 </div>
 <p>This, lamentably, comes with no warning, which might be
-problematic when indexers are generated programmatically.</p>
-<p>As a remedy, we sometimes pass the logical indexer to the <strong class="command">which</strong>
+problematic when indexers are generated programmatically.
+As a remedy, we sometimes pass the logical indexer to the <strong class="command">which</strong>
 function first. It returns the indexes of the elements equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>,
 ignoring the missing ones.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">which</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
-<span class="c1">## [1] 2</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">which</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="c1">## [1] 2 4 7</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;one&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;three&quot;</span><span class="p">)[</span><span class="nf">which</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))]</span>
 <span class="c1">## [1] &quot;two&quot;</span>
 </pre></div>
@@ -537,17 +529,17 @@ Anything that yields a logical vector of the same length as <code class="docutil
 can be passed as an indexer.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">60</span><span class="w">  </span><span class="c1"># yes, it is a perfect indexer candidate</span>
 <span class="c1">##  [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">60</span><span class="p">]</span><span class="w">  </span><span class="c1"># select elements in x that are greater than 60</span>
+<span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">60</span><span class="p">]</span><span class="w">  </span><span class="c1"># select elements in `x` that are greater than 60</span>
 <span class="c1">## [1]  70  80  90 100</span>
 <span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="m">70</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">x</span><span class="p">]</span><span class="w">  </span><span class="c1"># elements not between 30 and 70</span>
 <span class="c1">## [1]  10  20  80  90 100</span>
 <span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span><span class="w">  </span><span class="c1"># elements smaller than the mean</span>
 <span class="c1">## [1] 10 20 30 40 50</span>
-<span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">7777</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">1.6</span><span class="p">]</span><span class="w">  </span><span class="c1"># indexing via a transformed version of x</span>
+<span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">7777</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">1.6</span><span class="p">]</span><span class="w">  </span><span class="c1"># indexing via a transformed version of `x`</span>
 <span class="c1">## [1]  10  20  30  90 100</span>
 <span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># ten pseudorandom numbers</span>
 <span class="c1">##  [1] 0.29 0.79 0.41 0.88 0.94 0.05 0.53 0.89 0.55 0.46</span>
-<span class="n">x</span><span class="p">[</span><span class="n">z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.5</span><span class="p">]</span><span class="w">  </span><span class="c1"># indexing based on z, not x — not a problem</span>
+<span class="n">x</span><span class="p">[</span><span class="n">z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.5</span><span class="p">]</span><span class="w">  </span><span class="c1"># indexing based on `z`, not `x`: no problem</span>
 <span class="c1">## [1]  10  30  60 100</span>
 </pre></div>
 </div>
@@ -599,19 +591,18 @@ its size.</p>
         
     </div><div class="proof-content">
 <p>Remove missing values from a given vector without referring
-to the <strong class="command">na.omit</strong> function.</p>
+to <strong class="command">na.omit</strong>.</p>
 </div></div></section>
 <section id="character-indexer">
 <h3><span class="section-number">5.2.4. </span>Character indexer<a class="headerlink" href="#character-indexer" title="Permalink to this heading">#</a></h3>
-<p>If a vector is equipped with the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute,
-such as this one:</p>
+<p>Let us consider a vector equipped with the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="kc">letters</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">])</span><span class="w">  </span><span class="c1"># add names</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">##   a   b   c   d   e   f   g   h   i   j</span>
 <span class="c1">##  10  20  30  40  50  60  70  80  90 100</span>
 </pre></div>
 </div>
-<p>These labels can be referred to for the purpose of extracting the elements.
+<p>These labels can be referred to when extracting the elements.
 To do this, we use an indexer that is a character vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;g&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">)]</span>
 <span class="c1">##    a    f    a    g &lt;NA&gt;</span>
@@ -662,7 +653,7 @@ of positive, negative, and logical vectors is still available:</p>
 <p class="admonition-title">Important</p>
 <p>Labels do not have to be unique. When we have repeated names,
 the first matching element is extracted:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">))[</span><span class="s">&quot;a&quot;</span><span class="p">]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">))[</span><span class="s">&quot;a&quot;</span><span class="p">]</span>
 <span class="c1">## a</span>
 <span class="c1">## 1</span>
 </pre></div>
@@ -678,8 +669,7 @@ see <a class="reference internal" href="#sec-match"><span class="std std-numref"
         
     </div><div class="proof-content">
 <p>Rewrite the solution to the above spam-lovers exercise,
-assuming that we have the three features wrapped inside a list:
-(notice that Steve has now joined the group; hello, Steve):</p>
+assuming that we have the three features wrapped inside a list.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">people</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
 <span class="w">    </span><span class="n">Name</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Graham&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;John&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Terry&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Eric&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;Michael&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Terry&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Steve&quot;</span><span class="p">),</span>
 <span class="w">    </span><span class="n">Food</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;eggs&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w">    </span><span class="s">&quot;beans&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">),</span>
@@ -697,7 +687,8 @@ assuming that we have the three features wrapped inside a list:
 </div>
 <p>Do not refer to <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">food</span></code>, and <code class="docutils literal notranslate"><span class="pre">year</span></code> directly.
 Instead, use the full <code class="docutils literal notranslate"><span class="pre">people[[&quot;Name&quot;]]</span></code> etc. accessors.
-There is no need to pout: it is just a tiny bit of extra work.</p>
+There is no need to pout: it is just a tiny bit of extra work.
+Also, notice that Steve has now joined the group; hello, Steve.</p>
 </div></div></section>
 </section>
 <section id="replacing-elements">
@@ -721,11 +712,11 @@ are all in place:</p>
 </pre></div>
 </div>
 <p>Long story long: first, to ensure that the new content
-can be poured into the old wineskin, R needed to convert the numeric
-vector to a character one; compare <a class="reference internal" href="140-list.html#sec-type-hierarchy"><span class="std std-numref">Section 4.1</span></a>.
+can be poured into the old wineskin, R coerced the numeric
+vector to a character one.
 Then, every second element therein, a total of six items,
 was replaced by a recycled version of the replacement sequence
-of length 3. Finally, the name “<code class="docutils literal notranslate"><span class="pre">x</span></code>” was rebound to such
+of length three. Finally, the name <code class="docutils literal notranslate"><span class="pre">x</span></code> was rebound to such
 a brought-forth object and the previous one became forgotten.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -742,7 +733,7 @@ they are called on
         
     </div><div class="proof-content">
 <p>Replace missing values in a given numeric vector
-with the arithmetic mean of well-defined observations therein.</p>
+with the arithmetic mean of its well-defined observations.</p>
 </div></div></section>
 <section id="modifying-lists">
 <h3><span class="section-number">5.3.2. </span>Modifying lists<a class="headerlink" href="#modifying-lists" title="Permalink to this heading">#</a></h3>
@@ -778,8 +769,8 @@ of `<strong class="command">[</strong>` modifies a whole sub-list:</p>
 </pre></div>
 </div>
 <p>Moreover:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># replace 1 element with 1 object</span>
-<span class="n">y</span><span class="p">[</span><span class="m">-1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="o">:</span><span class="m">11</span><span class="w">      </span><span class="c1"># replace 2 elements with 2 vectors of length 1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># replace one element with one object</span>
+<span class="n">y</span><span class="p">[</span><span class="m">-1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="o">:</span><span class="m">11</span><span class="w">      </span><span class="c1"># replace two elements with two singletons</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="c1">## $a</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
@@ -793,18 +784,17 @@ of `<strong class="command">[</strong>` modifies a whole sub-list:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Let <code class="docutils literal notranslate"><span class="pre">idx</span></code> be a vector of positive indexes
-of elements to be modified.
-Overall, calling “<code class="docutils literal notranslate"><span class="pre">y[idx]</span> <span class="pre">&lt;-</span> <span class="pre">z</span></code>” behaves as if we wrote:</p>
+<p>Let <code class="docutils literal notranslate"><span class="pre">i</span></code> be a vector of positive indexes of elements to be modified.
+Overall, calling “<code class="docutils literal notranslate"><span class="pre">y[i]</span> <span class="pre">&lt;-</span> <span class="pre">z</span></code>” behaves as if we wrote:</p>
 <ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">y[[idx[1]]]</span> <span class="pre">&lt;-</span> <span class="pre">z[[1]]</span></code>,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">y[[idx[2]]]</span> <span class="pre">&lt;-</span> <span class="pre">z[[2]]</span></code>,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">y[[idx[3]]]</span> <span class="pre">&lt;-</span> <span class="pre">z[[3]]</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y[[</span> <span class="pre">i[1]</span> <span class="pre">]]</span> <span class="pre">&lt;-</span> <span class="pre">z[[1]]</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y[[</span> <span class="pre">i[2]</span> <span class="pre">]]</span> <span class="pre">&lt;-</span> <span class="pre">z[[2]]</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y[[</span> <span class="pre">i[3]</span> <span class="pre">]]</span> <span class="pre">&lt;-</span> <span class="pre">z[[3]]</span></code>,</p></li>
 </ol>
 <p>and so forth.</p>
-<p>Furthermore, <code class="docutils literal notranslate"><span class="pre">z</span></code> (but not <code class="docutils literal notranslate"><span class="pre">idx</span></code>) will be recycled if necessary,
-i.e., we take <code class="docutils literal notranslate"><span class="pre">z[[j</span> <span class="pre">%%</span> <span class="pre">length(z)]]</span></code> for consecutive <code class="docutils literal notranslate"><span class="pre">j</span></code>s
-from 1 to the length of <code class="docutils literal notranslate"><span class="pre">idx</span></code>.</p>
+<p>Furthermore, <code class="docutils literal notranslate"><span class="pre">z</span></code> (but not <code class="docutils literal notranslate"><span class="pre">i</span></code>) will be recycled if necessary.
+In other words, we retrieve <code class="docutils literal notranslate"><span class="pre">z[[j</span> <span class="pre">%%</span> <span class="pre">length(z)]]</span></code> for consecutive <code class="docutils literal notranslate"><span class="pre">j</span></code>s
+from 1 to the length of <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
 </div>
 <div class="proof proof-type-exercise" id="id12">
 
@@ -821,15 +811,15 @@ from 1 to the length of <code class="docutils literal notranslate"><span class="
 <li><p><code class="docutils literal notranslate"><span class="pre">y[1:3]</span> <span class="pre">&lt;-</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(c(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;))</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">y[1:3]</span> <span class="pre">&lt;-</span> <span class="pre">&quot;a&quot;</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">y[1:3]</span> <span class="pre">&lt;-</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;)</span></code>,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">y[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">1)]</span> <span class="pre">&lt;-</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;)</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">1)]</span> <span class="pre">&lt;-</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;)</span></code>.</p></li>
 </ul>
 </div></div><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Setting a list item to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> removes it from the list completely.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
-<span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">       </span><span class="c1"># removes the 1st element (i.e., 1)</span>
-<span class="n">y</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">     </span><span class="c1"># removes the 1st element (i.e., now 2)</span>
-<span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="c1"># sets the 1st element (i.e., now 3) to NULL</span>
+<span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">       </span><span class="c1"># removes the first element (i.e., 1)</span>
+<span class="n">y</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">     </span><span class="c1"># removes the first element (i.e., now 2)</span>
+<span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="c1"># sets the first element (i.e., now 3) to NULL</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## NULL</span>
@@ -895,13 +885,13 @@ elements in a vector (or functions based on these).</p>
 It compares each element in a vector on the left-hand side
 to the <em>corresponding</em> element in a vector on the right side.
 Thus, missing values and the recycling rule aside,
-if <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">&lt;-</span> <span class="pre">(x</span> <span class="pre">==</span> <span class="pre">y)</span></code>, then <code class="docutils literal notranslate"><span class="pre">z[i]</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> if and only if <code class="docutils literal notranslate"><span class="pre">x[i]</span> <span class="pre">==</span> <span class="pre">y[i]</span></code>.</p>
-<p>The  `<strong class="command">%in%</strong>` operator<a class="footnote-reference brackets" href="#footinname" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>
-is vectorised differently:
-it checks whether each element on the left-hand side
+if “<code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">&lt;-</span> <span class="pre">(x</span> <span class="pre">==</span> <span class="pre">y)</span></code>”, then <code class="docutils literal notranslate"><span class="pre">z[i]</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> if and only if
+<code class="docutils literal notranslate"><span class="pre">x[i]</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">y[i]</span></code>.</p>
+<p>The  `<strong class="command">%in%</strong>` operator<a class="footnote-reference brackets" href="#footinname" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> is vectorised differently.
+It checks whether each element on the left-hand side
 matches <em>one of</em> the elements on the right.
-Given <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">&lt;-</span> <span class="pre">(x</span> <span class="pre">%in%</span> <span class="pre">y)</span></code>, <code class="docutils literal notranslate"><span class="pre">z[i]</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>
-whenever <code class="docutils literal notranslate"><span class="pre">x[i]</span> <span class="pre">==</span> <span class="pre">y[j]</span></code> for some <code class="docutils literal notranslate"><span class="pre">j</span></code>.</p>
+Given “<code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">&lt;-</span> <span class="pre">(x</span> <span class="pre">%in%</span> <span class="pre">y)</span></code>”, <code class="docutils literal notranslate"><span class="pre">z[i]</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>
+whenever <code class="docutils literal notranslate"><span class="pre">x[i]</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">y[j]</span></code> for some <code class="docutils literal notranslate"><span class="pre">j</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;eggs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ham&quot;</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE FALSE  TRUE  TRUE  TRUE</span>
 </pre></div>
@@ -932,7 +922,7 @@ element in <code class="docutils literal notranslate"><span class="pre">y</span>
 <span class="c1">## [1]  1  5  9 10</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">NA_real_</span></code> denotes (by default) a no-match.</p>
+<p>By default, a missing value denotes a no-match.</p>
 <div class="proof proof-type-exercise" id="id14">
 
     <div class="proof-title">
@@ -1027,7 +1017,7 @@ by their favourite dish:</p>
 </div>
 <p>The result is a named list with labels determined by the unique
 elements in the second vector.</p>
-<p>Another example: here are some numbers pigeonholed into
+<p>Here is another example, where we pigeonhole some numbers into
 the four previously mentioned intervals:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.4</span><span class="p">,</span><span class="w"> </span><span class="m">0.66</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="nf">split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">findInterval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.75</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">)))</span>
@@ -1057,10 +1047,9 @@ by calling <strong class="command">split</strong><code class="code docutils lite
         
     </div><div class="proof-content">
 <p>The built-in <code class="docutils literal notranslate"><span class="pre">ToothGrowth</span></code> is a named list
-(with some extra attributes that make us rather call it a data frame;
-see <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>) that represents the results of an experimental
-study involving 60 guinea pigs.
-The experiment’s aim was to measure the effect of different vitamin C
+(more precisely, a data frame; see <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>)
+that represents the results of an experimental study involving 60 guinea
+pigs. The experiment’s aim was to measure the effect of different vitamin C
 <code class="docutils literal notranslate"><span class="pre">supp</span></code>lement types and <code class="docutils literal notranslate"><span class="pre">dose</span></code>s on the growth of the rodents’ teeth <code class="docutils literal notranslate"><span class="pre">len</span></code>gths:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ToothGrowth</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.list</span><span class="p">(</span><span class="n">ToothGrowth</span><span class="p">)</span><span class="w">  </span><span class="c1"># it is a list, but with extra attribs</span>
 <span class="n">ToothGrowth</span><span class="p">[[</span><span class="s">&quot;supp&quot;</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">ToothGrowth</span><span class="p">[[</span><span class="s">&quot;supp&quot;</span><span class="p">]])</span><span class="w">  </span><span class="c1"># was: factor</span>
@@ -1127,7 +1116,7 @@ with a list of vectors; see <a class="reference internal" href="#fig-toothgrowth
 <figure class="align-default" id="id18">
 <span id="fig-toothgrowth-boxplot"></span><img alt="../_images/toothgrowth-boxplot-1.png" src="../_images/toothgrowth-boxplot-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 5.1 </span><span class="caption-text">Box-and-whisker plots of <code class="docutils literal notranslate"><span class="pre">len</span></code> split by <code class="docutils literal notranslate"><span class="pre">supp</span></code> and <code class="docutils literal notranslate"><span class="pre">dose</span></code> (the <code class="docutils literal notranslate"><span class="pre">ToothGrowth</span></code> dataset).</span><a class="headerlink" href="#id18" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 5.1 </span><span class="caption-text">Box-and-whisker plots of <code class="docutils literal notranslate"><span class="pre">len</span></code> split by <code class="docutils literal notranslate"><span class="pre">supp</span></code> and <code class="docutils literal notranslate"><span class="pre">dose</span></code> in <code class="docutils literal notranslate"><span class="pre">ToothGrowth</span></code>.</span><a class="headerlink" href="#id18" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><div class="admonition note">
@@ -1176,7 +1165,7 @@ will be listed in the order of occurrence.</p>
 <span class="c1">## [1] 1 4 5 8 9 2 7 6 3</span>
 </pre></div>
 </div>
-<p>Above we have, e.g., five 10s at positions 1, 4, 5, 6, 9.
+<p>Above we have, e.g., five 10s at positions 1, 4, 5, 8, and 9.
 These five indexes are guaranteed to be listed in this very order.</p>
 </div>
 <p>Ordering can also be performed in a nonincreasing manner:</p>
@@ -1196,8 +1185,7 @@ Speed is rarely a bottleneck in the case of sorting
 (when it is, we have a problem!). This is why we will not bother ourselves
 with such topics until the last part of this pleasant book.
 Currently, we aim at expanding the repertoire of our skills and abilities
-so that we can implement anything we can think of (rapid prototyping
-with the least footprint).</p>
+so that we can implement anything we can think of.</p>
 </div>
 <div class="proof proof-type-exercise" id="id19">
 
@@ -1210,12 +1198,10 @@ in a given vector are… <em>not</em> sorted with respect to `<strong class="com
 Write an R expression that generates the same result by referring
 to the <strong class="command">order</strong> function. Also, assuming that <code class="docutils literal notranslate"><span class="pre">x</span></code> is numeric,
 do the same by means of a call to <strong class="command">diff</strong>.</p>
-</div></div><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Looking at <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;order&quot;)</span></code>, we see that it also accepts
-one or more arguments via the dot-dot-dot parameter, “<code class="docutils literal notranslate"><span class="pre">...</span></code>”.
+</div></div><p><strong class="command">order</strong> also accepts one or more arguments via
+the dot-dot-dot parameter, `<strong class="command">...</strong>`.
 This way, we can sort a vector with respect to many criteria.
-If there are ties (equal observations) in the first variable,
+If there are ties in the first variable,
 they will be resolved by the order of elements in the second variable.
 This is most useful for rearranging rows of a data frame,
 which we will exercise in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>.</p>
@@ -1231,7 +1217,6 @@ which we will exercise in <a class="reference internal" href="240-data-frame.htm
 <span class="n">x</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">)]</span>
 <span class="c1">## [1] 40 50 30 60 10 20</span>
 </pre></div>
-</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1343,11 +1328,11 @@ vector. For example:</p>
 </section>
 <section id="preserving-and-losing-attributes">
 <span id="sec-attrpreserv"></span><h2><span class="section-number">5.5. </span>Preserving and losing attributes<a class="headerlink" href="#preserving-and-losing-attributes" title="Permalink to this heading">#</a></h2>
-<p>As attributes are conceived as extra data, it is up to a function’s
+<p>Attributes are conceived as <em>extra</em> data. It is thus up to a function’s
 authors what they will decide to do with them.
 Generally, it is safe to assume that much thought has been put into
 the design of base R functions. Oftentimes, they behave quite reasonably.
-This is why we are going to spend some time now exploring
+This is why we are now going to spend some time now exploring
 their approaches to the handling of attributes.</p>
 <p>Namely, for functions and operators that aim at transforming
 vectors passed as their inputs, the assumed strategy may be to:</p>
@@ -1401,7 +1386,7 @@ see <a class="reference internal" href="230-matrix.html#chap-matrix"><span class
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">    </span><span class="c1"># subset of labels</span>
 <span class="c1">## a</span>
 <span class="c1">## 1</span>
-<span class="n">x</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w">  </span><span class="c1"># this always drops the labels</span>
+<span class="n">x</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w">  </span><span class="c1"># this always drops the labels (makes sense, right?)</span>
 <span class="c1">## [1] 1</span>
 </pre></div>
 </div>
@@ -1431,7 +1416,7 @@ all the elements:</p>
 </pre></div>
 </div>
 <p>Binary operations are expected to get the attributes from the longer input.
-If they are of equal sizes, the first argument preferred to the second.</p>
+If they are of equal sizes, the first argument is preferred to the second.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;f&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;g&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">attrib1</span><span class="o">=</span><span class="s">&quot;:|&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">attrib2</span><span class="o">=</span><span class="s">&quot;:O&quot;</span><span class="p">)</span>
 <span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w">  </span><span class="c1"># x is longer</span>
 <span class="c1">##  a  b  c  d</span>
@@ -1455,18 +1440,17 @@ If they are of equal sizes, the first argument preferred to the second.</p>
 <span class="c1">## [1] &quot;:O&quot;</span>
 </pre></div>
 </div>
-<p>Also, refer to <a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a> for a way
-to copy all the attributes from one object to another.</p>
+<p>Also, <a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a> mentions a way
+to copy all attributes from one object to another.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Even in base R, the above rules are not enforced strictly.
 We consider them inconsistencies that should be,
 for the time being, treated as features (with which we need to learn to live
 as they have not been fixed for years, but hope springs eternal).</p>
-<p>As far as third-party extension packages are concerned,
-suffice it to say that a lot of R programmers do not know
-what attributes are at all! It is always best to refer to the documentation,
-perform some experiments,
+<p>As far as third-party extension packages are concerned, suffice it to say
+that a lot of R programmers do not know what attributes are at all.
+It is always best to refer to the documentation, perform some experiments,
 and/or manually ensure the preservation of the data we care about.</p>
 </div>
 <div class="proof proof-type-exercise" id="id24">
@@ -1487,42 +1471,42 @@ and/or manually ensure the preservation of the data we care about.</p>
         
     </div><div class="proof-content">
 <p>Answer the following questions (contemplate first, then
-use R to find the answer):</p>
+use R to find the answer).</p>
 <ul class="simple">
-<li><p>What is the result of “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">()]</span></code>?”
-Is it the same as “<code class="docutils literal notranslate"><span class="pre">x[]</span></code>”?</p></li>
-<li><p>Is “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1)]</span></code>” equivalent to “<code class="docutils literal notranslate"><span class="pre">x[1]</span></code>”?</p></li>
-<li><p>Is “<code class="docutils literal notranslate"><span class="pre">x[1]</span></code>” equivalent to “<code class="docutils literal notranslate"><span class="pre">x[&quot;1&quot;]</span></code>”?</p></li>
-<li><p>Is “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(-1,</span> <span class="pre">-1,</span> <span class="pre">-1)]</span></code>” equivalent to “<code class="docutils literal notranslate"><span class="pre">x[-1]</span></code>”?</p></li>
-<li><p>What does “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">NA)]</span></code>” do?</p></li>
-<li><p>What does “<code class="docutils literal notranslate"><span class="pre">x[0]</span></code>” return?</p></li>
-<li><p>What does “<code class="docutils literal notranslate"><span class="pre">x[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>” do?</p></li>
-<li><p>What about “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">-1,</span> <span class="pre">-2)]</span></code>”
-and “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(-1,</span> <span class="pre">-2,</span> <span class="pre">NA)]</span></code>”?</p></li>
-<li><p>Why “<code class="docutils literal notranslate"><span class="pre">x[NA]</span></code>” is so significantly different
-from “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">NA)]</span></code>”?</p></li>
-<li><p>What is “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(FALSE,</span> <span class="pre">TRUE,</span> <span class="pre">2)]</span></code>”?</p></li>
-<li><p>What will we obtain by calling “<code class="docutils literal notranslate"><span class="pre">x[x&lt;</span></code><strong class="command">min</strong><code class="code docutils literal notranslate"><span class="pre">(x)]</span></code>”?</p></li>
-<li><p>What about “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)+1]</span></code>”?</p></li>
-<li><p>Why “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">min</strong><code class="code docutils literal notranslate"><span class="pre">(y)]</span></code>”
-is probably a mistake? What could it mean? How can it be fixed?</p></li>
+<li><p>What is the result of <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">()]</span></code>?
+Is it the same as <code class="docutils literal notranslate"><span class="pre">x[]</span></code>?</p></li>
+<li><p>Is <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1)]</span></code> equivalent to <code class="docutils literal notranslate"><span class="pre">x[1]</span></code>?</p></li>
+<li><p>Is <code class="docutils literal notranslate"><span class="pre">x[1]</span></code> equivalent to <code class="docutils literal notranslate"><span class="pre">x[&quot;1&quot;]</span></code>?</p></li>
+<li><p>Is <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(-1,</span> <span class="pre">-1,</span> <span class="pre">-1)]</span></code> equivalent to <code class="docutils literal notranslate"><span class="pre">x[-1]</span></code>?</p></li>
+<li><p>What does <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">NA)]</span></code> do?</p></li>
+<li><p>What does <code class="docutils literal notranslate"><span class="pre">x[0]</span></code> return?</p></li>
+<li><p>What does <code class="docutils literal notranslate"><span class="pre">x[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> do?</p></li>
+<li><p>What about <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">-1,</span> <span class="pre">-2)]</span></code>
+and <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(-1,</span> <span class="pre">-2,</span> <span class="pre">NA)]</span></code>?</p></li>
+<li><p>Why <code class="docutils literal notranslate"><span class="pre">x[NA]</span></code> is so significantly different
+from <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">NA)]</span></code>?</p></li>
+<li><p>What is <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(FALSE,</span> <span class="pre">TRUE,</span> <span class="pre">2)]</span></code>?</p></li>
+<li><p>What will we obtain by calling <code class="docutils literal notranslate"><span class="pre">x[x&lt;</span></code><strong class="command">min</strong><code class="code docutils literal notranslate"><span class="pre">(x)]</span></code>?</p></li>
+<li><p>What about <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)+1]</span></code>?</p></li>
+<li><p>Why <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">min</strong><code class="code docutils literal notranslate"><span class="pre">(y)]</span></code>
+is most probably a mistake? What could it mean? How can it be fixed?</p></li>
 <li><p>Why cannot we mix indexes of different types
-and write “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;,</span> <span class="pre">4)]</span></code>”? Or can we?</p></li>
+and write <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;,</span> <span class="pre">4)]</span></code>? Or can we?</p></li>
 <li><p>Why would we call
-“<strong class="command">as.vector</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">na.omit</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>” instead
+<strong class="command">as.vector</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">na.omit</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code> instead
 of just <strong class="command">na.omit</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>?</p></li>
 <li><p>What is the difference between <strong class="command">sort</strong> and <strong class="command">order</strong>?</p></li>
 <li><p>What is the type and the length of the object returned
-by a call to “<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(a,</span> <span class="pre">u)</span></code>”? What about
-“<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(a,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v))</span></code>”?</p></li>
+by a call to <strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(a,</span> <span class="pre">u)</span></code>? What about
+<strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(a,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v))</span></code>?</p></li>
 <li><p>How to get rid of the seventh element from a list of ten elements?</p></li>
 <li><p>How to get rid of the seventh, eight, and ninth elements from a list
 with ten elements?</p></li>
 <li><p>How to get rid of the seventh element from an atomic vector of ten elements?</p></li>
 <li><p>If <code class="docutils literal notranslate"><span class="pre">y</span></code> is a list, by how many elements
 “<code class="docutils literal notranslate"><span class="pre">y[</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1,</span> </code><strong class="command">length(y)</strong><code class="code docutils literal notranslate"><span class="pre">+1,</span> </code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(y)+1)]</span> <span class="pre">&lt;-</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>” will extend it?</p></li>
-<li><p>What is the difference between “<code class="docutils literal notranslate"><span class="pre">x[x&gt;0]</span></code>”
-and “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">which</strong><code class="code docutils literal notranslate"><span class="pre">(x&gt;0)]</span></code>”?</p></li>
+<li><p>What is the difference between <code class="docutils literal notranslate"><span class="pre">x[x&gt;0]</span></code>
+and <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">which</strong><code class="code docutils literal notranslate"><span class="pre">(x&gt;0)]</span></code>?</p></li>
 </ul>
 </div></div><div class="proof proof-type-exercise" id="id26">
 
@@ -1530,7 +1514,7 @@ and “<code class="docutils literal notranslate"><span class="pre">x[</span></c
         <span class="proof-type">Exercise 5.18</span>
         
     </div><div class="proof-content">
-<p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is an atomic vector of length <code class="docutils literal notranslate"><span class="pre">n</span></code>, “<code class="docutils literal notranslate"><span class="pre">x[5:n]</span></code>” obviously
+<p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is an atomic vector of length <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">x[5:n]</span></code> obviously
 extracts everything from the fifth element to the end.
 Does it, though? Check what happens when <code class="docutils literal notranslate"><span class="pre">x</span></code> is of length less than five,
 including 0. List different ways to correct this expression
@@ -1541,7 +1525,7 @@ so that it makes (some) sense in the case of shorter vectors.</p>
         <span class="proof-type">Exercise 5.19</span>
         
     </div><div class="proof-content">
-<p>Similarly, “<code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">5:1]</span></code>”
+<p>Similarly, <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">5:1]</span></code>
 is supposed to return the last five elements in <code class="docutils literal notranslate"><span class="pre">x</span></code>. Propose a few
 alternatives that are correct also for short <code class="docutils literal notranslate"><span class="pre">x</span></code>s.</p>
 </div></div><div class="proof proof-type-exercise" id="id28">
@@ -1594,7 +1578,7 @@ See also the built-in <strong class="command">cor</strong>.</p>
         
     </div><div class="proof-content">
 <p>(*)
-Given two vectors <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> of the same length <span class="math">\(n\)</span>,
+Given two vectors <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> both of length <span class="math">\(n\)</span>,
 a call to <strong class="command">approx</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">...)</span></code> can be used to
 interpolate linearly between
 the points <span class="math">\((x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\)</span>.
@@ -1607,10 +1591,10 @@ Moreover, <strong class="command">spline</strong><code class="code docutils lite
 <span class="n">y_new1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">approx</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">xout</span><span class="o">=</span><span class="n">x_new</span><span class="p">)[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span>
 <span class="n">y_new2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">xout</span><span class="o">=</span><span class="n">x_new</span><span class="p">)[[</span><span class="s">&quot;y&quot;</span><span class="p">]]</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">))</span><span class="w">  </span><span class="c1"># the points to interpolate between</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x_new</span><span class="p">,</span><span class="w"> </span><span class="n">y_new1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;darkred&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># linear interpolation</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x_new</span><span class="p">,</span><span class="w"> </span><span class="n">y_new2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;navy&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w">  </span><span class="c1"># cubic interpolation</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x_new</span><span class="p">,</span><span class="w"> </span><span class="n">y_new1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;solid&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># linear interpolation</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x_new</span><span class="p">,</span><span class="w"> </span><span class="n">y_new2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;darkred&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># cubic interpolation</span>
 <span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;linear&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cubic&quot;</span><span class="p">),</span>
-<span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;darkred&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;navy&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;solid&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dashed&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;darkred&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id32">
@@ -1756,7 +1740,7 @@ here; compare <a class="reference internal" href="220-s3.html#sec-s3-direct-meth
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-19T20:53:03+1000.
+              Last updated on 2023-06-20T15:57:23+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

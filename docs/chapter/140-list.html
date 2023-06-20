@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.0.9002 (draft)
+v0.9.0.9003 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -298,15 +298,15 @@ Make sure to check out the author’s other book,
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">26</a>]</span>.</em></p>
 </div></blockquote>
 <p>After two brain-teasing chapters, it is time to cool it down a little.
-In this more technical part, we will introduce lists, which serve
+In this more technical part, we will introduce <em>lists</em>, which serve
 as universal containers for R objects of any size and type.
 Moreover, we will also show that each R object can be equipped
-with a number of optional attributes, thanks to which we will not only
-be able to label elements in any vector but also introduce
-new complex data types such as matrices and data frames later.</p>
+with a number of optional <em>attributes</em>. Thanks to them, we will
+be able to label elements in any vector, and, in <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>,
+introduce new complex data types such as matrices and data frames.</p>
 <section id="type-hierarchy-and-conversion">
 <span id="sec-type-hierarchy"></span><h2><span class="section-number">4.1. </span>Type hierarchy and conversion<a class="headerlink" href="#type-hierarchy-and-conversion" title="Permalink to this heading">#</a></h2>
-<p>So far, we have been dealing with three types of atomic vectors:</p>
+<p>So far, we have been playing with three types of atomic vectors:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">logical</span></code> (<a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code> (<a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>),</p></li>
@@ -320,7 +320,7 @@ we can call the <strong class="command">typeof</strong> function.</p>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span>
 <span class="c1">## [1] &quot;logical&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gluten-free spam&quot;</span><span class="p">))</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;character&quot;</span>
 </pre></div>
 </div>
@@ -341,9 +341,10 @@ we can risklessly ignore; compare also the <strong class="command">mode</strong>
 <section id="explicit-type-casting">
 <h3><span class="section-number">4.1.1. </span>Explicit type casting<a class="headerlink" href="#explicit-type-casting" title="Permalink to this heading">#</a></h3>
 <p>We can use functions such as <strong class="command">as.logical</strong>,
-<strong class="command">as.numeric</strong>, and <strong class="command">as.character</strong> to <em>coerce</em> (convert)
+<strong class="command">as.numeric</strong><a class="footnote-reference brackets" href="#footasnumeric" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>,
+and <strong class="command">as.character</strong> to <em>convert</em>
 given objects to the corresponding types.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span><span class="w">  </span><span class="c1"># synonym: as.double</span>
 <span class="c1">## [1]  1  0 NA  1 NA  0</span>
 <span class="nf">as.logical</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">))</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE    NA  TRUE    NA</span>
@@ -353,15 +354,15 @@ given objects to the corresponding types.</p>
 <p class="admonition-title">Important</p>
 <p>It is easily seen that the rules are:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">TRUE</span></code> → 1,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FALSE</span></code> → 0,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NA</span></code> → <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TRUE</span></code> <span class="math">\(\rightarrow\)</span> 1,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FALSE</span></code> <span class="math">\(\rightarrow\)</span> 0,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NA</span></code> <span class="math">\(\rightarrow\)</span> <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>,</p></li>
 </ul>
 <p>and:</p>
 <ul class="simple">
-<li><p>0 → <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NA_real_</span></code> and <code class="docutils literal notranslate"><span class="pre">NaN</span></code> → <code class="docutils literal notranslate"><span class="pre">NA</span></code>,</p></li>
-<li><p>anything else → <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
+<li><p>0 <span class="math">\(\rightarrow\)</span> <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NA_real_</span></code> and <code class="docutils literal notranslate"><span class="pre">NaN</span></code> <span class="math">\(\rightarrow\)</span> <code class="docutils literal notranslate"><span class="pre">NA</span></code>,</p></li>
+<li><p>anything else <span class="math">\(\rightarrow\)</span> <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
 </ul>
 <p>The distinction between zero and non-zero
 is commonly applied in other programming languages as well.</p>
@@ -383,11 +384,11 @@ is commonly applied in other programming languages as well.</p>
 </section>
 <section id="implicit-conversion-coercion">
 <h3><span class="section-number">4.1.2. </span>Implicit conversion (coercion)<a class="headerlink" href="#implicit-conversion-coercion" title="Permalink to this heading">#</a></h3>
-<p>Recall that we referred to the three vector types as <em>atomic</em> ones:
-they can only be used to store elements of the <em>same type</em>.</p>
-<p>If we make an attempt at composing an object of mixed types with <strong class="command">c</strong>,
-the common type will be determined in such a way that storing
-the data is done without information loss:</p>
+<p>Recall that we referred to the three vector types as <em>atomic</em> ones.
+They can only be used to store elements of the <em>same type</em>.</p>
+<p>If we make an attempt at composing an object of mixed types with
+<strong class="command">c</strong>, the common type will be determined in such a way that
+data are stored without information loss:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;three&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
 <span class="c1">## [1] &quot;-1&quot;    &quot;FALSE&quot; &quot;TRUE&quot;  &quot;2&quot;     &quot;three&quot; NA</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;zero&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
@@ -396,24 +397,24 @@ the data is done without information loss:</p>
 <span class="c1">## [1] -1  0  1  2 NA</span>
 </pre></div>
 </div>
-<p>Hence, we see that <code class="docutils literal notranslate"><span class="pre">logical</span></code> is the most specialise of the tree,
+<p>Hence, we see that <code class="docutils literal notranslate"><span class="pre">logical</span></code> is the most specialised of the tree,
 whereas <code class="docutils literal notranslate"><span class="pre">character</span></code> is the most general.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The logical <code class="docutils literal notranslate"><span class="pre">NA</span></code> is converted to <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code> and <code class="docutils literal notranslate"><span class="pre">NA_character_</span></code>
 in the above examples. R users tend to rely on implicit type
-conversion when they write  <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">NA,</span> <span class="pre">4)</span></code> instead of
-the more explicit <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">NA_real_,</span> <span class="pre">4)</span></code>.
-In most cases, this is fine.</p>
+conversion when they write  <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">NA,</span> <span class="pre">4)</span></code>
+rather than <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">NA_real_,</span> <span class="pre">4)</span></code>.
+In most cases, this is fine, but it might make us less vigilant.</p>
 <p>However, occasionally, it will be wiser to be more unequivocal.
 For instance, <strong class="command">rep</strong><code class="code docutils literal notranslate"><span class="pre">(NA_real_,</span> <span class="pre">1e9)</span></code> pre-allocates
 a long numeric vector instead of a logical one.</p>
 </div>
 <p>Some functions that expect vectors of specific types
 can apply coercion by themselves (or act as if they do so):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="c1"># implicit conversion logical -&gt; numeric</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">10</span><span class="w">  </span><span class="c1"># implicit conversion logical –&gt; numeric</span>
 <span class="c1">## [1] NA 10 11</span>
-<span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">  </span><span class="c1"># implicit conversion numeric -&gt; logical</span>
+<span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">  </span><span class="c1"># implicit conversion numeric –&gt; logical</span>
 <span class="c1">## [1]  TRUE FALSE  TRUE</span>
 <span class="nf">sum</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span><span class="w">  </span><span class="c1"># same as sum(as.numeric(...))</span>
 <span class="c1">## [1] 3</span>
@@ -423,7 +424,7 @@ can apply coercion by themselves (or act as if they do so):</p>
 <span class="c1">## [1] 1 1 0 0 0</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id3">
+<div class="proof proof-type-exercise" id="id4">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.1</span>
@@ -441,19 +442,20 @@ This measure can be equivalently defined as:</p>
 </div>
 <p>Implement the above formula (using vectorised operations,
 but not relying on <strong class="command">ifelse</strong> this time)
-and compute the cross-entropy loss between, say,
-“<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&lt;-</span> </code><strong class="command">sample</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(FALSE,</span> <span class="pre">TRUE),</span> <span class="pre">n)</span></code>” and
+and compute the cross-entropy loss between, for instance,
+“<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&lt;-</span> </code><strong class="command">sample</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(FALSE,</span> <span class="pre">TRUE),</span> <span class="pre">n)</span></code>”
+and
 “<code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&lt;-</span> </code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span></code>” for some <code class="docutils literal notranslate"><span class="pre">n</span></code>.
-Note how seamlessly we are translating between
+Note how seamlessly we translate between
 <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>/<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>s and 0/1s in the above equation (in particular,
-where we let <span class="math">\(1-y_i\)</span> mean the logical negation of <span class="math">\(y_i\)</span>).</p>
+where <span class="math">\(1-y_i\)</span> means the logical negation of <span class="math">\(y_i\)</span>).</p>
 </div></div></section>
 </section>
 <section id="lists">
 <h2><span class="section-number">4.2. </span>Lists<a class="headerlink" href="#lists" title="Permalink to this heading">#</a></h2>
 <p><em>Lists</em> are <em>generalised</em> vectors.
 They can be comprised of R objects of any kind, also other lists.
-This is why we classify them as <em>recursive</em> (and not atomic) objects.
+It is why we classify them as <em>recursive</em> (and not atomic) objects.
 They are especially useful wherever there is a need to
 handle some <em>multitude</em> as a single entity.</p>
 <section id="creating-lists">
@@ -471,10 +473,10 @@ of the <strong class="command">list</strong> function:</p>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
-<p>Notice that the above is not the same as “<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>”.
+<p>Notice that the above is not the same as <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>.
 We got a sequence that wraps three numeric vectors, each of length one.
-Also, how overly talkative R is when printing out lists!</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;and so forth&quot;</span><span class="p">)</span>
+More examples:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;and so forth&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># different types</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1 2 3</span>
 <span class="c1">##</span>
@@ -482,11 +484,11 @@ Also, how overly talkative R is when printing out lists!</p>
 <span class="c1">## [1] 4</span>
 <span class="c1">##</span>
 <span class="c1">## [[3]]</span>
-<span class="c1">## [1]  TRUE FALSE FALSE    NA  TRUE</span>
+<span class="c1">## [1]  TRUE FALSE    NA  TRUE</span>
 <span class="c1">##</span>
 <span class="c1">## [[4]]</span>
 <span class="c1">## [1] &quot;and so forth&quot;</span>
-<span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="kc">letters</span><span class="p">),</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">))</span><span class="w">  </span><span class="c1"># a list of lists</span>
+<span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="kc">letters</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># a list of lists</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [[1]][[1]]</span>
 <span class="c1">## [1]  TRUE FALSE    NA  TRUE</span>
@@ -497,17 +499,20 @@ Also, how overly talkative R is when printing out lists!</p>
 <span class="c1">##</span>
 <span class="c1">##</span>
 <span class="c1">## [[2]]</span>
-<span class="c1">## [1] 0.28758 0.78831 0.40898 0.88302 0.94047</span>
+<span class="c1">## [[2]][[1]]</span>
+<span class="c1">## [1] 1 2 3</span>
 </pre></div>
 </div>
-<p>However, the <strong class="command">str</strong> function can be used to print R objects
+<p>The display of lists is (un)pretty bloated.
+However, the <strong class="command">str</strong> function prints any R object
 in a more concise fashion:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="kc">letters</span><span class="p">),</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="kc">letters</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)))</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ :List of 2</span>
 <span class="c1">##   ..$ : logi [1:4] TRUE FALSE NA TRUE</span>
 <span class="c1">##   ..$ : chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...</span>
-<span class="c1">##  $ : num [1:5] 0.288 0.788 0.409 0.883 0.94</span>
+<span class="c1">##  $ :List of 1</span>
+<span class="c1">##   ..$ : int [1:3] 1 2 3</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -532,7 +537,7 @@ will be a list.</p>
 </div>
 </div>
 <p>Thus, the <strong class="command">c</strong> function can also be used to concatenate lists:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># 3 lists -&gt; 1 list</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># three lists –&gt; one list</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">##</span>
@@ -565,7 +570,7 @@ will be a list.</p>
 <h3><span class="section-number">4.2.2. </span>Converting to and from lists<a class="headerlink" href="#converting-to-and-from-lists" title="Permalink to this heading">#</a></h3>
 <p>The conversion of an atomic vector to a list of vectors of length one can
 be done via a call to <strong class="command">as.list</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># vector of length 3 -&gt; list of 3 vectors of length 1</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># vector of length 3 –&gt; list of 3 vectors of length 1</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">##</span>
@@ -577,8 +582,8 @@ be done via a call to <strong class="command">as.list</strong>:</p>
 </pre></div>
 </div>
 <p>Unfortunately, calling, say, <strong class="command">as.numeric</strong> on a list
-arouses an error (even if it is comprised of numeric
-vectors only). We can try to flatten it to an atomic sequence
+arouses an error, even if it is comprised of numeric
+vectors only. We can try flattening it to an atomic sequence
 by calling <strong class="command">unlist</strong>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">4</span><span class="o">:</span><span class="m">8</span><span class="p">)),</span><span class="w"> </span><span class="m">9</span><span class="p">))</span>
 <span class="c1">## [1] 1 2 3 4 5 6 7 8 9</span>
@@ -597,9 +602,9 @@ in a way that can sometimes give rise to a matrix.</p>
 </section>
 <section id="null">
 <h2><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">NULL</span></code><a class="headerlink" href="#null" title="Permalink to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">NULL</span></code> object (the one and only object of the type “<code class="docutils literal notranslate"><span class="pre">NULL</span></code>”)
-can be used as a placeholder for any other R object
-or designate the absence of such.</p>
+<p><code class="docutils literal notranslate"><span class="pre">NULL</span></code>, being the one and only instance of the type “<code class="docutils literal notranslate"><span class="pre">NULL</span></code>”,
+can be used as a placeholder for an R object
+or designate the absence of any entities whatsoever.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">month.name</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## NULL</span>
@@ -614,37 +619,37 @@ or designate the absence of such.</p>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> is different from a vector of length zero because the latter
-has a type.</p>
-<p>However, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> sometimes <em>behaves</em> like a zero-length vector.
+has a type.
+However, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> sometimes <em>behaves</em> like a zero-length vector.
 In particular, <strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(NULL)</span></code> returns 0.
 Also, <strong class="command">c</strong> called with no arguments returns <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.</p>
 <p>Testing for <code class="docutils literal notranslate"><span class="pre">NULL</span></code>-ness can be done with a call to <strong class="command">is.null</strong>.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> is not the same as <code class="docutils literal notranslate"><span class="pre">NA</span></code>  (or it is other-typed variants).
-The latter can be emplaced in an atomic vector.</p>
+<p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> is not the same as <code class="docutils literal notranslate"><span class="pre">NA</span></code> or it is other-typed variants.
+The former cannot be emplaced in an atomic vector.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">  </span><span class="c1"># NULL behaves like a zero-length vector here</span>
 <span class="c1">## [1]  1 NA  3  5</span>
 </pre></div>
 </div>
-<p>They both have very distinct semantics (no value vs a missing value).</p>
+<p>They have very distinct semantics (no value vs a missing value).</p>
 </div>
 <p>Later we will see that some functions return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> invisibly
 when they have nothing interesting to report.
 This is the case of <strong class="command">print</strong> or <strong class="command">plot</strong>, which are called
 because of their side effects (printing and plotting).</p>
 <p>Furthermore, in some contexts, replacing content with <code class="docutils literal notranslate"><span class="pre">NULL</span></code>
-(e.g., when subsetting a list) will actually result in its removal.</p>
+will actually result in its removal, e.g., when subsetting a list.</p>
 </section>
 <section id="object-attributes">
 <span id="sec-attribute"></span><h2><span class="section-number">4.4. </span>Object attributes<a class="headerlink" href="#object-attributes" title="Permalink to this heading">#</a></h2>
-<p>Lists can be used to embrace many objects to form a single item sequence.
+<p>Lists can be used to embrace many entities to form a single item sequence.
 Attributes, on the other hand, give means to inject some <em>extra</em> data
-into an object of any type (except <code class="docutils literal notranslate"><span class="pre">NULL</span></code>).</p>
-<p>Attributes are (unordered) <code class="docutils literal notranslate"><span class="pre">key=value</span></code> pairs,
+into an object.</p>
+<p>Attributes are unordered <code class="docutils literal notranslate"><span class="pre">key=value</span></code> pairs,
 where <code class="docutils literal notranslate"><span class="pre">key</span></code> is a single string,
 and <code class="docutils literal notranslate"><span class="pre">value</span></code> is any R object except <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.
-They can be introduced by calling, amongst others<a class="footnote-reference brackets" href="#attr1" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, the
+They can be introduced by calling, amongst others<a class="footnote-reference brackets" href="#attr1" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, the
 <strong class="command">structure</strong> function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x_simple</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">10</span>
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span>
@@ -665,16 +670,16 @@ They can be introduced by calling, amongst others<a class="footnote-reference br
 <span class="c1">## [1]   6 100 324</span>
 </pre></div>
 </div>
-<p>The object of concern, “<code class="docutils literal notranslate"><span class="pre">1:10</span></code>”, was displayed first.
+<p>The object of concern, <code class="docutils literal notranslate"><span class="pre">1:10</span></code>, was displayed first.
 We need to get used to that. Most of the time, we suggest to treat
 the “<code class="docutils literal notranslate"><span class="pre">attr</span></code>…” parts of the display as if they were printed
 in tiny font.</p>
-<p>Equipping an object with attributes does not change its very nature
-(see, however, <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a> for some exceptions).
+<p>Equipping an object with attributes <em>does not usually change its nature</em>;
+see, however, <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a> for some exceptions.
 For example, the above <code class="docutils literal notranslate"><span class="pre">x</span></code>, despite featuring some extra data (metadata),
 is still treated as an ordinary sequence of numbers by
 most functions:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">   </span><span class="c1"># the same as sum(1:10), sum() does not care about any attributes</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">   </span><span class="c1"># the same as sum(1:10); `sum` does not care about any attributes</span>
 <span class="c1">## [1] 55</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># just a numeric vector, but with some perks</span>
 <span class="c1">## [1] &quot;integer&quot;</span>
@@ -708,24 +713,23 @@ further computations:</p>
 <span class="c1">## [1] 38</span>
 </pre></div>
 </div>
-<p>However, the <code class="docutils literal notranslate"><span class="pre">na.action</span></code> attribute (we ignore the <code class="docutils literal notranslate"><span class="pre">class</span></code> part until
-<a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>) tells us <em>where</em> the missing observations were:</p>
+<p>Additionally, the <code class="docutils literal notranslate"><span class="pre">na.action</span></code> attribute tells us <em>where</em> the missing observations were:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">y_na_free</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;na.action&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># read the attribute value</span>
 <span class="c1">## [1] 3 6</span>
 <span class="c1">## attr(,&quot;class&quot;)</span>
 <span class="c1">## [1] &quot;omit&quot;</span>
 </pre></div>
 </div>
-<p>As another example, <strong class="command">gregexpr</strong> can be used to search for a given
-pattern in a character vector (for more details,
-see <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">needle</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam|gluten&quot;</span><span class="w">  </span><span class="c1"># pattern to search for: spam OR gluten</span>
-<span class="n">haystack</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam, spam, bacon, and gluten-free spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spammer&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># text</span>
-<span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span><span class="w"> </span><span class="n">haystack</span><span class="p">))</span>
+<p>We ignore the <code class="docutils literal notranslate"><span class="pre">class</span></code> part until <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>.</p>
+<p>As another example, <strong class="command">gregexpr</strong> discussed in <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>
+can be used to search for a given pattern in a character vector:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">needle</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam|durian&quot;</span><span class="w">  </span><span class="c1"># pattern to search for: spam OR durian</span>
+<span class="n">haystack</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam, bacon, and durian-flavoured spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spammer&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># text</span>
+<span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gregexpr</span><span class="p">(</span><span class="n">needle</span><span class="p">,</span><span class="w"> </span><span class="n">haystack</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 <span class="c1">## [[1]]</span>
-<span class="c1">## [1]  1  7 24 36</span>
+<span class="c1">## [1]  1 18 35</span>
 <span class="c1">## attr(,&quot;match.length&quot;)</span>
-<span class="c1">## [1] 4 4 6 4</span>
+<span class="c1">## [1] 4 6 4</span>
 <span class="c1">## attr(,&quot;index.type&quot;)</span>
 <span class="c1">## [1] &quot;chars&quot;</span>
 <span class="c1">## attr(,&quot;useBytes&quot;)</span>
@@ -745,10 +749,10 @@ see <a class="reference internal" href="160-character.html#chap-character"><span
 two character strings. As their number may vary from string to string,
 wrapping the results in a list was a good design choice.
 Each list element gives the starting positions
-where matches can be found (there are four and one match(es), respectively).</p>
-<p>Each vector of positions also features its own <code class="docutils literal notranslate"><span class="pre">match.length</span></code> attribute
+where matches can be found: there are three and one match(es), respectively.</p>
+<p>Every vector of positions also features its own <code class="docutils literal notranslate"><span class="pre">match.length</span></code> attribute
 (amongst others), in case we need it.</p>
-<div class="proof proof-type-exercise" id="id4">
+<div class="proof proof-type-exercise" id="id5">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.2</span>
@@ -787,14 +791,14 @@ for R users rarely know:</p>
 <li><p>that attributes exist (pessimistic scenario), or</p></li>
 <li><p>how to handle them (realistic scenario).</p></li>
 </ul>
-<p>But we now know.</p>
+<p>But <em>we</em> know now.</p>
 <p>What is more, some attributes have been predestined to play
-a fundamental role in R.
+a unique role in R.
 Namely, the most prevalent amongst the <em>special attributes</em> are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">names</span></code>, <code class="docutils literal notranslate"><span class="pre">row.names</span></code>, and <code class="docutils literal notranslate"><span class="pre">dimnames</span></code>
-are used to label the elements of atomic and generic vectors (see below),
-and also rows and columns in matrices (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>)
+are used to label the elements of atomic and generic vectors (see below)
+as well as rows and columns in matrices (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>)
 and data frames (<a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">dim</span></code> turns flat vectors into matrices
 and other tensors (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>),</p></li>
@@ -806,9 +810,8 @@ based on basic types (<a class="reference internal" href="220-s3.html#chap-s3"><
 <p>We call them <em>special</em> because:</p>
 <ul class="simple">
 <li><p>they cannot be assigned arbitrary values;
-for instance, we will soon see that <code class="docutils literal notranslate"><span class="pre">names</span></code> can only be mapped
-to a character vector of the length equal to that of the sequence
-it is labelling,</p></li>
+for instance, we will soon see that <code class="docutils literal notranslate"><span class="pre">names</span></code> can accept a character vector
+of a specific length,</p></li>
 <li><p>they can be accessed via designated functions,
 e.g., <strong class="command">names</strong>, <strong class="command">class</strong>, <strong class="command">dim</strong>,
 <strong class="command">dimnames</strong>, <strong class="command">levels</strong>, etc.,</p></li>
@@ -816,7 +819,7 @@ e.g., <strong class="command">names</strong>, <strong class="command">class</str
 </ul>
 <p>However, in spite of the above, special attributes
 can still be managed as any other (ordinary) ones.</p>
-<div class="proof proof-type-exercise" id="id5">
+<div class="proof proof-type-exercise" id="id6">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.3</span>
@@ -841,8 +844,7 @@ see, e.g., <a class="reference internal" href="230-matrix.html#sec-matrix-repres
 </section>
 <section id="labelling-vector-elements-with-the-names-attribute">
 <h3><span class="section-number">4.4.4. </span>Labelling vector elements with the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute<a class="headerlink" href="#labelling-vector-elements-with-the-names-attribute" title="Permalink to this heading">#</a></h3>
-<p>A special attribute called <code class="docutils literal notranslate"><span class="pre">names</span></code> can be used to label
-the elements of atomic vectors and lists.</p>
+<p>The special attribute <code class="docutils literal notranslate"><span class="pre">names</span></code> labels atomic vectors’ and lists’ elements.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;celery&quot;</span><span class="p">)))</span>
 <span class="c1">##    spam sausage  celery</span>
 <span class="c1">##      13       2       6</span>
@@ -850,7 +852,7 @@ the elements of atomic vectors and lists.</p>
 </div>
 <p>The labels may improve the expressivity and readability
 of our code and data.</p>
-<div class="proof proof-type-exercise" id="id6">
+<div class="proof proof-type-exercise" id="id7">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.4</span>
@@ -860,18 +862,19 @@ of our code and data.</p>
 by calling <strong class="command">typeof</strong> and <strong class="command">sum</strong> on it.</p>
 </div></div><p>Let us stress that we can ignore the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute whatsoever.
 If we apply any operation discussed in <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>,
-we will still garner the same result no matter if such extra information
+we will garner the same result regardless whether such extra information
 is present or not.</p>
-<p>It is just the <strong class="command">print</strong> function that changed its behaviour slightly
-(it is a special attribute, after all). Instead of reporting:</p>
+<p>It is just the <strong class="command">print</strong> function that changed its behaviour slightly.
+After all, it is a special attribute. Instead of reporting:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## [1] 13  2  6</span>
 <span class="c1">## attr(,&quot;names​&quot;)</span>
 <span class="c1">## [1] &quot;spam&quot;    &quot;sausage&quot; &quot;celery&quot;</span>
 </pre></div>
 </div>
 <p>we got a nicely formatted table-like display.
-Non-special attributes are still printed in a standard way.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">##    spam sausage  celery</span>
+Non-special attributes are still printed in the standard way:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">additional_attribute</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span>
+<span class="c1">##    spam sausage  celery</span>
 <span class="c1">##      13       2       6</span>
 <span class="c1">## attr(,&quot;additional_attribute&quot;)</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
@@ -908,7 +911,7 @@ and <strong class="command">list</strong> functions as well:</p>
 </div>
 <p>Let us contemplate how a named list is
 printed on the console. Again, it is still a list, but with some extras.</p>
-<div class="proof proof-type-exercise" id="id7">
+<div class="proof proof-type-exercise" id="id8">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.5</span>
@@ -916,7 +919,7 @@ printed on the console. Again, it is still a list, but with some extras.</p>
     </div><div class="proof-content">
 <p>A whole lot of functions return named vectors.
 Evaluate the following expressions and read the corresponding
-pages in the documentation:</p>
+pages in their documentation:</p>
 <ul class="simple">
 <li><p><strong class="command">quantile</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(100))</span></code>,</p></li>
 <li><p><strong class="command">hist</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(100),</span> <span class="pre">plot=FALSE)</span></code>,</p></li>
@@ -930,7 +933,7 @@ pages in the documentation:</p>
 Most of the time, lists are used merely as <em>containers</em>
 for other R objects. This is a boring yet essential role.
 However, let us just mention here that
-each data frame is, in fact, a generic vector
+every data frame is, in fact, a generic vector
 (see <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>). Each column corresponds
 to a named list element:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="n">iris</span><span class="p">))</span><span class="w">  </span><span class="c1"># some data frame</span>
@@ -941,7 +944,7 @@ to a named list element:</p>
 <span class="c1">## 4          4.6         3.1          1.5         0.2  setosa</span>
 <span class="c1">## 5          5.0         3.6          1.4         0.2  setosa</span>
 <span class="c1">## 6          5.4         3.9          1.7         0.4  setosa</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">  </span><span class="c1"># it is just a list (with extras that&#39;ll be discussed later)</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">  </span><span class="c1"># it is just a list (with extras that will be discussed later)</span>
 <span class="c1">## [1] &quot;list&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">  </span><span class="c1"># how it is represented exactly (without the extras)</span>
 <span class="c1">## $Sepal.Length</span>
@@ -965,7 +968,7 @@ to a named list element:</p>
 </pre></div>
 </div>
 <p>Therefore, the functions we discuss in this chapter
-are of use in the processing of such structured data as well.</p>
+are of use in processing such structured data too.</p>
 </div>
 </section>
 <section id="altering-and-removing-attributes">
@@ -1013,7 +1016,7 @@ Moreover, setting an attribute’s value to <code class="docutils literal notran
 </pre></div>
 </div>
 <p>As far as the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute is concerned,
-we may generate an un-named copy of an object by calling:</p>
+we may generate an unnamed copy of an object by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unname</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;some&quot;   &quot;object&quot;</span>
 <span class="c1">## attr(,&quot;attribute1&quot;)</span>
@@ -1024,7 +1027,7 @@ we may generate an un-named copy of an object by calling:</p>
 <span class="c1">## [1] &quot;value3&quot;</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a>, we will discuss the so-called
+<p>In <a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a>, we will introduce
 <em>replacement functions</em>. They will enable us to modify or remove
 an object’s attribute
 by calling “<strong class="command">attr</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">&quot;some_attribute&quot;)</span> <span class="pre">&lt;-</span> <span class="pre">new_value</span></code>”.</p>
@@ -1036,37 +1039,45 @@ given as their inputs.</p>
 </section>
 <section id="exercises">
 <h2><span class="section-number">4.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id8">
+<div class="proof proof-type-exercise" id="id9">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.6</span>
         
     </div><div class="proof-content">
-<p>Answer the following.</p>
+<p>Provide an answer to the following questions.</p>
 <ul class="simple">
-<li><p>That is the meaning of “<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(TRUE,</span> <span class="pre">FALSE)</span> <span class="pre">*</span> <span class="pre">1:10</span></code>”?</p></li>
-<li><p>What does “<strong class="command">sum</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>”
+<li><p>What is the meaning of <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(TRUE,</span> <span class="pre">FALSE)*1:10</span></code>?</p></li>
+<li><p>What does <strong class="command">sum</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>
 compute when <code class="docutils literal notranslate"><span class="pre">x</span></code> is a numeric vector?</p></li>
 <li><p>We said that atomic vectors of the type <code class="docutils literal notranslate"><span class="pre">character</span></code> are the
 most general ones. Therefore, is
-“<strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>”
-the same as “<strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>”, regardless of
+<strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(x))</span></code>
+the same as <strong class="command">as.numeric</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>, regardless of
 the type of <code class="docutils literal notranslate"><span class="pre">x</span></code>?</p></li>
-<li><p>What is the meaning of “<strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x+y)</span></code>”
+<li><p>What is the meaning of <strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x+y)</span></code>
 if <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are logical vectors?
-What about “<strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x*y)</span></code>”,
-“<strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(1-x)</span></code>”, and
-“<strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x!=y)</span></code>”?</p></li>
+What about <strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x*y)</span></code>,
+<strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(1-x)</span></code>, and
+<strong class="command">as.logical</strong><code class="code docutils literal notranslate"><span class="pre">(x!=y)</span></code>?</p></li>
+<li><p>What is the meaning of the following when <code class="docutils literal notranslate"><span class="pre">x</span></code> is a logical vector?</p>
+<ul>
+<li><p><strong class="command">cummin</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cummin</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>,</p></li>
+<li><p><strong class="command">cummax</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cummax</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>,</p></li>
+<li><p><strong class="command">cumsum</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cumsum</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>,</p></li>
+<li><p><strong class="command">cumprod</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cumprod</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>.</p></li>
+</ul>
+</li>
 <li><p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> be a <em>named</em> numeric vector, e.g.,
 “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> </code><strong class="command">quantile</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(100))</span></code>”.
-What is the result of “<code class="docutils literal notranslate"><span class="pre">2*x</span></code>”, “<strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>”,
+What is the result of <code class="docutils literal notranslate"><span class="pre">2*x</span></code>, <strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code>,
 and <strong class="command">round</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">2)</span></code>?</p></li>
 <li><p>What is the meaning of <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">NULL</span></code>?</p></li>
 <li><p>Give two ways to create a named character vector.</p></li>
 <li><p>Give two ways (discussed above; there are more) to remove the
 <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute from an object.</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id9">
+</div></div><div class="proof proof-type-exercise" id="id10">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.7</span>
@@ -1088,7 +1099,7 @@ the results generated by the following pairs of expressions:</p>
 <span class="nf">c</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">))</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id10">
+</div></div><div class="proof proof-type-exercise" id="id11">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.8</span>
@@ -1101,50 +1112,45 @@ More generally, given a set of atomic vectors
 and lists of atomic vectors, how to combine them
 to get a single list that features all atomic vectors as its elements
 (not a list of atomic vectors and lists, not atomic vectors unwound, etc.)?</p>
-</div></div><div class="proof proof-type-exercise" id="id11">
+</div></div><div class="proof proof-type-exercise" id="id12">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.9</span>
         
     </div><div class="proof-content">
-<p>What is the meaning of the following when <code class="docutils literal notranslate"><span class="pre">x</span></code> is a logical vector?</p>
-<ul class="simple">
-<li><p><strong class="command">cummin</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cummin</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>,</p></li>
-<li><p><strong class="command">cummax</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cummax</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>,</p></li>
-<li><p><strong class="command">cumsum</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cumsum</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>,</p></li>
-<li><p><strong class="command">cumprod</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> and <strong class="command">cumprod</strong><code class="code docutils literal notranslate"><span class="pre">(!x)</span></code>.</p></li>
-</ul>
-</div></div><div class="proof proof-type-exercise" id="id12">
+<p><strong class="command">readRDS</strong> serialises R objects and writes their
+snapshots to disk so that they can be restored
+via a call to <strong class="command">saveRDS</strong> at a later time.
+Verify that this function preserves object attributes.
+Also, check out <strong class="command">dput</strong> and <strong class="command">dget</strong> which work with
+objects’ textual representation in the form executable R code.</p>
+</div></div><div class="proof proof-type-exercise" id="id13">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 4.10</span>
         
     </div><div class="proof-content">
-<p><strong class="command">readRDS</strong> serialises R objects and writes their
-snapshots to disk so that they can be later restored
-via a call to <strong class="command">saveRDS</strong>.
-Verify that this function preserves object attributes.</p>
-<p>See also <strong class="command">dput</strong> and <strong class="command">dget</strong> which work with
-objects’ textual representation in the form executable R code.</p>
-</div></div><div class="proof proof-type-exercise" id="id13">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 4.11</span>
-        
-    </div><div class="proof-content">
 <p>(*)
 Use <strong class="program">jsonlite</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">fromJSON</strong>
 to read a JSON file in the form of a named list.</p>
-</div></div><p>–</p>
-<p>In the extremely unlikely event of us finding
+</div></div><div style="margin-top: 1em"></div><p>In the extremely unlikely event of our finding
 the current chapter boring, let us rejoice:
 some of the exercises and remarks that we will encounter in the
-next part – devoted to vector indexing –
+next part, which is devoted to vector indexing,
 will definitely be deliciously stimulating!</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="attr1" role="note">
+<aside class="footnote brackets" id="footasnumeric" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>(*) <strong class="command">as.numeric</strong> is a generic function
+identical to (synonymous with) <strong class="command">as.double</strong>.
+<strong class="command">is.numeric</strong> is generic too, and is more universal
+than <strong class="command">is.double</strong>, which only verifies whether <strong class="command">typeof</strong>
+returns <code class="docutils literal notranslate"><span class="pre">&quot;double&quot;</span></code>. For instance, vectors of the type <em>integer</em>
+which we mention later are considered numeric as well.</p>
+</aside>
+<aside class="footnote brackets" id="attr1" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
 <p>Other ways include the replacement versions
 of the <strong class="command">attr</strong> and <strong class="command">attributes</strong> functions;
 see <a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a>.</p>
@@ -1188,7 +1194,7 @@ see <a class="reference internal" href="210-design.html#sec-replacementfun"><spa
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-19T20:53:03+1000.
+              Last updated on 2023-06-20T15:57:23+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
