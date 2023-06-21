@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.0.9003 (draft)
+v0.9.0.9004 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -373,9 +373,8 @@ of some illegal operations, e.g., <span class="math">\(0/0\)</span> or <span cla
 <h3><span class="section-number">2.1.2. </span>Concatenating vectors with <strong class="command">c</strong><a class="headerlink" href="#concatenating-vectors-with-c" title="Permalink to this heading">#</a></h3>
 <p>Let us provide some ways to create numeric vectors with possibly
 more than one element.</p>
-<p>First, the <strong class="command">c</strong> function that we introduced in the previous chapter
-can be used to <em>c</em>ombine (concatenate) many numeric vectors, each
-of any length, so as to form a single object:</p>
+<p>First, the <strong class="command">c</strong> function can be used to <em>c</em>ombine (concatenate)
+many numeric vectors, each of any length. It results in a single object:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># three vectors of length one –&gt; one vector of length three</span>
 <span class="c1">## [1] 1 2 3</span>
 <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">)))</span>
@@ -385,7 +384,7 @@ of any length, so as to form a single object:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Running <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;c&quot;)</span></code>, we will see that its usage is like
-“<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(...)</span></code>”. In the current context,
+<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(...)</span></code>. In the current context,
 this means that the <strong class="command">c</strong> function
 takes an arbitrary number of arguments.
 In <a class="reference internal" href="210-design.html#sec-ellipsis"><span class="std std-numref">Section 9.5.6</span></a>, we will study
@@ -412,11 +411,10 @@ of the same length as the first one, the behaviour will be different:</p>
 </pre></div>
 </div>
 <p>Here, <em>each</em> element is repeated the <em>corresponding</em> number of times.</p>
-<p>If we call <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;rep&quot;)</span></code>, we will come across the notion like
-“<strong class="command">rep</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">...)</span></code>” in the <em>Usage</em> section.
-It is rather peculiar. However, reading further,
-we discover that the ellipsis (dot-dot-dot) stands for one of the following
-further parameters:</p>
+<p>Calling <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;rep&quot;)</span></code>, we find that the function’s usage
+is like <strong class="command">rep</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">...)</span></code>. It is rather peculiar.
+However, reading further, we discover that the ellipsis (dot-dot-dot)
+may be fed with one of the following parameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">times</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">length.out</span></code><a class="footnote-reference brackets" href="#footdotnotspecial" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>,</p></li>
@@ -448,12 +446,10 @@ but their names must be mentioned explicitly:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Whether it was a good programming practice to actually
-implement a range of varied behaviours inside a single
-function is a matter of taste.
-On the one hand, in all of the  examples above, we do repeat the input elements
-somehow, so remembering just one function name is really convenient.
-Nevertheless, a drastic change in the repetition pattern
+<p>Whether it was a good programming practice to actually implement a range of
+varied behaviours inside a single function is a matter of taste.
+On the one hand, in all of the  examples above, we do repeat the input elements somehow, so remembering just one function name is really
+convenient. Nevertheless, a drastic change in the repetition pattern
 depending, e.g., on the length of the <code class="docutils literal notranslate"><span class="pre">times</span></code> argument can be bug-prone.
 Anyway, we have been warned<a class="footnote-reference brackets" href="#footillusionarycare" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 </div>
@@ -520,7 +516,7 @@ can also be generated via the `<strong class="command">:</strong>` operator.</p>
 </pre></div>
 </div>
 <p>Let us highlight the order of precedence of this operator:
-“<code class="docutils literal notranslate"><span class="pre">-1:10</span></code>” means “<code class="docutils literal notranslate"><span class="pre">(-1):10</span></code>” and not “<code class="docutils literal notranslate"><span class="pre">-(1:10)</span></code>”;
+<code class="docutils literal notranslate"><span class="pre">-1:10</span></code> means <code class="docutils literal notranslate"><span class="pre">(-1):10</span></code>, and not <code class="docutils literal notranslate"><span class="pre">-(1:10)</span></code>;
 compare <a class="reference internal" href="#sec-precedence-numeric"><span class="std std-numref">Section 2.4.3</span></a>.</p>
 <div class="proof proof-type-exercise" id="id20">
 
@@ -667,7 +663,7 @@ comments for us humans. They should be ignored by the interpreter.
 The first “real” value, <code class="docutils literal notranslate"><span class="pre">NA</span></code>, corresponds to 1 January
 (Wednesday, New Year’s Day; Forex markets were closed,
 hence a missing observation).</p>
-<p>The <strong class="command">scan</strong> function can be used to read all the inputs
+<p>We can invoke the <strong class="command">scan</strong> function to read all the inputs
 and convert them to a single numeric vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">scan</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="s">&quot;master/marek/euraud-20200101-20200630.csv&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span>
@@ -819,7 +815,7 @@ Readers who know other programming languages will need to habituate
 themselves to this convention.</p>
 </div>
 <p>R, as a dynamic language, allows for introducing new variables at any time.
-Moreover, existing names can be rebound to new values. For instance:</p>
+Moreover, existing names can be bound to new values. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># bracketed expression – printing not suppressed</span>
 <span class="c1">## [1] &quot;spam&quot;</span>
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span><span class="w">  </span><span class="c1"># overwrites the previous `x`</span>
@@ -830,10 +826,9 @@ Moreover, existing names can be rebound to new values. For instance:</p>
 <p>Now <code class="docutils literal notranslate"><span class="pre">x</span></code> refers to a verbatim copy of <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Objects are automatically destroyed when there are
-no more names bound to them. By now, the
-<em>garbage collector</em> is likely to have got rid of the <code class="docutils literal notranslate"><span class="pre">1:3</span></code> vector
-begotten above (to which the name <code class="docutils literal notranslate"><span class="pre">x</span></code> was bound previously).</p>
+<p>Objects are automatically destroyed when we cannot access them anymore.
+By now, the <em>garbage collector</em> is likely to have got rid of
+the <code class="docutils literal notranslate"><span class="pre">1:3</span></code> vector begotten above (to which the name <code class="docutils literal notranslate"><span class="pre">x</span></code> was bound previously).</p>
 </div>
 </section>
 <section id="vectorised-mathematical-functions">
@@ -1003,10 +998,10 @@ the whole real line):</p>
 </ul>
 <p>with the prefix “<code class="docutils literal notranslate"><span class="pre">*</span></code>” being one of:</p>
 <ul class="simple">
-<li><p>“<code class="docutils literal notranslate"><span class="pre">d</span></code>” (probability density function, PDF),</p></li>
-<li><p>“<code class="docutils literal notranslate"><span class="pre">p</span></code>” (cumulative distribution function, CDF; or survival function, SF),</p></li>
-<li><p>“<code class="docutils literal notranslate"><span class="pre">q</span></code>” (quantile function, being the inverse of the CDF),</p></li>
-<li><p>“<code class="docutils literal notranslate"><span class="pre">r</span></code>” (generation of random deviates; already mentioned above);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code> (probability density function, PDF),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> (cumulative distribution function, CDF; or survival function, SF),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">q</span></code> (quantile function, being the inverse of the CDF),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r</span></code> (generation of random deviates; already mentioned above);</p></li>
 </ul>
 </li>
 <li><p>discrete distributions, i.e., those whose possible outcomes can
@@ -1021,8 +1016,8 @@ easily be enumerated (e.g., some integers):</p>
 <p>here, prefixes “<code class="docutils literal notranslate"><span class="pre">p</span></code>” and “<code class="docutils literal notranslate"><span class="pre">r</span></code>” have the same meaning as above,
 however:</p>
 <ul class="simple">
-<li><p>“<code class="docutils literal notranslate"><span class="pre">d</span></code>” now gives the probability <em>mass</em> function (PMF),</p></li>
-<li><p>“<code class="docutils literal notranslate"><span class="pre">q</span></code>” brings about the quantile function,
+<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code> now gives the probability <em>mass</em> function (PMF),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">q</span></code> brings about the quantile function,
 defined as a <em>generalised</em> inverse of the CDF.</p></li>
 </ul>
 </li>
@@ -1342,8 +1337,8 @@ and `<strong class="command">&lt;-</strong>`, which are performed the other way 
 <li><p><code class="docutils literal notranslate"><span class="pre">2*3/4*5</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">((2*3)/4)*5</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">2^3^4</span></code> is <code class="docutils literal notranslate"><span class="pre">2^(3^4)</span></code> because, mathematically,
 we would write it as <span class="math">\(2^{3^4}=2^{81}\)</span>,</p></li>
-<li><p>“<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">y</span> <span class="pre">&lt;-</span> <span class="pre">4*3%%8/2</span></code>” binds both <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code> with <code class="docutils literal notranslate"><span class="pre">6</span></code>,
-not <code class="docutils literal notranslate"><span class="pre">x</span></code> with the previous value of <code class="docutils literal notranslate"><span class="pre">y</span></code> and then <code class="docutils literal notranslate"><span class="pre">y</span></code> with <code class="docutils literal notranslate"><span class="pre">6</span></code>.</p></li>
+<li><p>“<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">y</span> <span class="pre">&lt;-</span> <span class="pre">4*3%%8/2</span></code>” binds both <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>,
+not <code class="docutils literal notranslate"><span class="pre">x</span></code> to the previous value of <code class="docutils literal notranslate"><span class="pre">y</span></code> and then <code class="docutils literal notranslate"><span class="pre">y</span></code> to <code class="docutils literal notranslate"><span class="pre">6</span></code>.</p></li>
 </ul>
 <p>When in doubt, we can always <em>bracket</em> a subexpression to ensure
 it is executed in the intended order.
@@ -1739,7 +1734,7 @@ in a compact (ALTREP) form; see <a class="reference internal" href="160-characte
 </aside>
 <aside class="footnote brackets" id="footenvir" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">4</a><span class="fn-bracket">]</span></span>
-<p>Names are bound in environment frames;
+<p>Name bindings are part of environment frames;
 see <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footdot" role="note">
@@ -1821,7 +1816,7 @@ It is because it returns a named vector.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-20T15:57:23+1000.
+              Last updated on 2023-06-21T21:13:14+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

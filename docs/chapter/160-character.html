@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.0.9003 (draft)
+v0.9.0.9004 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -322,12 +322,12 @@ are both okay.</p>
 <p>However, to embrace characters whose inclusion might otherwise
 be difficult or impossible, we may always employ the so-called
 <em>escape sequences</em>.</p>
-<p>R uses the backslash, “<code class="docutils literal notranslate"><span class="pre">\</span></code>”, as the escape character, in particular:</p>
+<p>R uses the backslash, “<code class="docutils literal notranslate"><span class="pre">\</span></code>”, as the <em>escape character</em>. In particular:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">\&quot;</span></code> inputs the double quote character,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">\'</span></code> – single quote,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">\\</span></code> – backslash,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">\n</span></code> – new line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\&quot;</span></code> inputs a double quote,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\'</span></code> generates a single quote,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\\</span></code> includes a backslash,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\n</span></code> endows a new line.</p></li>
 </ul>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;I \&quot;love\&quot; bacon\n\\\&quot;/&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;I \&quot;love\&quot; bacon\n\\\&quot;/&quot;</span>
@@ -342,65 +342,37 @@ The number of characters in <code class="docutils literal notranslate"><span cla
 <span class="c1">## [1] 18</span>
 </pre></div>
 </div>
-<p>To display the string as-it-really-is, we call:</p>
+<p>To display the string as-it-really-is, we call <strong class="command">cat</strong>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="c1">## I &quot;love&quot; bacon</span>
 <span class="c1">## \&quot;/</span>
 </pre></div>
 </div>
-<p>Raw character constants, where the backslash character’s special
-meaning is disabled, can be entered using the notation
-like <code class="docutils literal notranslate"><span class="pre">r&quot;(...)&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">r&quot;{...}&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">r&quot;[...]&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">r&quot;----(...)----&quot;</span></code>, etc.;
-see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Quotes&quot;)</span></code>. These can be useful when inputting
-regular expressions (see below).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="s">&quot;(spam\n\\\&quot;maps)&quot;</span>
+<p>In <em>raw</em> character constants, the backslash character’s special
+meaning is disabled. They can be entered using the notation
+like <code class="docutils literal notranslate"><span class="pre">r&quot;(...)&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">r&quot;{...}&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">r&quot;[...]&quot;</span></code>; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Quotes&quot;)</span></code>.
+These can be useful when inputting
+regular expressions (<a class="reference internal" href="#sec-regex"><span class="std std-numref">Section 6.2.4</span></a>).</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r</span><span class="s">&quot;(spam\n\\\&quot;maps)&quot;</span><span class="w">   </span><span class="c1"># also: r&quot;-(...)-&quot;, r&quot;--(...)--&quot;, etc.</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;spam\\n\\\\\\\&quot;maps&quot;</span>
 <span class="nf">cat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="c1">## spam\n\\\&quot;maps</span>
 </pre></div>
 </div>
-<p>… and, of course, the string version of the missing value marker
-is “<code class="docutils literal notranslate"><span class="pre">NA_character_</span></code>”.</p>
+<p>Furthermore, the string version of the missing value marker
+is <code class="docutils literal notranslate"><span class="pre">NA_character_</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
-Some output devices may support the following
-codes that control the position of the caret (text cursor):</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">\b</span></code> – backspace (move cursor one column to the left),</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">\t</span></code> – tab (advance to the next tab stop, e.g., a multiply of 8),</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">\r</span></code> – carriage return (move to the beginning of the current line).</p></li>
-</ul>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;abc\bd\tef\rg\nhij&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
-<span class="c1">## gbd     ef</span>
-<span class="c1">## hij</span>
-</pre></div>
-</div>
-<p>These can be used on unbuffered outputs
-(see, e.g., <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;stderr&quot;)</span></code>)
-to display the status of the current operation (a simple “animated”
-progress bar, the print-out of the ETA, or the percentage
-of work completed).</p>
-<p>Further, certain terminals can also understand
-<a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code">the ECMA-48/ANSI-X3.64 escape sequences</a> of the form “<code class="docutils literal notranslate"><span class="pre">\u001b[...</span></code>”
-to control further the cursor’s position, text colour, and even style.
-For example, “<code class="docutils literal notranslate"><span class="pre">\u001b[1;31m</span></code>” outputs bold red text
-and “<code class="docutils literal notranslate"><span class="pre">\u001b[0m</span></code>” resets the settings to default.
-Give, e.g., “<strong class="command">cat</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;\u001b[1;31mspam\u001b[0m&quot;)</span></code>”
-or “<strong class="command">cat</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;\u001b[5;36m\u001b[Abacon\u001b[Espam\u001b[0m&quot;)</span></code>”
-a try.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>(*)
-The Unicode standard 15.0 (version dated September 2022) defines over 149 186
+The Unicode standard 15.0 (version dated September 2022) defines 149 186
 characters, i.a., letters from different scripts, mathematical symbols,
 and emojis.
 Each is assigned a unique numeric identifier; see the
 <a class="reference external" href="https://www.unicode.org/charts">Unicode Character Code Charts</a>.
 For example, the <em>inverted exclamation mark</em> (see the Latin-1 Supplement
-section therein) has been mapped to hexadecimal code 0xA1 (or 161 decimally).
+section therein) has been mapped to the hexadecimal code
+0xA1 (or 161 decimally).
 Knowing this magic number permits us to specify a
 Unicode code point using one of the following escape sequences:</p>
 <ul class="simple">
@@ -412,31 +384,59 @@ Unicode code point using one of the following escape sequences:</p>
 <span class="c1">## !¡!¡!</span>
 </pre></div>
 </div>
-<p>All R installations allow for working with Unicode strings
-(more precisely, UTF-8: a super-encoding that
-is native to most UNIX-like boxes, including GNU/Linux and m**OS).
+<p>All R installations allow for working with Unicode strings.
+More precisely, they support dealing with <em>UTF-8</em>, being
+a super-encoding that is native to most UNIX-like boxes,
+including GNU/Linux and m**OS.
 Other operating systems may use some 8-bit encoding as the system one
 (e.g., <code class="docutils literal notranslate"><span class="pre">latin1</span></code> or <code class="docutils literal notranslate"><span class="pre">cp1252</span></code>), but they can be
-mixed with Unicode seamlessly. See <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Encoding&quot;)</span></code>,
+mixed with Unicode seamlessly; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Encoding&quot;)</span></code>,
 <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;iconv&quot;)</span></code>, and <span id="id2">[<a class="reference internal" href="999-bibliography.html#id6" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. URL: https://stringi.gagolewski.com/, DOI: 10.18637/jss.v103.i02.">27</a>]</span> for discussion.</p>
 <p>Nevertheless, certain output devices
 (web browsers, LaTeX renderers, text terminals)
 might be unable to display every possible Unicode
 character, e.g., due to some fonts’ being missing.
 However, as far as the processing of character data is concerned,
-this does not matter: R does it with its eyes closed.</p>
-<p>For example, in the <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF version</a>
-of this adorable book, none
-of the following Unicode glyphs are correctly displayed.
-Yours cordially did not care about installing appropriate fonts in his
-XeLaTeX distribution. However, its
-<a class="reference external" href="https://deepr.gagolewski.com/">HTML variant</a>,
-generated from the same source files as the former,
-will likely be rendered by the reader’s web browser as intended.</p>
+this does not matter because R does it with its eyes closed.
+For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;\U0001f642\u2665\u0bb8\U0001f923\U0001f60d\u2307&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="c1">## 🙂♥ஸ🤣😍⌇</span>
 </pre></div>
 </div>
+<p>In the <a class="reference external" href="https://deepr.gagolewski.com/deepr.pdf">PDF version</a>
+of this adorable book, the Unicode glyphs are not rendered correctly
+for some reason. However, its <a class="reference external" href="https://deepr.gagolewski.com/">HTML variant</a>,
+generated from the same source files, should be displayed by most web
+browsers properly.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(*)
+Some output devices may support the following
+codes that control the position of the caret (text cursor):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">\b</span></code> inserts a backspace (moves cursor one column to the left),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\t</span></code> implants a tabulator (advances to the next tab stop, e.g.,
+a multiply of four or eight text columns),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\r</span></code> injects a carriage return (move to the beginning of the current line).</p></li>
+</ul>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;abc\bd\tef\rg\nhij&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="c1">## gbd     ef</span>
+<span class="c1">## hij</span>
+</pre></div>
+</div>
+<p>These can be used on unbuffered outputs like <strong class="command">stderr</strong>
+to display the status of the current operation, for instance,
+an animated textual progress bar, the print-out of the ETA,
+or the percentage of work completed.</p>
+<p>Further, certain terminals can also understand
+<a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code">the ECMA-48/ANSI-X3.64 escape sequences</a> of the form <code class="docutils literal notranslate"><span class="pre">\u001b[...</span></code>
+to control the cursor’s position, text colour, and even style.
+For example, <code class="docutils literal notranslate"><span class="pre">\u001b[1;31m</span></code> outputs red text in bold font
+and <code class="docutils literal notranslate"><span class="pre">\u001b[0m</span></code> resets the settings to default.
+We recommend giving, e.g., <strong class="command">cat</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;\u001b[1;31mspam\u001b[0m&quot;)</span></code>
+or <strong class="command">cat</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;\u001b[5;36m\u001b[Abacon\u001b[Espam\u001b[0m&quot;)</span></code>
+a try.</p>
 </div>
 </section>
 <section id="many-strings-one-object">
@@ -450,7 +450,7 @@ can be constructed by means of, e.g., <strong class="command">c</strong> or
 </div>
 <p>Thus, a character vector is, in fact,
 a sequence of sequences of characters<a class="footnote-reference brackets" href="#footcharsxp" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.
-As usual, the total number of strings can be fetched,
+As usual, the total number of strings can be fetched
 via the <strong class="command">length</strong> function. However, the length of each
 string may be read with the vectorised <strong class="command">nchar</strong>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># how many strings?</span>
@@ -471,7 +471,7 @@ elements of two or more character vectors:</p>
 </pre></div>
 </div>
 <p>The function is deeply vectorised:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;!&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;?&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># implicit coercion of numbers</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;!&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;?&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># coercion of numeric to character</span>
 <span class="c1">## [1] &quot;a 1 !&quot; &quot;b 2 ?&quot; &quot;c 3 !&quot; &quot;a 4 ?&quot; &quot;b 5 !&quot; &quot;c 6 ?&quot;</span>
 </pre></div>
 </div>
@@ -492,10 +492,10 @@ treats missing values differently from most other vectorised functions:</p>
 </section>
 <section id="formatting-objects">
 <h3><span class="section-number">6.1.4. </span>Formatting objects<a class="headerlink" href="#formatting-objects" title="Permalink to this heading">#</a></h3>
-<p>Strings can also come into being by turning other R objects
-into text. For example, the quite customisable
-(see <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>) <strong class="command">format</strong> function
-can be used to pretty-print data in dynamically generated reports.</p>
+<p>Strings can also arise by converting other-typed R objects into text.
+For example, the quite customisable
+(see <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>) <strong class="command">format</strong> function prepares data
+for display in dynamically generated reports.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">123456.789</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">pi</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">)</span>
 <span class="nf">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;123456.7890&quot; &quot;    -3.1416&quot; &quot;        NaN&quot;</span>
@@ -506,40 +506,49 @@ can be used to pretty-print data in dynamically generated reports.</p>
 </pre></div>
 </div>
 <p>Moreover, <strong class="command">sprintf</strong> is a workhorse for turning possibly many atomic
-vectors into strings. The numbers’ precision, strings’ widths and
-justification, etc., can be fully controlled.
-Its first argument is a format string; special escape sequences starting
+vectors into strings.
+Its first argument is a <em>format string</em>. Special escape sequences starting
 with the per cent sign, “<code class="docutils literal notranslate"><span class="pre">%</span></code>”, serve as placeholders for the actual values.
-For instance, “<code class="docutils literal notranslate"><span class="pre">%s</span></code>” is meant to be replaced with a corresponding string
-and “<code class="docutils literal notranslate"><span class="pre">%f</span></code>” with a floating point value.
-Additional options are available, e.g., “<code class="docutils literal notranslate"><span class="pre">%10.2f</span></code>”
-is a number that, when converted to text, will occupy ten text columns<a class="footnote-reference brackets" href="#footsprintfwidth" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>,
-with two decimal digits of precision.
-Also, e.g., “<code class="docutils literal notranslate"><span class="pre">%1$s</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%2$s</span></code>”, …
-will insert the first, second, … argument as text.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.5f&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="p">)</span>
-<span class="c1">## [1] &quot;3.14159&quot;</span>
-<span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Z&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># like paste(...)</span>
+For instance, “<code class="docutils literal notranslate"><span class="pre">%s</span></code>” is replaced with a string and “<code class="docutils literal notranslate"><span class="pre">%f</span></code>” with
+a floating point value taken from further arguments.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Z&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># like paste(...)</span>
 <span class="c1">## [1] &quot;aX&quot; &quot;aY&quot; &quot;aZ&quot;</span>
-<span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;key=%s, value=%.1f&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">100000</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span>
-<span class="c1">## [1] &quot;key=spam, value=100000.0&quot; &quot;key=eggs, value=0.0&quot;</span>
+<span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;key=%s, value=%f&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">100000</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span>
+<span class="c1">## [1] &quot;key=spam, value=100000.000000&quot; &quot;key=eggs, value=0.000000&quot;</span>
+</pre></div>
+</div>
+<p>The numbers’ precision, strings’ widths and justification, etc.,
+can be customised, e.g., “<code class="docutils literal notranslate"><span class="pre">%6.2f</span></code>” is a number that, when converted
+to text, will occupy six text columns<a class="footnote-reference brackets" href="#footsprintfwidth" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>,
+with two decimal digits of precision.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%10s=%6.2f%%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;rate&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">/</span><span class="m">3</span><span class="o">*</span><span class="m">100</span><span class="p">)</span><span class="w">  </span><span class="c1"># &quot;%%&quot; renders the per cent sign</span>
+<span class="c1">## [1] &quot;      rate= 66.67%&quot;</span>
 <span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.*f&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="p">)</span><span class="w">  </span><span class="c1"># variable precision</span>
 <span class="c1">## [1] &quot;3.1&quot;     &quot;3.14&quot;    &quot;3.142&quot;   &quot;3.1416&quot;  &quot;3.14159&quot;</span>
-<span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%1$s, %2$s, %1$s, and %1$s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># numbered argument</span>
+</pre></div>
+</div>
+<p>Also, e.g., “<code class="docutils literal notranslate"><span class="pre">%1$s</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%2$s</span></code>”, …
+inserts the first, second, … argument as text.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%1$s, %2$s, %1$s, and %1$s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># numbered argument</span>
 <span class="c1">## [1] &quot;spam, bacon, spam, and spam&quot;</span>
 </pre></div>
 </div>
-<p>See <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;sprintf&quot;)</span></code> for more details. I recommend. Marek Gagolewski.</p>
-</section>
+<div class="proof proof-type-exercise" id="id15">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 6.1</span>
+        
+    </div><div class="proof-content">
+<p>Read <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;sprintf&quot;)</span></code> (highly recommended!).</p>
+</div></div></section>
 <section id="reading-text-data-from-files">
 <h3><span class="section-number">6.1.5. </span>Reading text data from files<a class="headerlink" href="#reading-text-data-from-files" title="Permalink to this heading">#</a></h3>
-<p>Given a raw text file, <strong class="command">readLines</strong> can load it into memory
-to represent it as a character vector, with each line stored in a separate
+<p>Given a raw text file, <strong class="command">readLines</strong> loads it into memory
+and represents it as a character vector, with each line stored in a separate
 string.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">readLines</span><span class="p">(</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">head</span><span class="p">(</span><span class="nf">readLines</span><span class="p">(</span>
 <span class="w">    </span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/master/README.md&quot;</span>
-<span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<span class="p">))</span>
 <span class="c1">## [1] &quot;# Dr [Marek](https://www.gagolewski.com)&#39;s Data for Teaching&quot;</span>
 <span class="c1">## [2] &quot;&quot;</span>
 <span class="c1">## [3] &quot;&gt; *See the comment lines within the files themselves for&quot;</span>
@@ -549,9 +558,9 @@ string.</p>
 </pre></div>
 </div>
 <p><strong class="command">writeLines</strong> is its counterpart.
-There is also an option to read or write parts of files at a time,
-which we mention in <a class="reference internal" href="180-flow.html#sec-time-complexity"><span class="std std-numref">Section 8.3.5</span></a>.
-Also, <strong class="command">cat</strong><code class="code docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">append=TRUE)</span></code> can be used
+There is also an option to read or write parts of files at a time
+using file connections which we mention in <a class="reference internal" href="180-flow.html#sec-time-complexity"><span class="std std-numref">Section 8.3.5</span></a>.
+Moreover, <strong class="command">cat</strong><code class="code docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">append=TRUE)</span></code> can be used
 to create a text file incrementally.</p>
 </section>
 </section>
@@ -577,14 +586,13 @@ operator. They are vectorised in a different way:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong class="command">match</strong> relies on simple, bytewise comparisons of the corresponding
-code points. It might not be valid in, for example, natural language
-processing activities; compare <span id="id6">[<a class="reference internal" href="999-bibliography.html#id65" title="Davis, M., Whistler, K., and Scherer, M. (2021).  Unicode Technical Standard #10: Unicode Collation Algorithm. URL: http://www.unicode.org/reports/tr10.">18</a>]</span>. In particular,
-the German word <em>groß</em> is not deemed equal to <em>gross</em>, although we expect
-that should be the case, at least in a German language setting.
-Moreover, in the rare situations where we read Unicode-unnormalised
-data (say, not in the NFC form; see <span id="id7">[<a class="reference internal" href="999-bibliography.html#id66" title="Davis, M. and Whistler, K. (2021).  Unicode Standard Annex #15: Unicode Normalization Forms. URL: http://www.unicode.org/reports/tr15.">17</a>]</span>),
-canonically equivalent strings may be considered different.</p>
+<p>(*)
+<strong class="command">match</strong> relies on a simple, bytewise comparison of the corresponding
+code points. It might not be valid in natural language processing activities,
+e.g., where the German word <em>groß</em> should be equivalent to <em>gross</em>
+<span id="id6">[<a class="reference internal" href="999-bibliography.html#id65" title="Davis, M., Whistler, K., and Scherer, M. (2021).  Unicode Technical Standard #10: Unicode Collation Algorithm. URL: http://www.unicode.org/reports/tr10.">18</a>]</span>. Moreover, in the rare situations where we read
+Unicode-unnormalised data, canonically equivalent strings may be considered
+different; see <span id="id7">[<a class="reference internal" href="999-bibliography.html#id66" title="Davis, M. and Whistler, K. (2021).  Unicode Standard Annex #15: Unicode Normalization Forms. URL: http://www.unicode.org/reports/tr15.">17</a>]</span>.</p>
 </div>
 </section>
 <section id="partial-matching">
@@ -595,24 +603,23 @@ is required, we can call:</p>
 <span class="c1">## [1] FALSE  TRUE  TRUE FALSE FALSE</span>
 </pre></div>
 </div>
-<p>Both the above and <strong class="command">endsWith</strong> are applied elementwisely
-in the case of many search prefixes/suffixes, just like in `<strong class="command">==</strong>`.</p>
-<p><em>Partial matching</em> of strings can be performed with <strong class="command">charmatch</strong>,
-which is a each-vs-all version of <strong class="command">startsWith</strong>:</p>
+<p>If we provide many prefixes, the above function will be
+applied elementwisely, just like the `<strong class="command">==</strong>` operator.</p>
+<p>On the other hand, <strong class="command">charmatch</strong> performs a <em>partial matching</em>
+of strings. It is an each-vs-all version of <strong class="command">startsWith</strong>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">charmatch</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spams&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">))</span>
 <span class="c1">## [1]  1  1  1 NA  2 NA</span>
 <span class="nf">charmatch</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spoo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spoof&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spoon&quot;</span><span class="p">))</span>
 <span class="c1">## [1]  0  0  1  2 NA</span>
 </pre></div>
 </div>
-<p>Note that <code class="docutils literal notranslate"><span class="pre">0</span></code> designates that there was an ambiguity in matching
-a string to a given table.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">0</span></code> designates that there was an ambiguous match.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
-In <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>, we discuss the very-advanced
-<strong class="command">match.arg</strong>, which is frequently called by other R functions.
-It assists in selecting a value from a range of possible choices.
+In <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>, we discuss <strong class="command">match.arg</strong>,
+which some R functions rely on when they need to
+select a value from a range of possible choices.
 Furthermore, <a class="reference internal" href="210-design.html#sec-dollar"><span class="std std-numref">Section 9.4.2</span></a> and <a class="reference internal" href="320-language.html#sec-sys-call"><span class="std std-numref">Section 15.4.4</span></a>
 mention the (discouraged) partial matching of list labels and
 function argument names.</p>
@@ -633,33 +640,35 @@ strings using <strong class="command">grepl</strong>:</p>
 not the other way around. Also, this function is not vectorised with respect
 to the first argument.</p>
 </div>
-<div class="proof proof-type-exercise" id="id14">
+<div class="proof proof-type-exercise" id="id16">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.1</span>
+        <span class="proof-type">Exercise 6.2</span>
         
     </div><div class="proof-content">
-<p>Determine how the calls to <strong class="command">grep</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">x,</span> <span class="pre">value=FALSE)</span></code>
-and <strong class="command">grep</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">x,</span> <span class="pre">value=TRUE)</span></code> can be implemented
-based on <strong class="command">grepl</strong>
-and other operations we are already familiar with.</p>
+<p>How the calls to <strong class="command">grep</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">x,</span> <span class="pre">value=FALSE)</span></code>
+and <strong class="command">grep</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">x,</span> <span class="pre">value=TRUE)</span></code> can be implemented based on
+<strong class="command">grepl</strong> and other operations we are already familiar with?</p>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>As a curiosity, <strong class="command">agrepl</strong> performs <em>approximate</em> matching
-based on Levenshtein’s edit distance, which can account for
-a small number of “typos”.</p>
+<p>(*)
+As a curiosity, <strong class="command">agrepl</strong> performs <em>approximate</em> matching,
+which can account for a smöll nmber of tpyos.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">agrepl</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE  TRUE FALSE  TRUE</span>
 <span class="nf">agrepl</span><span class="p">(</span><span class="s">&quot;ham&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">ignore.case</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [1] TRUE TRUE TRUE TRUE</span>
 </pre></div>
 </div>
+<p>It is based on <em>Levenshtein’s edit distance</em> that measures the number of
+character insertions, deletions, or substitutions required to
+turn one string into another.</p>
 </div>
 </section>
 <section id="using-regular-expressions">
 <span id="sec-regex"></span><h3><span class="section-number">6.2.4. </span>Using regular expressions (*)<a class="headerlink" href="#using-regular-expressions" title="Permalink to this heading">#</a></h3>
-<p>Setting <code class="docutils literal notranslate"><span class="pre">perl=TRUE</span></code> allows for identifying occurrences of patterns specified
-by the PCRE2 regular expressions (regexes).</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">perl=TRUE</span></code> allows for identifying occurrences
+of patterns specified by <em>regular expressions</em> (regexes).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">grepl</span><span class="p">(</span><span class="s">&quot;^spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># strings that begin with `spam`</span>
 <span class="c1">## [1]  TRUE FALSE FALSE FALSE</span>
 <span class="nf">grepl</span><span class="p">(</span><span class="s">&quot;(?i)^spam|spam$&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># begin or end; case ignored</span>
@@ -669,33 +678,32 @@ by the PCRE2 regular expressions (regexes).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For more details on regular expressions in general, see, e.g.,
-<span id="id8">[<a class="reference internal" href="999-bibliography.html#id67" title="Friedl, J.E.F. (2006).  Mastering Regular Expressions. O'Reilly.">24</a>]</span>.
-The ultimate reference for PCRE2 pattern syntax is the
-<a class="reference external" href="http://www.pcre.org/current/doc/html/pcre2pattern.html"><code class="docutils literal notranslate"><span class="pre">man</span></code></a> page
-<em class="manpage">pcre2pattern(3)</em>.
-R also gives access to ERE-like TRE library
-(see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;regex&quot;)</span></code>), which is the default one.
+<span id="id8">[<a class="reference internal" href="999-bibliography.html#id67" title="Friedl, J.E.F. (2006).  Mastering Regular Expressions. O'Reilly.">24</a>]</span>. The ultimate reference on the PCRE2
+pattern syntax is the Unix <code class="docutils literal notranslate"><span class="pre">man</span></code> page
+<a class="reference external" href="http://www.pcre.org/current/doc/html/pcre2pattern.html"><em class="manpage">pcre2pattern(3)</em></a>.
+From now on, we assume that the reader is familiar with it.</p>
+<p>Apart from the Perl-compatible regexes, R also gives access
+to the TRE library (ERE-like), which is the default one; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;regex&quot;)</span></code>.
 However, we discourage its use because it is feature-poorer.</p>
 </div>
-<div class="proof proof-type-exercise" id="id15">
+<div class="proof proof-type-exercise" id="id17">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.2</span>
+        <span class="proof-type">Exercise 6.3</span>
         
     </div><div class="proof-content">
 <p>The <strong class="command">list.files</strong> function generates the list
 of file names in a given directory that match a given regular expression.
-For instance, the following gives all CSV files in some directory.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list.files</span><span class="p">(</span><span class="s">&quot;../../Projects/teaching-data/r/&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="s">&quot;(\.csv$)&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># or &quot;\\.csv$&quot;</span>
+For instance, the following gives all CSV files in some folder.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list.files</span><span class="p">(</span><span class="s">&quot;~/Projects/teaching-data/r/&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\.csv$&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;air_quality_1973.csv&quot; &quot;anscombe.csv&quot;         &quot;iris.csv&quot;</span>
 <span class="c1">## [4] &quot;titanic.csv&quot;          &quot;tooth_growth.csv&quot;     &quot;trees.csv&quot;</span>
 <span class="c1">## [7] &quot;world_phones.csv&quot;</span>
 </pre></div>
 </div>
-<p>Write a single regular expression that matches file names
-ending with “<code class="docutils literal notranslate"><span class="pre">.csv</span></code>” or “<code class="docutils literal notranslate"><span class="pre">.csv.gz</span></code>”.
-Also, scribble a regex that matches CSV files whose names do not begin
-with “<code class="docutils literal notranslate"><span class="pre">eurusd</span></code>”.</p>
+<p>Write a single regular expression that matches file names ending with
+“<code class="docutils literal notranslate"><span class="pre">.csv</span></code>” <em>or</em> “<code class="docutils literal notranslate"><span class="pre">.csv.gz</span></code>”. Also, scribble a regex that matches CSV files
+whose names do not begin with “<code class="docutils literal notranslate"><span class="pre">eurusd</span></code>”.</p>
 </div></div></section>
 <section id="locating-pattern-occurrences">
 <h3><span class="section-number">6.2.5. </span>Locating pattern occurrences<a class="headerlink" href="#locating-pattern-occurrences" title="Permalink to this heading">#</a></h3>
@@ -711,9 +719,8 @@ with “<code class="docutils literal notranslate"><span class="pre">eurusd</spa
 </pre></div>
 </div>
 <p>In particular, there is a pattern occurrence starting at the
-3th code point of the 2nd
-string in <code class="docutils literal notranslate"><span class="pre">x</span></code>.
-Moreover, the last string has no pattern match (denoted with <code class="docutils literal notranslate"><span class="pre">-1</span></code>).</p>
+third code point of the second string in <code class="docutils literal notranslate"><span class="pre">x</span></code>.
+Moreover, the last string has no pattern match, which is denoted with <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">match.length</span></code> attribute is generally more informative when
 searching with regular expressions.</p>
 <p>To locate all the matches, i.e., globally,
@@ -758,8 +765,8 @@ we use <strong class="command">gregexpr</strong>:</p>
 </pre></div>
 </div>
 <p>As we noted in <a class="reference internal" href="140-list.html#sec-list-use-cases"><span class="std std-numref">Section 4.4.2</span></a>,
-wrapping the results in a list was a clever choice, as the number
-of matches can obviously vary between strings.</p>
+wrapping the results in a list was a clever choice
+for the number of matches can obviously vary between strings.</p>
 <p>In <a class="reference internal" href="170-function.html#sec-fun-prog"><span class="std std-numref">Section 7.2</span></a>, we will look at the
 <strong class="command">Map</strong> function, which, along with <strong class="command">substring</strong> introduced
 below, can aid in getting the most out of such data.
@@ -782,15 +789,15 @@ extracts the matching substrings:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*) Let us consider what happens when a regular expression contains
-parenthesised subexpressions (capture groups).</p>
+<em>parenthesised subexpressions (capture groups)</em>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;(?&lt;basename&gt;[^. ]+)\\.(?&lt;extension&gt;[^ ]*)&quot;</span>
 </pre></div>
 </div>
-<p>The above regex consists of two such parts.
-The first one is labelled “<code class="docutils literal notranslate"><span class="pre">basename</span></code>”. It comprises several
-arbitrary characters except for the space and the dot.
+<p>The above regex consists of two capture groups separated by
+a dot. The first one is labelled “<code class="docutils literal notranslate"><span class="pre">basename</span></code>”. It comprises several
+arbitrary characters except for spaces and dots.
 The second group, named “<code class="docutils literal notranslate"><span class="pre">extension</span></code>”, is a substring consisting
-of anything but the space. A dot separates these two groups.</p>
+of anything but spaces.</p>
 <p>Such a pattern can be used for unpacking space-delimited lists of
 file names.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;dataset.csv.gz something_else.txt spam&quot;</span>
@@ -834,15 +841,15 @@ file names.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">capture.*</span></code> attributes give us access to the matches to the individual
 capture groups, i.e., the <code class="docutils literal notranslate"><span class="pre">basename</span></code> and the <code class="docutils literal notranslate"><span class="pre">extension</span></code>.</p>
 </div>
-<div class="proof proof-type-exercise" id="id16">
+<div class="proof proof-type-exercise" id="id18">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.3</span>
+        <span class="proof-type">Exercise 6.4</span>
         
     </div><div class="proof-content">
 <p>(*) Check out the difference between the results generated by
 <strong class="command">regexec</strong> and <strong class="command">regexpr</strong> as well as
-<strong class="command">gregexec</strong> and <strong class="command">gregexpr</strong>.</p>
+between the outputs of <strong class="command">gregexec</strong> and <strong class="command">gregexpr</strong>.</p>
 </div></div></section>
 <section id="replacing-pattern-occurrences">
 <h3><span class="section-number">6.2.6. </span>Replacing pattern occurrences<a class="headerlink" href="#replacing-pattern-occurrences" title="Permalink to this heading">#</a></h3>
@@ -871,10 +878,10 @@ another letter, and the former letter again. Each
 such palindrome of length three is replaced with just the repeated
 letter.</p>
 </div>
-<div class="proof proof-type-exercise" id="id17">
+<div class="proof proof-type-exercise" id="id19">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.4</span>
+        <span class="proof-type">Exercise 6.5</span>
         
     </div><div class="proof-content">
 <p>(*) Display the source code of <strong class="command">glob2rx</strong> by calling
@@ -885,9 +892,7 @@ or <code class="regexp docutils literal notranslate"><span class="pre">*.csv</sp
 </div></div></section>
 <section id="splitting-strings-into-tokens">
 <h3><span class="section-number">6.2.7. </span>Splitting strings into tokens<a class="headerlink" href="#splitting-strings-into-tokens" title="Permalink to this heading">#</a></h3>
-<p><strong class="command">strsplit</strong> divides each string in a character vector into chunks.
-This time, though, the search pattern specifying the token delimiter
-is given as the second argument:</p>
+<p><strong class="command">strsplit</strong> divides each string in a character vector into chunks.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">strsplit</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam;spam;eggs;;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fixed</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] &quot;spam&quot;  &quot;spam&quot;  &quot;eggs&quot;  &quot;&quot;      &quot;bacon&quot;</span>
@@ -896,6 +901,8 @@ is given as the second argument:</p>
 <span class="c1">## [1] &quot;spam&quot;</span>
 </pre></div>
 </div>
+<p>Note that this time the search pattern specifying the token
+delimiter is given as the <em>second</em> argument (an inconsistency).</p>
 </section>
 </section>
 <section id="other-string-operations">
@@ -926,7 +933,7 @@ version of the above:</p>
 </div>
 <p>Unfortunately, the number of characters in the replacement string
 should not exceed the length of the part being substituted
-(try “<code class="docutils literal notranslate"><span class="pre">chickpeas</span></code>” instead of “<code class="docutils literal notranslate"><span class="pre">eggs</span></code>”).
+(try <code class="docutils literal notranslate"><span class="pre">&quot;chickpeas&quot;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&quot;eggs&quot;</span></code>).
 However, substring replacement can be written as
 a composition of substring extraction and concatenation:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">paste</span><span class="p">(</span><span class="nf">substring</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;chickpeas&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">substring</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
@@ -934,10 +941,10 @@ a composition of substring extraction and concatenation:</p>
 </pre></div>
 </div>
 </div>
-<div class="proof proof-type-exercise" id="id18">
+<div class="proof proof-type-exercise" id="id20">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.5</span>
+        <span class="proof-type">Exercise 6.6</span>
         
     </div><div class="proof-content">
 <p>Take the output generated by <strong class="command">regexpr</strong> and apply <strong class="command">substring</strong>
@@ -946,7 +953,7 @@ the corresponding output should be <code class="docutils literal notranslate"><s
 </div></div></section>
 <section id="translating-characters">
 <h3><span class="section-number">6.3.2. </span>Translating characters<a class="headerlink" href="#translating-characters" title="Permalink to this heading">#</a></h3>
-<p><strong class="command">tolower</strong> and <strong class="command">toupper</strong> can be used to convert between
+<p><strong class="command">tolower</strong> and <strong class="command">toupper</strong> converts between
 lower and upper case:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">toupper</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;SPAM&quot;</span>
@@ -956,8 +963,8 @@ lower and upper case:</p>
 <p class="admonition-title">Note</p>
 <p>Like many other string operations in base R, these functions
 perform very simple character substitutions. They might not be valid
-in natural language processing tasks. For instance, <em>groß</em> is <strong>not</strong>
-converted to <em>GROSS</em>, the correct case folding in German.</p>
+in natural language processing tasks. For instance, <em>groß</em> is <em>not</em>
+converted to <em>GROSS</em>, being the correct case folding in German.</p>
 </div>
 <p>Moreover, <strong class="command">chartr</strong> translates individual characters:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">chartr</span><span class="p">(</span><span class="s">&quot;\\&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c:\\windows\\system\\cmd.exe&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># chartr(old, new, x)</span>
@@ -1010,7 +1017,7 @@ and the R package <strong class="program">stringi</strong>; see <span id="id10">
 <span class="c1">## [1] &quot;hardy&quot;   &quot;hladný&quot;  &quot;chladný&quot; &quot;chłodny&quot;</span>
 <span class="nf">toupper</span><span class="p">(</span><span class="s">&quot;gro\u00DF&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># compare base::toupper(&quot;gro\u00DF&quot;)</span>
 <span class="c1">## [1] &quot;GROSS&quot;</span>
-<span class="nf">detach</span><span class="p">(</span><span class="s">&quot;package:stringx&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># unload the package</span>
+<span class="nf">detach</span><span class="p">(</span><span class="s">&quot;package:stringx&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># remove the package from the search path</span>
 </pre></div>
 </div>
 </div>
@@ -1020,7 +1027,7 @@ and the R package <strong class="program">stringi</strong>; see <span id="id10">
 <h2><span class="section-number">6.4. </span>Other atomic vector types (*)<a class="headerlink" href="#other-atomic-vector-types" title="Permalink to this heading">#</a></h2>
 <p>We have discussed four vector types: <code class="docutils literal notranslate"><span class="pre">logical</span></code>, <code class="docutils literal notranslate"><span class="pre">double</span></code>, <code class="docutils literal notranslate"><span class="pre">character</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">list</span></code> (the latter being a generic-recursive vector).
-To get the complete picture of the sequence-like types in R,
+To get a more complete picture of the sequence-like types in R,
 let us briefly mention <code class="docutils literal notranslate"><span class="pre">integer</span></code>, <code class="docutils literal notranslate"><span class="pre">complex</span></code>, and <code class="docutils literal notranslate"><span class="pre">raw</span></code> atomic types
 so that we are not surprised when we encounter them.</p>
 <section id="integer-vectors">
@@ -1041,10 +1048,8 @@ so that we are not surprised when we encounter them.</p>
 </pre></div>
 </div>
 <p>In most expressions, integer vectors behave like numeric ones.
-They are silently coerced to <code class="docutils literal notranslate"><span class="pre">double</span></code> if need be.
-Therefore, there is no real practical reason to distinguish between them
-(they are of <em>internal</em> interest, e.g.,
-when writing C/C++ extensions; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>).
+They are silently coerced to <code class="docutils literal notranslate"><span class="pre">double</span></code> if need be. Usually, there is no
+practical<a class="footnote-reference brackets" href="#footint" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> reason to distinguish between them.
 For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="m">1L</span><span class="o">/</span><span class="m">2L</span><span class="w">  </span><span class="c1"># like 1/2 == 1.0/2.0</span>
 <span class="c1">## [1] 0.5</span>
@@ -1053,10 +1058,9 @@ For example:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
-R <code class="docutils literal notranslate"><span class="pre">integer</span></code>s are 32-bit signed types.
-The <code class="docutils literal notranslate"><span class="pre">double</span></code> type can store more integers than them
-(with the maximal contiguously representable integer
-being <span class="math">\(2^{53}\)</span> vs <span class="math">\(2^{31}-1\)</span> in the former case; see <a class="reference internal" href="130-logical.html#sec-fp"><span class="std std-numref">Section 3.2.3</span></a>):</p>
+R <code class="docutils literal notranslate"><span class="pre">integer</span></code>s are 32-bit signed types. In the <code class="docutils literal notranslate"><span class="pre">double</span></code> type, we can store
+more of them. The maximal contiguously representable integer
+is <span class="math">\(2^{31}-1\)</span> and <span class="math">\(2^{53}\)</span>, respectively; see <a class="reference internal" href="130-logical.html#sec-fp"><span class="std std-numref">Section 3.2.3</span></a>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.integer</span><span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="m">31-1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1L</span><span class="w">  </span><span class="c1"># 32-bit integer overflow</span>
 <span class="c1">## Warning in as.integer(2^31 - 1) + 1L: NAs produced by integer overflow</span>
 <span class="c1">## [1] NA</span>
@@ -1064,7 +1068,7 @@ being <span class="math">\(2^{53}\)</span> vs <span class="math">\(2^{31}-1\)</s
 <span class="c1">## [1] TRUE</span>
 <span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w">  </span><span class="c1"># OK</span>
 <span class="c1">## [1] TRUE</span>
-<span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w">  </span><span class="c1"># lost due to FP rounding, left result is 2^53 - 1</span>
+<span class="p">(</span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">53</span><span class="w">  </span><span class="c1"># lost due to FP rounding; left side equals 2^53 - 1</span>
 <span class="c1">## [1] FALSE</span>
 </pre></div>
 </div>
@@ -1073,19 +1077,17 @@ being <span class="math">\(2^{53}\)</span> vs <span class="math">\(2^{31}-1\)</s
 <p class="admonition-title">Note</p>
 <p>Since R 3.0, there is support for vectors longer
 than <span class="math">\(2^{31}-1\)</span> elements. As there are no 64-bit integers
-in R, these are indexed by doubles anyway (as we have been doing
-all this time).
-Interestingly, <code class="docutils literal notranslate"><span class="pre">x[1.9]</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">x[1]</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">x[-1.9]</span></code> means <code class="docutils literal notranslate"><span class="pre">x[-1]</span></code> (a truncation of the fractional part).
-This is why the notation like <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)*0.2]</span></code>
-works regardless of whether the length of <code class="docutils literal notranslate"><span class="pre">x</span></code> is a multiple of 5
-or not, which is neat.</p>
+in R, long vectors are indexed by <code class="docutils literal notranslate"><span class="pre">double</span></code>s (we have been doing
+all this time). In particular, <code class="docutils literal notranslate"><span class="pre">x[1.9]</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">x[1]</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">x[-1.9]</span></code> means <code class="docutils literal notranslate"><span class="pre">x[-1]</span></code>, i.e., the fractional part is truncated.
+It is why the notation like <code class="docutils literal notranslate"><span class="pre">x[</span></code><strong class="command">length</strong><code class="code docutils literal notranslate"><span class="pre">(x)*0.2]</span></code>
+works, whether the length of <code class="docutils literal notranslate"><span class="pre">x</span></code> is a multiple of five or not.</p>
 </div>
 </section>
 <section id="raw-vectors">
 <span id="sec-raw"></span><h3><span class="section-number">6.4.2. </span>Raw vectors (*)<a class="headerlink" href="#raw-vectors" title="Permalink to this heading">#</a></h3>
 <p>Vectors of the type <code class="docutils literal notranslate"><span class="pre">raw</span></code> can store bytes, i.e., unsigned
-8-bit integers, whose range is 0–255 (there are no raw <code class="docutils literal notranslate"><span class="pre">NA</span></code>s).
+8-bit integers, whose range is 0–255.
 For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.raw</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="mh">0xc0</span><span class="p">,</span><span class="w"> </span><span class="m">254</span><span class="p">,</span><span class="w"> </span><span class="m">255</span><span class="p">,</span><span class="w"> </span><span class="m">256</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span>
 <span class="c1">## Warning: out-of-range values treated as 0 in coercion to raw</span>
@@ -1093,11 +1095,46 @@ For example:</p>
 </pre></div>
 </div>
 <p>They are displayed as two-digit hexadecimal (base-16) numbers.
-We may enter such numbers using the “<code class="docutils literal notranslate"><span class="pre">0x</span></code>” prefix.</p>
+There are no raw <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.</p>
 <p>Only a few functions deal with such vectors:
 e.g., <strong class="command">readBin</strong>, <strong class="command">charToRaw</strong>,
 and <strong class="command">rawToChar</strong>.</p>
-</section>
+<p>Interestingly, the meaning of the logical operators differs
+for raw vectors; they denote bitwise operations.
+See also <strong class="command">bitwAnd</strong>, <strong class="command">bitwOr</strong> etc. that
+work on integer vectors.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">xor</span><span class="p">(</span><span class="nf">as.raw</span><span class="p">(</span><span class="mh">0xf0</span><span class="p">),</span><span class="w"> </span><span class="nf">as.raw</span><span class="p">(</span><span class="mh">0x0f</span><span class="p">))</span>
+<span class="c1">## [1] ff</span>
+<span class="nf">bitwXor</span><span class="p">(</span><span class="mh">0x0fff0f00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0f00f0ff</span><span class="p">)</span>
+<span class="c1">## [1] 16777215</span>
+</pre></div>
+</div>
+<div class="proof proof-type-example" id="id21">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 6.7</span>
+        
+    </div><div class="proof-content">
+<p>(*)
+One use case of bitwise operations is for representing
+a selection of items in a small set of possible values.
+This can be useful for communicating with routines implemented
+in C/C++. For instance, let us define three flags:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">HAS_SPAM</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="mh">0x01</span><span class="w">  </span><span class="c1"># binary 00000001</span>
+<span class="n">HAS_BACON</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="mh">0x02</span><span class="w">  </span><span class="c1"># binary 00000010</span>
+<span class="n">HAS_EGGS</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="mh">0x04</span><span class="w">  </span><span class="c1"># binary 00000100</span>
+</pre></div>
+</div>
+<p>Now a particular subset can be created using the bitwise OR:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">dish</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">bitwOr</span><span class="p">(</span><span class="n">HAS_SPAM</span><span class="p">,</span><span class="w"> </span><span class="n">HAS_EGGS</span><span class="p">)</span><span class="w">  </span><span class="c1"># {spam, eggs}</span>
+</pre></div>
+</div>
+<p>Testing for inclusion is done via the bitwise AND:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.logical</span><span class="p">(</span><span class="nf">bitwAnd</span><span class="p">(</span><span class="n">dish</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">HAS_SPAM</span><span class="p">,</span><span class="w"> </span><span class="n">HAS_BACON</span><span class="p">,</span><span class="w"> </span><span class="n">HAS_EGGS</span><span class="p">)))</span>
+<span class="c1">## [1]  TRUE FALSE  TRUE</span>
+</pre></div>
+</div>
+</div></div></section>
 <section id="complex-vectors">
 <span id="sec-complex"></span><h3><span class="section-number">6.4.3. </span>Complex vectors (*)<a class="headerlink" href="#complex-vectors" title="Permalink to this heading">#</a></h3>
 <p>We can also play with vectors of the type <code class="docutils literal notranslate"><span class="pre">complex</span></code>,
@@ -1108,7 +1145,7 @@ They are (at least: ought to be) part of introductory
 subjects or textbooks in university-level mathematics,
 including the statistics/machine learning-oriented ones
 because of their heavy use of numerical computing; see e.g.,
-<span id="id12">[<a class="reference internal" href="999-bibliography.html#id28" title="Deisenroth, M.P., Faisal, A.A., and Ong, C.S. (2020).  Mathematics for Machine Learning. Cambridge University Press. URL: https://mml-book.com/.">19</a>, <a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2007).  Matrix Algebra. Springer.">30</a>]</span>.</p>
+<span id="id13">[<a class="reference internal" href="999-bibliography.html#id28" title="Deisenroth, M.P., Faisal, A.A., and Ong, C.S. (2020).  Mathematics for Machine Learning. Cambridge University Press. URL: https://mml-book.com/.">19</a>, <a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2007).  Matrix Algebra. Springer.">30</a>]</span>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1i</span><span class="p">,</span><span class="w"> </span><span class="kc">pi</span><span class="o">+</span><span class="kc">pi</span><span class="o">*</span><span class="m">1i</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_complex_</span><span class="p">)</span>
 <span class="c1">## [1] 0.0000+0.0000i 0.0000+1.0000i 3.1416+3.1416i             NA</span>
 </pre></div>
@@ -1123,98 +1160,97 @@ see <strong class="command">help</strong><code class="code docutils literal notr
 <h2><span class="section-number">6.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <p>Exercises marked with (*) might require tinkering with regular expressions
 or third-party R packages.</p>
-<div class="proof proof-type-exercise" id="id19">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 6.6</span>
-        
-    </div><div class="proof-content">
-<p>Answer the following questions.</p>
-<ul class="simple">
-<li><p>How many characters are there in the string <code class="docutils literal notranslate"><span class="pre">&quot;ab\n\\\t\\\\\&quot;&quot;</span></code>?
-What about <code class="docutils literal notranslate"><span class="pre">&quot;-{ab\n\\\t\\\\\&quot;-)}-&quot;</span></code>?</p></li>
-<li><p>What is the result of calling
-“<strong class="command">paste</strong><code class="code docutils literal notranslate"><span class="pre">(NA,</span> <span class="pre">1:5,</span> <span class="pre">collapse=&quot;&quot;)</span></code>”?</p></li>
-<li><p>What is the meaning of the following <strong class="command">sprintf</strong> format strings:
-<code class="docutils literal notranslate"><span class="pre">&quot;%s&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;%20s&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;%-20s&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;%f&quot;</span></code>,  <code class="docutils literal notranslate"><span class="pre">&quot;%g&quot;</span></code>,  <code class="docutils literal notranslate"><span class="pre">&quot;%e&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;%5f&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;%5.2f%%&quot;</span></code>,
-<code class="docutils literal notranslate"><span class="pre">&quot;%.2f&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;%0+5f&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;[%+-5.2f]&quot;</span></code>?</p></li>
-<li><p>What is the difference between <strong class="command">regexpr</strong> and <strong class="command">gregexpr</strong>?
-What does “g” in the latter name stand for?</p></li>
-<li><p>What is the result of a call to
-“<strong class="command">grepl</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;spam&quot;,</span> <span class="pre">&quot;spammity</span> <span class="pre">spam&quot;,</span> <span class="pre">&quot;aubergines&quot;),</span> <span class="pre">&quot;spam&quot;)</span></code>”?</p></li>
-<li><p>Is it always the case that “<code class="docutils literal notranslate"><span class="pre">&quot;Aaron&quot;</span> <span class="pre">&lt;</span> <span class="pre">&quot;Zorro&quot;</span></code>”?</p></li>
-<li><p>Why “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">&quot;10&quot;</span></code>” and “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">10</span></code>” may return different results?</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is a character vector, is “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">x</span></code>” always equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>?</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are character vectors of lengths <span class="math">\(n\)</span> and <span class="math">\(m\)</span>, respectively,
-what is the length of the output of “<strong class="command">match</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>”?</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is a named vector, why is there a difference between
-“<code class="docutils literal notranslate"><span class="pre">x[NA]</span></code>” and “<code class="docutils literal notranslate"><span class="pre">x[NA_character_]</span></code>”?</p></li>
-<li><p>What is the difference between “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code>” and “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%in%</span> <span class="pre">y</span></code>”?</p></li>
-</ul>
-</div></div><div class="proof proof-type-exercise" id="id20">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 6.7</span>
-        
-    </div><div class="proof-content">
-<p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code> be atomic vectors and <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> be single strings.
-Generate the same results as
-“<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">collapse=b)</span></code>”,
-“<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">sep=a)</span></code>”,
-“<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">sep=a,</span> <span class="pre">collapse=b)</span></code>”,
-“<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">sep=a)</span></code>”,
-“<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">sep=a,</span> <span class="pre">collapse=b)</span></code>”,
-assuming that <strong class="command">pastena</strong> is a version of <strong class="command">paste</strong>
-(which we do not have) that handles missing data in a way consistent
-with most other functions.</p>
-</div></div><div class="proof proof-type-exercise" id="id21">
+<div class="proof proof-type-exercise" id="id22">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 6.8</span>
         
     </div><div class="proof-content">
-<p>Based on <strong class="command">list.files</strong> and <strong class="command">glob2rx</strong>,
-generate the list of all PDFs on your computer.
-Then, using <strong class="command">file.size</strong> filter out the files smaller
-than 10 MiB.</p>
-</div></div><div class="proof proof-type-exercise" id="id22">
+<p>Answer the following questions.</p>
+<ul class="simple">
+<li><p>How many characters are there in the string <code class="docutils literal notranslate"><span class="pre">&quot;ab\n\\\t\\\\\&quot;&quot;</span></code>?
+What about <code class="docutils literal notranslate"><span class="pre">r&quot;-{ab\n\\\t\\\\\&quot;-)}-&quot;</span></code>?</p></li>
+<li><p>What is the result of a call to
+<strong class="command">paste</strong><code class="code docutils literal notranslate"><span class="pre">(NA,</span> <span class="pre">1:5,</span> <span class="pre">collapse=&quot;&quot;)</span></code>?</p></li>
+<li><p>What is the meaning of the following <strong class="command">sprintf</strong> format strings:
+“<code class="docutils literal notranslate"><span class="pre">%s</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%20s</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%-20s</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%f</span></code>”,  “<code class="docutils literal notranslate"><span class="pre">%g</span></code>”,  “<code class="docutils literal notranslate"><span class="pre">%e</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%5f</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%5.2f%%</span></code>”,
+“<code class="docutils literal notranslate"><span class="pre">%.2f</span></code>”, “<code class="docutils literal notranslate"><span class="pre">%0+5f</span></code>”, and “<code class="docutils literal notranslate"><span class="pre">[%+-5.2f]</span></code>”?</p></li>
+<li><p>What is the difference between <strong class="command">regexpr</strong> and <strong class="command">gregexpr</strong>?
+What does “g” in the latter function name stand for?</p></li>
+<li><p>What is the result of a call to
+<strong class="command">grepl</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;spam&quot;,</span> <span class="pre">&quot;spammity</span> <span class="pre">spam&quot;,</span> <span class="pre">&quot;aubergines&quot;),</span> <span class="pre">&quot;spam&quot;)</span></code>?</p></li>
+<li><p>Is it always the case that “<code class="docutils literal notranslate"><span class="pre">&quot;Aaron&quot;</span> <span class="pre">&lt;</span> <span class="pre">&quot;Zorro&quot;</span></code>”?</p></li>
+<li><p>Why “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">&quot;10&quot;</span></code>” and “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">10</span></code>” may return different results?</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is a character vector, is “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">x</span></code>” always equal to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>?</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are character vectors of lengths <span class="math">\(n\)</span> and <span class="math">\(m\)</span>, respectively,
+what is the length of the output of <strong class="command">match</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>?</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is a named vector, why is there a difference between
+<code class="docutils literal notranslate"><span class="pre">x[NA]</span></code> and <code class="docutils literal notranslate"><span class="pre">x[NA_character_]</span></code>?</p></li>
+<li><p>What is the difference between “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code>” and “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%in%</span> <span class="pre">y</span></code>”?</p></li>
+</ul>
+</div></div><div class="proof proof-type-exercise" id="id23">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 6.9</span>
         
     </div><div class="proof-content">
-<p>Read a text file that stores a long paragraph of some banal prose.
-Concatenate all the lines to form a single, long string.
-Using <strong class="command">strwrap</strong> and <strong class="command">cat</strong>,
-output the paragraph on the console,
-nicely formatted to fit an aesthetic width, say, 60 text columns.</p>
-</div></div><div class="proof proof-type-exercise" id="id23">
+<p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code> be atomic vectors and <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> be single strings.
+Generate the same results as
+<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">collapse=b)</span></code>,
+<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">sep=a)</span></code>,
+<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">sep=a,</span> <span class="pre">collapse=b)</span></code>,
+<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">sep=a)</span></code>,
+<strong class="command">pastena</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">sep=a,</span> <span class="pre">collapse=b)</span></code>,
+assuming that <strong class="command">pastena</strong> is a version of <strong class="command">paste</strong>
+(which we do not have) that handles missing data in a way consistent
+with most other functions.</p>
+</div></div><div class="proof proof-type-exercise" id="id24">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 6.10</span>
         
     </div><div class="proof-content">
-<p>(*) Implement your own simplified version of <strong class="command">basename</strong> and <strong class="command">dirname</strong>.</p>
-</div></div><div class="proof proof-type-exercise" id="id24">
+<p>Based on <strong class="command">list.files</strong> and <strong class="command">glob2rx</strong>,
+generate the list of all PDFs on your computer. Then, use
+<strong class="command">file.size</strong> to filter out the files smaller than 10 MiB.</p>
+</div></div><div class="proof proof-type-exercise" id="id25">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 6.11</span>
         
     </div><div class="proof-content">
-<p>(*) Implement an operation similar to <strong class="command">trimws</strong> using the functions
-introduced in this chapter.</p>
-</div></div><div class="proof proof-type-exercise" id="id25">
+<p>Read a text file that stores a long paragraph of some banal prose.
+Concatenate all the lines to form a single, long string.
+Using <strong class="command">strwrap</strong> and <strong class="command">cat</strong>,
+output the paragraph on the console, nicely formatted to fit a block
+of text of an aesthetic width, say, 60 columns.</p>
+</div></div><div class="proof proof-type-exercise" id="id26">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 6.12</span>
         
     </div><div class="proof-content">
-<p>(*) Write a regex that extracts all <em>words</em> from each string in a
-given character vector.</p>
-</div></div><div class="proof proof-type-exercise" id="id26">
+<p>(*) Implement your own simplified version of <strong class="command">basename</strong> and <strong class="command">dirname</strong>.</p>
+</div></div><div class="proof proof-type-exercise" id="id27">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 6.13</span>
+        
+    </div><div class="proof-content">
+<p>(*) Implement an operation similar to <strong class="command">trimws</strong> using the functions
+introduced in this chapter.</p>
+</div></div><div class="proof proof-type-exercise" id="id28">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 6.14</span>
+        
+    </div><div class="proof-content">
+<p>(*) Write a regex that extracts all <em>words</em> from each string in a
+given character vector.</p>
+</div></div><div class="proof proof-type-exercise" id="id29">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 6.15</span>
         
     </div><div class="proof-content">
 <p>(*) Write a regex that extracts, from each string
@@ -1227,26 +1263,26 @@ in a character vector, all:</p>
 <li><p>email&#64;address.es,</p></li>
 <li><p>hyperlinks of the form http://… and https://….</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id27">
+</div></div><div class="proof proof-type-exercise" id="id30">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.14</span>
+        <span class="proof-type">Exercise 6.16</span>
         
     </div><div class="proof-content">
 <p>(*) What do <code class="docutils literal notranslate"><span class="pre">42i</span></code>, <code class="docutils literal notranslate"><span class="pre">42L</span></code>, and <code class="docutils literal notranslate"><span class="pre">0x42</span></code> stand for?</p>
-</div></div><div class="proof proof-type-exercise" id="id28">
+</div></div><div class="proof proof-type-exercise" id="id31">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.15</span>
+        <span class="proof-type">Exercise 6.17</span>
         
     </div><div class="proof-content">
 <p>(*) Check out <strong class="command">stri_sort</strong> in the <strong class="program">stringi</strong> package
 (or <strong class="command">sort.character</strong> in <strong class="program">stringx</strong>) for a way
 to obtain an ordering like <code class="docutils literal notranslate"><span class="pre">&quot;a1&quot;</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">&quot;a2&quot;</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">&quot;a10&quot;</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">&quot;a11&quot;</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">&quot;a100&quot;</span></code>.</p>
-</div></div><div class="proof proof-type-exercise" id="id29">
+</div></div><div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.16</span>
+        <span class="proof-type">Exercise 6.18</span>
         
     </div><div class="proof-content">
 <p>(*)
@@ -1254,8 +1290,8 @@ In <strong class="command">sprintf</strong>,
 the formatter <code class="docutils literal notranslate"><span class="pre">&quot;%20s&quot;</span></code> means that if a string is less than 20 bytes
 long, the remaining bytes will be replaced with spaces.
 Only for ASCII characters (English letters, digits, some punctuation marks,
-etc.), it is true that one character is represented by 1 byte.
-Other Unicode code points can take up between 2 and 4 bytes.</p>
+etc.), it is true that one character is represented by one byte.
+Other Unicode code points can take up between two and four bytes.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;..%6s..&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1!&lt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aßc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ąß©&quot;</span><span class="p">)),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># aligned?</span>
 <span class="c1">## ..   abc..</span>
 <span class="c1">## ..   1!&lt;..</span>
@@ -1266,10 +1302,10 @@ Other Unicode code points can take up between 2 and 4 bytes.</p>
 <p>Use the <strong class="command">stri_pad</strong> function from the <strong class="program">stringi</strong>
 package to align the strings aesthetically.
 Alternatively, check out <strong class="command">sprintf</strong> from <strong class="program">stringx</strong>.</p>
-</div></div><div class="proof proof-type-exercise" id="id30">
+</div></div><div class="proof proof-type-exercise" id="id33">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 6.17</span>
+        <span class="proof-type">Exercise 6.19</span>
         
     </div><div class="proof-content">
 <p>(*) Implement an operation similar to <strong class="command">stri_pad</strong>
@@ -1292,9 +1328,10 @@ each of which is a string of characters (<code class="docutils literal notransla
 </aside>
 <aside class="footnote brackets" id="footsprintfwidth" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
-<p>This is only true for 8-bit native encodings;
-see also <strong class="command">sprintf</strong> from the <strong class="program">stringx</strong> package,
-which takes the text width and not the number of bytes into account.</p>
+<p>This is only true for 8-bit native encodings
+or ASCII; see also <strong class="command">sprintf</strong> from the <strong class="program">stringx</strong>
+package, which takes the text width and not the number of bytes into
+account.</p>
 </aside>
 <aside class="footnote brackets" id="footxtfrm" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">4</a><span class="fn-bracket">]</span></span>
@@ -1303,12 +1340,17 @@ which takes the text width and not the number of bytes into account.</p>
 <aside class="footnote brackets" id="footaltrepint" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">5</a><span class="fn-bracket">]</span></span>
 <p>Actually, <code class="docutils literal notranslate"><span class="pre">1:10</span></code> returns an integer vector in a compact
-(ALTREP; see <span id="id13">[<a class="reference internal" href="999-bibliography.html#id69" title="Tierney, L., Becker, G., and Kalibera, T. (2018).  ALTREP: Alternative Representations for R Objects. URL: https://svn.r-project.org/R/branches/ALTREP/ALTREP.html.">55</a>]</span>)
-form; compare the results of the call to “<strong class="command">.Internal</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">inspect</strong><code class="code docutils literal notranslate"><span class="pre">(1:10))</span></code>”
-and “<strong class="command">.Internal</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">inspect</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">10,</span> <span class="pre">1)))</span></code>”. This way, the whole vector
+(ALTREP; see <span id="id14">[<a class="reference internal" href="999-bibliography.html#id69" title="Tierney, L., Becker, G., and Kalibera, T. (2018).  ALTREP: Alternative Representations for R Objects. URL: https://svn.r-project.org/R/branches/ALTREP/ALTREP.html.">55</a>]</span>)
+form; compare the results of the call to <strong class="command">.Internal</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">inspect</strong><code class="code docutils literal notranslate"><span class="pre">(1:10))</span></code>
+and <strong class="command">.Internal</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">inspect</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">10,</span> <span class="pre">1)))</span></code>. This way, the whole vector
 does not have to be allocated. This saves memory and time.
 At the R level, though, it behaves as any other integer (numeric)
 sequence.</p>
+</aside>
+<aside class="footnote brackets" id="footint" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">6</a><span class="fn-bracket">]</span></span>
+<p>They are of <em>internal</em> interest, e.g.,
+when writing C/C++ extensions; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
 </aside>
 </aside>
 </section>
@@ -1349,7 +1391,7 @@ sequence.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-20T15:57:23+1000.
+              Last updated on 2023-06-21T21:13:14+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

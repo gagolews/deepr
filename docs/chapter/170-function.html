@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.0.9003 (draft)
+v0.9.0.9004 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -297,11 +297,11 @@ Make sure to check out the author’s other book,
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">26</a>]</span>.</em></p>
 </div></blockquote>
-<p>R is a <em>functional language</em> where functions play first fiddle.
+<p>R is a <em>functional</em> language, i.e., one where functions play first fiddle.
 Each action we perform reduces itself to a call to some function
 or a combination thereof.</p>
 <p>So far, we have been tinkering with dozens of available functions
-which are part of base R, with only a few exceptions.
+which were mostly part of base R.
 They constitute the essential vocabulary that everyone
 <em>must</em> be able to speak fluently.</p>
 <p>Any operation, be it <strong class="command">sum</strong>, <strong class="command">sqrt</strong>,
@@ -318,14 +318,14 @@ of nanoseconds or hours, we can relish what has been bred. This is very convenie
 on its help page.</p>
 <p>In this chapter, we will learn how to write our <em>own</em> functions.
 Using this skill is a good development practice when we expect
-that some operations are to be executed many times
-but perhaps on different data.</p>
-<p>Also, some R functions are meant to invoke other functions,
+that <em>the same operations</em> will need to be <em>executed many times</em>
+but perhaps on <em>different data</em>.</p>
+<p>Also, some built-in functions invoke other procedures,
 for instance, on every element in a list or every section of a
 data frame grouped by a qualitative variable. Thus,
 it is advisable to learn how we can specify a custom operation
 to be propagated thereover.</p>
-<div class="proof proof-type-example" id="id10">
+<div class="proof proof-type-example" id="id7">
 
     <div class="proof-title">
         <span class="proof-type">Example 7.1</span>
@@ -337,21 +337,22 @@ to be propagated thereover.</p>
 <span class="n">x3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">64</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>when we want to apply the same action on different data,
-say, compute the root mean square, instead of retyping almost identical
+<p>assume we want to apply the same action on different data,
+say, compute the root mean square.
+Then, instead of retyping almost identical
 expressions (or a bunch of them) over and over again:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x1</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x1</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># very fresh</span>
 <span class="c1">## [1] 0.6545</span>
-<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x2</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># the same second time - borderline okay</span>
+<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x2</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># the same second time; borderline okay</span>
 <span class="c1">## [1] 0.56203</span>
-<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x3</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># tedious, barbarous, and error-prone</span>
+<span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x3</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># third time the same; tedious, barbarous, and error-prone</span>
 <span class="c1">## [1] 0.57206</span>
 </pre></div>
 </div>
 <p>we can <em>generalise</em> the operation to any object like <code class="docutils literal notranslate"><span class="pre">x</span></code>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">rms</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">                   </span><span class="c1"># bound what follows to name `rms`</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">rms</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">                   </span><span class="c1"># bind the name `rms` to...</span>
 <span class="w">    </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">          </span><span class="c1"># a function that takes one parameter, `x`</span>
-<span class="w">        </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># expression to transform the input to yield output</span>
+<span class="w">        </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># transforming the input to yield output this way</span>
 </pre></div>
 </div>
 <p>and then reuse it on different <em>concrete</em> data instances:</p>
@@ -368,22 +369,20 @@ expressions (or a bunch of them) over and over again:</p>
 <span class="c1">## [1] 0.50824</span>
 </pre></div>
 </div>
+<p>Thus, custom functions are very useful.</p>
 </div></div><div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Does writing your own functions equal reinventing the wheel?
+<p>Does writing own functions equal reinventing the wheel?
 Can everything be found online these days (including
-on Stack Overflow, GitHub, or CRAN)?</p>
-<p>Luckily, it is not the case. Otherwise,
-data analysts’, researchers’, and developers’ lives would be
-monotonous, dreary, and uninspiring.
-Plus, sometimes it is much quicker to compose a function from scratch
-than to get through the whole garbage dump from where, only occasionally,
-we can dig out some pearls.
-Not to mention the self-educative side: we become better programmers
-by crunching those exercises.
-We are advocating for minimalism here, remember?</p>
-<p>This and many other vital issues in function design
-will be reflected upon in <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>.</p>
+on Stack Overflow, GitHub, or CRAN)? Luckily, it is not the case.
+Otherwise, data analysts’, researchers’, and developers’ lives would be
+monotonous, dreary, and uninspiring. What is more, we might be able
+to compose a function from scratch much more quickly than to get through
+the whole garbage dump called the internet from where, only occasionally,
+we can dig out some pearls. Let us remember that we advocate for minimalism
+in this book. We will reflect on such issues in <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>.
+There is also the <em>personal growth</em> side: we become better programmers
+by crunching those exercises.</p>
 </div>
 <section id="creating-and-invoking-functions">
 <h2><span class="section-number">7.1. </span>Creating and invoking functions<a class="headerlink" href="#creating-and-invoking-functions" title="Permalink to this heading">#</a></h2>
@@ -394,9 +393,9 @@ will be reflected upon in <a class="reference internal" href="210-design.html#ch
 </pre></div>
 </div>
 <p>First, <code class="docutils literal notranslate"><span class="pre">args</span></code> is a (possibly empty) list of comma-separated parameter
-names which are supposed to act as input variables.</p>
-<p>Second, <code class="docutils literal notranslate"><span class="pre">body</span></code> is a <em>single</em>
-R expression that will be evaluated when the function is called.
+names which act as <em>input</em> variables.</p>
+<p>Second, <code class="docutils literal notranslate"><span class="pre">body</span></code> is a <em>single</em> R expression that is evaluated
+when the function is called.
 The value this expression yields will constitute the function’s
 output.</p>
 <p>For example, here is a definition of a function that takes
@@ -407,11 +406,10 @@ no inputs and generates a constant output:</p>
 </div>
 <p>We thus created a <em>function</em> object. However, it disappeared immediately
 thereafter, as we have not used it at all.</p>
-<p>Any function, say,  <strong class="command">f</strong> can be invoked,
-i.e., evaluated on concrete data,
-using the notation <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(arg1,</span> <span class="pre">...,</span> <span class="pre">argn)</span></code>,
-where “<code class="docutils literal notranslate"><span class="pre">arg1,</span> <span class="pre">...,</span> <span class="pre">argn</span></code>” are the arguments
-to be passed to <strong class="command">f</strong>.</p>
+<p>Any function <strong class="command">f</strong> can be <em>invoked</em>, i.e., evaluated
+on <em>concrete</em> data, using the syntax <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(arg1,</span> <span class="pre">...,</span> <span class="pre">argn)</span></code>.
+Here, <code class="docutils literal notranslate"><span class="pre">arg1</span></code>, …, <code class="docutils literal notranslate"><span class="pre">argn</span></code> are expressions passed as <em>arguments</em>
+to <strong class="command">f</strong>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="m">1</span><span class="p">)()</span><span class="w">  </span><span class="c1"># invoking f like f(); here, no arguments are expected</span>
 <span class="c1">## [1] 1</span>
 </pre></div>
@@ -421,10 +419,10 @@ to be passed to <strong class="command">f</strong>.</p>
 <p class="admonition-title">Note</p>
 <p>(*)
 Calling <strong class="command">typeof</strong> on a function object will report
-<code class="docutils literal notranslate"><span class="pre">&quot;closure&quot;</span></code> (for user-defined functions),
-<code class="docutils literal notranslate"><span class="pre">&quot;builtin&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;primitive&quot;</span></code> (for some built-in, base ones),
-for the reasons that we explain in more detail<a class="footnote-reference brackets" href="#footenv" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
-in <a class="reference internal" href="210-design.html#sec-closures"><span class="std std-numref">Section 9.5.3</span></a>:</p>
+<code class="docutils literal notranslate"><span class="pre">&quot;closure&quot;</span></code> (user-defined functions),
+<code class="docutils literal notranslate"><span class="pre">&quot;builtin&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;primitive&quot;</span></code> (built-in, base ones)
+for the reasons that we explain in more detail
+in <a class="reference internal" href="210-design.html#sec-closures"><span class="std std-numref">Section 9.5.3</span></a> and <a class="reference internal" href="330-environment.html#sec-lexical-scope"><span class="std std-numref">Section 16.3.2</span></a>. In our case:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="c1">## [1] &quot;closure&quot;</span>
 </pre></div>
@@ -433,8 +431,8 @@ in <a class="reference internal" href="210-design.html#sec-closures"><span class
 </section>
 <section id="named-functions">
 <h3><span class="section-number">7.1.2. </span>Named functions<a class="headerlink" href="#named-functions" title="Permalink to this heading">#</a></h3>
-<p>Function objects can be bound with names so that they can be
-referred to multiple times:</p>
+<p>Names can be bound to function objects. This way, we can refer to them
+multiple times:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">one</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># one &lt;- (function() 1)</span>
 </pre></div>
 </div>
@@ -457,7 +455,7 @@ are used to writing “<code class="docutils literal notranslate"><span class="p
 </section>
 <section id="passing-arguments-to-functions">
 <h3><span class="section-number">7.1.3. </span>Passing arguments to functions<a class="headerlink" href="#passing-arguments-to-functions" title="Permalink to this heading">#</a></h3>
-<p>Functions with no arguments are kind of boring, thus let us distil
+<p>Functions with no arguments are kind of boring. Thus, let us distil
 a more highbrowed operation:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">concat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 </pre></div>
@@ -468,7 +466,7 @@ Yours faithfully pleads guilty to multiplying entities needlessly:
 it <em>should</em> not be a problem for anyone to write
 <strong class="command">paste</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">sep=&quot;&quot;)</span></code> each time.
 Yet, ‘tis merely an illustration.</p>
-<p>The <strong class="command">concat</strong> function has two <em>parameters</em>, “<code class="docutils literal notranslate"><span class="pre">x</span></code>” and “<code class="docutils literal notranslate"><span class="pre">y</span></code>”.
+<p>The <strong class="command">concat</strong> function has two <em>parameters</em>, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.
 Hence, calling it will require the provision of two <em>arguments</em>,
 which we put within round brackets and separate from each other by commas.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span>
@@ -489,7 +487,7 @@ Also, the <code class="docutils literal notranslate"><span class="pre">u</span><
 can be accessed via <code class="docutils literal notranslate"><span class="pre">y</span></code> in <strong class="command">concat</strong>.
 Most of the time (yet, see <a class="reference internal" href="330-environment.html#sec-eval-fun"><span class="std std-numref">Section 16.3</span></a>),
 it is best to think of the function as being fed not with <code class="docutils literal notranslate"><span class="pre">u</span></code> per se
-but the value that <code class="docutils literal notranslate"><span class="pre">u</span></code> is bound to, i.e., “<code class="docutils literal notranslate"><span class="pre">1:5</span></code>”.</p>
+but the value that <code class="docutils literal notranslate"><span class="pre">u</span></code> is bound to, i.e., <code class="docutils literal notranslate"><span class="pre">1:5</span></code>.</p>
 <p>Also:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span>
@@ -497,13 +495,12 @@ but the value that <code class="docutils literal notranslate"><span class="pre">
 <span class="c1">## [1] &quot;spam1&quot; &quot;spam2&quot; &quot;spam3&quot; &quot;spam4&quot; &quot;spam5&quot;</span>
 </pre></div>
 </div>
-<p>This call is still equivalent to <strong class="command">concat</strong><code class="code docutils literal notranslate"><span class="pre">(x=y,</span> <span class="pre">y=x)</span></code>.
+<p>This call is equivalent to <strong class="command">concat</strong><code class="code docutils literal notranslate"><span class="pre">(x=y,</span> <span class="pre">y=x)</span></code>.
 The argument <code class="docutils literal notranslate"><span class="pre">x</span></code> is assigned the value of <code class="docutils literal notranslate"><span class="pre">y</span></code> from
-the calling environment, <code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span></code>. Yes, one <code class="docutils literal notranslate"><span class="pre">x</span></code> is not the same
-as the other <code class="docutils literal notranslate"><span class="pre">x</span></code>, and which is unambiguously defined by the context.
-Understanding and being able to manipulate such abstractions is
-basic logic and common sense that everyone should master.</p>
-<div class="proof proof-type-exercise" id="id11">
+the calling environment, <code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span></code>. Let us stress that
+one <code class="docutils literal notranslate"><span class="pre">x</span></code> is not the same as the other <code class="docutils literal notranslate"><span class="pre">x</span></code>; which is which
+is unambiguously defined by the context.</p>
+<div class="proof proof-type-exercise" id="id8">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.2</span>
@@ -515,10 +512,9 @@ i.e., from each element in <code class="docutils literal notranslate"><span clas
 and then divide it by the standard deviation.</p>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Recall from <a class="reference internal" href="120-numeric.html#sec-rep"><span class="std std-numref">Section 2.1.3</span></a> that, syntactically speaking,
+<p><a class="reference internal" href="120-numeric.html#sec-rep"><span class="std std-numref">Section 2.1.3</span></a> mentioned that, syntactically speaking,
 the following are perfectly valid alternatives to the positionally-matched
-call <strong class="command">concat</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;spam&quot;,</span> <span class="pre">u)</span></code>; see <a class="reference internal" href="320-language.html#sec-sys-call"><span class="std std-numref">Section 15.4.4</span></a>
-for more details.</p>
+call <strong class="command">concat</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;spam&quot;,</span> <span class="pre">u)</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
 <span class="nf">concat</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
 <span class="nf">concat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
@@ -530,10 +526,11 @@ for more details.</p>
 <p>However, we recommend to avoid the last two
 for the sake of the readers’ sanity.
 It is best to provide positionally-matched arguments
-before the keyword-based ones.</p>
-<p>Also, in <a class="reference internal" href="220-s3.html#sec-pipe"><span class="std std-numref">Section 10.5</span></a>, we will introduce the (overused) forward pipe
-operator, `<strong class="command">|&gt;</strong>`, which enables the above to be written as
-“<code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span> <span class="pre">|&gt;</span> <span class="pre">concat(u)</span></code>”.</p>
+before the keyword-based ones; see <a class="reference internal" href="320-language.html#sec-sys-call"><span class="std std-numref">Section 15.4.4</span></a>
+for more details.</p>
+<p>Also, <a class="reference internal" href="220-s3.html#sec-pipe"><span class="std std-numref">Section 10.5</span></a> introduces the (overused) forward pipe
+operator, `<strong class="command">|&gt;</strong>`, which will enable us to write
+the above as “<code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span> <span class="pre">|&gt;</span> <span class="pre">concat(u)</span></code>”.</p>
 </div>
 </section>
 <section id="grouping-expressions-with-curly-braces">
@@ -544,11 +541,9 @@ This may sound restrictive and in contrast with what we have
 experienced so far. Rarely are we faced with such simple computing tasks,
 and we have already seen R functions performing quite sophisticated
 operations.</p>
-<p>It turns out that, grammatically, a single R expression can be
-arbitrarily complex (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>);
-we can use curly braces to group many calls
-that are to be evaluated one after another.
-For instance:</p>
+<p>Grammatically, a single R expression can be arbitrarily complex
+(<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>). We can use curly braces to group many calls
+that are to be evaluated one after another. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;first expression\n&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;second expression\n&quot;</span><span class="p">)</span>
@@ -578,11 +573,7 @@ will be considered its output value.</p>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>(*)
-The above code block can also be written more concisely
+<p>The above code block can also be written more concisely
 by replacing newlines with semicolons, albeit with perhaps some
 loss in readability:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="m">3</span><span class="p">}</span>
@@ -592,14 +583,14 @@ loss in readability:</p>
 <p><a class="reference internal" href="210-design.html#sec-syntactic-sugar"><span class="std std-numref">Section 9.4</span></a> will give a few more details
 about `<strong class="command">{</strong>`.</p>
 </div>
-<div class="proof proof-type-example" id="id12">
+<div class="proof proof-type-example" id="id9">
 
     <div class="proof-title">
         <span class="proof-type">Example 7.3</span>
         
     </div><div class="proof-content">
 <p>Here is a version of the above <strong class="command">concat</strong> function,
-which takes care of a more <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>-style
+which guarantees a more <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>-style
 missing values’ propagation:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">concat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
@@ -619,8 +610,8 @@ missing values’ propagation:</p>
 </pre></div>
 </div>
 <p>Let us appreciate the fact that we could keep the code brief thanks
-to <strong class="command">paste</strong> and `<strong class="command">|</strong>` implementing the recycling rule.</p>
-</div></div><div class="proof proof-type-exercise" id="id13">
+to <strong class="command">paste</strong>’s and `<strong class="command">|</strong>`’s implementing the recycling rule.</p>
+</div></div><div class="proof proof-type-exercise" id="id10">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.4</span>
@@ -632,7 +623,7 @@ to the [0, 1] interval. To do so, subtract the sample minimum
 from each element, and then divide it by the range,
 i.e., the difference between the maximum and the minimum.
 Avoid computing <strong class="command">min</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code> twice.</p>
-</div></div><div class="proof proof-type-exercise" id="id14">
+</div></div><div class="proof proof-type-exercise" id="id11">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.5</span>
@@ -644,22 +635,19 @@ vector: subtract the median and divide it by the median absolute deviation,
 values and their median.</p>
 </div></div><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>R is an open-source (free, libre) project. Users are not only encouraged
-to run the software for whatever purpose,
-but also study and modify its source code without any restrictions.
-This applies both to functions that we have authored ourselves:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span>
+<p>R is an open-source (free, libre) project distributed under the terms
+of the GNU General Public License version 2. Therefore,
+we are not only encouraged to run the software for whatever purpose,
+but also study and modify its source code without restrictions.
+To facilitate this, we can display all function definitions:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span><span class="w">  </span><span class="c1"># code of the above procedure</span>
 <span class="c1">## function(a, b)</span>
 <span class="c1">## {</span>
 <span class="c1">##     z &lt;- paste(a, b, sep=&quot;&quot;)</span>
 <span class="c1">##     z[is.na(a) | is.na(b)] &lt;- NA_character_</span>
 <span class="c1">##     z  # last expression in the block – return value</span>
 <span class="c1">## }</span>
-</pre></div>
-</div>
-<p>and to the routines that are part of base R or any other
-extension packages:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">union</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">union</span><span class="p">)</span><span class="w">  </span><span class="c1"># a built-in function</span>
 <span class="c1">## function (x, y)</span>
 <span class="c1">## {</span>
 <span class="c1">##     u &lt;- as.vector(x)</span>
@@ -675,7 +663,7 @@ notice a call to <strong class="command">.Internal</strong> in the source code
 of <strong class="command">paste</strong>, <strong class="command">.Primitive</strong> in <strong class="command">list</strong>,
 or <strong class="command">.Call</strong> in <strong class="command">runif</strong>.
 Therefore, we will sometimes have to dig a bit deeper to access
-the underlying source code; see
+the underlying definition; see
 <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a> for more details.</p>
 </div>
 </section>
@@ -683,10 +671,10 @@ the underlying source code; see
 <section id="functional-programming">
 <span id="sec-fun-prog"></span><h2><span class="section-number">7.2. </span>Functional programming<a class="headerlink" href="#functional-programming" title="Permalink to this heading">#</a></h2>
 <p>R is a <em>functional</em> programming language. As such, it shares several
-common features with other languages that emphasise the role
+features with other languages that emphasise the role
 of function manipulation in software development
 (e.g., Common Lisp, Scheme, OCaml, Haskell, Clojure, F#).
-Let us explore them now.</p>
+Let us explore these commonalities now.</p>
 <section id="functions-are-objects">
 <h3><span class="section-number">7.2.1. </span>Functions are objects<a class="headerlink" href="#functions-are-objects" title="Permalink to this heading">#</a></h3>
 <p>R functions were given the right to a <em>fair go</em>;
@@ -694,7 +682,8 @@ they are what we refer to as <em>first-class citizens</em>.
 In other words, our interaction with them is not limited
 to their invocation; we treat them as any other language object.</p>
 <ul>
-<li><p>They can be stored inside list objects:</p>
+<li><p>They can be stored inside list objects,
+which can embrace R objects of <em>any</em> kind:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span><span class="w"> </span><span class="n">NROW</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">)</span><span class="w">  </span><span class="c1"># a list storing three functions</span>
 <span></span><span class="c1">## [[1]]</span>
 <span class="c1">## function (x)</span>
@@ -710,8 +699,6 @@ to their invocation; we treat them as any other language object.</p>
 <span class="c1">## function (..., na.rm = FALSE)  .Primitive(&quot;sum&quot;)</span>
 </pre></div>
 </div>
-<p>This is possible owing to the fact
-that lists, as we recall, can embrace R objects of <em>any</em> kind,</p>
 </li>
 <li><p>They can be created and then called inside another function’s body:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">euclidean_distance</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
@@ -732,7 +719,7 @@ of <em>recursive</em> types (compare <strong class="command">is.recursive</stron
 <span class="c1"># of all non-missing elements:</span>
 <span class="n">fill_na</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">filler_fun</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">missing_ones</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># otherwise, we&#39;d call is.na twice</span>
+<span class="w">    </span><span class="n">missing_ones</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># otherwise, we&#39;d have to call is.na twice</span>
 <span class="w">    </span><span class="n">replacement_value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filler_fun</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">!</span><span class="n">missing_ones</span><span class="p">])</span>
 <span class="w">    </span><span class="n">x</span><span class="p">[</span><span class="n">missing_ones</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">replacement_value</span>
 <span class="w">    </span><span class="n">x</span>
@@ -744,7 +731,7 @@ of <em>recursive</em> types (compare <strong class="command">is.recursive</stron
 <span></span><span class="c1">## [1] 0.0 2.5 2.5 2.0 3.0 7.0 2.5</span>
 </pre></div>
 </div>
-<p>We call these <em>higher-order functions</em>.</p>
+<p>Procedures like this are called <em>higher-order functions</em>.</p>
 </li>
 </ul>
 <div class="admonition note">
@@ -764,8 +751,8 @@ including <strong class="command">do.call</strong> and <strong class="command">M
 <section id="calling-on-precomputed-arguments-with-do-call">
 <span id="sec-do-call-intro"></span><h3><span class="section-number">7.2.2. </span>Calling on precomputed arguments with <strong class="command">do.call</strong><a class="headerlink" href="#calling-on-precomputed-arguments-with-do-call" title="Permalink to this heading">#</a></h3>
 <p>Notation like <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(arg1,</span> <span class="pre">...,</span> <span class="pre">argn)</span></code>
-has no monopoly over how we are supposed to call a function
-on a specific sequence of comma-delimited arguments.
+has no monopoly over how we call a function
+on a specific sequence of arguments.
 The list of actual parameters does not have to be hardcoded.</p>
 <p>Here is an alternative.
 We can first prepare a number of objects to be passed
@@ -805,7 +792,7 @@ to the corresponding keyword arguments.</p>
 <span class="c1">## (plot display suppressed)</span>
 </pre></div>
 </div>
-<p>Notice that, e.g., <code class="docutils literal notranslate"><span class="pre">plot_opts</span></code> can now be reused in further
+<p>Notice that our favourite <code class="docutils literal notranslate"><span class="pre">plot_opts</span></code> can now be reused in further
 calls to graphics functions. This is very convenient as it avoids
 repetitions.</p>
 </section>
@@ -820,8 +807,8 @@ various add-on libraries (<strong class="program">functools</strong> in Python,
 more recent versions of the C++ Standard Library, etc.)
 or frameworks (Apache Spark and the like).
 Their presence reflects the obvious truth that some operations
-occur more frequently than others.</p>
-<p>In particular:</p>
+occur more frequently than others.
+In particular:</p>
 <ul class="simple">
 <li><p><strong class="command">Map</strong> calls a function on each element of a sequence
 in order to transform:</p>
@@ -835,16 +822,15 @@ so as to vectorise a given operation elementwisely
 </ul>
 </li>
 <li><p><strong class="command">Reduce</strong> (also called accumulate) applies a binary operation to combine consecutive elements in a sequence, e.g., to generate the
-aggregates, like, totally (compare <strong class="command">sum</strong>, <strong class="command">prod</strong>, <strong class="command">all</strong>,
-<strong class="command">max</strong>) or cumulatively (compare <strong class="command">cumsum</strong>, <strong class="command">cummmin</strong>),</p></li>
+aggregates, like, totally (compare <strong class="command">sum</strong>, <strong class="command">prod</strong>,
+<strong class="command">all</strong>, <strong class="command">max</strong>) or cumulatively (compare <strong class="command">cumsum</strong>, <strong class="command">cummmin</strong>),</p></li>
 <li><p><strong class="command">Filter</strong> creates a subset of a sequence that is comprised
 of elements that enjoy a given property
 (which we typically achieve in R by means of the `<strong class="command">[</strong>`
 operator),</p></li>
 <li><p><strong class="command">Find</strong> locates the first element that fulfils some logical condition
-(compare  <strong class="command">which</strong>),</p></li>
+(compare  <strong class="command">which</strong>).</p></li>
 </ul>
-<p>and so forth.</p>
 <p>Below we will only focus on the <strong class="command">Map</strong> function.
 The inspection of the remaining ones is left as an exercise.
 This is because, oftentimes, we can be better off with their more
@@ -853,33 +839,32 @@ R-ish versions (e.g., using the subsetting operator, `<strong class="command">[<
 <section id="vectorising-functions-with-map">
 <span id="sec-map"></span><h3><span class="section-number">7.2.4. </span>Vectorising functions with <strong class="command">Map</strong><a class="headerlink" href="#vectorising-functions-with-map" title="Permalink to this heading">#</a></h3>
 <p>In data-centric computing, we are frequently faced with tasks that
-involve processing each element in a sequence
-independently, one after another. Such use cases can benefit
-from vectorised operations like those discussed in
-<a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>, <a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>,
+involve processing each vector element independently, one after another.
+Such use cases can benefit from vectorised operations like those discussed
+in <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>, <a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>,
 and <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>.</p>
 <p>Unfortunately, most of the functions that we introduced so far
 cannot be applied on lists.
-For instance, if we try calling <strong class="command">sqrt</strong> on a list,
-we will get an error, even if it is a list of numeric vectors only.
+For instance, if we try calling <strong class="command">sqrt</strong> on a generic vector,
+we will get an error, even if it is a list of numeric sequences only.
 One way to compute the square root of all elements would
 be to invoke <strong class="command">sqrt</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">unlist</strong><code class="code docutils literal notranslate"><span class="pre">(...))</span></code>.
 It is a go-to approach if we wish
 to treat all the list’s elements as one sequence.
 However, this comes at the price of losing the list’s structure.</p>
-<p>We also discussed some operations that are not vectorised
+<p>We have also discussed some operations that are not vectorised
 with respect to all their arguments, even though they could have been
 designed this way, e.g., <strong class="command">grepl</strong>.</p>
-<p>The <strong class="command">Map</strong> function<a class="footnote-reference brackets" href="#footmapply" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> applies an operation on each element
+<p>The <strong class="command">Map</strong> function<a class="footnote-reference brackets" href="#footmapply" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> applies an operation on each element
 in a vector or the corresponding elements in a number of vectors.
 In many situations,
 it may be used as a more elegant alternative
 to <strong class="command">for</strong> loops that we will introduce in the next chapter.</p>
-<div style="margin-top: 1em"></div><p>First<a class="footnote-reference brackets" href="#footlapply" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, a call to <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x)</span></code>
+<div style="margin-top: 1em"></div><p>First<a class="footnote-reference brackets" href="#footlapply" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, a call to <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x)</span></code>
 yields a list whose <span class="math">\(i\)</span>-th element is equal to
 <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x[[i]])</span></code>
-(recall that `<strong class="command">[[</strong>` works on atomic vectors too).</p>
-<p>For example:</p>
+(recall that `<strong class="command">[[</strong>` works on atomic vectors too).
+For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">  </span><span class="c1"># an example named list</span>
 <span class="w">    </span><span class="n">x1</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span>
 <span class="w">    </span><span class="n">x2</span><span class="o">=</span><span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="m">0.25</span><span class="p">),</span>
@@ -972,7 +957,7 @@ and toss it via the <code class="docutils literal notranslate"><span class="pre"
 </pre></div>
 </div>
 </div>
-<div class="proof proof-type-exercise" id="id15">
+<div class="proof proof-type-exercise" id="id12">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.6</span>
@@ -987,9 +972,9 @@ and toss it via the <code class="docutils literal notranslate"><span class="pre"
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Call <strong class="command">Map</strong> to read each dataset with <strong class="command">scan</strong>
-and determine each series’ minimal, mean, and maximal value.</p>
-</div></div><div class="proof proof-type-exercise" id="id16">
+<p>Call <strong class="command">Map</strong> to read them with <strong class="command">scan</strong>.
+Determine each series’ minimal, mean, and maximal value.</p>
+</div></div><div class="proof proof-type-exercise" id="id13">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.7</span>
@@ -1019,7 +1004,7 @@ to cry on. Let us explore some ways to reuse the existing function libraries.</p
 <li><p>documentation (manuals, vignettes, etc.);</p></li>
 </ul>
 <p>see <a class="reference internal" href="210-design.html#sec-own-packages"><span class="std std-numref">Section 9.3.2</span></a> for more
-and <span id="id5">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for all the details.</p>
+and <span id="id4">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for all the details.</p>
 <p>Most packages are published in the
 moderated repository that is part of the <em>Comprehensive R Archive Network</em>
 (<a class="reference external" href="https://cloud.r-project.org/">CRAN</a>).
@@ -1044,11 +1029,69 @@ we have mentioned the <strong class="program">gsl</strong> package:</p>
 <p>Here, <strong class="command">poch</strong> is an object exported by package <strong class="program">gsl</strong>.
 If we did not call <strong class="command">library</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;gsl&quot;)</span></code>,
 trying to access the former would raise an error.</p>
-<p>We could also have accessed the above function
+<p>We could have also accessed the above function
 without attaching it to the search path using
 the <strong class="program">pkg</strong><code class="code docutils literal notranslate"><span class="pre">::object</span></code> syntax,
-i.e., <strong class="program">gsl</strong><code class="code docutils literal notranslate"><span class="pre">::poch</span></code>.</p>
-<div class="proof proof-type-exercise" id="id17">
+namely, <strong class="program">gsl</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">poch</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information about any R extension, call
+<strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;pkg&quot;)</span></code>.
+Also, it is advisable to visit the package’s CRAN entry
+at an address like <em>https://CRAN.R-project.org/package=pkg</em>
+to access additional information, e.g., vignettes.
+Why waste our time and energy by querying a web search engine
+that will likely lead us to a dodgy middleman when we
+can acquire authoritative knowledge directly from the source?</p>
+<p>Moreover, it is worth exploring various
+<a class="reference external" href="https://cloud.r-project.org/web/views">CRAN Task Views</a>
+that group the packages into topics such as <em>Genetics</em>,
+<em>Graphics</em>, and <em>Optimisation</em>.
+They are curated by experts in their relevant fields.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Frequently, R packages are written in their respective authors’ free time,
+many of whom are volunteers.
+They neither get paid for this, nor do it as part of the so-called
+<em>their job</em>. Yes, not everyone is driven by money or fame.</p>
+<p>We can show appreciation for their generosity by, e.g.,
+spreading the word about their software by citing it in publications
+(see <strong class="command">citation</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;pkg&quot;)</span></code>),
+talking about them during lunchtime, or mentioning them in (un)social media.
+We can also help them improve the existing code base by reporting bugs,
+polishing documentation, proposing new features, or cleaning up
+the redundant fragments of their APIs.</p>
+<p>Someday, when we come up with something valuable for the community,
+we might become one of them.</p>
+</div>
+<section id="default-packages">
+<span id="sec-default-packages"></span><h4><span class="section-number">7.3.1.1. </span>Default packages<a class="headerlink" href="#default-packages" title="Permalink to this heading">#</a></h4>
+<p>The always-on package <strong class="program">base</strong> is a must-have. It provides
+us with the most crucial functions such as the vector addition, <strong class="command">c</strong>,
+<strong class="command">Map</strong>, and <strong class="command">library</strong>.
+Certain other packages are also loaded by default:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">getOption</span><span class="p">(</span><span class="s">&quot;defaultPackages&quot;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;datasets&quot;  &quot;utils&quot;     &quot;grDevices&quot; &quot;graphics&quot;  &quot;stats&quot;</span>
+<span class="c1">## [6] &quot;methods&quot;</span>
+</pre></div>
+</div>
+<p>This list can, theoretically, be changed<a class="footnote-reference brackets" href="#footchangedefs" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.
+However, in this book, we assume that the above are always attached
+because it is reasonable to do so.
+This is why in <a class="reference internal" href="120-numeric.html#sec-numeric-aggregation"><span class="std std-numref">Section 2.4.5</span></a>,
+there was no need to call, for example,
+<strong class="command">library</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;stats&quot;)</span></code>
+before referring to the <strong class="command">var</strong> and <strong class="command">sd</strong> functions.</p>
+<p>On a side note, <strong class="program">grDevices</strong> and <strong class="program">graphics</strong>
+will be discussed in <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a>.
+<strong class="program">methods</strong> will be mentioned in <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>.
+<strong class="program">datasets</strong> brings a few example R objects on which
+we can exercise our skills.
+The functions from <strong class="program">utils</strong>,
+<strong class="program">graphics</strong>, and <strong class="program">stats</strong>
+already appeared here and there.</p>
+<div class="proof proof-type-exercise" id="id14">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.8</span>
@@ -1061,117 +1104,56 @@ i.e., <strong class="program">gsl</strong><code class="code docutils literal not
 <strong class="command">Map</strong>.
 Recall from <a class="reference internal" href="110-basics.html#sec-help"><span class="std std-numref">Section 1.4</span></a> where such information
 can be found in these objects’ manual pages.</p>
-</div></div><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For more information about any R extension, call
-<strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;pkg&quot;)</span></code>.
-Also, it is advisable to visit the package’s CRAN entry
-at an address like <em>https://CRAN.R-project.org/package=pkg</em>
-to access some additional information (e.g.,
-vignettes; see also <strong class="command">vignette</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;pkg&quot;)</span></code>).
-Why waste our time and energy by querying a web search engine
-that will lead us to some (usually low-quality) middleman when we
-can acquire authoritative knowledge directly from the source?</p>
-<p>Moreover, it is worth exploring various
-<a class="reference external" href="https://cloud.r-project.org/web/views">CRAN Task Views</a>
-that group the packages into topics such as <em>Genetics</em>,
-<em>Graphics</em>, and <em>Optimisation</em>.
-They are curated by experts in their relevant fields.</p>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Frequently, R packages are written in their respective authors’ free time,
-many of whom are volunteers/public servants/enthusiasts
-who are neither paid for doing this nor it is part of the so-called
-<em>their job</em>.
-You can show appreciation for their generosity by, e.g.,
-spreading the word about their software by citing them in publications
-(see <strong class="command">citation</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;pkg&quot;)</span></code>),
-talking about them during lunchtime,
-or mentioning them in (un)social media.
-You can also help them improve the existing code base
-by reporting bugs, polishing documentation,
-proposing new features, or cleaning up the redundant fragments of their APIs.
-Some readers will become one of them someday (when they come
-up with something valuable for our community).</p>
-</div>
-<section id="default-packages">
-<span id="sec-default-packages"></span><h4><span class="section-number">7.3.1.1. </span>Default packages<a class="headerlink" href="#default-packages" title="Permalink to this heading">#</a></h4>
-<p>The always-on package <strong class="program">base</strong> is a must-have. It provides
-us with the most crucial functions (vector addition, <strong class="command">c</strong>,
-<strong class="command">Map</strong>, <strong class="command">library</strong>).
-Certain other packages are also loaded by default:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">getOption</span><span class="p">(</span><span class="s">&quot;defaultPackages&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;datasets&quot;  &quot;utils&quot;     &quot;grDevices&quot; &quot;graphics&quot;  &quot;stats&quot;</span>
-<span class="c1">## [6] &quot;methods&quot;</span>
-</pre></div>
-</div>
-<p>This list can, theoretically, be changed<a class="footnote-reference brackets" href="#footchangedefs" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.
-However, in this book, we assume that the above are always attached
-because it is reasonable to do so.
-This is why in <a class="reference internal" href="120-numeric.html#sec-numeric-aggregation"><span class="std std-numref">Section 2.4.5</span></a>,
-there was no need to call, for example,
-<strong class="command">library</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;stats&quot;)</span></code>
-before referring to the <strong class="command">var</strong> and <strong class="command">sd</strong> functions.</p>
-<p>On a side note, <strong class="program">grDevices</strong> and <strong class="program">graphics</strong>
-will be discussed in <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a>.
-<strong class="program">methods</strong> will be mentioned in <a class="reference internal" href="230-matrix.html#sec-s4"><span class="std std-numref">Section 11.5</span></a>.
-<strong class="program">datasets</strong> brings a few example R objects on which
-we can exercise our skills.
-On the other hand, the functions from <strong class="program">utils</strong>,
-<strong class="program">graphics</strong>, and <strong class="program">stats</strong>
-already appeared here and there.</p>
-</section>
+</div></div></section>
 <section id="source-vs-binary-packages">
 <span id="sec-src-package"></span><h4><span class="section-number">7.3.1.2. </span>Source vs binary packages (*)<a class="headerlink" href="#source-vs-binary-packages" title="Permalink to this heading">#</a></h4>
-<p>R is a free and open project. Therefore, its packages are published primarily
+<p>R is an open environment. Therefore, its packages are published primarily
 in the source form. This way, anyone can study how they work
 and improve them or reuse parts thereof in different projects.</p>
 <p>If we call
 <strong class="command">install.packages</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;path&quot;,</span> <span class="pre">repos=NULL,</span> <span class="pre">type=&quot;source&quot;)</span></code>,
 we should be able to install a package from sources:
-<code class="docutils literal notranslate"><span class="pre">path</span></code> can either be pinpointing a directory or  a
-source tarball (see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;untar&quot;)</span></code>,
-most often as a compressed <code class="docutils literal notranslate"><span class="pre">pkg_version.tar.gz</span></code> file).</p>
+<code class="docutils literal notranslate"><span class="pre">path</span></code> can be pinpointing either a directory or a
+source tarball (most often as a compressed <code class="file docutils literal notranslate"><span class="pre">pkg_version.tar.gz</span></code> file;
+see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;untar&quot;)</span></code>).</p>
 <p>Note that <code class="code docutils literal notranslate"><span class="pre">type=&quot;source&quot;</span></code> is the default unless one is
 on W****ws or some m**OS boxes;
-see <strong class="command">getOption</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;pkgType&quot;)</span></code>.
-This is because these two require additional build tools
-to be present in the system, especially if a package features
-C or C++ code; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a> and Section C.3 of <span id="id7">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">65</a>]</span>:</p>
+see <strong class="command">getOption</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;pkgType&quot;)</span></code>. This is because these two
+operating systems require additional build tools, especially if a package
+features C or C++ code; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>
+and Section C.3 of <span id="id6">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">65</a>]</span>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cran.r-project.org/bin/windows/Rtools"><strong class="program">RTools</strong></a> on W****ws,</p></li>
 <li><p><a class="reference external" href="https://developer.apple.com/xcode/resources"><strong class="program">Xcode</strong> Command Line Tools</a>
 on m**OS.</p></li>
 </ul>
-<p>Because these systems are less developer-oriented,
-as a courtesy to their users,
-CRAN also distributes the platform-specific binary versions
+<p>These systems are less developer-oriented. Thus, as a courtesy to their
+users, CRAN also distributes the platform-specific binary versions
 of the packages (.zip or .tgz files).
 <strong class="command">install.packages</strong> will try to fetch them by default.</p>
-<div class="proof proof-type-example" id="id18">
+<div class="proof proof-type-example" id="id15">
 
     <div class="proof-title">
         <span class="proof-type">Example 7.9</span>
         
     </div><div class="proof-content">
 <p>GitLab and GitHub are quite popular hosting platforms.
-It is very easy to fetch a package’s source directly from them.
+It is very easy to retrieve a package’s source directly from them.
 At the time of writing this, the relevant links were, respectively:</p>
 <ul class="simple">
-<li><p>https://gitlab.com/<em>user</em>/<em>repo</em>/-/archive/<em>branch</em>/<em>repo</em>-<em>branch</em>.zip</p></li>
-<li><p>https://github.com/<em>user</em>/<em>repo</em>/archive/<em>branch</em>.zip</p></li>
+<li><p>https://gitlab.com/<em>user</em>/<em>repo</em>/-/archive/<em>branch</em>/<em>repo</em>-<em>branch</em>.zip,</p></li>
+<li><p>https://github.com/<em>user</em>/<em>repo</em>/archive/<em>branch</em>.zip.</p></li>
 </ul>
 <p>For example, to download the contents of
-the <em>master</em> branch in the repository <em>rpackagedemo</em>
+the <em>master</em> branch in the GitHub repository <em>rpackagedemo</em>
 owned by <em>gagolews</em>, we can call:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tempfile</span><span class="p">()</span><span class="w">  </span><span class="c1"># temporary file name - download destination</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tempfile</span><span class="p">()</span><span class="w">  </span><span class="c1"># download destination: a temporary file name</span>
 <span class="nf">download.file</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/rpackagedemo/archive/master.zip&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="n">destfile</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Next, the contents can be extracted with <strong class="command">unzip</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tempdir</span><span class="p">()</span><span class="w">  </span><span class="c1"># temporary directory to extract the files to</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tempdir</span><span class="p">()</span><span class="w">  </span><span class="c1"># temporary directory for extracted files</span>
 <span class="p">(</span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">unzip</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">exdir</span><span class="o">=</span><span class="n">t</span><span class="p">))</span><span class="w">  </span><span class="c1"># returns extracted file paths</span>
 </pre></div>
 </div>
@@ -1181,7 +1163,7 @@ can be passed to <strong class="command">install.packages</strong>:</p>
 <span class="nf">file.remove</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">))</span><span class="w">  </span><span class="c1"># clean up</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id19">
+</div></div><div class="proof proof-type-exercise" id="id16">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.10</span>
@@ -1189,20 +1171,19 @@ can be passed to <strong class="command">install.packages</strong>:</p>
     </div><div class="proof-content">
 <p>Use the <strong class="program">git2r</strong> package to clone the <strong class="command">git</strong>
 repository located at <a class="reference external" href="https://github.com/gagolews/rpackagedemo.git">https://github.com/gagolews/rpackagedemo.git</a>
-and install the package published therein from the current
-R session.</p>
+and install the package published therein.</p>
 </div></div></section>
 <section id="managing-dependencies">
 <h4><span class="section-number">7.3.1.3. </span>Managing dependencies (*)<a class="headerlink" href="#managing-dependencies" title="Permalink to this heading">#</a></h4>
-<p>All installed add-on packages may be upgraded to their most recent versions
-available on CRAN (or other indicated repository) by calling
-<strong class="command">update.packages</strong>.</p>
-<p>As a general rule, the more experienced developers we become,
+<p>By calling <strong class="command">update.packages</strong>,
+all installed add-on packages may be upgraded to their most recent versions
+available on CRAN or other indicated repository.</p>
+<p>As a general rule, the more experienced we become,
 the less excited we get about the <em>new</em>.
 Sure, bug fixes and some well-thought-of additional
 features are usually welcome. Still, just we wait until someone
-updates the package API for the <span class="math">\(n\)</span>-th time, <span class="math">\(n \ge 2\)</span>,
-which will break our program that used to work flawlessly for so long.</p>
+updates a package’s API for the <span class="math">\(n\)</span>-th time, <span class="math">\(n \ge 2\)</span>,
+breaking our so-far flawless program.</p>
 <p>Hence, when designing software projects (see <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>
 for more details), we must ask ourselves the ultimate
 question: do we really need to import that package with lots of dependencies
@@ -1210,11 +1191,10 @@ from which we will just use only about 3–5 functions?
 Wouldn’t it be better to write our own version of some
 functionality (and learn something new, exercise our brain, etc.),
 or call a mature terminal-based tool?</p>
-<p>Otherwise, as all the historical versions of all the packages
+<p>Otherwise, as all the historical versions of the packages
 are <a class="reference external" href="https://cran.r-project.org/src/contrib/Archive">archived on CRAN</a>,
-some software dependency management can easily be conducted
-by storing different releases of packages in different directories
-(only one version of a package can be loaded at a time though).
+simple software dependency management can be conducted
+by storing different releases of packages in different directories.
 This way, we can create an isolated environment for the add-ons.</p>
 <p>To fetch the locations where packages are sought (in this very order),
 call:</p>
@@ -1225,20 +1205,21 @@ call:</p>
 <span class="c1">## [4] &quot;/usr/lib/R/library&quot;</span>
 </pre></div>
 </div>
-<p>The same function can be used to add new folders to the search
+<p>The same function can add new folders to the search
 path; see also the environment variable
-<code class="docutils literal notranslate"><span class="pre">R_LIBS_USER</span></code> (e.g., <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Sys.setenv&quot;)</span></code>).
+<code class="docutils literal notranslate"><span class="pre">R_LIBS_USER</span></code> that we can set using <strong class="command">Sys.setenv</strong>.
 The <strong class="command">install.packages</strong> function will honour them as target
-directories; see its <code class="docutils literal notranslate"><span class="pre">lib</span></code> parameter for more details.</p>
+directories; see its <code class="docutils literal notranslate"><span class="pre">lib</span></code> parameter for more details.
+Note that only one version of a package can be loaded at a time, though.</p>
 <p>Moreover, the packages may deposit some auxiliary data
 on the user’s machine. Therefore, it might be worthwhile
 to set the following directories (via the corresponding
 environment variables) relative to the current project:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1"># R_USER_DATA_DIR</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data&quot;</span><span class="p">)</span><span class="w">    </span><span class="c1"># R_USER_DATA_DIR</span>
 <span class="c1">## [1] &quot;/home/gagolews/.local/share/R/pkg&quot;</span>
-<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;config&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># R_USER_CONFIG_DIR</span>
+<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;config&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># R_USER_CONFIG_DIR</span>
 <span class="c1">## [1] &quot;/home/gagolews/.config/R/pkg&quot;</span>
-<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cache&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># R_USER_CACHE_DIR</span>
+<span class="n">tools</span><span class="o">::</span><span class="nf">R_user_dir</span><span class="p">(</span><span class="s">&quot;pkg&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cache&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1"># R_USER_CACHE_DIR</span>
 <span class="c1">## [1] &quot;/home/gagolews/.cache/R/pkg&quot;</span>
 </pre></div>
 </div>
@@ -1246,40 +1227,39 @@ environment variables) relative to the current project:</p>
 </section>
 <section id="calling-external-programs">
 <span id="sec-external-programs"></span><h3><span class="section-number">7.3.2. </span>Calling external programs<a class="headerlink" href="#calling-external-programs" title="Permalink to this heading">#</a></h3>
-<p>Many tasks can naturally be accomplished by calling external programs.
+<p>Many tasks can be accomplished by calling external programs.
 Such an approach is particularly natural on UNIX-like systems,
 which classically follow modular, minimalist design patterns.
 There are many tools at a developer’s hand and each tool is specialised
 at solving a single, well-defined problem.</p>
-<p>Apart from the many <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_Unix_commands">standard UNIX commands</a>, we can consider, for example:</p>
+<p>Apart from the many
+<a class="reference external" href="https://en.wikipedia.org/wiki/List_of_Unix_commands">standard UNIX commands</a>,
+we may consider the following:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pandoc.org/"><strong class="program">pandoc</strong></a> converts documents
-between markup formats, e.g., Markdown, reStructuredText,
-LaTeX, LibreOffice Writer, EPUB;</p></li>
-<li><p><strong class="program">pdflatex</strong>, <strong class="program">xelatex</strong>, and <strong class="program">lualatex</strong>
-compile LaTeX documents to PDF;</p></li>
+between markup formats, e.g., Markdown, HTML, reStructuredText,
+and LaTeX and can generate LibreOffice Writer documents, EPUB or
+PDF files, or slides;</p></li>
+<li><p><strong class="program">jupyter-nbconvert</strong> converts <a class="reference external" href="https://jupyter.org/">Jupyter</a>
+notebooks (see <a class="reference internal" href="110-basics.html#sec-jupyter"><span class="std std-numref">Section 1.2.5</span></a>)
+to other formats such as LaTeX, HTML, Markdown, etc.;</p></li>
 <li><p><strong class="program">convert</strong> (from <a class="reference external" href="https://imagemagick.org/"><strong class="program">ImageMagick</strong></a>)
 applies various operations on bitmap graphics
 (scaling, cropping, conversion between formats);</p></li>
 <li><p><a class="reference external" href="https://graphviz.org/"><strong class="program">graphviz</strong></a>
 and <a class="reference external" href="https://plantuml.com/"><strong class="program">PlantUML</strong></a>
-can be used to create various graphs and diagrams;</p></li>
-<li><p><strong class="program">jupyter-nbconvert</strong> converts <a class="reference external" href="https://jupyter.org/">Jupyter</a>
-notebooks (see <a class="reference internal" href="110-basics.html#sec-jupyter"><span class="std std-numref">Section 1.2.5</span></a>)
-to other formats such as LaTeX, HTML, Markdown, etc.;</p></li>
+draws graphs and diagrams;</p></li>
 <li><p><strong class="program">python</strong>, <strong class="program">perl</strong>, … can be called
 to perform tasks that can be expressed more easily in languages
-other than R;</p></li>
+other than R.</p></li>
 </ul>
-<p>and so forth.</p>
-<p>The good news is that R can not only be called from the system shell
-(in an interactive or batch mode; see <a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>).
-It can also serve well as a glue language.</p>
-<p>The <strong class="command">system2</strong> function can be used to invoke
-any system command.
-Communication between such programs can be done using,
+<p>The good news is that we are not limited to calling R from the system shell
+in the interactive or batch mode; see <a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>.
+Our environment serves well as a glue language too.</p>
+<p>The <strong class="command">system2</strong> function invokes a system command.
+Communication between such programs may be done using,
 e.g., intermediate text, JSON, CSV, XML, or any other files.
-The <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> arguments can control the
+The <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> arguments control the
 redirection of the standard I/O streams.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">system2</span><span class="p">(</span><span class="s">&quot;pandoc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-s input.md -o output.html&quot;</span><span class="p">)</span>
 <span class="nf">system2</span><span class="p">(</span><span class="s">&quot;bash&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-c &#39;for i in `seq 1 2 10`; do echo $i; done&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stdout</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
@@ -1294,18 +1274,18 @@ redirection of the standard I/O streams.</p>
 </div>
 <p>On a side note, the current working directory can be read and changed
 through a call to <strong class="command">getwd</strong> and <strong class="command">setwd</strong>, respectively.
-It is the directory where the current R session was started.</p>
+By default, it is the directory where the current R session was started.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Relying on <strong class="command">system2</strong> assumes that the commands
 it refers to are available on the target platform. Hence,
 it might not be portable unless additional assumptions
-are made (e.g., that a user runs some UNIX-like system and
-that certain libraries are installed therein).
-We strongly recommend GNU/Linux or FreeBSD
-for both software development
+are made, e.g., that a user runs some UNIX-like system and
+that certain libraries are available. We strongly recommend GNU/Linux
+or FreeBSD for both software development
 and production use, as they are free, open, developer-friendly,
-user-loving, reliable, ethical, and sustainable.</p>
+user-loving, reliable, ethical, and sustainable.
+Users of other operating systems are missing out on so many good features.</p>
 </div>
 </section>
 <section id="interfacing-c-c-fortran-python-java-etc">
@@ -1332,25 +1312,13 @@ and <strong class="program">pandas</strong> data frames
 <p>We should not feel obliged to use R in all parts of a data processing
 pipeline. Some activities can be expressed more naturally in other
 languages or environments (e.g., parse raw data and create a SQL
-database in Python but visualise it in R). We can use other tools as
-the glue language (including R, Python, or Bash) to steer the data flow
-in the right direction.</p>
+database in Python but visualise it in R).</p>
 </div>
-<p>R is an effective <em>glue</em> language:
-it is suitable for implementing data wrangling
-pipelines, visualisation, and developing prototypes of data analysis
-algorithms. In other words, it makes connecting larger <em>building blocks</em>
-very easy.</p>
-<p>Nevertheless, for performance reasons<a class="footnote-reference brackets" href="#footwhycompile" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>,
-we should move the more computing-intensive tasks
-to the C or C++ level. In this chapter, we will demonstrate
-that R works very well as a user-friendly interface to compiled code
-written in these languages<a class="footnote-reference brackets" href="#footlangs" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
 </section>
 </section>
 <section id="exercises">
 <h2><span class="section-number">7.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id20">
+<div class="proof proof-type-exercise" id="id17">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.11</span>
@@ -1359,12 +1327,12 @@ written in these languages<a class="footnote-reference brackets" href="#footlang
 <p>Answer the following questions.</p>
 <ul class="simple">
 <li><p>What is the result of
-“<code class="code docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">2;</span> <span class="pre">x</span> <span class="pre">&lt;-</span> </code><strong class="command">function</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">x^2;</span> <span class="pre">x(x)</span></code>”?</p></li>
+“<code class="code docutils literal notranslate"><span class="pre">{x</span> <span class="pre">&lt;-</span> <span class="pre">&quot;x&quot;;</span> <span class="pre">x</span> <span class="pre">&lt;-</span> </code><strong class="command">function</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">x;</span> <span class="pre">x(x)}</span></code>”?</p></li>
 <li><p>How to compose a function that returns two objects?</p></li>
 <li><p>What is a higher-order function?</p></li>
 <li><p>What are the use cases of <strong class="command">do.call</strong>?</p></li>
-<li><p>Why a call to <strong class="command">Map</strong> is not necessary
-in the expression “<strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">paste</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>”?</p></li>
+<li><p>Why a call to <strong class="command">Map</strong> is redundant
+in the expression <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">paste</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>?</p></li>
 <li><p>What is the difference between
 <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">na.rm=TRUE)</span></code>
 and <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x,</span> <span class="pre">MoreArgs=</span></code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(na.rm=TRUE))</span></code>?</p></li>
@@ -1378,7 +1346,7 @@ about this strategy?</p></li>
 <li><p>How to ensure that we will always run an R session with
 only specific versions of a set of packages?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id21">
+</div></div><div class="proof proof-type-exercise" id="id18">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.12</span>
@@ -1391,7 +1359,7 @@ which, assuming <span class="math">\(x_1\le x_2\le\dots\le x_n\)</span>, is equa
 <div class="math">
 \[G(x_1,\dots,x_n) = \frac{ \sum_{i=1}^{n} (n-2i+1) x_{i} }{ (n-1) \sum_{i=1}^n x_i }.\]</div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id22">
+</div></div><div class="proof proof-type-exercise" id="id19">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.13</span>
@@ -1402,7 +1370,7 @@ that verifies whether each element in <code class="docutils literal notranslate"
 interval. Return a logical vector of the same length as <code class="docutils literal notranslate"><span class="pre">x</span></code>.
 Ensure the function is correctly vectorised with respect to all
 the arguments and handles missing data correctly.</p>
-</div></div><div class="proof proof-type-exercise" id="id23">
+</div></div><div class="proof proof-type-exercise" id="id20">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.14</span>
@@ -1419,7 +1387,7 @@ called <strong class="command">dup</strong>.</p>
 <span class="c1">## [1] &quot;aaaa&quot; &quot;bbbb&quot; &quot;cccc&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id24">
+</div></div><div class="proof proof-type-exercise" id="id21">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.15</span>
@@ -1427,14 +1395,14 @@ called <strong class="command">dup</strong>.</p>
     </div><div class="proof-content">
 <p>Given a list <code class="docutils literal notranslate"><span class="pre">x</span></code>, generate its sublist with all the elements
 equal to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> removed.</p>
-</div></div><div class="proof proof-type-exercise" id="id25">
+</div></div><div class="proof proof-type-exercise" id="id22">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.16</span>
         
     </div><div class="proof-content">
 <p>Implement your version of the built-in <strong class="command">sequence</strong> function.</p>
-</div></div><div class="proof proof-type-exercise" id="id26">
+</div></div><div class="proof proof-type-exercise" id="id23">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.17</span>
@@ -1455,12 +1423,22 @@ equal to <code class="docutils literal notranslate"><span class="pre">NULL</span
 </pre></div>
 </div>
 <p>Write a function <strong class="command">windows</strong><code class="code docutils literal notranslate"><span class="pre">(k,</span> <span class="pre">n)</span></code> that yields
-<span class="math">\(k\)</span> index windows with elements between <span class="math">\(1\)</span> and <span class="math">\(n\)</span>
+index windows of length <span class="math">\(k\)</span> with elements between <span class="math">\(1\)</span> and <span class="math">\(n\)</span>
 (the above example is for <span class="math">\(k=3\)</span> and <span class="math">\(k=6\)</span>).</p>
-</div></div><div class="proof proof-type-exercise" id="id27">
+</div></div><div class="proof proof-type-exercise" id="id24">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.18</span>
+        
+    </div><div class="proof-content">
+<p>Write a function to extract all <span class="math">\(q\)</span>-grams, <span class="math">\(q \ge 1\)</span>,
+from a given character vector. Return a list of
+character vectors. For example,
+2-grams (bigrams) in <code class="docutils literal notranslate"><span class="pre">&quot;abcd&quot;</span></code> are: <code class="docutils literal notranslate"><span class="pre">&quot;ab&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bc&quot;</span></code>, “cd”`.</p>
+</div></div><div class="proof proof-type-exercise" id="id25">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 7.19</span>
         
     </div><div class="proof-content">
 <p>Implement a function <strong class="command">movstat</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x,</span> <span class="pre">k)</span></code>
@@ -1475,25 +1453,15 @@ For instance:</p>
 <span class="c1">## [1]  3.0000  6.0000 13.3333  3.3333</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id28">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 7.19</span>
-        
-    </div><div class="proof-content">
-<p>Write a function to extract all <span class="math">\(q\)</span>-grams, <span class="math">\(q \ge 1\)</span>,
-from a given character vector. Return a list of
-character vectors. For example,
-2-grams (bigrams) in <code class="docutils literal notranslate"><span class="pre">&quot;abcd&quot;</span></code> are: <code class="docutils literal notranslate"><span class="pre">&quot;ab&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bc&quot;</span></code>, “cd”`.</p>
-</div></div><div class="proof proof-type-exercise" id="id29">
+</div></div><div class="proof proof-type-exercise" id="id26">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.20</span>
         
     </div><div class="proof-content">
 <p>Recode a character vector with a small number of distinct values
-to a vector where each unique code is assigned a positive integer
-from <span class="math">\(1\)</span> to <span class="math">\(k\)</span>. Example calls and the corresponding expected results:</p>
+to a vector where each unique code is assigned a positive integer from
+<span class="math">\(1\)</span> to <span class="math">\(k\)</span>. Here are example calls and the corresponding expected results:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">recode</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
 <span class="nf">recode</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">))</span>
 <span class="c1">## [1] 1 1 1 2 2</span>
@@ -1501,7 +1469,7 @@ from <span class="math">\(1\)</span> to <span class="math">\(k\)</span>. Example
 <span class="c1">## [1] 1 3 2 1 2 1</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id30">
+</div></div><div class="proof proof-type-exercise" id="id27">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.21</span>
@@ -1509,7 +1477,7 @@ from <span class="math">\(1\)</span> to <span class="math">\(k\)</span>. Example
     </div><div class="proof-content">
 <p>Implement a function that returns the number of occurrences of
 each unique element in a given atomic vector. The return value
-should be a numeric vector equipped with a <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute.</p>
+should be a numeric vector equipped with the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">count</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
 <span class="nf">count</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="m">954</span><span class="p">))</span>
 <span class="c1">##   5  42 954</span>
@@ -1520,7 +1488,7 @@ should be a numeric vector equipped with a <code class="docutils literal notrans
 </pre></div>
 </div>
 <p>Hint: use <strong class="command">match</strong> and <strong class="command">tabulate</strong>.</p>
-</div></div><div class="proof proof-type-exercise" id="id31">
+</div></div><div class="proof proof-type-exercise" id="id28">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.22</span>
@@ -1536,40 +1504,32 @@ of a repeated value is it (starting from the beginning of the vector).</p>
 <span class="c1">##  [1] 1 1 1 2 2 3 1 4 5 3 2</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id32">
+</div></div><div class="proof proof-type-exercise" id="id29">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.23</span>
         
     </div><div class="proof-content">
-<p>Based on a call to <strong class="command">Map</strong>, implement a function <strong class="command">my_split</strong>
-such that, given a vector <code class="docutils literal notranslate"><span class="pre">x</span></code> and an atomic vector
-<code class="docutils literal notranslate"><span class="pre">y</span></code> of the same length as <code class="docutils literal notranslate"><span class="pre">x</span></code>, <strong class="command">my_split</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>
-yields the same result as <strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
-</div></div><div class="proof proof-type-exercise" id="id33">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 7.24</span>
-        
-    </div><div class="proof-content">
-<p>Extend <strong class="command">my_split</strong> to handle the second argument
+<p>Based on a call to <strong class="command">Map</strong>, implement your version of
+<strong class="command">split</strong> that takes two atomic vectors as arguments.
+Then, extend it to handle the second argument
 being a list of the form <strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(y1,</span> <span class="pre">y2,</span> <span class="pre">...)</span></code>
 representing the product of many levels.
 If the <span class="math">\(y\)</span>s are of different lengths, apply the recycling rule.</p>
-</div></div><div class="proof proof-type-exercise" id="id34">
+</div></div><div class="proof proof-type-exercise" id="id30">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.25</span>
+        <span class="proof-type">Exercise 7.24</span>
         
     </div><div class="proof-content">
 <p>Implement <strong class="command">my_unsplit</strong> being your version of the built-in
 <strong class="command">unsplit</strong>. Ensure it holds
 <strong class="command">my_unsplit</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">g),</span> <span class="pre">g)</span> <span class="pre">==</span> <span class="pre">x</span></code>
 for <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">g</span></code> of the same lengths.</p>
-</div></div><div class="proof proof-type-exercise" id="id35">
+</div></div><div class="proof proof-type-exercise" id="id31">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.26</span>
+        <span class="proof-type">Exercise 7.25</span>
         
     </div><div class="proof-content">
 <p>Write a function that takes as arguments:
@@ -1580,17 +1540,17 @@ Verify that <span class="math">\(p_i\ge 0\)</span> for all <span class="math">\(
 Based on a random number generator from the uniform distribution on
 the unit interval, generate <span class="math">\(n\)</span> independent realisations
 of a random variable <span class="math">\(X\)</span> such that <span class="math">\(\Pr(X=x_i)=p_i\)</span> for <span class="math">\(i=1,\dots,k\)</span>.
-Hint: to obtain a single value:</p>
+To obtain a single value:</p>
 <ol class="arabic simple">
 <li><p>generate <span class="math">\(u\in[0, 1]\)</span>,</p></li>
 <li><p>find <span class="math">\(m\in\{1,\dots,k\}\)</span> such that
 <span class="math">\(u\in\left(\sum_{j=1}^{m-1} p_{j}, \sum_{j=1}^m p_{j}\right]\)</span>,</p></li>
 <li><p>the result is then <span class="math">\(x_m\)</span>.</p></li>
 </ol>
-</div></div><div class="proof proof-type-exercise" id="id36">
+</div></div><div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.27</span>
+        <span class="proof-type">Exercise 7.26</span>
         
     </div><div class="proof-content">
 <p>Write a function that takes as arguments:
@@ -1600,10 +1560,10 @@ Hint: to obtain a single value:</p>
 Let <span class="math">\(f\)</span> be the piecewise linear spline that interpolates the points
 <span class="math">\((x_1,y_1),\dots,(x_n,y_n)\)</span>.
 Return a vector <code class="docutils literal notranslate"><span class="pre">w</span></code> of length <span class="math">\(k\)</span> such that <span class="math">\(w_i=f(z_i)\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id37">
+</div></div><div class="proof proof-type-exercise" id="id33">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.28</span>
+        <span class="proof-type">Exercise 7.27</span>
         
     </div><div class="proof-content">
 <p>(*) Write functions <strong class="command">dpareto</strong>, <strong class="command">ppareto</strong>,
@@ -1612,45 +1572,25 @@ that implement the basic functions related to the Pareto distribution;
 compare <a class="reference internal" href="120-numeric.html#sec-probability-distributions"><span class="std std-numref">Section 2.3.4</span></a>.</p>
 </div></div><hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="footenv" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
-<p>In short: each function consists of a list of formal arguments,
-a body, an possibly (if it is a closure)
-an enclosing environment.</p>
-</aside>
 <aside class="footnote brackets" id="footmapply" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p>Yes, the author is aware that <strong class="command">Map</strong> was implemented
 using the slightly more primitive <strong class="command">mapply</strong>
 but we are not fond of the latter function’s having
 the <code class="docutils literal notranslate"><span class="pre">SIMPLIFY</span></code> argument set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> by default.</p>
 </aside>
 <aside class="footnote brackets" id="footlapply" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
 <p>This use case scenario  can also be programmed
 using <strong class="command">lapply</strong>;
 <strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">f,</span> <span class="pre">...)</span></code>
 is equivalent to <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x,</span> <span class="pre">MoreArgs=list(...))</span></code>.</p>
 </aside>
 <aside class="footnote brackets" id="footchangedefs" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
 <p>(*) R is greatly configurable:
 we can have custom <code class="file docutils literal notranslate"><span class="pre">~/.Renviron</span></code> and <code class="file docutils literal notranslate"><span class="pre">~/.Rprofile</span></code> files
 that are processed on R’s startup; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;Startup&quot;)</span></code>.</p>
-</aside>
-<aside class="footnote brackets" id="footwhycompile" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
-<p>A well-written, portable function library relying only
-on simple data structures (e.g., arrays of the type <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span></code>)
-can be used in other environments, such as Python (e.g., via Cython)
-of Julia. Let us remember about other programmers yearning for
-the possibility to enjoy our cultivated algorithms.</p>
-</aside>
-<aside class="footnote brackets" id="footlangs" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
-<p>(*) Fortran is also supported but will not be covered
-in this book because of its smaller popularity.
-Some third-party packages are gateways to other languages such as Java.</p>
 </aside>
 </aside>
 </section>
@@ -1691,7 +1631,7 @@ Some third-party packages are gateways to other languages such as Java.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-20T15:57:23+1000.
+              Last updated on 2023-06-21T21:13:14+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
