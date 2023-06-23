@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.1.9005 (draft)
+v0.9.1.9006 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -369,7 +369,7 @@ of an expression group as the latter is read in its entirety.</p>
 </div>
 <section id="return-value">
 <h3><span class="section-number">8.1.1. </span>Return value<a class="headerlink" href="#return-value" title="Permalink to this heading">#</a></h3>
-<p>`<strong class="command">if</strong>` is a function (compare <a class="reference internal" href="210-design.html#sec-syntactic-sugar"><span class="std std-numref">Section 9.4</span></a>).
+<p>`<strong class="command">if</strong>` is a function (compare <a class="reference internal" href="210-design.html#sec-syntactic-sugar"><span class="std std-numref">Section 9.3</span></a>).
 Hence, it has a return value: the result of evaluating the
 conditional expression.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>
@@ -384,7 +384,7 @@ conditional expression.</p>
 </div>
 <p>This is particularly useful when a call to `<strong class="command">if</strong>`
 is the last expression in a curly brace-delimited code block
-constituting a function’s body.</p>
+that constitutes a function’s body.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">cond</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w">  </span><span class="c1"># could be something more sophisticated</span>
@@ -597,10 +597,9 @@ formulating the conditions within the <strong class="command">if</strong> expres
 </section>
 <section id="exception-handling">
 <span id="sec-exceptions"></span><h2><span class="section-number">8.2. </span>Exception handling<a class="headerlink" href="#exception-handling" title="Permalink to this heading">#</a></h2>
-<p>Exceptions are exceptional, but they may happen and break things.
-For instance, we are in deep skit when the internet connection
-drops while we try to download a file, an optimisation algorithm fails to
-converge, or:</p>
+<p>Exceptions are exceptional, but they may happen and break things. For
+instance, we are in deep skit when the internet connection drops while
+we try to download a file, an optimisation algorithm fails to converge, or:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;/path/to/a/file/that/does/not/exist&quot;</span><span class="p">)</span>
 <span class="c1">## Warning in file(file, &quot;rt&quot;): cannot open file &#39;/path/to/a/file/that/does/</span>
 <span class="c1">##     not/exist&#39;: No such file or directory</span>
@@ -659,8 +658,8 @@ Note that consecutive calls to <strong class="command">library</strong> do not
 reload an already loaded package. Therefore, the message will only
 be seen once per R session.</p>
 </div></div><p>Related functions include <strong class="command">stopifnot</strong> discussed
-in <a class="reference internal" href="210-design.html#sec-fun-io"><span class="std std-numref">Section 9.2</span></a> and <strong class="command">on.exit</strong> mentioned
-in <a class="reference internal" href="340-lazy.html#sec-on-exit"><span class="std std-numref">Section 17.4</span></a>; see <a class="reference internal" href="210-design.html#sec-code-quality"><span class="std std-numref">Section 9.3.4</span></a>
+in <a class="reference internal" href="210-design.html#sec-fun-io"><span class="std std-numref">Section 9.1</span></a> and <strong class="command">on.exit</strong> mentioned
+in <a class="reference internal" href="340-lazy.html#sec-on-exit"><span class="std std-numref">Section 17.4</span></a>; see <a class="reference internal" href="210-design.html#sec-code-quality"><span class="std std-numref">Section 9.2.4</span></a>
 for some code debugging tips.</p>
 </section>
 <section id="repeated-evaluation">
@@ -1077,7 +1076,7 @@ in each iteration. Luckily, since R version 3.4.0,
 each such size extension has amortised <span class="math">\(O(1)\)</span> time
 as some more memory is internally reserved for its
 prospective growth (dynamic arrays; see, e.g., Chapter 17 of <span id="id5">[<a class="reference internal" href="999-bibliography.html#id68" title="Cormen, T.H., Leiserson, C.E., Rivest, R.L., and Stein, C. (2009).  Introduction to Algorithms. MIT Press and McGraw-Hill.">14</a>]</span>).</p>
-<p>However, it is better to pre-allocate the output vector
+<p>However, it is better to preallocate the output vector
 of the desired final size.
 We can construct vectors of specific lengths and types
 in an efficient way (more efficient than with <strong class="command">rep</strong>) by calling:</p>
@@ -1122,7 +1121,7 @@ through file connections. For example:</p>
 </div>
 <p>Many functions support reading from/writing to already
 established connections of different types, e.g., <strong class="command">file</strong>,
-<strong class="command">gzfile</strong>, <strong class="command">textConnection</strong>, batch-by-batch.</p>
+<strong class="command">gzfile</strong>, <strong class="command">textConnection</strong>, batch by batch.</p>
 <p>A frequent scenario involves reading a very large CSV, JSON, or XML file
 only by thousands of lines/records at a time,
 parsing and cleansing them, and exporting them to SQL databases
@@ -1292,7 +1291,7 @@ benefit from a rewrite in C or C++ (<a class="reference internal" href="310-comp
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-22T18:13:44+1000.
+              Last updated on 2023-06-23T16:07:12+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

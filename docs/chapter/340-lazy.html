@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.1.9005 (draft)
+v0.9.1.9006 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -421,7 +421,7 @@ always evaluate the arguments. There is no lazy evaluation in the case
 of the arguments passed to group generics;
 see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;groupGeneric&quot;)</span></code> and <a class="reference internal" href="220-s3.html#sec-operator-overloading-s3"><span class="std std-numref">Section 10.2.6</span></a>.
 Furthermore, replacement functions’ <code class="docutils literal notranslate"><span class="pre">values</span></code> arguments
-(<a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.4.6</span></a>) are computed eagerly.</p>
+(<a class="reference internal" href="210-design.html#sec-replacementfun"><span class="std std-numref">Section 9.3.6</span></a>) are computed eagerly.</p>
 </li>
 </ul>
 </div>
@@ -542,7 +542,7 @@ function (but it is probably very rarely needed there). Compare:</p>
 </div></div></section>
 <section id="evaluation-of-default-arguments">
 <span id="sec-default-args-eval"></span><h2><span class="section-number">17.2. </span>Evaluation of default arguments<a class="headerlink" href="#evaluation-of-default-arguments" title="Permalink to this heading">#</a></h2>
-<p>As we know from <a class="reference internal" href="210-design.html#sec-default-args"><span class="std std-numref">Section 9.5.4</span></a>, default arguments
+<p>As we know from <a class="reference internal" href="210-design.html#sec-default-args"><span class="std std-numref">Section 9.4.4</span></a>, default arguments
 are special expressions specified in a function’s parameter list.
 When a function’s body requires the value of an argument
 that the caller did not provide, the default expression
@@ -696,10 +696,10 @@ and not on each application of <strong class="command">FUN</strong> on the eleme
     </div><div class="proof-content">
 <p>We know from <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a> that
 many high-level graphics functions rely on multiple calls to
-more primitive functions that allow for setting a variety of parameters
+more primitive routines that allow for setting a variety of parameters
 (e.g., via <strong class="command">par</strong>).
 A common scenario is for a high-level function
-to submit <em>all</em> the passed arguments to more basic routines.
+to pass <em>all</em> the arguments down.
 Each underlying procedure can then decide by itself which items
 it is interested in.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span>
@@ -780,7 +780,7 @@ as if they were local variables:</p>
         <span class="proof-type">Exercise 17.12</span>
         
     </div><div class="proof-content">
-<p>Implement your version of the built-in <strong class="command">switch</strong> function.</p>
+<p>Implement your version of the <strong class="command">switch</strong> function.</p>
 </div></div><div class="proof proof-type-exercise" id="id23">
 
     <div class="proof-title">
@@ -874,8 +874,8 @@ any way we want. Each such function can become a microverse
 our users, as they will have to analyse every procedure’s behaviour
 separately.</p>
 <p>In this section, we extend on our notes
-from <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a> and <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>.
-We look at a few built-in functions relying on metaprogramming and laziness,
+from <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.4.7</span></a> and <a class="reference internal" href="240-data-frame.html#sec-metaprogramming-df"><span class="std std-numref">Section 12.3.9</span></a>.
+We look at a few functions relying on metaprogramming and laziness,
 mostly because studying them is a good exercise.
 It can help extend our programming skills and deepen our understanding
 of the concepts discussed in this part of the book.</p>
@@ -885,7 +885,7 @@ might interest some advanced programmers (e.g., package
 developers).</p>
 <section id="match-arg">
 <h3><span class="section-number">17.5.1. </span><strong class="command">match.arg</strong><a class="headerlink" href="#match-arg" title="Permalink to this heading">#</a></h3>
-<p><strong class="command">match.arg</strong> was mentioned in <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.5.7</span></a>.
+<p><strong class="command">match.arg</strong> was mentioned in <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.4.7</span></a>.
 When called normally, it matches a string against a set of possible
 choices, similarly to <strong class="command">pmatch</strong>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">choices</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eggs&quot;</span><span class="p">)</span>
@@ -1186,9 +1186,9 @@ We can compose its simplified version manually:</p>
 <span class="c1">## [1] 2.75</span>
 </pre></div>
 </div>
-<p>Moreover, we can memorise the value of <code class="docutils literal notranslate"><span class="pre">e1</span></code> under the name, say, `<code class="docutils literal notranslate"><span class="pre">.</span></code>`
-so that it can be referred to in the right-hand side expression.
-This comes at the cost of forcing the evaluation of
+<p>Moreover, we can memorise the value of <code class="docutils literal notranslate"><span class="pre">e1</span></code> so that it can be referred
+to in the expression on the right side of the operator.
+This comes at a cost of forcing the evaluation of
 the left-hand side argument and thus losing the potential benefits
 of laziness, including access to the generating expression.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`%.&gt;%`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
@@ -1200,7 +1200,7 @@ of laziness, including access to the generating expression.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This way, we can refer to the value of the left-hand side
+<p>This way, we can refer to the value of the left side
 multiple times in a single call. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">);</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%.&gt;%</span><span class="w"> </span><span class="nf">`[`</span><span class="p">(</span><span class="n">.</span><span class="o">&gt;</span><span class="m">0.5</span><span class="p">)</span><span class="w">   </span><span class="c1"># x[x&gt;0.5] with x=runif(5)</span>
 <span class="c1">## [1] 0.78831 0.88302 0.94047</span>
@@ -1580,7 +1580,7 @@ Such exceptions go against this natural coping strategy of theirs.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-22T18:13:44+1000.
+              Last updated on 2023-06-23T16:07:12+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

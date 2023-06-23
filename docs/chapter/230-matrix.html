@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.1.9005 (draft)
+v0.9.1.9006 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -307,9 +307,9 @@ to represent <em>tabular</em> data where items are aligned into rows and columns
 <span class="c1">## [2,]    2    4    6</span>
 </pre></div>
 </div>
-<p>Combined with the fact that there are many built-in functions overloaded
+<p>Combined with the fact that there are many functions overloaded
 for the <code class="docutils literal notranslate"><span class="pre">matrix</span></code> class, we have just opened up a whole world of new
-possibilities. We explore them in this chapter.</p>
+possibilities, which we explore in this chapter.</p>
 <p>In particular, we discuss how to perform basic algebraic operations
 such as matrix multiplication, transpose, finding eigenvalues,
 and performing various decompositions. We also cover data wrangling
@@ -328,20 +328,19 @@ the same) type.</p>
 <h2><span class="section-number">11.1. </span>Creating arrays<a class="headerlink" href="#creating-arrays" title="Permalink to this heading">#</a></h2>
 <section id="matrix-and-array">
 <h3><span class="section-number">11.1.1. </span><strong class="command">matrix</strong> and <strong class="command">array</strong><a class="headerlink" href="#matrix-and-array" title="Permalink to this heading">#</a></h3>
-<p>A matrix can be conveniently created using the <strong class="command">matrix</strong> function.</p>
+<p>A matrix can be conveniently created using the following function.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]    1    2    3</span>
 <span class="c1">## [2,]    4    5    6</span>
 </pre></div>
 </div>
-<p>The above converted an atomic vector of length six
-into a matrix with two rows. The number of columns
-was determined automatically (<code class="docutils literal notranslate"><span class="pre">ncol=3</span></code> could have been passed
-to get the same result).</p>
+<p>It converted an atomic vector of length six to a matrix with two rows.
+The number of columns was determined automatically (<code class="docutils literal notranslate"><span class="pre">ncol=3</span></code> could have
+been passed to get the same result).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>By default, the elements of the input vector are read columnwisely:</p>
+<p>By default, the elements of the input vector are read column by column:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># byrow=FALSE</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]    1    3    5</span>
@@ -349,25 +348,25 @@ to get the same result).</p>
 </pre></div>
 </div>
 </div>
-<p>A matrix can be equipped with dimension names,
-being a list of two character vectors of appropriate sizes,
-labelling each row and column in this order:</p>
+<p>A matrix can be equipped with an attribute that defines dimension names,
+being a list of two character vectors of appropriate sizes which label
+each row and column:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">)))</span>
 <span class="c1">##   a b c</span>
 <span class="c1">## x 1 2 3</span>
 <span class="c1">## y 4 5 6</span>
 </pre></div>
 </div>
-<p>Alternatively, to create a matrix, we can use the <strong class="command">array</strong> function,
-which requires the number of rows and columns to be specified explicitly.</p>
+<p>Alternatively, to create a matrix, we can use the <strong class="command">array</strong> function.
+It requires the number of rows and columns to be specified explicitly.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">array</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]    1    3    5</span>
 <span class="c1">## [2,]    2    4    6</span>
 </pre></div>
 </div>
-<p>The elements are consumed in a column-major manner.</p>
-<p>Arrays of dimensionality other than 2 are also possible.
+<p>The elements were consumed in the column-major order.</p>
+<p>Arrays of other dimensionalities are also possible.
 Here is a one-dimensional array. When printed, it is indistinguishable
 from an atomic vector (but the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute is still
 set to <code class="docutils literal notranslate"><span class="pre">array</span></code>):</p>
@@ -393,24 +392,23 @@ of size <span class="math">\(3\times 4\times 2\)</span>:</p>
 <span class="c1">## [3,]   15   18   21   24</span>
 </pre></div>
 </div>
-<p>which can be thought of as two matrices of size <span class="math">\(3\times 4\)</span>
+<p>It can be thought of as two matrices of size <span class="math">\(3\times 4\)</span>
 (because how else can we print out a 3D object on a 2D console?).</p>
 <p>The <strong class="command">array</strong> function can be fed with the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> argument too.
 For instance, the above three-dimensional hypertable
 would require a list of three character vectors
 of sizes 3, 4, and 2, respectively.</p>
-<div class="proof proof-type-exercise" id="id15">
+<div class="proof proof-type-exercise" id="id14">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.1</span>
         
     </div><div class="proof-content">
-<p>The readers are encouraged to try out themselves
-that 10-dimensional arrays are also possible.</p>
+<p>Verify that 5-dimensional arrays can also be created.</p>
 </div></div></section>
 <section id="promoting-and-stacking-vectors">
 <span id="sec-cbind-matrix"></span><h3><span class="section-number">11.1.2. </span>Promoting and stacking vectors<a class="headerlink" href="#promoting-and-stacking-vectors" title="Permalink to this heading">#</a></h3>
-<p>We can promote an ordinary vector to a column vector, i.e.,
+<p>We can promote an ordinary vector to a <em>column vector</em>, i.e.,
 a matrix with one column, by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">##      [,1]</span>
@@ -452,8 +450,8 @@ one after/below another:</p>
 <span class="c1">## [2,]    2    4   21   22   23</span>
 </pre></div>
 </div>
-<p>and so forth.</p>
-<p>Unfortunately, the <em>generalised</em> recycling rule is not implemented in full:</p>
+<p>and so forth.
+Unfortunately, the <em>generalised</em> recycling rule is not implemented in full:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="o">:</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="m">9</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">))</span><span class="w">  </span><span class="c1"># different from cbind(1:4, 5:8, 9:10, 11)</span>
 <span class="c1">## Warning in cbind(1:4, 5:8, cbind(9:10, 11)): number of rows of result is</span>
 <span class="c1">##     not a multiple of vector length (arg 1)</span>
@@ -462,23 +460,22 @@ one after/below another:</p>
 <span class="c1">## [2,]    2    6   10   11</span>
 </pre></div>
 </div>
-<p>The first two arguments are of length four.</p>
+<p>Note that the first two arguments were of length four.</p>
 </section>
 <section id="simplifying-lists">
 <span id="sec-simplify2array"></span><h3><span class="section-number">11.1.3. </span>Simplifying lists<a class="headerlink" href="#simplifying-lists" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">simplify2array</strong> is an extension of the <strong class="command">unlist</strong> function.
 Given a list of atomic vectors, each of length one, it will return a flat
-atomic vector.
-However, if a list of equisized vectors of greater lengths is given,
-these will be converted to a matrix.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">simplify2array</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="p">))</span><span class="w">  </span><span class="c1"># each of length 1</span>
+atomic vector. However, if longer vectors of the same lengths are given,
+they will be converted to a matrix.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">simplify2array</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="p">))</span><span class="w">  </span><span class="c1"># each of length one</span>
 <span class="c1">## [1]  1 11 21</span>
-<span class="nf">simplify2array</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="o">:</span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="o">:</span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="o">:</span><span class="m">33</span><span class="p">))</span><span class="w">  </span><span class="c1"># each of length 3</span>
+<span class="nf">simplify2array</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="o">:</span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="o">:</span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="o">:</span><span class="m">33</span><span class="p">))</span><span class="w">  </span><span class="c1"># each of length three</span>
 <span class="c1">##      [,1] [,2] [,3] [,4]</span>
 <span class="c1">## [1,]    1   11   21   31</span>
 <span class="c1">## [2,]    2   12   22   32</span>
 <span class="c1">## [3,]    3   13   23   33</span>
-<span class="nf">simplify2array</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="o">:</span><span class="m">23</span><span class="p">))</span><span class="w">  </span><span class="c1"># no can do</span>
+<span class="nf">simplify2array</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">21</span><span class="o">:</span><span class="m">23</span><span class="p">))</span><span class="w">  </span><span class="c1"># no can do (without warning!)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 1</span>
 <span class="c1">##</span>
@@ -490,19 +487,21 @@ these will be converted to a matrix.</p>
 </pre></div>
 </div>
 <p>In the second example, each vector becomes
-a separate column of the resulting matrix<a class="footnote-reference brackets" href="#footsimplify" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
-<p>See <a class="reference internal" href="240-data-frame.html#sec-df-group-by"><span class="std std-numref">Section 12.3.7</span></a> for a few more examples.</p>
-<div class="proof proof-type-example" id="id16">
+a separate column of the resulting matrix,
+which can easily be justified by the fact that
+matrix elements are stored in a columnwise order.</p>
+<div class="proof proof-type-example" id="id15">
 
     <div class="proof-title">
         <span class="proof-type">Example 11.2</span>
         
     </div><div class="proof-content">
-<p>Quite a few functions call the above automatically
-(compare the <code class="docutils literal notranslate"><span class="pre">simplify</span></code> or <code class="docutils literal notranslate"><span class="pre">SIMPLIFY</span></code> (sic!) argument in
-<strong class="command">sapply</strong>, <strong class="command">tapply</strong>, <strong class="command">mapply</strong>,
-<strong class="command">replicate</strong>, etc.).
-For instance:</p>
+<p>Quite a few functions call the above automatically;
+compare the <code class="docutils literal notranslate"><span class="pre">simplify</span></code> argument to <strong class="command">apply</strong>,
+<strong class="command">sapply</strong>, <strong class="command">tapply</strong>, or <strong class="command">replicate</strong>,
+and the <code class="docutils literal notranslate"><span class="pre">SIMPLIFY</span></code> (sic!) argument to <strong class="command">mapply</strong>. For instance,
+<strong class="command">sapply</strong> combines <strong class="command">lapply</strong>
+with <strong class="command">simplify2array</strong>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">min_mean_max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">Min</span><span class="o">=</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">Mean</span><span class="o">=</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">Max</span><span class="o">=</span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="nf">sapply</span><span class="p">(</span><span class="nf">split</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]]),</span><span class="w"> </span><span class="n">min_mean_max</span><span class="p">)</span>
 <span class="c1">##      setosa versicolor virginica</span>
@@ -512,7 +511,7 @@ For instance:</p>
 </pre></div>
 </div>
 <p>Take note of what constitutes the columns of the return matrix.</p>
-</div></div><div class="proof proof-type-exercise" id="id17">
+</div></div><div class="proof proof-type-exercise" id="id16">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.3</span>
@@ -522,10 +521,10 @@ For instance:</p>
 Write your version of <strong class="command">simplify2array</strong>
 named <strong class="command">as.matrix.list</strong> that <em>always</em>
 returns a matrix. If a list of non-equisized vectors is given,
-fill the missing cells with <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.</p>
+fill the missing cells with <code class="docutils literal notranslate"><span class="pre">NA</span></code>s and generate a warning.</p>
 </div></div><div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Sometimes a call to <strong class="command">do.call</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">cbind</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x))</span></code>
+<p>Sometimes a call to <strong class="command">do.call</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">cbind</strong><code class="code docutils literal notranslate"><span class="pre">,</span> <span class="pre">x)</span></code>
 might be a better idea than a referral to <strong class="command">simplify2array</strong>.
 Provided that <code class="docutils literal notranslate"><span class="pre">x</span></code> is a list of atomic vectors,
 it <em>always</em> returns a matrix: shorter vectors are recycled
@@ -540,13 +539,13 @@ it <em>always</em> returns a matrix: shorter vectors are recycled
 </pre></div>
 </div>
 </div>
-<div class="proof proof-type-example" id="id18">
+<div class="proof proof-type-example" id="id17">
 
     <div class="proof-title">
         <span class="proof-type">Example 11.4</span>
         
     </div><div class="proof-content">
-<p>Consider a named toy list of numeric vectors:</p>
+<p>Consider a toy named list of numeric vectors:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="nf">runif</span><span class="p">(</span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">15</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -576,10 +575,11 @@ it <em>always</em> returns a matrix: shorter vectors are recycled
 </div>
 <p>Notice that <strong class="command">sapply</strong> may return an atomic vector
 with somewhat surprising <code class="docutils literal notranslate"><span class="pre">names</span></code>.</p>
-</div></div></section>
+</div></div><p>See <a class="reference internal" href="240-data-frame.html#sec-df-group-by"><span class="std std-numref">Section 12.3.7</span></a> for a few more examples.</p>
+</section>
 <section id="beyond-numeric-arrays">
 <h3><span class="section-number">11.1.4. </span>Beyond numeric arrays<a class="headerlink" href="#beyond-numeric-arrays" title="Permalink to this heading">#</a></h3>
-<p>Arrays built on atomic vectors other than numeric ones are possible too.
+<p>Arrays based on non-numeric vectors are also possible.
 For instance, we will later stress that comparisons featuring matrices
 are performed elementwisely. They spawn logical matrices:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">3</span>
@@ -588,7 +588,7 @@ are performed elementwisely. They spawn logical matrices:</p>
 <span class="c1">## [2,]  TRUE  TRUE TRUE</span>
 </pre></div>
 </div>
-<p>Furthermore, matrices of character strings can also be useful:</p>
+<p>Matrices of character strings can be useful too:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">matrix</span><span class="p">(</span><span class="nf">strrep</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">],</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">##      [,1] [,2]   [,3]</span>
 <span class="c1">## [1,] &quot;A&quot;  &quot;CCC&quot;  &quot;EEEEE&quot;</span>
@@ -602,7 +602,7 @@ are performed elementwisely. They spawn logical matrices:</p>
 <span class="c1">## [2,] 4+1i 5+1i 6+1i</span>
 </pre></div>
 </div>
-<p>We are not limited to <em>atomic</em> vectors: lists can
+<p>We are not limited to <em>atomic</em> vectors. Lists can
 be a basis for arrays as well:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">matrix</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="o">:</span><span class="m">21</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">##      [,1]       [,2]</span>
@@ -610,15 +610,15 @@ be a basis for arrays as well:</p>
 <span class="c1">## [2,] integer,11 list,3</span>
 </pre></div>
 </div>
-<p>Some elements are not displayed correctly, but they are still there.</p>
+<p>Some elements are not <em>displayed</em> correctly, but they <em>are</em> still there.</p>
 </section>
 <section id="internal-representation">
 <span id="sec-matrix-representation"></span><h3><span class="section-number">11.1.5. </span>Internal representation<a class="headerlink" href="#internal-representation" title="Permalink to this heading">#</a></h3>
 <p>An object of the S3 class <code class="docutils literal notranslate"><span class="pre">array</span></code> is an atomic vector or a list
 equipped with the <code class="docutils literal notranslate"><span class="pre">dims</span></code> attribute being a vector of nonnegative integers.
 Interestingly, we do not have to set the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute explicitly:
-the accessor function <strong class="command">class</strong> will return an implicit<a class="footnote-reference brackets" href="#footunclass" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
-class anyway (compare <a class="reference internal" href="140-list.html#sec-special-attributes"><span class="std std-numref">Section 4.4.3</span></a>).</p>
+the accessor function <strong class="command">class</strong> will return an implicit<a class="footnote-reference brackets" href="#footunclass" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
+class anyway.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># atomic vector</span>
 <span class="c1">## [1] &quot;numeric&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)))</span><span class="w">  </span><span class="c1"># 1D array (vector)</span>
@@ -649,15 +649,15 @@ where <span class="math">\(d\)</span> is the array’s dimensionality.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Internally, elements in an array are always
-stored in the columnwise (column-major, Fortran) order:</p>
+<p>Internally, elements in an array are
+stored in the column-major (Fortran) order:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w">  </span><span class="c1"># drop all attributes to reveal the underlying numeric vector</span>
 <span class="c1">## [1] 1 2 3 4 5 6</span>
 </pre></div>
 </div>
-<p>Setting <code class="docutils literal notranslate"><span class="pre">byrow=TRUE</span></code> in a call to the <strong class="command">matrix</strong>
-only affects the order in which this function reads a given source vector,
-not the column/row-majorness.</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">byrow=TRUE</span></code> in a call to the <strong class="command">matrix</strong> only affects
+the order in which this constructor <em>reads</em> a given source vector,
+not the resulting column/row-majorness.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]    1    2    3</span>
@@ -670,10 +670,10 @@ not the column/row-majorness.</p>
 <p>The two said special attributes can be modified through the replacement
 functions `<strong class="command">dim&lt;-</strong>` and `<strong class="command">dimnames&lt;-</strong>`
 (and, of course, `<strong class="command">attr&lt;-</strong>` as well).
-In particular, changing <code class="docutils literal notranslate"><span class="pre">dim</span></code> does not alter the underlying atomic vector;
-it only affects how other functions, including the corresponding
+In particular, changing <code class="docutils literal notranslate"><span class="pre">dim</span></code> does not alter the underlying atomic vector.
+It only affects how other functions, including the corresponding
 <strong class="command">print</strong> method, interpret their placement on a virtual grid:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`dim&lt;-`</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># not the same as transpose of A</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`dim&lt;-`</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># not the same as the transpose of `A`</span>
 <span class="c1">##      [,1] [,2]</span>
 <span class="c1">## [1,]    1    4</span>
 <span class="c1">## [2,]    2    5</span>
@@ -681,9 +681,9 @@ it only affects how other functions, including the corresponding
 </pre></div>
 </div>
 <p>We obtained a different <em>view</em> of the same <em>flat</em> data vector.
-Also, the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute was dropped as its size became
+Also, the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute was dropped because its size became
 incompatible with the newly requested dimensionality.</p>
-<div class="proof proof-type-exercise" id="id19">
+<div class="proof proof-type-exercise" id="id18">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.5</span>
@@ -697,7 +697,7 @@ incompatible with the newly requested dimensionality.</p>
 <strong class="command">names</strong> function returns a reasonable value
 (based on the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute, which is a list featuring one character
 vector), despite the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute’s not being set.</p>
-<p>What is more, <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> itself can be named:</p>
+<p>What is more, the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute itself can be named:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">A</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ROWS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;COLUMNS&quot;</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="c1">##     COLUMNS</span>
@@ -706,9 +706,9 @@ vector), despite the <code class="docutils literal notranslate"><span class="pre
 <span class="c1">##    b 2 4 6</span>
 </pre></div>
 </div>
-<p>It is still a numeric matrix, but the presentation thereof is
+<p>It is still a numeric matrix, but its presentation has been
 slightly prettified.</p>
-<div class="proof proof-type-exercise" id="id20">
+<div class="proof proof-type-exercise" id="id19">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.6</span>
@@ -716,9 +716,8 @@ slightly prettified.</p>
     </div><div class="proof-content">
 <p><strong class="command">outer</strong> applies an elementwisely vectorised function
 on each pair of elements from two vectors, forming a two-dimensional
-result grid.
-Based on two calls to <strong class="command">rep</strong>, implement it yourself.</p>
-<p>Some examples:</p>
+result grid. Implement it yourself based on two calls to <strong class="command">rep</strong>.
+Some examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">outer</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="m">100</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="o">=</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;*&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># multiplication</span>
 <span class="c1">##     a   b   c   d</span>
 <span class="c1">## x   1   2   3   4</span>
@@ -730,27 +729,26 @@ Based on two calls to <strong class="command">rep</strong>, implement it yoursel
 <span class="c1">## [2,] &quot;B-1&quot; &quot;B-2&quot; &quot;B-3&quot; &quot;B-4&quot; &quot;B-5&quot; &quot;B-6&quot; &quot;B-7&quot; &quot;B-8&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id21">
+</div></div><div class="proof proof-type-exercise" id="id20">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.7</span>
         
     </div><div class="proof-content">
-<p>Show how <strong class="command">match</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">z)</span></code> can be expressed
+<p>Show how <strong class="command">match</strong><code class="code docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">z)</span></code> can be implemented
 using <strong class="command">outer</strong>. Is its time and memory complexity
 optimal, though?</p>
-</div></div><div class="proof proof-type-exercise" id="id22">
+</div></div><div class="proof proof-type-exercise" id="id21">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.8</span>
         
     </div><div class="proof-content">
 <p><strong class="command">table</strong> creates a contingency matrix/array that
-counts the number of unique pairs of corresponding elements
+counts the number of unique elements of pairs of corresponding items
 from one or more vectors of equal lengths.
-Implement its one- and two-argument version based on
-<strong class="command">tabulate</strong>.
-For example:</p>
+Write its one- and two-argument version based on
+<strong class="command">tabulate</strong>. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">tips</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;https://github.com/gagolews/teaching-data/raw/&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="s">&quot;master/other/tips.csv&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">comment.char</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># a data.frame (list)</span>
 <span class="nf">table</span><span class="p">(</span><span class="n">tips</span><span class="p">[[</span><span class="s">&quot;day&quot;</span><span class="p">]])</span>
@@ -768,31 +766,26 @@ For example:</p>
 </section>
 <section id="array-indexing">
 <h2><span class="section-number">11.2. </span>Array indexing<a class="headerlink" href="#array-indexing" title="Permalink to this heading">#</a></h2>
-<p>Array subsetting can be performed by means of an overloaded<a class="footnote-reference brackets" href="#footsqover" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>
-`<strong class="command">[</strong>` method, which we will usually provide with
-many indexers: two in the matrix case; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>.</p>
-<p>Throughout this section, we refer to the two following example matrices:</p>
+<p>Array subsetting can be performed by means of the overloaded<a class="footnote-reference brackets" href="#footsqover" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
+`<strong class="command">[</strong>` method.</p>
+<section id="arrays-are-built-on-basic-vectors">
+<h3><span class="section-number">11.2.1. </span>Arrays are built on basic vectors<a class="headerlink" href="#arrays-are-built-on-basic-vectors" title="Permalink to this heading">#</a></h3>
+<p>Consider the two following example matrices:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">))</span>
 <span class="c1">##      [,1] [,2] [,3] [,4]</span>
 <span class="c1">## [1,]    1    2    3    4</span>
 <span class="c1">## [2,]    5    6    7    8</span>
 <span class="c1">## [3,]    9   10   11   12</span>
-<span class="n">B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">A</span>
-<span class="nf">dimnames</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
-<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w">     </span><span class="c1"># row labels</span>
-<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># column labels</span>
-<span class="p">)</span>
-<span class="n">B</span>
+<span class="p">(</span><span class="n">B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">`dimnames&lt;-`</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">  </span><span class="c1"># copy of `A` with `dimnames` set</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w">      </span><span class="c1"># row labels</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># column labels</span>
+<span class="p">)))</span>
 <span class="c1">##   x  y  z  w</span>
 <span class="c1">## a 1  2  3  4</span>
 <span class="c1">## b 5  6  7  8</span>
 <span class="c1">## c 9 10 11 12</span>
 </pre></div>
 </div>
-<p>Subsetting higher-dimensional arrays will be covered
-at the end.</p>
-<section id="arrays-are-built-on-basic-vectors">
-<h3><span class="section-number">11.2.1. </span>Arrays are built on basic vectors<a class="headerlink" href="#arrays-are-built-on-basic-vectors" title="Permalink to this heading">#</a></h3>
 <p>Subsetting based on one indexer (as in <a class="reference internal" href="150-indexing.html#chap-indexing"><span class="std std-numref">Chapter 5</span></a>)
 will refer to the underlying flat vector.
 For instance:</p>
@@ -805,7 +798,7 @@ Recall that values are stored in the column-major order.</p>
 </section>
 <section id="selecting-individual-elements">
 <h3><span class="section-number">11.2.2. </span>Selecting individual elements<a class="headerlink" href="#selecting-individual-elements" title="Permalink to this heading">#</a></h3>
-<p>Mathematically, we say that our example <span class="math">\(3\times 4\)</span> real matrix
+<p>Our example <span class="math">\(3\times 4\)</span> real matrix
 <span class="math">\(\mathbf{A}\in\mathbb{R}^{3\times 4}\)</span> is like:</p>
 <div class="math-wrapper docutils container">
 <div class="math">
@@ -829,10 +822,9 @@ a_{3, 1} & a_{3, 2} & a_{3, 3} & a_{3, 4}  \\
 \]</div>
 </div>
 <p>Matrix elements are aligned in a two-dimensional grid.
-They are organised into rows and columns.
-Hence, we can pinpoint a cell using two indexes:
-<span class="math">\(a_{i,j}\)</span> refers to the <span class="math">\(i\)</span>-th row and the <span class="math">\(j\)</span>-th column.</p>
-<p>Similarly in R:</p>
+Hence, we can pinpoint a cell using two indexes.
+In mathematical notation, <span class="math">\(a_{i,j}\)</span> refers to the <span class="math">\(i\)</span>-th row
+and the <span class="math">\(j\)</span>-th column. Similarly in R:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1"># the third row, the second column</span>
 <span class="c1">## [1] 10</span>
 <span class="n">B</span><span class="p">[</span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">]</span><span class="w">  </span><span class="c1"># using dimnames == B[3, 2]</span>
@@ -843,11 +835,11 @@ Hence, we can pinpoint a cell using two indexes:
 <section id="selecting-rows-and-columns">
 <h3><span class="section-number">11.2.3. </span>Selecting rows and columns<a class="headerlink" href="#selecting-rows-and-columns" title="Permalink to this heading">#</a></h3>
 <p>Some textbooks, and we are fond of this notation here as well,
-mark with  <span class="math">\(\mathbf{a}_{i,\cdot}\)</span>
+mark with <span class="math">\(\mathbf{a}_{i,\cdot}\)</span>
 a vector that consists of all the elements in
 the <span class="math">\(i\)</span>-th row and with <span class="math">\(\mathbf{a}_{\cdot,j}\)</span> all items
-in the <span class="math">\(j\)</span>-th column.</p>
-<p>In R, these will correspond to one of the indexers being left out.</p>
+in the <span class="math">\(j\)</span>-th column.
+In R, this corresponds to one of the indexers being left out.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">  </span><span class="c1"># the third row</span>
 <span class="c1">## [1]  9 10 11 12</span>
 <span class="n">A</span><span class="p">[,</span><span class="w"> </span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1"># the second column</span>
@@ -860,10 +852,10 @@ in the <span class="math">\(j\)</span>-th column.</p>
 <span class="c1">##  2  6 10</span>
 </pre></div>
 </div>
-<p>Let us stress that <code class="docutils literal notranslate"><span class="pre">A[1]</span></code>, <code class="docutils literal notranslate"><span class="pre">A[1,</span> <span class="pre">]</span></code>, and <code class="docutils literal notranslate"><span class="pre">A[,</span> <span class="pre">1]</span></code> have all different
+<p>Let us stress that <code class="docutils literal notranslate"><span class="pre">A[1]</span></code>, <code class="docutils literal notranslate"><span class="pre">A[1,</span> <span class="pre">]</span></code>, and <code class="docutils literal notranslate"><span class="pre">A[,</span> <span class="pre">1]</span></code> have different
 meanings. Also, we see that the results’ <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> are adjusted accordingly;
 see also <strong class="command">unname</strong>, which can take care of them once and for all.</p>
-<div class="proof proof-type-exercise" id="id23">
+<div class="proof proof-type-exercise" id="id22">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.9</span>
@@ -875,19 +867,20 @@ in a given numeric matrix (see also <strong class="command">unique</strong>).</p
 <section id="dropping-dimensions">
 <h3><span class="section-number">11.2.4. </span>Dropping dimensions<a class="headerlink" href="#dropping-dimensions" title="Permalink to this heading">#</a></h3>
 <p>Extracting an individual element or a single row/column from a matrix
-brings about an atomic vector. If the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute consists of 1s only,
-it will be removed whatsoever.</p>
+brings about an atomic vector. If the resulting object’s <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute
+consists of 1s only, it will be removed whatsoever; see also the
+<strong class="command">drop</strong> function which removes the dimensions with only one level.</p>
 <p>In order to obtain proper row and column vectors, we can request the
 preservation of the dimensionality of the output object
-(and, more precisely, the length of <code class="docutils literal notranslate"><span class="pre">dim</span></code>). It can be
+(and, more precisely, the length of <code class="docutils literal notranslate"><span class="pre">dim</span></code>). This can be
 done by passing <code class="docutils literal notranslate"><span class="pre">drop=FALSE</span></code> to `<strong class="command">[</strong>`.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># first row, second column</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># the first row, second column</span>
 <span class="c1">##      [,1]</span>
 <span class="c1">## [1,]    2</span>
-<span class="n">A</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># first row</span>
+<span class="n">A</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># the first row</span>
 <span class="c1">##      [,1] [,2] [,3] [,4]</span>
 <span class="c1">## [1,]    1    2    3    4</span>
-<span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># second column</span>
+<span class="n">A</span><span class="p">[</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># the second column</span>
 <span class="c1">##      [,1]</span>
 <span class="c1">## [1,]    2</span>
 <span class="c1">## [2,]    6</span>
@@ -900,8 +893,6 @@ done by passing <code class="docutils literal notranslate"><span class="pre">dro
 avoided otherwise, primarily when the indexers are generated
 programmatically.</p>
 </div>
-<p>See also the <strong class="command">drop</strong> function, which removes the dimensions
-with only one level.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For list-based matrices,
@@ -923,19 +914,19 @@ version of `<strong class="command">[[</strong>` to extract the individual eleme
 <section id="selecting-submatrices">
 <h3><span class="section-number">11.2.5. </span>Selecting submatrices<a class="headerlink" href="#selecting-submatrices" title="Permalink to this heading">#</a></h3>
 <p>Indexing based on two vectors, both of length two or more, extracts
-a sub-block of a given matrix:</p>
+a sub-block of a given matrix.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)]</span><span class="w">  </span><span class="c1"># rows 1 and 2, columns 1, 2, and 4</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]    1    2    4</span>
 <span class="c1">## [2,]    5    6    8</span>
-<span class="n">B</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">),</span><span class="w"> </span><span class="m">-3</span><span class="p">]</span>
+<span class="n">B</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">),</span><span class="w"> </span><span class="m">-3</span><span class="p">]</span><span class="w">  </span><span class="c1"># some rows, omit the third column</span>
 <span class="c1">##   x y w</span>
 <span class="c1">## a 1 2 4</span>
 <span class="c1">## b 5 6 8</span>
 </pre></div>
 </div>
-<p>Note again that <code class="docutils literal notranslate"><span class="pre">drop=TRUE</span></code> is the default,
-which affects the behaviour if one of the indexers is a scalar.</p>
+<p>Note again that we have <code class="docutils literal notranslate"><span class="pre">drop=TRUE</span></code> by default, which affects
+the operator’s behaviour if one of the indexers is a scalar.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">]</span>
 <span class="c1">## [1]  3 11</span>
 <span class="n">A</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span>
@@ -944,19 +935,19 @@ which affects the behaviour if one of the indexers is a scalar.</p>
 <span class="c1">## [2,]   11</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id24">
+<div class="proof proof-type-exercise" id="id23">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.10</span>
         
     </div><div class="proof-content">
-<p>Overload the <strong class="command">split</strong> function for the <code class="docutils literal notranslate"><span class="pre">matrix</span></code> class
-so that, given a matrix with <span class="math">\(n\)</span> rows and an
-object of the class <code class="docutils literal notranslate"><span class="pre">factor</span></code> of length <span class="math">\(n\)</span> (or a list of such objects),
-a list of <span class="math">\(n\)</span> matrices is returned. For example:</p>
+<p>Define the <strong class="command">split</strong> method for the <code class="docutils literal notranslate"><span class="pre">matrix</span></code> class that
+returns a list of <span class="math">\(n\)</span> matrices when given a matrix with <span class="math">\(n\)</span> rows and an
+object of the class <code class="docutils literal notranslate"><span class="pre">factor</span></code> of length <span class="math">\(n\)</span> (or a list of such objects).
+For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">split.matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">...to.do...</span>
 <span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># matrix whose rows are to be split</span>
-<span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># determines the grouping of rows</span>
+<span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># determines a grouping of rows</span>
 <span class="nf">split</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
 <span class="c1">## $a</span>
 <span class="c1">##      [,1] [,2] [,3] [,4]</span>
@@ -973,15 +964,15 @@ a list of <span class="math">\(n\)</span> matrices is returned. For example:</p>
 <h3><span class="section-number">11.2.6. </span>Selecting elements based on logical vectors<a class="headerlink" href="#selecting-elements-based-on-logical-vectors" title="Permalink to this heading">#</a></h3>
 <p>Logical vectors can also be used as indexers, with consequences
 that are not hard to guess:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="m">-1</span><span class="p">]</span><span class="w">  </span><span class="c1"># select 1st and 3rd row, all but 1st column</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="m">-1</span><span class="p">]</span><span class="w">  </span><span class="c1"># select 1st and 3rd row, omit 1st column</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]    4    7   10</span>
 <span class="c1">## [2,]    6    9   12</span>
-<span class="n">B</span><span class="p">[</span><span class="n">B</span><span class="p">[,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">[,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">]</span><span class="o">&lt;=</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">  </span><span class="c1"># all rows where x is in (1, 9]</span>
+<span class="n">B</span><span class="p">[</span><span class="n">B</span><span class="p">[,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">[,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">]</span><span class="o">&lt;=</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">  </span><span class="c1"># all rows where x&#39;s contents are in (1, 9]</span>
 <span class="c1">##   x  y  z  w</span>
 <span class="c1">## b 5  6  7  8</span>
 <span class="c1">## c 9 10 11 12</span>
-<span class="n">A</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="nf">colMeans</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">&gt;</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># 2nd row of the columns with means &gt; 6</span>
+<span class="n">A</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="nf">colMeans</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">&gt;</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">drop</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span><span class="w">  </span><span class="c1"># 2nd row and the columns whose means &gt; 6</span>
 <span class="c1">##      [,1] [,2]</span>
 <span class="c1">## [1,]    8   11</span>
 </pre></div>
@@ -1004,10 +995,10 @@ same size. This kind of indexing always gives rise to a (flat) vector:</p>
 </pre></div>
 </div>
 <p>It is nothing else than the single-indexer subsetting
-involving two flat vectors (a numeric and a logical one);
-the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attributes are not considered here.</p>
+involving two flat vectors (a numeric and a logical one).
+The <code class="docutils literal notranslate"><span class="pre">dim</span></code> attributes are not considered here.</p>
 </div>
-<div class="proof proof-type-exercise" id="id25">
+<div class="proof proof-type-exercise" id="id24">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.11</span>
@@ -1018,36 +1009,36 @@ the <code class="docutils literal notranslate"><span class="pre">dim</span></cod
 </div></div></section>
 <section id="selecting-based-on-two-column-numeric-matrices">
 <h3><span class="section-number">11.2.7. </span>Selecting based on two-column numeric matrices<a class="headerlink" href="#selecting-based-on-two-column-numeric-matrices" title="Permalink to this heading">#</a></h3>
-<p>We can also index a matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> with a two-column matrix of positive
+<p>We can also index a matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> by a two-column matrix of positive
 integers <code class="docutils literal notranslate"><span class="pre">I</span></code>. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span>
 <span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span>
-<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
 <span class="p">))</span>
 <span class="c1">##      [,1] [,2]</span>
 <span class="c1">## [1,]    1    2</span>
 <span class="c1">## [2,]    3    3</span>
 <span class="c1">## [3,]    2    2</span>
-<span class="c1">## [4,]    1    1</span>
+<span class="c1">## [4,]    1    2</span>
 <span class="c1">## [5,]    2    4</span>
 </pre></div>
 </div>
 <p>Now <code class="docutils literal notranslate"><span class="pre">A[I]</span></code> gives easy access to:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">A[I[1,</span> <span class="pre">1],</span> <span class="pre">I[1,</span> <span class="pre">2]]</span></code>,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">A[I[2,</span> <span class="pre">1],</span> <span class="pre">I[2,</span> <span class="pre">2]]</span></code>,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">A[I[3,</span> <span class="pre">1],</span> <span class="pre">I[3,</span> <span class="pre">2]]</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A[</span> <span class="pre">I[1,</span> <span class="pre">1],</span> <span class="pre">I[1,</span> <span class="pre">2]</span> <span class="pre">]</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A[</span> <span class="pre">I[2,</span> <span class="pre">1],</span> <span class="pre">I[2,</span> <span class="pre">2]</span> <span class="pre">]</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A[</span> <span class="pre">I[3,</span> <span class="pre">1],</span> <span class="pre">I[3,</span> <span class="pre">2]</span> <span class="pre">]</span></code>,</p></li>
 <li><p>…</p></li>
 </ul>
 <p>and so forth. In other words, each row of <code class="docutils literal notranslate"><span class="pre">I</span></code> gives
-the coordinates of the elements to extract.</p>
+the coordinates of the elements to extract.
+The result is always a flat vector.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">[</span><span class="n">I</span><span class="p">]</span>
-<span class="c1">## [1]  4  9  5  1 11</span>
+<span class="c1">## [1]  4  9  5  4 11</span>
 </pre></div>
 </div>
 <p>This is exactly
-<code class="docutils literal notranslate"><span class="pre">A[1,</span> <span class="pre">2],</span> <span class="pre">A[3,</span> <span class="pre">3],</span> <span class="pre">A[2,</span> <span class="pre">2],</span> <span class="pre">A[1,</span> <span class="pre">1],</span> <span class="pre">A[2,</span> <span class="pre">4]</span></code>.
-The result is always a flat vector.</p>
+<code class="docutils literal notranslate"><span class="pre">A[1,</span> <span class="pre">2],</span> <span class="pre">A[3,</span> <span class="pre">3],</span> <span class="pre">A[2,</span> <span class="pre">2],</span> <span class="pre">A[1,</span> <span class="pre">2],</span> <span class="pre">A[2,</span> <span class="pre">4]</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong class="command">which</strong> can also return a list of index matrices:</p>
@@ -1063,7 +1054,7 @@ The result is always a flat vector.</p>
 <p>Moreover, <strong class="command">arrayInd</strong> converts
 flat indexes to multidimensional ones.</p>
 </div>
-<div class="proof proof-type-exercise" id="id26">
+<div class="proof proof-type-exercise" id="id25">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.12</span>
@@ -1071,7 +1062,7 @@ flat indexes to multidimensional ones.</p>
     </div><div class="proof-content">
 <p>Implement your version of <strong class="command">arrayInd</strong>
 and a function performing the inverse operation.</p>
-</div></div><div class="proof proof-type-exercise" id="id27">
+</div></div><div class="proof proof-type-exercise" id="id26">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.13</span>
@@ -1084,29 +1075,32 @@ and a function performing the inverse operation.</p>
 <p>For <span class="math">\(d\)</span>-dimensional arrays, indexing can involve up to <span class="math">\(d\)</span> indexes.
 It is particularly valuable for arrays with the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute set
 representing contingency tables over a Cartesian product of multiple factors.
-The built-in <strong class="program">datasets</strong><code class="code docutils literal notranslate"><span class="pre">::Titanic</span></code> object is
-an example of this:</p>
+The <strong class="program">datasets</strong><code class="code docutils literal notranslate"><span class="pre">::Titanic</span></code> object is
+an exemplary four-dimensional table:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">Titanic</span><span class="p">))</span><span class="w">  </span><span class="c1"># for reference (note that dimnames are named)</span>
 <span class="c1">## List of 4</span>
 <span class="c1">##  $ Class   : chr [1:4] &quot;1st&quot; &quot;2nd&quot; &quot;3rd&quot; &quot;Crew&quot;</span>
 <span class="c1">##  $ Sex     : chr [1:2] &quot;Male&quot; &quot;Female&quot;</span>
 <span class="c1">##  $ Age     : chr [1:2] &quot;Child&quot; &quot;Adult&quot;</span>
 <span class="c1">##  $ Survived: chr [1:2] &quot;No&quot; &quot;Yes&quot;</span>
-<span class="n">Titanic</span><span class="p">[</span><span class="s">&quot;Crew&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Male&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Adult&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Yes&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Here is the number of adult male crew members who survived
+the accident:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Titanic</span><span class="p">[</span><span class="s">&quot;Crew&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Male&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Adult&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Yes&quot;</span><span class="p">]</span>
 <span class="c1">## [1] 192</span>
 </pre></div>
 </div>
-<p>gives the number of adult male crew members who survived
-the accident. Also:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Titanic</span><span class="p">[</span><span class="s">&quot;Crew&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Adult&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<p>Moreover, let us fetch a slice corresponding to adults
+travelling in the premium class:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Titanic</span><span class="p">[</span><span class="s">&quot;1st&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Adult&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
 <span class="c1">##         Survived</span>
 <span class="c1">## Sex       No Yes</span>
-<span class="c1">##   Male   670 192</span>
-<span class="c1">##   Female   3  20</span>
+<span class="c1">##   Male   118  57</span>
+<span class="c1">##   Female   4 140</span>
 </pre></div>
 </div>
-<p>and so on.</p>
-<div class="proof proof-type-exercise" id="id28">
+<div class="proof proof-type-exercise" id="id27">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.14</span>
@@ -1117,29 +1111,26 @@ matrices with four columns.</p>
 </div></div></section>
 <section id="replacing-elements">
 <h3><span class="section-number">11.2.9. </span>Replacing elements<a class="headerlink" href="#replacing-elements" title="Permalink to this heading">#</a></h3>
-<p>There is also a multidimensional version of the
-replacement subsetting function, `<strong class="command">[&lt;-</strong>`.</p>
 <p>Generally, subsetting drops all attributes except
 <code class="docutils literal notranslate"><span class="pre">names</span></code>, <code class="docutils literal notranslate"><span class="pre">dim</span></code>, and <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> (unless it does not make sense otherwise).
 The replacement variant of the index operator
-modifies vector values but generally preserves all the attributes.</p>
-<p>This enables transforming matrix elements like:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="p">[</span><span class="n">B</span><span class="o">&lt;</span><span class="m">10</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">B</span><span class="o">&lt;</span><span class="m">10</span><span class="p">]</span><span class="o">^</span><span class="m">2</span>
+modifies vector values but generally preserves all the attributes.
+This enables transforming matrix elements like:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="p">[</span><span class="n">B</span><span class="o">&lt;</span><span class="m">10</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">B</span><span class="o">&lt;</span><span class="m">10</span><span class="p">]</span><span class="o">^</span><span class="m">2</span><span class="w">  </span><span class="c1"># `A` has no `dimnames` set</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
 <span class="c1">##   x  y  z   w</span>
 <span class="c1">## a 1 16 49 100</span>
 <span class="c1">## b 4 25 64 121</span>
 <span class="c1">## c 9 10 11  12</span>
 <span class="n">B</span><span class="p">[]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="nf">seq_len</span><span class="p">(</span><span class="nf">NROW</span><span class="p">(</span><span class="n">B</span><span class="p">)),</span><span class="w"> </span><span class="nf">NCOL</span><span class="p">(</span><span class="n">B</span><span class="p">))</span><span class="w">  </span><span class="c1"># NOT the same as B &lt;- ...</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w">  </span><span class="c1"># `dim` and `dimnames` were preserved</span>
 <span class="c1">##   x y z w</span>
 <span class="c1">## a 1 1 1 1</span>
 <span class="c1">## b 2 2 2 2</span>
 <span class="c1">## c 3 3 3 3</span>
 </pre></div>
 </div>
-<p>Take note of the preservation of <code class="docutils literal notranslate"><span class="pre">dim</span></code> and <code class="docutils literal notranslate"><span class="pre">dimnames</span></code>.</p>
-<div class="proof proof-type-exercise" id="id29">
+<div class="proof proof-type-exercise" id="id28">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.15</span>
@@ -1175,12 +1166,10 @@ is available via a call to <strong class="command">t</strong>:</p>
 </pre></div>
 </div>
 <p>Hence, if <span class="math">\(\mathbf{B}=\mathbf{A}^T\)</span>, then it is a matrix such that
-<span class="math">\(b_{i,j}=a_{j,i}\)</span>.
-In other words, in the transposed matrix, rows become columns, and
-columns become rows.</p>
-<p>For higher-dimensional arrays,
-a generalised transpose can be achieved with <strong class="command">aperm</strong>
-(try permuting the dimensions of <code class="docutils literal notranslate"><span class="pre">Titanic</span></code>).
+<span class="math">\(b_{i,j}=a_{j,i}\)</span>. In other words, in the transposed matrix, rows become
+columns, and columns become rows.</p>
+<p>For higher-dimensional arrays, a generalised transpose can be obtained
+through <strong class="command">aperm</strong> (try permuting the dimensions of <code class="docutils literal notranslate"><span class="pre">Titanic</span></code>).
 Also, the conjugate transpose of a complex matrix <span class="math">\(\mathbf{A}\)</span>
 is done via <strong class="command">Conj</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">t</strong><code class="code docutils literal notranslate"><span class="pre">(A))</span></code>.</p>
 </section>
@@ -1195,7 +1184,7 @@ is done via <strong class="command">Conj</strong><code class="code docutils lite
 <strong class="command">cos</strong>,
 <strong class="command">sin</strong>,
 etc.,
-operate on each array element<a class="footnote-reference brackets" href="#footunarymatrix" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
+operate on each array element<a class="footnote-reference brackets" href="#footunarymatrix" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 <span class="nf">round</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># rounds every element in A</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
@@ -1203,16 +1192,17 @@ operate on each array element<a class="footnote-reference brackets" href="#footu
 <span class="c1">## [2,]  0.5 0.25 0.17</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id30">
+<div class="proof proof-type-exercise" id="id29">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.16</span>
         
     </div><div class="proof-content">
-<p>Using a single call to <strong class="command">matplot</strong>, which accepts
+<p>Using a single call to <strong class="command">matplot</strong>, which allows
 the <code class="docutils literal notranslate"><span class="pre">y</span></code> argument to be a matrix, draw a plot
 of <span class="math">\(\sin(x)\)</span>, <span class="math">\(\cos(x)\)</span>, <span class="math">\(|\sin(x)|\)</span>, and <span class="math">\(|\cos(x)|\)</span>
-for <span class="math">\(x\in[-2\pi, 6\pi]\)</span>.</p>
+for <span class="math">\(x\in[-2\pi, 6\pi]\)</span>; see <a class="reference internal" href="250-graphics.html#sec-high-level-plotting"><span class="std std-numref">Section 13.3</span></a>
+for more details.</p>
 </div></div></section>
 <section id="aggregating-rows-and-columns">
 <h3><span class="section-number">11.3.3. </span>Aggregating rows and columns<a class="headerlink" href="#aggregating-rows-and-columns" title="Permalink to this heading">#</a></h3>
@@ -1230,10 +1220,10 @@ it will reduce all elements to a single number:</p>
 <p>The <strong class="command">apply</strong> function may be used to summarise
 individual rows or columns in a matrix:</p>
 <ul class="simple">
-<li><p><strong class="command">apply</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">1,</span> <span class="pre">f)</span></code>
-applies a given function <strong class="command">f</strong> on each <em>row</em> of a matrix <code class="docutils literal notranslate"><span class="pre">A</span></code>;</p></li>
-<li><p><strong class="command">apply</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">2,</span> <span class="pre">f)</span></code>
-applies <strong class="command">f</strong> on each <em>column</em> of <code class="docutils literal notranslate"><span class="pre">A</span></code>.</p></li>
+<li><p><strong class="command">apply</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">1,</span> <span class="pre">f)</span></code> applies a given function <strong class="command">f</strong>
+on each <em>row</em> of a matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> (over the first axis),</p></li>
+<li><p><strong class="command">apply</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">2,</span> <span class="pre">f)</span></code> applies <strong class="command">f</strong>
+on each <em>column</em> of <code class="docutils literal notranslate"><span class="pre">A</span></code> (over the second axis).</p></li>
 </ul>
 <p>For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">apply</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># synonym: rowMeans(A)</span>
@@ -1254,12 +1244,12 @@ applies <strong class="command">f</strong> on each <em>column</em> of <code clas
 <span class="c1">## Max   4.0  8.0 12.0</span>
 </pre></div>
 </div>
-<p>Take note of the columnwise order of the output values.</p>
-<p><strong class="command">apply</strong> works on higher-dimensional arrays:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># first dimension - Class</span>
+<p>Take again note of the columnwise order of the output values.</p>
+<p><strong class="command">apply</strong> also works on higher-dimensional arrays:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># over the first axis, &quot;Class&quot; (dimnames work too)</span>
 <span class="c1">##     1st     2nd     3rd    Crew</span>
 <span class="c1">##  40.625  35.625  88.250 110.625</span>
-<span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># w.r.t. Class (first) and Age (third)</span>
+<span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># over c(&quot;Class&quot;, &quot;Age&quot;)</span>
 <span class="c1">##       Age</span>
 <span class="c1">## Class  Child  Adult</span>
 <span class="c1">##   1st   1.50  79.75</span>
@@ -1273,15 +1263,16 @@ applies <strong class="command">f</strong> on each <em>column</em> of <code clas
 <span id="sec-recycling-rule-revisited"></span><h3><span class="section-number">11.3.4. </span>Binary operators<a class="headerlink" href="#binary-operators" title="Permalink to this heading">#</a></h3>
 <p>In <a class="reference internal" href="150-indexing.html#sec-attrpreserv"><span class="std std-numref">Section 5.5</span></a>, we stated that
 binary elementwise operations, such as addition or multiplication,
-preserve the attributes of the longer input or both (with the first argument preferred to the second) if they are of equal sizes.</p>
-<p>Taking into account that:</p>
+preserve the attributes of the longer input or both (with the first argument preferred to the second) if they are of equal sizes.
+Taking into account that:</p>
 <ul class="simple">
 <li><p>an array is simply a flat vector equipped with the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute, and</p></li>
-<li><p>we refer to the respective <em>default</em> methods when applying binary operators</p></li>
+<li><p>we refer to the respective <em>default</em> methods when applying binary
+operators,</p></li>
 </ul>
-<p>allows us to deduce how `<strong class="command">+</strong>`, `<strong class="command">&lt;=</strong>`,
+<p>we can deduce how `<strong class="command">+</strong>`, `<strong class="command">&lt;=</strong>`,
 `<strong class="command">&amp;</strong>`, etc. behave in several different contexts.</p>
-<div style="margin-top: 1em"></div><p><strong>Array-Array.</strong>
+<div style="margin-top: 1em"></div><p><strong>Array-array.</strong>
 First, let us note what happens when we operate on two arrays
 of identical dimensionalities.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">-100</span><span class="p">)))</span>
@@ -1304,8 +1295,8 @@ of identical dimensionalities.</p>
 </div>
 <p>They are simply the addition and multiplication of the corresponding
 elements of two given matrices.</p>
-<div style="margin-top: 1em"></div><p><strong>Array-Scalar</strong>.
-Second, we can apply scalar-matrix operations:</p>
+<div style="margin-top: 1em"></div><p><strong>Array-scalar</strong>.
+Second, we can apply matrix-scalar operations:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="m">-1</span><span class="p">)</span><span class="o">*</span><span class="n">B</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]   -1   -2   -3</span>
@@ -1318,16 +1309,16 @@ Second, we can apply scalar-matrix operations:</p>
 </div>
 <p>They multiplied each element in <code class="docutils literal notranslate"><span class="pre">B</span></code> by -1
 and squared every element in <code class="docutils literal notranslate"><span class="pre">A</span></code>, respectively.</p>
-<p>The behaviour of relational operators is similar:</p>
+<p>The behaviour of relational operators is of course similar:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">100</span>
 <span class="c1">##       [,1]  [,2]  [,3]</span>
 <span class="c1">## [1,]  TRUE  TRUE  TRUE</span>
 <span class="c1">## [2,] FALSE FALSE FALSE</span>
 </pre></div>
 </div>
-<div style="margin-top: 1em"></div><p><strong>Array-Vector</strong>.
-Next, based on the recycling rule and the fact that
-elements are ordered columnwisely, we get that:</p>
+<div style="margin-top: 1em"></div><p><strong>Array-vector</strong>.
+Next, based on the recycling rule and the fact that matrix
+elements are ordered columnwisely, we have that:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]   10   20   30</span>
@@ -1359,16 +1350,16 @@ we should <em>not</em> call:</p>
 <span class="c1">## [2,]    4  500 6000</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id31">
+<div class="proof proof-type-exercise" id="id30">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.17</span>
         
     </div><div class="proof-content">
 <p>Write a function that standardises the values in each column of
-a given matrix: for each column, from every element,
-subtract the mean and then divide it by the standard deviation.
-Try to do it in a few different ways,
+a given matrix: for all elements in each column,
+subtract their mean and then divide them by the standard deviation.
+Try to implement it in a few different ways,
 including via a call to <strong class="command">apply</strong>,
 <strong class="command">sweep</strong>, <strong class="command">scale</strong>, or based solely
 on arithmetic operators.</p>
@@ -1376,15 +1367,13 @@ on arithmetic operators.</p>
 <p class="admonition-title">Note</p>
 <p>Some sanity checks are done on the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attributes, so not every
 configuration is possible. Notice the following peculiarities:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">getOption</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span>
-<span class="c1">## NULL</span>
-<span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w">  </span><span class="c1"># dim==c(2, 3) vs dim==c(3, 2)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w">  </span><span class="c1"># `dim` equal to c(2, 3) vs c(3, 2)</span>
 <span class="c1">## Error in A + t(B): non-conformable arrays</span>
 <span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span><span class="w">  </span><span class="c1"># this is too good to be true</span>
 <span class="c1">## Error in A * cbind(1, 10, 100): non-conformable arrays</span>
 <span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># but A * c(1, 10) works...</span>
 <span class="c1">## Error in A * rbind(1, 10): non-conformable arrays</span>
-<span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">12</span>
+<span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">12</span><span class="w">  </span><span class="c1"># `A` has six elements</span>
 <span class="c1">## Error in eval(expr, envir, enclos): dims [product 6] do not match the</span>
 <span class="c1">##     length of object [12]</span>
 <span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="w">  </span><span class="c1"># partial recycling is okay</span>
@@ -1401,26 +1390,25 @@ configuration is possible. Notice the following peculiarities:</p>
 <section id="numerical-matrix-algebra">
 <h2><span class="section-number">11.4. </span>Numerical matrix algebra (*)<a class="headerlink" href="#numerical-matrix-algebra" title="Permalink to this heading">#</a></h2>
 <p>Many data analysis and machine learning algorithms, in their essence,
-involve quite simple matrix algebra and numerical mathematics.
+involve rather straightforward matrix algebra and numerical mathematics.
 Suffice it to say that anyone serious about data science and scientific
 computing should learn the necessary theory;
-see, for example, <span id="id6">[<a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2007).  Matrix Algebra. Springer.">30</a>]</span> and <span id="id7">[<a class="reference internal" href="999-bibliography.html#id41" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">31</a>]</span>.</p>
-<p>R is a convenient interface to the well-tested and stable
-algorithms from, amongst others, <strong class="program">LAPACK</strong> and
-<strong class="program">BLAS</strong><a class="footnote-reference brackets" href="#footblas" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Below we mention only a few of them.
-Many third-party packages feature hundreds of
+see, for example, <span id="id5">[<a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2007).  Matrix Algebra. Springer.">30</a>]</span> and <span id="id6">[<a class="reference internal" href="999-bibliography.html#id41" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">31</a>]</span>.</p>
+<p>R is a convenient interface to the stable and well-tested
+algorithms from, amongst others, <code class="docutils literal notranslate"><span class="pre">LAPACK</span></code> and
+<code class="docutils literal notranslate"><span class="pre">BLAS</span></code><a class="footnote-reference brackets" href="#footblas" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Below we mention a few of them.
+Many external packages feature hundreds of
 algorithms tackling differential equations, constrained
 and unconstrained optimisation, etc. Exploring the relevant
 <a class="reference external" href="https://cran.r-project.org/web/views">CRAN Task Views</a>
 can give a comprehensive overview.</p>
 <section id="matrix-multiplication">
 <h3><span class="section-number">11.4.1. </span>Matrix multiplication<a class="headerlink" href="#matrix-multiplication" title="Permalink to this heading">#</a></h3>
-<p>`<strong class="command">*</strong>` performs elementwise multiplication.
-For what we call (algebraic) matrix multiplication,
-we use the `<strong class="command">%*%</strong>` operator.</p>
-<p>Here is a quick refresher from a basic linear algebra course.
-The matrix multiplication can only be performed on two matrices of
-<em>compatible sizes</em>: the number of columns in the left matrix must match
+<p>`<strong class="command">*</strong>` performs <em>elementwise</em> multiplication.
+For what we call the (algebraic) <em>matrix</em> multiplication,
+we use the `<strong class="command">%*%</strong>` operator. It can only be performed
+on two matrices of <em>compatible sizes</em>:
+the number of columns in the left matrix must match
 the number of rows in the right operand.</p>
 <p>Given <span class="math">\(\mathbf{A}\in\mathbb{R}^{n\times p}\)</span>
 and <span class="math">\(\mathbf{B}\in\mathbb{R}^{p\times m}\)</span>, their multiply is a matrix
@@ -1436,10 +1424,10 @@ c_{i,j} = \mathbf{a}_{i,\cdot} \cdot \mathbf{b}_{\cdot,j}
 </div>
 <p>for <span class="math">\(i=1,\dots,n\)</span> and <span class="math">\(j=1,\dots,m\)</span>.
 For instance:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">)))</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
-<span class="c1">## [1,]    1    1    1</span>
-<span class="c1">## [2,]   -1    1    0</span>
+<span class="c1">## [1,]    0    1    3</span>
+<span class="c1">## [2,]   -1    1   -2</span>
 <span class="p">(</span><span class="n">B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)))</span>
 <span class="c1">##      [,1] [,2]</span>
 <span class="c1">## [1,]    3   -1</span>
@@ -1447,8 +1435,8 @@ For instance:</p>
 <span class="c1">## [3,]    6    1</span>
 <span class="n">A</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">B</span>
 <span class="c1">##      [,1] [,2]</span>
-<span class="c1">## [1,]   10    2</span>
-<span class="c1">## [2,]   -2    3</span>
+<span class="c1">## [1,]   19    5</span>
+<span class="c1">## [2,]  -14    1</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1464,23 +1452,23 @@ gives a scalar <span class="math">\(ac+bd\)</span>, and not a <span class="math"
 <strong class="command">tcrossprod</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">B)</span></code> determines <span class="math">\(\mathbf{A} \mathbf{B}^T\)</span>
 more efficiently than relying on `<strong class="command">%*%</strong>`.
 We can omit the second argument and get
-<span class="math">\(\mathbf{A}^T \mathbf{A}\)</span> and <span class="math">\(\mathbf{A} \mathbf{A}\)</span>, respectively.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">crossprod</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># Euclidean norm squared</span>
+<span class="math">\(\mathbf{A}^T \mathbf{A}\)</span> and <span class="math">\(\mathbf{A} \mathbf{A}^T\)</span>, respectively.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">crossprod</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># Euclidean norm squared</span>
 <span class="c1">##      [,1]</span>
-<span class="c1">## [1,]    2</span>
-<span class="nf">crossprod</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># dot product of two vectors</span>
+<span class="c1">## [1,]    5</span>
+<span class="nf">crossprod</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">  </span><span class="c1"># dot product of two vectors</span>
 <span class="c1">##      [,1]</span>
 <span class="c1">## [1,]    0</span>
 <span class="nf">crossprod</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w">  </span><span class="c1"># same as t(A) %*% A, i.e., dot products of all column pairs</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
-<span class="c1">## [1,]    2    0    1</span>
-<span class="c1">## [2,]    0    2    1</span>
-<span class="c1">## [3,]    1    1    1</span>
+<span class="c1">## [1,]    1   -1    2</span>
+<span class="c1">## [2,]   -1    2    1</span>
+<span class="c1">## [3,]    2    1   13</span>
 </pre></div>
 </div>
 <p>Recall that if the dot product of two vectors equals 0,
 we say that they are orthogonal (perpendicular).</p>
-<div class="proof proof-type-exercise" id="id32">
+<div class="proof proof-type-exercise" id="id31">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.18</span>
@@ -1494,16 +1482,16 @@ with <strong class="command">crossprod</strong> based on a centred version of an
 </div></div></section>
 <section id="solving-systems-of-linear-equations">
 <h3><span class="section-number">11.4.2. </span>Solving systems of linear equations<a class="headerlink" href="#solving-systems-of-linear-equations" title="Permalink to this heading">#</a></h3>
-<p>The <strong class="command">solve</strong> function can be used to solve <span class="math">\(m\)</span> systems
-of <span class="math">\(n\)</span> linear equations of the form
+<p>The <strong class="command">solve</strong> function can be used to determine the
+solution to <span class="math">\(m\)</span> systems of <span class="math">\(n\)</span> linear equations of the form
 <span class="math">\(\mathbf{A}\mathbf{X}=\mathbf{B}\)</span>,
 where <span class="math">\(\mathbf{A}\in\mathbb{R}^{n\times n}\)</span> and <span class="math">\(\mathbf{X},\mathbf{B}\in\mathbb{R}^{n\times m}\)</span>
 (via the LU decomposition with partial pivoting and row interchanges).</p>
 </section>
 <section id="norms-and-metrics">
 <h3><span class="section-number">11.4.3. </span>Norms and metrics<a class="headerlink" href="#norms-and-metrics" title="Permalink to this heading">#</a></h3>
-<p>Given an <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{A}\)</span>,
-calling <strong class="command">norm</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">&quot;1&quot;)</span></code>,
+<p>Given an <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{A}\)</span>, calling
+<strong class="command">norm</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">&quot;1&quot;)</span></code>,
 <strong class="command">norm</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">&quot;2&quot;)</span></code>,
 and <strong class="command">norm</strong><code class="code docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">&quot;I&quot;)</span></code>,
 we can compute the operator norms:</p>
@@ -1522,27 +1510,25 @@ we can compute the operator norms:</p>
 <p>Also, passing <code class="docutils literal notranslate"><span class="pre">&quot;F&quot;</span></code> as the second argument
 yields the Frobenius norm,
 <span class="math">\(\|\mathbf{A}\|_F = \sqrt{\sum_{i=1}^n \sum_{j=1}^m a_{i,j}^2}\)</span>,
-and <code class="docutils literal notranslate"><span class="pre">&quot;M&quot;</span></code> computes the max norm,
+and <code class="docutils literal notranslate"><span class="pre">&quot;M&quot;</span></code> computes the maximum norm,
 <span class="math">\(\|\mathbf{A}\|_M = \max_{{i=1,\dots,n\atop j=1,\dots,m}} |a_{i,j}|\)</span>.</p>
 <p>If <span class="math">\(\mathbf{A}\)</span> is a column vector, then
 <span class="math">\(\|\mathbf{A}\|_F\)</span> and <span class="math">\(\|\mathbf{A}\|_2\)</span> are equivalent.
 They are referred to as the Euclidean norm.
-Moreover, <span class="math">\(\|\mathbf{A}\|_M=\|\mathbf{A}\|_I\)</span> give the supremum norm
-and outputs <span class="math">\(\|\mathbf{A}\|_1\)</span> the Manhattan (taxicab) one.</p>
-<div class="proof proof-type-exercise" id="id33">
+Moreover, <span class="math">\(\|\mathbf{A}\|_M=\|\mathbf{A}\|_I\)</span> gives the supremum norm
+and <span class="math">\(\|\mathbf{A}\|_1\)</span> outputs the Manhattan (taxicab) one.</p>
+<div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.19</span>
         
     </div><div class="proof-content">
-<p>Given an <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{A}\)</span> representing
-<span class="math">\(m\)</span> vectors in <span class="math">\(\mathbb{R}^n\)</span>, normalise each column
-so that you obtain <span class="math">\(m\)</span> unit vectors,
-i.e., whose Euclidean norm equals 1.</p>
+<p>Given an <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{A}\)</span>, normalise each column
+so that it becomes a unit vector, i.e., whose Euclidean norm equals 1.</p>
 </div></div><p>Further, <strong class="command">dist</strong> determines all pairwise distances
 between a set of <span class="math">\(n\)</span> vectors in <span class="math">\(\mathbb{R}^m\)</span>,
-written as an <span class="math">\(n\times m\)</span> matrix.</p>
-<p>For example, let us consider three vectors in <span class="math">\(\mathbb{R}^2\)</span>:</p>
+written as an <span class="math">\(n\times m\)</span> matrix.
+For example, let us consider three vectors in <span class="math">\(\mathbb{R}^2\)</span>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)))</span>
 <span class="c1">##      [,1] [,2]</span>
 <span class="c1">## [1,]    1    1</span>
@@ -1555,11 +1541,12 @@ written as an <span class="math">\(n\times m\)</span> matrix.</p>
 <span class="c1">## 3 1.4142 2.2361 0.0000</span>
 </pre></div>
 </div>
-<p>Thus, the distance between the first and the third vector
+<p>Thus, the Euclidean distance between the first and the third vector,
+<span class="math">\(\|\mathbf{x}_{1,\cdot}-\mathbf{x}_{3,\cdot}\|_2=\sqrt{ (x_{1,1}-x_{3,1})^2 + (x_{1,2}-x_{3,2})^2 }\)</span>,
 is roughly 1.41421.
-Euclidean, maximum, Manhattan, and Canberra distances/metrics
-are available, amongst others.</p>
-<div class="proof proof-type-exercise" id="id34">
+The maximum, Manhattan, and Canberra distances/metrics
+are also available, amongst others.</p>
+<div class="proof proof-type-exercise" id="id33">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.20</span>
@@ -1567,7 +1554,7 @@ are available, amongst others.</p>
     </div><div class="proof-content">
 <p><strong class="command">dist</strong> returns an object of S3 class <code class="docutils literal notranslate"><span class="pre">dist</span></code>.
 Inspect how it is represented.</p>
-</div></div><div class="proof proof-type-example" id="id35">
+</div></div><div class="proof proof-type-example" id="id34">
 
     <div class="proof-title">
         <span class="proof-type">Example 11.21</span>
@@ -1587,39 +1574,49 @@ For example:</p>
 <span class="c1">## legs     4     5    2   4     4    0</span>
 </pre></div>
 </div>
-<p>gives the Levenshtein distances between each pair of strings.
+<p>It gave the Levenshtein distances between each pair of strings.
 In particular, we need two edit operations (character
 insertions, deletions, or replacements) to turn <code class="docutils literal notranslate"><span class="pre">&quot;eggs&quot;</span></code> into <code class="docutils literal notranslate"><span class="pre">&quot;legs&quot;</span></code>
 (add <code class="docutils literal notranslate"><span class="pre">l</span></code> and remove <code class="docutils literal notranslate"><span class="pre">g</span></code>).</p>
-</div></div><div class="proof proof-type-example" id="id36">
+</div></div><div class="proof proof-type-example" id="id35">
 
     <div class="proof-title">
         <span class="proof-type">Example 11.22</span>
         
     </div><div class="proof-content">
-<p>Objects of the class <code class="docutils literal notranslate"><span class="pre">dist</span></code> can be used to perform hierarchical
-clusterings of datasets. For example:</p>
+<p>Objects of the class <code class="docutils literal notranslate"><span class="pre">dist</span></code> can be used to find a hierarchical
+clustering of a dataset. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">hclust</span><span class="p">(</span><span class="nf">as.dist</span><span class="p">(</span><span class="n">d</span><span class="p">),</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="s">&quot;average&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># see also: plot(h, labels=x)</span>
 <span class="nf">cutree</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span>
 <span class="c1">##  spam bacon  eggs   spa spams  legs</span>
 <span class="c1">##     1     2     3     1     1     3</span>
 </pre></div>
 </div>
-<p>determines three clusters using the average linkage strategy
+<p>It determined three clusters using the average linkage strategy
 (<code class="docutils literal notranslate"><span class="pre">&quot;legs&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;eggs&quot;</span></code> are grouped together, <code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;spa&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;spams&quot;</span></code>
 form another cluster, and <code class="docutils literal notranslate"><span class="pre">&quot;bacon&quot;</span></code> is a singleton).</p>
 </div></div></section>
 <section id="eigenvalues-and-eigenvectors">
 <h3><span class="section-number">11.4.4. </span>Eigenvalues and eigenvectors<a class="headerlink" href="#eigenvalues-and-eigenvectors" title="Permalink to this heading">#</a></h3>
 <p><strong class="command">eigen</strong> returns a sequence of eigenvalues
-<span class="math">\((\lambda_1,\dots,\lambda_n)\)</span> (ordered nondecreasingly w.r.t. <span class="math">\(|\lambda_i|\)</span>)
+<span class="math">\((\lambda_1,\dots,\lambda_n)\)</span>
+ordered nondecreasingly w.r.t. <span class="math">\(|\lambda_i|\)</span>,
 and a matrix <span class="math">\(\mathbf{V}\)</span> whose columns define the corresponding
-eigenvectors (scaled to unit length) of a given matrix <span class="math">\(\mathbf{X}\)</span>.
-To recall, by definition, it holds that
-<span class="math">\(\mathbf{X}\mathbf{v}_{\cdot,i}=\lambda_i\mathbf{v}_{\cdot,i}\)</span>.</p>
-<p>Here are the eigenvalues and the corresponding eigenvectors
-of an example matrix (defining rotation in 2D by <span class="math">\(\pi/3\)</span>):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">R</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">cos</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">cos</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">))))</span>
+eigenvectors (scaled to the unit length) of a given matrix <span class="math">\(\mathbf{X}\)</span>.
+By definition, for all <span class="math">\(j\)</span>, it holds that
+<span class="math">\(\mathbf{X}\mathbf{v}_{\cdot,j}=\lambda_j \mathbf{v}_{\cdot,j}\)</span>.</p>
+<div class="proof proof-type-example" id="id36">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 11.23</span>
+        
+    </div><div class="proof-content">
+<p>(*)
+Here are the eigenvalues and the corresponding eigenvectors
+of the matrix defining the rotation in the xy-plane
+about the origin <span class="math">\((0,0)\)</span> by the counterclockwise angle <span class="math">\(\pi/3\)</span>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">R</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">cos</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">)),</span>
+<span class="w">            </span><span class="nf">c</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="w">  </span><span class="nf">cos</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">3</span><span class="p">))))</span>
 <span class="c1">##         [,1]     [,2]</span>
 <span class="c1">## [1,] 0.50000 -0.86603</span>
 <span class="c1">## [2,] 0.86603  0.50000</span>
@@ -1634,46 +1631,75 @@ of an example matrix (defining rotation in 2D by <span class="math">\(\pi/3\)</s
 <span class="c1">## [2,] 0.00000-0.70711i 0.00000+0.70711i</span>
 </pre></div>
 </div>
-<div class="proof proof-type-example" id="id37">
+<p>The complex eigenvalues are <span class="math">\(e^{\pi/3 i}\)</span> and <span class="math">\(e^{-\pi/3 i}\)</span>
+and we have <span class="math">\(|e^{\pi/3 i}|=|e^{-\pi/3 i}|=1\)</span>.</p>
+</div></div><div class="proof proof-type-example" id="id37">
 
     <div class="proof-title">
-        <span class="proof-type">Example 11.23</span>
+        <span class="proof-type">Example 11.24</span>
         
     </div><div class="proof-content">
-<p>Consider a pseudorandom sample from a bivariate<a class="footnote-reference brackets" href="#footcopula" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> normal
-distribution; see <a class="reference internal" href="#fig-eigen-prcomp-1"><span class="std std-numref">Figure 11.1</span></a>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">2000</span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># independent N(0, 1)</span>
-<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span><span class="w">  </span><span class="c1"># scaling</span>
-<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">R</span><span class="w">  </span><span class="c1"># rotation</span>
-<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">-5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">))</span><span class="w">  </span><span class="c1"># translation</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">asp</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<p>(*)
+Consider a pseudorandom sample that we depict in
+<a class="reference internal" href="#fig-eigen-prcomp-1"><span class="std std-numref">Figure 11.1</span></a>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">S</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="m">2</span><span class="p">),</span><span class="w">      </span><span class="m">0</span><span class="w"> </span><span class="p">),</span>
+<span class="w">           </span><span class="nf">c</span><span class="p">(</span><span class="w">     </span><span class="m">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="m">5</span><span class="p">)))</span>
+<span class="n">mu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">-3</span><span class="p">)</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">2000</span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># each row is a standard normal 2-vector</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="o">+</span><span class="n">mu</span><span class="p">)</span><span class="w">  </span><span class="c1"># scale, rotate, shift</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">asp</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id38">
 <span id="fig-eigen-prcomp-1"></span><img alt="../_images/eigen-prcomp-1-1.png" src="../_images/eigen-prcomp-1-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 11.1 </span><span class="caption-text">An example bivariate normal sample.</span><a class="headerlink" href="#id38" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 11.1 </span><span class="caption-text">A sample from a bivariate normal distribution.</span><a class="headerlink" href="#id38" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p><span class="math">\(\mathbf{X}\)</span> was created by generating a realisation of a two-dimensional
+standard normal vector <span class="math">\(\mathbf{Z}\)</span>,
+scaling it by <span class="math">\(\left(\sqrt{2}, \sqrt{5}\right)\)</span>,
+rotating by the counterclockwise
+angle <span class="math">\(\pi/3\)</span>, and shifting by <span class="math">\((10, -3)\)</span>, which we denote with
+<span class="math">\(\mathbf{X}=\mathbf{Z} \mathbf{S} \mathbf{R} + \boldsymbol{\mu}\)</span>.
+It can be shown that <span class="math">\(\mathbf{X}\)</span> follows a bivariate<a class="footnote-reference brackets" href="#footcopula" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> normal
+distribution centred at <span class="math">\(\boldsymbol{\mu}=(10, -3)\)</span> and
+with the covariance matrix
+<span class="math">\(\boldsymbol{\Sigma}=(\mathbf{S} \mathbf{R})^T (\mathbf{S} \mathbf{R})\)</span>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">crossprod</span><span class="p">(</span><span class="n">S</span><span class="o">%*%</span><span class="n">R</span><span class="p">)</span><span class="w">  </span><span class="c1"># covariance matrix</span>
+<span class="c1">##       [,1]  [,2]</span>
+<span class="c1">## [1,] 4.250 1.299</span>
+<span class="c1">## [2,] 1.299 2.750</span>
+<span class="nf">cov</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w">  </span><span class="c1"># compare: sample covariance matrix (estimator)</span>
+<span class="c1">##        [,1]   [,2]</span>
+<span class="c1">## [1,] 4.3931 1.3869</span>
+<span class="c1">## [2,] 1.3869 2.7607</span>
+</pre></div>
+</div>
 <p>It is known that eigenvectors of the covariance matrix
 correspond to the principal components of the original dataset.
-Furthermore, the eigenvalues give the variance explained by them.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">eigen</span><span class="p">(</span><span class="nf">cov</span><span class="p">(</span><span class="n">Z</span><span class="p">))</span>
+Furthermore, its eigenvalues give the variances explained by each of them.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">eigen</span><span class="p">(</span><span class="nf">cov</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
 <span class="c1">## eigen() decomposition</span>
 <span class="c1">## $values</span>
-<span class="c1">## [1] 5.18609 0.98386</span>
+<span class="c1">## [1] 5.1861 1.9677</span>
 <span class="c1">##</span>
 <span class="c1">## $vectors</span>
 <span class="c1">##          [,1]     [,2]</span>
-<span class="c1">## [1,] -0.86715  0.49804</span>
-<span class="c1">## [2,] -0.49804 -0.86715</span>
+<span class="c1">## [1,] -0.86810  0.49638</span>
+<span class="c1">## [2,] -0.49638 -0.86810</span>
 </pre></div>
 </div>
-<p>this roughly corresponds to the principal directions
-<span class="math">\([\sin(\pi/3), \cos(\pi/3)]\)</span> and the thereto-orthogonal
-<span class="math">\([\cos(\pi/3), -\sin(\pi/3)]\)</span>
-with variances of 5 and 1, respectively. Still, this method of performing
-a PCA is not particularly numerically stable; see below for an alternative.</p>
+<p>This roughly corresponds to the principal directions
+<span class="math">\((\sin \pi/3,  \cos \pi/3 )\simeq (0.866, 0.5)\)</span>
+(up to an orientation inverse) and the thereto-orthogonal
+<span class="math">\((\cos \pi/3, -\sin \pi/3 )\simeq (0.5, -0.866)\)</span>
+with variances of <span class="math">\(5\)</span> and <span class="math">\(2\)</span>
+(standard deviations of <span class="math">\(\sqrt{5}\)</span> and <span class="math">\(\sqrt{2}\)</span>), respectively.
+Note that this method of performing principal component analysis, i.e.,
+recreating the scale and rotation transformation
+based only on <span class="math">\(\mathbf{X}\)</span>, is not particularly numerically stable;
+see below for an alternative.</p>
 </div></div></section>
 <section id="qr-decomposition">
 <h3><span class="section-number">11.4.5. </span>QR decomposition<a class="headerlink" href="#qr-decomposition" title="Permalink to this heading">#</a></h3>
@@ -1684,7 +1710,7 @@ orthogonal unit vectors
 (if <span class="math">\(\mathbf{Q}\)</span> is a square matrix, then
 <span class="math">\(\mathbf{Q}^T=\mathbf{Q}^{-1}\)</span> if and only if
 <span class="math">\(\mathbf{Q}^T \mathbf{Q} = \mathbf{Q} \mathbf{Q}^T = \mathbf{I}\)</span>).</p>
-<p>Let <span class="math">\(\mathbf{A}\)</span> be a real<a class="footnote-reference brackets" href="#footcomplexqr" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> <span class="math">\(n\times m\)</span> matrix with <span class="math">\(n\ge m\)</span>.
+<p>Let <span class="math">\(\mathbf{A}\)</span> be a real<a class="footnote-reference brackets" href="#footcomplexqr" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> <span class="math">\(n\times m\)</span> matrix with <span class="math">\(n\ge m\)</span>.
 Then <span class="math">\(\mathbf{A}=\mathbf{Q}\mathbf{R}\)</span> is its QR
 decomposition (in the so-called narrow form),
 if <span class="math">\(\mathbf{Q}\)</span> is an orthogonal <span class="math">\(n\times m\)</span> matrix
@@ -1696,7 +1722,7 @@ from which we can extract  the two components; see the
 <div class="proof proof-type-example" id="id39">
 
     <div class="proof-title">
-        <span class="proof-type">Example 11.24</span>
+        <span class="proof-type">Example 11.25</span>
         
     </div><div class="proof-content">
 <p>Let <span class="math">\(\mathbf{X}\)</span> be an <span class="math">\(n\times m\)</span> data matrix, representing
@@ -1705,7 +1731,7 @@ from which we can extract  the two components; see the
 to each input.
 For fitting a linear model <span class="math">\(\mathbf{x}^T \boldsymbol\theta\)</span>,
 where <span class="math">\(\boldsymbol\theta\)</span> is a vector of <span class="math">\(m\)</span> parameters,
-we can use the method of least squares, which minimises</p>
+we can use the method of least squares, which minimises:</p>
 <div class="math-wrapper docutils container">
 <div class="math">
 \[
@@ -1728,9 +1754,9 @@ model <span class="math">\(y=ax+b\)</span> by considering <span class="math">\(\
 for example (see  <a class="reference internal" href="#fig-qr-lm"><span class="std std-numref">Figure 11.2</span></a>):</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cars</span><span class="p">[[</span><span class="s">&quot;speed&quot;</span><span class="p">]]</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cars</span><span class="p">[[</span><span class="s">&quot;dist&quot;</span><span class="p">]]</span>
-<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># the model is theta[1]*x + theta[2]*1</span>
-<span class="n">qrX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">qr</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="nf">qr.R</span><span class="p">(</span><span class="n">qrX</span><span class="p">))</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="nf">qr.Q</span><span class="p">(</span><span class="n">qrX</span><span class="p">))</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">   </span><span class="c1"># or: qr.coef(qrX, y)</span>
+<span class="n">X1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># the model is theta[1]*x + theta[2]*1</span>
+<span class="n">qrX1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">qr</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+<span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="nf">qr.R</span><span class="p">(</span><span class="n">qrX1</span><span class="p">))</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="nf">qr.Q</span><span class="p">(</span><span class="n">qrX1</span><span class="p">))</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># or: qr.coef(qrX1, y)</span>
 <span class="c1">##       [,1]</span>
 <span class="c1">## x   3.9324</span>
 <span class="c1">##   -17.5791</span>
@@ -1741,7 +1767,7 @@ for example (see  <a class="reference internal" href="#fig-qr-lm"><span class="s
 <figure class="align-default" id="id40">
 <span id="fig-qr-lm"></span><img alt="../_images/qr-lm-1.png" src="../_images/qr-lm-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 11.2 </span><span class="caption-text">The built-in <code class="docutils literal notranslate"><span class="pre">cars</span></code> dataset and the fitted regression line.</span><a class="headerlink" href="#id40" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Figure 11.2 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">cars</span></code> dataset and the fitted regression line.</span><a class="headerlink" href="#id40" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p><strong class="command">solve</strong> with one argument determines the inverse of a given matrix.
@@ -1761,29 +1787,29 @@ the workhorse behind the <strong class="command">lm</strong> method accepting an
 its singular value decomposition (SVD) is given by
 <span class="math">\(\mathbf{X}=\mathbf{U} \mathbf{D} \mathbf{V}^T\)</span>,
 where <span class="math">\(\mathbf{D}\)</span> is a <span class="math">\(p\times p\)</span> diagonal matrix
-(featuring the so-called singular values of <span class="math">\(\mathbf{X}\)</span>,
+(featuring the singular values of <span class="math">\(\mathbf{X}\)</span>,
 <span class="math">\(d_{1,1}\ge\dots\ge d_{p,p}\ge 0\)</span>, <span class="math">\(p=\min\{n,m\}\)</span>),
 and <span class="math">\(\mathbf{U}\)</span> and <span class="math">\(\mathbf{V}\)</span> are orthogonal matrices
-of dimension <span class="math">\(n\times p\)</span> and <span class="math">\(m\times p\)</span>, respectively.</p>
+of dimensions <span class="math">\(n\times p\)</span> and <span class="math">\(m\times p\)</span>, respectively.</p>
 <p><strong class="command">svd</strong> may not only be used to determine the solution to
-linear regression<a class="footnote-reference brackets" href="#footregsvd" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>
-but also to perform the principal component analysis<a class="footnote-reference brackets" href="#footpcasvd" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>.
+linear regression<a class="footnote-reference brackets" href="#footregsvd" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>
+but also to perform the principal component analysis<a class="footnote-reference brackets" href="#footpcasvd" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.
 Namely, <span class="math">\(\mathbf{V}\)</span> gives the eigenvectors of <span class="math">\(\mathbf{X}^T \mathbf{X}\)</span>.
 Assuming that <span class="math">\(\mathbf{X}\)</span> is centred at <span class="math">\(\boldsymbol{0}\)</span>,
 the latter is precisely its scaled covariance matrix.</p>
 <div class="proof proof-type-example" id="id41">
 
     <div class="proof-title">
-        <span class="proof-type">Example 11.25</span>
+        <span class="proof-type">Example 11.26</span>
         
     </div><div class="proof-content">
-<p>Continuing the PCA example above, we can determine the principal
-directions also by calling:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Zc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">-</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># centred version of Z</span>
-<span class="nf">svd</span><span class="p">(</span><span class="n">Zc</span><span class="p">)[[</span><span class="s">&quot;v&quot;</span><span class="p">]]</span>
+<p>Continuing the example featuring a bivariate normal sample,
+we can determine the principal directions also by calling:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Xc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">-</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># centred version of X</span>
+<span class="nf">svd</span><span class="p">(</span><span class="n">Xc</span><span class="p">)[[</span><span class="s">&quot;v&quot;</span><span class="p">]]</span>
 <span class="c1">##          [,1]     [,2]</span>
-<span class="c1">## [1,] -0.86715  0.49804</span>
-<span class="c1">## [2,] -0.49804 -0.86715</span>
+<span class="c1">## [1,] -0.86810  0.49638</span>
+<span class="c1">## [2,] -0.49638 -0.86810</span>
 </pre></div>
 </div>
 </div></div></section>
@@ -1826,7 +1852,7 @@ For example:</p>
 </pre></div>
 </div>
 <p>It yielded a general sparse real matrix in the CSC
-(compressed, sparse, column-oriented) format.</p>
+(compressed, sparse, column-orientated) format.</p>
 <p>For more information on this package, see
 <strong class="command">vignette</strong><code class="code docutils literal notranslate"><span class="pre">(package=&quot;Matrix&quot;)</span></code>.</p>
 </section>
@@ -1836,7 +1862,7 @@ For example:</p>
 <div class="proof proof-type-exercise" id="id42">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.26</span>
+        <span class="proof-type">Exercise 11.27</span>
         
     </div><div class="proof-content">
 <p>Let <code class="docutils literal notranslate"><span class="pre">X</span></code> be a matrix with <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> set, for instance:</p>
@@ -1868,7 +1894,7 @@ involving matrix subsetting. Note that some of them are invalid.</p>
 </div></div><div class="proof proof-type-exercise" id="id43">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.27</span>
+        <span class="proof-type">Exercise 11.28</span>
         
     </div><div class="proof-content">
 <p>Assuming that <code class="docutils literal notranslate"><span class="pre">X</span></code> is an array, what are the differences between the following
@@ -1886,7 +1912,7 @@ operations involving indexing?</p>
 </div></div><div class="proof proof-type-exercise" id="id44">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.28</span>
+        <span class="proof-type">Exercise 11.29</span>
         
     </div><div class="proof-content">
 <p>Give a few ways to create a matrix like:</p>
@@ -1918,7 +1944,7 @@ operations involving indexing?</p>
 </div></div><div class="proof proof-type-exercise" id="id45">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.29</span>
+        <span class="proof-type">Exercise 11.30</span>
         
     </div><div class="proof-content">
 <p>For a given real <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{X}\)</span>,
@@ -1929,7 +1955,7 @@ with <span class="math">\(b_{1,j}=\min_i x_{i,j}\)</span> and <span class="math"
 </div></div><div class="proof proof-type-exercise" id="id46">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.30</span>
+        <span class="proof-type">Exercise 11.31</span>
         
     </div><div class="proof-content">
 <p>Let <span class="math">\(\mathbf{t}\)</span> be a vector of <span class="math">\(n\)</span> integers in <span class="math">\(\{1,\dots,k\}\)</span>.
@@ -1977,7 +2003,7 @@ R = \left[
 <div class="proof proof-type-exercise" id="id47">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.31</span>
+        <span class="proof-type">Exercise 11.32</span>
         
     </div><div class="proof-content">
 <p>Given an <span class="math">\(n\times k\)</span> real matrix, apply the softmax
@@ -1989,7 +2015,7 @@ with elements in <span class="math">\(\{1,\dots,k\}\)</span>.</p>
 </div></div><div class="proof proof-type-exercise" id="id48">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.32</span>
+        <span class="proof-type">Exercise 11.33</span>
         
     </div><div class="proof-content">
 <p>Assume that an <span class="math">\(n\times m\)</span> real matrix <span class="math">\(\mathbf{X}\)</span> represents
@@ -2001,7 +2027,7 @@ with <span class="math">\(d_{i}=\|\mathbf{x}_{i,\cdot}-\mathbf{y}\|_2\)</span>.<
 </div></div><div class="proof proof-type-exercise" id="id49">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.33</span>
+        <span class="proof-type">Exercise 11.34</span>
         
     </div><div class="proof-content">
 <p>Let <span class="math">\(\mathbf{X}\)</span> and <span class="math">\(\mathbf{Y}\)</span>
@@ -2015,14 +2041,14 @@ the <span class="math">\(i\)</span>-th point in <span class="math">\(\mathbf{Y}\
 </div></div><div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.34</span>
+        <span class="proof-type">Exercise 11.35</span>
         
     </div><div class="proof-content">
-<p>Write your version of the built-in <strong class="program">utils</strong>::<strong class="command">combn</strong>.</p>
+<p>Write your version of <strong class="program">utils</strong>::<strong class="command">combn</strong>.</p>
 </div></div><div class="proof proof-type-exercise" id="id51">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.35</span>
+        <span class="proof-type">Exercise 11.36</span>
         
     </div><div class="proof-content">
 <p>Time series are vectors or matrices of the class <code class="docutils literal notranslate"><span class="pre">ts</span></code>
@@ -2032,7 +2058,7 @@ how they are represented and what S3 methods have been overloaded for them.</p>
 </div></div><div class="proof proof-type-exercise" id="id52">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.36</span>
+        <span class="proof-type">Exercise 11.37</span>
         
     </div><div class="proof-content">
 <p>(*) Numeric matrices can be stored in a CSV file, amongst others.
@@ -2058,7 +2084,7 @@ before reading the actual numeric values.</p>
 </div></div><div class="proof proof-type-exercise" id="id53">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.37</span>
+        <span class="proof-type">Exercise 11.38</span>
         
     </div><div class="proof-content">
 <p>(*)
@@ -2070,7 +2096,7 @@ section therein for more details.</p>
 </div></div><div class="proof proof-type-exercise" id="id54">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.38</span>
+        <span class="proof-type">Exercise 11.39</span>
         
     </div><div class="proof-content">
 <p>(**)
@@ -2084,7 +2110,7 @@ and plot the results using the <strong class="command">image</strong> function.<
 </div></div><div class="proof proof-type-exercise" id="id55">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.39</span>
+        <span class="proof-type">Exercise 11.40</span>
         
     </div><div class="proof-content">
 <p>(*) Using <strong class="command">constrOptim</strong>,
@@ -2096,21 +2122,17 @@ with linear constraints <span class="math">\( 2\le x_1 \le 50\)</span>,
 package to find the minimum.</p>
 </div></div><hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="footsimplify" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
-<p>Which can easily be explained by the fact that
-matrix elements are stored in a columnwise order.</p>
-</aside>
 <aside class="footnote brackets" id="footunclass" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>Calling <strong class="command">unclass</strong> on a matrix has no effect.</p>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference internal" href="220-s3.html#sec-type-vs-class"><span class="std std-numref">Section 10.1</span></a>. Interestingly,
+calling <strong class="command">unclass</strong> on a matrix has no effect.</p>
 </aside>
 <aside class="footnote brackets" id="footsqover" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
-<p>Hidden deeply at the C language level.</p>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>Hidden deeply at the C language level; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;[&quot;)</span></code>.</p>
 </aside>
 <aside class="footnote brackets" id="footunarymatrix" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
 <p>They are simply applied on each
 element of the underlying flat vector.
 <a class="reference internal" href="150-indexing.html#sec-attrpreserv"><span class="std std-numref">Section 5.5</span></a> mentioned that
@@ -2118,26 +2140,26 @@ unary functions preserve <em>all</em> attributes of their inputs, hence
 also <code class="docutils literal notranslate"><span class="pre">dim</span></code> and <code class="docutils literal notranslate"><span class="pre">dimnames</span></code>.</p>
 </aside>
 <aside class="footnote brackets" id="footblas" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
 <p>(*) We can select the underlying implementation
-of <strong class="program">BLAS</strong> at R’s compile time; see Section A.3 in
-<span id="id13">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">65</a>]</span>. Some of them are faster than others.</p>
+of <code class="docutils literal notranslate"><span class="pre">BLAS</span></code> at R’s compile time; see Section A.3 of
+<span id="id12">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">65</a>]</span>. Some of them are faster than others.</p>
 </aside>
 <aside class="footnote brackets" id="footcopula" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
 <p>For drawing random samples from any multivariate distribution,
-refer to the theory of copulas, e.g., <span id="id14">[<a class="reference internal" href="999-bibliography.html#id70" title="Nelsen, R.B. (1999).  An Introduction to Copulas. Springer.">49</a>]</span>.
+refer to the theory of copulas, e.g., <span id="id13">[<a class="reference internal" href="999-bibliography.html#id70" title="Nelsen, R.B. (1999).  An Introduction to Copulas. Springer.">49</a>]</span>.
 There are a few R packages on CRAN that implement the most popular
 models.</p>
 </aside>
 <aside class="footnote brackets" id="footcomplexqr" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">7</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
 <p><span class="math">\(\mathbf{A}\)</span> can also be a complex matrix,.
 In this case, its QR decomposition spawns
 <span class="math">\(\mathbf{Q}\)</span> that is a unitary matrix.</p>
 </aside>
 <aside class="footnote brackets" id="footregsvd" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">8</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">7</a><span class="fn-bracket">]</span></span>
 <p>As the pseudoinverse
 <span class="math">\(\mathbf{X}^+=\left(\mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T
 =\mathbf{V} \mathbf{D}^+ \mathbf{U}^T=\mathbf{R}^{-1}\mathbf{Q}^T\)</span>,
@@ -2147,7 +2169,7 @@ Here <span class="math">\(\mathbf{D}^+\)</span> is a transposed version of <span
 featuring the reciprocals of its non-zero elements.</p>
 </aside>
 <aside class="footnote brackets" id="footpcasvd" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">9</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">8</a><span class="fn-bracket">]</span></span>
 <p>See the source code of
 <strong class="command">getS3method</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;prcomp&quot;,</span> <span class="pre">&quot;default&quot;)</span></code>.</p>
 </aside>
@@ -2190,7 +2212,7 @@ featuring the reciprocals of its non-zero elements.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-22T18:13:44+1000.
+              Last updated on 2023-06-23T16:07:12+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

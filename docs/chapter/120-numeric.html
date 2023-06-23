@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.1.9005 (draft)
+v0.9.1.9006 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -315,7 +315,7 @@ in a number of additional packages or libraries
 popular packages (such as <strong class="program">data.table</strong>, <strong class="program">dplyr</strong>,
 or <strong class="program">caret</strong>). Most importantly, base R’s API is <em>stable</em>.
 Hence, the code we compose today will most likely work the same way in
-ten years. It is often not the case when we rely on third-party add-ons.</p>
+ten years. It is often not the case when we rely on external add-ons.</p>
 <p>In the sequel, we will be advocating a minimalist, keep-it-simple approach
 to the art of programming data processing pipelines,
 one that is a healthy balance between “doing it all by ourselves”,
@@ -352,20 +352,18 @@ Here, “<code class="docutils literal notranslate"><span class="pre">e</span></
 Therefore, <code class="docutils literal notranslate"><span class="pre">1.23e-4</span></code> is equal to <span class="math">\(1.23\times 10^{-4}=0.000123\)</span>.
 In other words, given <span class="math">\(1.23\)</span>, we move the decimal separator by
 four digits towards the left, adding zeroes if necessary.</p>
-<p>In real life, some information items
-may be inherently or temporarily missing, unknown, or <code class="docutils literal notranslate"><span class="pre">N</span></code>ot <code class="docutils literal notranslate"><span class="pre">A</span></code>vailable.
-R is data processing-oriented. Hence, it is equipped with
-a special indicator:</p>
+<p>In real life, some information items may be inherently or temporarily
+missing, unknown, or <code class="docutils literal notranslate"><span class="pre">N</span></code>ot <code class="docutils literal notranslate"><span class="pre">A</span></code>vailable. As R is orientated towards data
+processing, it was equipped with a special indicator:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="kc">NA_real_</span><span class="w">  </span><span class="c1"># numeric NA (missing value)</span>
 <span class="c1">## [1] NA</span>
 </pre></div>
 </div>
-<p>It is similar to the <em>Null</em> marker in database query languages
-such as SQL. Note that <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>
-is displayed simply as “<code class="docutils literal notranslate"><span class="pre">NA</span></code>”, chiefly for readability.</p>
-<p>Moreover, <code class="docutils literal notranslate"><span class="pre">Inf</span></code> denotes infinity, <span class="math">\(\infty\)</span>, i.e., a value that is
+<p>It is similar to the <em>Null</em> marker in database query languages such as SQL.
+Note that <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code> is displayed simply as “<code class="docutils literal notranslate"><span class="pre">NA</span></code>”, chiefly for readability.</p>
+<p>Moreover, <code class="docutils literal notranslate"><span class="pre">Inf</span></code> denotes infinity, <span class="math">\(\infty\)</span>, i.e., an element that is
 larger than the largest representable double-precision (64 bit)
-floating point number.
+floating point value.
 Also, <code class="docutils literal notranslate"><span class="pre">NaN</span></code> stands for <em>not-a-number</em>, which is returned as the result
 of some illegal operations, e.g., <span class="math">\(0/0\)</span> or <span class="math">\(\infty-\infty\)</span>.</p>
 </section>
@@ -387,7 +385,7 @@ many numeric vectors, each of any length. It results in a single object:</p>
 <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(...)</span></code>. In the current context,
 this means that the <strong class="command">c</strong> function
 takes an arbitrary number of arguments.
-In <a class="reference internal" href="210-design.html#sec-ellipsis"><span class="std std-numref">Section 9.5.6</span></a>, we will study
+In <a class="reference internal" href="210-design.html#sec-ellipsis"><span class="std std-numref">Section 9.4.6</span></a>, we will study
 the dot-dot-dot (ellipsis) parameter in more detail.</p>
 </div>
 </section>
@@ -784,7 +782,7 @@ not followed by a number. Names such as <code class="docutils literal notranslat
 and neither are the reserved words</em>
 such as <strong class="command">if</strong>, <strong class="command">for</strong>, <strong class="command">function</strong>,
 <strong class="command">next</strong>, and <strong class="command">TRUE</strong>,
-but see <a class="reference internal" href="210-design.html#sec-backtick"><span class="std std-numref">Section 9.4.1</span></a> for an exception.</p>
+but see <a class="reference internal" href="210-design.html#sec-backtick"><span class="std std-numref">Section 9.3.1</span></a> for an exception.</p>
 <p>A fine name is self-explanatory and thus reader-friendly:
 <code class="docutils literal notranslate"><span class="pre">patients</span></code>, <code class="docutils literal notranslate"><span class="pre">mean</span></code>, and <code class="docutils literal notranslate"><span class="pre">average_scores</span></code> are way better (if they
 are what they claim they are) than <code class="docutils literal notranslate"><span class="pre">xyz123</span></code>, <code class="docutils literal notranslate"><span class="pre">crap</span></code>, or <code class="docutils literal notranslate"><span class="pre">spam</span></code>.
@@ -1533,7 +1531,7 @@ the <span class="math">\(\boldsymbol{x}\)</span> vector can be anything:
 from the one that features very accurate socioeconomic predictions
 that will help make this world less miserable,
 through the data you have been collecting for the last ten years
-in relation to your definitely-super-important PhD research,
+in relation to your super important PhD research,
 whatever your company asked you to crunch today,
 to something related to the hobby project that you enjoy doing after hours.
 But you can also just test the above on something
@@ -1591,7 +1589,7 @@ is based on <strong class="command">sum</strong>, not vice versa.</p>
 What does that mean?</p></li>
 <li><p>What is wrong with a call to
 <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">sqrt</strong><code class="code docutils literal notranslate"><span class="pre">(1),</span> </code><strong class="command">sqrt</strong><code class="code docutils literal notranslate"><span class="pre">(2),</span> </code><strong class="command">sqrt</strong><code class="code docutils literal notranslate"><span class="pre">(3))</span></code>?</p></li>
-<li><p>What do we mean by saying that multiplication operates element-by-element?</p></li>
+<li><p>What do we mean by saying that multiplication operates element by element?</p></li>
 <li><p>How does the recycling rule work when applying `<strong class="command">+</strong>`?</p></li>
 <li><p>How to (and why) set the seed of the pseudorandom number generator?</p></li>
 <li><p>What is the difference between <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code> and <code class="docutils literal notranslate"><span class="pre">NaN</span></code>?</p></li>
@@ -1679,7 +1677,7 @@ r = \frac{
 \]</div>
 </div>
 <p>To make sure you have come up with a correct implementation,
-compare your result to a call to the built-in <strong class="command">cor</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
+compare your result to a call to <strong class="command">cor</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
 </div></div><div class="proof proof-type-exercise" id="id37">
 
     <div class="proof-title">
@@ -1749,7 +1747,7 @@ etc. in <strong class="command">help</strong><code class="code docutils literal
 </aside>
 <aside class="footnote brackets" id="footwarnrec" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">7</a><span class="fn-bracket">]</span></span>
-<p>A few built-in functions do not warn at all when incomplete
+<p>A few functions do not warn at all when incomplete
 recycling is performed (e.g., <strong class="command">paste</strong>)
 or can even give an error (e.g., <strong class="command">as.data.frame.list</strong>).
 Consider this inconsistency an annoying bug and hope it will be fixed,
@@ -1814,7 +1812,7 @@ It is because it returns a named vector.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-22T18:13:44+1000.
+              Last updated on 2023-06-23T16:07:12+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
