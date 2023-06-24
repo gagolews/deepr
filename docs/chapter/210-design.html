@@ -1208,8 +1208,8 @@ Thus, the expression “<code class="docutils literal notranslate"><span class="
 It is equivalent to
 `<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> </code>`<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;b&quot;,</span> <span class="pre">1))</span></code>
 and `<strong class="command">&lt;-</strong>`<code class="code docutils literal notranslate"><span class="pre">(&quot;b&quot;,</span> <span class="pre">1)</span></code> returns 1.</p>
-<p>Owing to the pass-by-value semantics (<a class="reference internal" href="#sec-pass-by-value"><span class="std std-numref">Section 9.4.1</span></a>),
-we can also expect that we will always be
+<p>Owing to the pass-by-value-like semantics (<a class="reference internal" href="#sec-pass-by-value"><span class="std std-numref">Section 9.4.1</span></a>),
+we can also expect that we will be
 assigning a <em>copy</em> of the value on the right side of the operator
 (with the exception of environments; <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span>
@@ -1558,8 +1558,8 @@ an altered copy of:</p>
 </section>
 <section id="arguments-and-local-variables">
 <h2><span class="section-number">9.4. </span>Arguments and local variables<a class="headerlink" href="#arguments-and-local-variables" title="Permalink to this heading">#</a></h2>
-<section id="pass-by-value">
-<span id="sec-pass-by-value"></span><h3><span class="section-number">9.4.1. </span>Pass by “value”<a class="headerlink" href="#pass-by-value" title="Permalink to this heading">#</a></h3>
+<section id="call-by-value">
+<span id="sec-pass-by-value"></span><h3><span class="section-number">9.4.1. </span>Call by “value”<a class="headerlink" href="#call-by-value" title="Permalink to this heading">#</a></h3>
 <p>As a general rule, functions cannot change the state of their
 arguments<a class="footnote-reference brackets" href="#footchgenvir" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. We can think of them as being passed
 by <em>value</em>, i.e., as if their copy was made.</p>
@@ -1644,11 +1644,11 @@ a corresponding <span class="math">\(y\)</span> can be determined for any <span 
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x5585ee1eade0&gt;</span>
+<span class="c1">## &lt;environment: 0x5646176e9d90&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x5585ee2aec58&gt;</span>
+<span class="c1">## &lt;environment: 0x5646177afaf0&gt;</span>
 </pre></div>
 </div>
 <p>We might wonder how they can produce different results.
@@ -2001,7 +2001,7 @@ improving things with regard to one criterion sometimes makes them
 worse with respect to other aspects<a class="footnote-reference brackets" href="#footparetooptim" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>
 (also those that we are not aware of).
 Moreover, not everything that counts can nor will be counted.</p>
-<p>We do not want to be considered needless enablers who say that
+<p>We do not want to be considered heedless enablers who say that
 if anything is possible, it should be done. Therefore,
 below we serve some food for thought. However, as there is no accounting
 for taste, the kind readers might as well decide to skip this spicy meal.</p>
@@ -2053,8 +2053,7 @@ old version is deprecated and will be removed in, say, two years?
         
     </div><div class="proof-content">
 <p>R 4.0 defined a new function called <strong class="command">deparse1</strong>.
-It nothing but a combination of <strong class="command">deparse</strong> (see below)
-and <strong class="command">paste</strong>:</p>
+It is nothing but a combination of <strong class="command">deparse</strong> and <strong class="command">paste</strong>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">deparse1</span><span class="p">)</span>
 <span class="c1">## function (expr, collapse = &quot; &quot;, width.cutoff = 500L, ...)</span>
 <span class="c1">## paste(deparse(expr, width.cutoff, ...), collapse = collapse)</span>
@@ -2100,8 +2099,7 @@ learn another, more advanced, generic, and capable tool anyway
 (in our case, the base R itself). Are they determined
 and skilled enough to do that? Some might, unfortunately,
 say: “it is not my problem, I made sure everyone was happy at that time”.
-Due to this shortsightedness, it is <em>our</em> problem now.
-The least we can do is to be explicit about it.</p>
+Due to this shortsightedness, it is <em>our</em> problem now.</p>
 <p>Recall that it took us some time to arrive at <strong class="command">order</strong>
 and subsetting via `<strong class="command">[</strong>`. Assuming that we read this
 book from the beginning to the end and solve all the
@@ -2184,14 +2182,15 @@ Less is better, even though slightly more challenging. Put
 good engineering first.</p>
 <p>It might even happen that we realise that “everything so far was wrong
 and we need a global reset”. But if we become very successful, we will cause
-a <em>divide</em> in the community. Especially when we duplicate the existing,
-base functionality we should note that some users will be introduced
-to the system through the supplementary interface and not be familiar
-with the classic one, and others will have to learn the added syntax to be
-able to communicate with the former group. This gives rise to a whole
+a <em>divide</em> in the community. Especially when we decide to duplicate
+the existing, base functionality, we should note that some
+users will be introduced to the system through the supplementary
+interface and they will not be familiar with the classic one.
+Others will have to learn the added syntax to be able to communicate
+with the former group. This gives rise to a whole
 new set of issues (how to make all the functions interoperable
-with each other seamlessly, etc.).
-Such moves are sometimes necessary, but let us not treat them lightly.</p>
+with each other seamlessly, etc.). Such moves are sometimes necessary,
+but let us not treat them lightly; it is a great responsibility.</p>
 </section>
 </section>
 <section id="exercises">
@@ -2351,9 +2350,9 @@ see <a class="reference internal" href="220-s3.html#sec-built-in-generics"><span
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
 <p>Let us make it less about ourselves and more about the
 community. Developing expertise in any complex area takes years of
-hard work. In the meantime, we can help the community
-by submitting bug fixes, extending documentation,
-spreading the good word about the project,
+hard work. In the meantime, we can help open-source projects
+by spreading the good word about them,
+submitting bug fixes, extending documentation,
 supporting other users through their journey, etc.</p>
 </aside>
 <aside class="footnote brackets" id="footdollar" role="note">
@@ -2365,7 +2364,8 @@ supporting other users through their journey, etc.</p>
 <p>With the exception of objects of the type <code class="docutils literal notranslate"><span class="pre">environment</span></code>,
 which are passed by reference; see <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.
 Also, the fact that we have access to unevaluated R expressions
-can cause further deviations to this rule.</p>
+can cause further deviations to this rule; actually,
+R implements the <em>call-by-need</em> strategy; see <a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footshadow" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">6</a><span class="fn-bracket">]</span></span>
@@ -2431,7 +2431,7 @@ lines/proprietary solutions/payable services, etc.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-23T16:07:12+1000.
+              Last updated on 2023-06-24T17:50:59+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2496,7 +2496,7 @@ lines/proprietary solutions/payable services, etc.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#arguments-and-local-variables">9.4. Arguments and local variables</a><ul>
-<li><a class="reference internal" href="#pass-by-value">9.4.1. Pass by “value”</a></li>
+<li><a class="reference internal" href="#call-by-value">9.4.1. Call by “value”</a></li>
 <li><a class="reference internal" href="#variable-scope">9.4.2. Variable scope</a></li>
 <li><a class="reference internal" href="#closures">9.4.3. Closures (*)</a></li>
 <li><a class="reference internal" href="#default-arguments">9.4.4. Default arguments</a></li>

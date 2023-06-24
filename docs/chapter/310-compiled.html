@@ -426,7 +426,7 @@ to R objects via special pointers of the type <code class="docutils literal notr
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="cm">/* the caller is expected to prepare the arguments</span>
 <span class="cm">           (doing it at the C level is tedious work) */</span>
-<span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of type &#39;double&#39;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of the type &#39;double&#39;&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/* Exercise: consider missing value (NA) checking</span>
@@ -839,7 +839,7 @@ environments. In many data analysis applications, we do not need much more.</p>
 <td><p><strong class="command">COMPLEX</strong><code class="code docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">STRSXP</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">SEXP</span></code> <em>(array of <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s of type <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>)</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SEXP</span></code> <em>(array of <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s of the type <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>)</em></p></td>
 <td><p><em>(not directly)</em></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VECSXP</span></code></p></td>
@@ -874,7 +874,7 @@ or return values.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_test_sharedmem</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a non-empty vector of type &#39;double&#39;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a non-empty vector of the type &#39;double&#39;&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="c1">// never do it; always make a copy;</span>
 <span class="w">            </span><span class="c1">// the underlying array `x` may be shared by many objects</span>
@@ -1079,7 +1079,7 @@ from garbage collection while data are being prepared.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_square1</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1">// no need to call PROTECT(x), it is already in use</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of type &#39;double&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of the type &#39;double&#39;&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
@@ -1159,7 +1159,7 @@ garbage-collected at the end of a <strong class="command">.Call</strong>.</p>
 <p>Here is our version of the <strong class="command">which</strong> function.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_which1</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isLogical</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be of type &#39;logical&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isLogical</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be of the type &#39;logical&#39;&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">;</span>
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOGICAL</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
@@ -1216,7 +1216,7 @@ from the language’s standard library.</p>
 
 <span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="n">SEXP</span><span class="w"> </span><span class="n">C_which2</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isLogical</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be of type &#39;logical&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isLogical</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be of the type &#39;logical&#39;&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOGICAL</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
@@ -1433,7 +1433,7 @@ see Section 5.13 of <span id="id22">[<a class="reference internal" href="999-bi
 <p>We can use them to maintain dynamic data structures
 or resource handlers between calls to R functions.
 The problem with these is that pointers are passed as… pointers.
-They can easily break R’s pass-by-value semantics,
+They can easily break R’s pass-by-value-like semantics,
 where changes to the state of the referenced object will
 be visible outside the call.</p>
 <p>Furthermore, pointers are not serialisable. They cannot be saved
@@ -1797,7 +1797,7 @@ contingency table.</p>
 of identical lengths <em>n</em> or matrices of <em>n</em> rows for some <em>n</em> and <em>m</em>.
 The character vectors stored in the <code class="docutils literal notranslate"><span class="pre">row.names</span></code> and <code class="docutils literal notranslate"><span class="pre">names</span></code> attributes
 give the <em>n</em> row and <em>m</em> column labels.
-They are objects of S3 class <code class="docutils literal notranslate"><span class="pre">&quot;data.frame&quot;</span></code>.</p>
+They are objects of the S3 class <code class="docutils literal notranslate"><span class="pre">&quot;data.frame&quot;</span></code>.</p>
 <p>We process data frames as ordinary lists.
 However, in many applications, it is enough to write
 functions that accept ordinary numeric matrices instead.
@@ -2050,7 +2050,7 @@ that invokes our <strong class="command">.Call</strong>.</p>
 <aside class="footnote brackets" id="footnanrepr" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">8</a><span class="fn-bracket">]</span></span>
 <p>(**) Namely, <code class="docutils literal notranslate"><span class="pre">NA</span></code>s are encoded as un-signalling <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s
-<code class="docutils literal notranslate"><span class="pre">0x7ff00000000007A2</span></code> of type <code class="docutils literal notranslate"><span class="pre">double</span></code>
+<code class="docutils literal notranslate"><span class="pre">0x7ff00000000007A2</span></code> of the type <code class="docutils literal notranslate"><span class="pre">double</span></code>
 (the lower 32 payload bits are equal to 1954, decimally);
 see <code class="file docutils literal notranslate"><span class="pre">src/arithmetic.c</span></code> in R’s source code.
 The payload propagation is not fully covered by the current
@@ -2145,7 +2145,7 @@ it defines parallel versions of <strong class="command">lapply</strong> and <str
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-23T16:07:12+1000.
+              Last updated on 2023-06-24T17:50:59+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
