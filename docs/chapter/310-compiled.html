@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.1.9006 (draft)
+v0.9.2.9007 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -304,12 +304,13 @@ larger <em>building blocks</em> very convenient.</p>
 <p>R is also a competent tool for developing quick and dirty
 prototypes of standalone, general-purpose algorithms,
 especially if they are of <em>numerical</em> nature.
-Nevertheless, for performance reasons, we may<a class="footnote-reference brackets" href="#footknuth" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> consider moving
-computing-intensive tasks to the C or C++ level<a class="footnote-reference brackets" href="#footlangs" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.
-It is particularly the case when we need a method that:</p>
+Nevertheless, for performance reasons, we may consider rewriting
+computing-intensive tasks in C or C++<a class="footnote-reference brackets" href="#footlangs" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
+Such a move can be beneficial if we need a method that:</p>
 <ul class="simple">
-<li><p>has higher memory or time complexity than its straightforward
-implementation when it is programmed using vectorised R functions,</p></li>
+<li><p>has higher memory or time complexity
+when programmed using vectorised R functions
+than its straightforward implementation,</p></li>
 <li><p>has an <em>iterative</em> or <em>recursive</em> nature, e.g., involving unvectorisable
 <em>for</em> or <em>while</em> loops,</p></li>
 <li><p>relies on complicated dynamic data structures
@@ -320,27 +321,27 @@ in R (e.g., other C or C++ libraries).</p></li>
 <p>In the current chapter, we will demonstrate that R works very well as
 a user-friendly interface to compiled code.</p>
 <p>This topic is overall very technical. The definitive reference
-is <em>Writing R Extensions</em> <span id="id4">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>, but see also Chapter 11
-of <span id="id5">[<a class="reference internal" href="999-bibliography.html#id19" title="Chambers, J.M. (2008).  Software for Data Analysis. Programming with R. Springer.">10</a>]</span>. Furthermore, R’s source code provides many working
+is the <em>Writing R Extensions</em> manual <span id="id3">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>, but see also Chapter 11
+of <span id="id4">[<a class="reference internal" href="999-bibliography.html#id19" title="Chambers, J.M. (2008).  Software for Data Analysis. Programming with R. Springer.">10</a>]</span>. Furthermore, R’s source code provides many working
 examples of how to deal with R objects in C.</p>
 <p>Here, we will only cover the most important basics.
-We will focus on writing or interfacing <em>portable</em><a class="footnote-reference brackets" href="#rcpp" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>
-function libraries that only rely on <em>simple</em><a class="footnote-reference brackets" href="#noaltrep" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> data structures
+We will focus on writing or interfacing <em>portable</em><a class="footnote-reference brackets" href="#rcpp" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
+function libraries that only rely on <em>simple</em><a class="footnote-reference brackets" href="#noaltrep" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> data structures
 (e.g., arrays of the type <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span></code>).
 Thanks to this, we will be able to reuse
 them in other environments such as Python (e.g., via Cython) or Julia.
 Let us remember that R is one of <em>many</em> languages out there.</p>
-<p>We assume basic knowledge of the C language; see <span id="id8">[<a class="reference internal" href="999-bibliography.html#id36" title="Kernighan, B.W. and Ritchie, D. (1988).  The C Programming Language. Prentice Hall.">38</a>]</span>.
+<p>We assume basic knowledge of the C language; see <span id="id7">[<a class="reference internal" href="999-bibliography.html#id36" title="Kernighan, B.W. and Ritchie, D. (1988).  The C Programming Language. Prentice Hall.">38</a>]</span>.
 The reader can skip this chapter now and return to it later.
 The remaining material is not contingent on the current one.</p>
 <p>From now on, we take for granted that our environment
 can successfully build a source package with C code, as mentioned in
-<a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>. In particular, W****ws and m**OS should have,
-respectively, <strong class="program">RTools</strong> and <strong class="program">Xcode</strong> installed.</p>
+<a class="reference internal" href="170-function.html#sec-src-package"><span class="std std-numref">Section 7.3.1.2</span></a>. In particular, W****ws and m**OS should
+install, respectively, <strong class="program">RTools</strong> and <strong class="program">Xcode</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To avoid ambiguity, in the main text, calls to C functions will be prefixed
-with “<strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code>”; e.g.,
+<p>To avoid ambiguity, in the main text, calls to C functions will be
+denoted with the “<strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code>” prefix, e.g.,
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">spanish_inquisition</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>.</p>
 </div>
 <section id="c-and-c-code-in-r">
@@ -351,7 +352,7 @@ with “<strong class="program">C</strong><code class="code docutils literal not
 is via standalone R packages. For the purpose of the current
 chapter, we created a demo project
 available at <a class="reference external" href="https://github.com/gagolews/cpackagedemo">https://github.com/gagolews/cpackagedemo</a>.</p>
-<div class="proof proof-type-exercise" id="id32">
+<div class="proof proof-type-exercise" id="id31">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.1</span>
@@ -359,9 +360,10 @@ available at <a class="reference external" href="https://github.com/gagolews/cpa
     </div><div class="proof-content">
 <p>Inspect the structure of <strong class="program">cpackagedemo</strong>.
 Note that C source files are located in the <code class="file docutils literal notranslate"><span class="pre">src/</span></code> subdirectory.
-Build and install the package. Call <strong class="command">my_sum</strong> in R on some
-numeric vector.</p>
-</div></div><p>The package provides an R interface to one function,
+Build and install the package using <strong class="command">install.packages</strong>
+or the “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">INSTALL</span></code>” command. Then, load the package in R and call
+<strong class="command">my_sum</strong> defined there on some numeric vector.</p>
+</div></div><p>The package provides an R interface to one C function,
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">my_c_sum</strong>, written in the
 most portable fashion possible.
 Its declaration is included in the <code class="file docutils literal notranslate"><span class="pre">src/cfuns.h</span></code> file:</p>
@@ -375,7 +377,7 @@ Its declaration is included in the <code class="file docutils literal notranslat
 </pre></div>
 </div>
 <p>The function accepts a pointer to the start of a numeric sequence
-and its size, which is a standard<a class="footnote-reference brackets" href="#footstride" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> way of representing
+and its size, which is a standard<a class="footnote-reference brackets" href="#footstride" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> way of representing
 an array of <code class="docutils literal notranslate"><span class="pre">double</span></code>s.</p>
 <p>Its definition is given in <code class="file docutils literal notranslate"><span class="pre">src/cfuns.c</span></code>. We see that it is
 nothing more than a simple sum of all the elements in an array:</p>
@@ -429,19 +431,16 @@ to R objects via special pointers of the type <code class="docutils literal notr
 <span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of the type &#39;double&#39;&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="cm">/* Exercise: consider missing value (NA) checking</span>
-<span class="cm">       as my_c_sum doesn&#39;t do it */</span>
-
 <span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my_c_sum</span><span class="p">(</span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
 
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Rf_ScalarReal</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The arguments can be, technically speaking, prepared at the C level.
-For instance, if <code class="docutils literal notranslate"><span class="pre">x</span></code> turned
-out to be an integer vector, we could convert it to the <code class="docutils literal notranslate"><span class="pre">double</span></code> one
-(these are two different types; see <a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>).
+<p>The arguments could be, technically speaking, prepared at the C level.
+For instance, if <code class="docutils literal notranslate"><span class="pre">x</span></code> turned out to be an integer vector,
+we could convert it to the <code class="docutils literal notranslate"><span class="pre">double</span></code> one
+(they are two different types; see <a class="reference internal" href="160-character.html#sec-integer"><span class="std std-numref">Section 6.4.1</span></a>).
 Nevertheless, overall, it is very burdensome. It is better to use pure R code
 to ensure that the arguments are of the correct form and to beautify
 the outputs.</p>
@@ -452,14 +451,15 @@ It guarantees that the <strong class="program">C</strong><code class="code docut
 functions correctly return the pointer to the start of the sequence
 and its length, respectively.</p>
 <p>Once <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">my_c_sum</strong> is called,
-we must convert it to an R object. Here, it is a newly allocated
-numeric vector of length one. It can be done easily by calling
+we must convert it to an R object so that it can be returned to our
+environment. Here, it is a newly allocated
+numeric vector of length one. We did this by calling
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_ScalarReal</strong>.</p>
-<div style="margin-top: 1em"></div><p>Although optional (see Section 5.4 of <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>),
+<div style="margin-top: 1em"></div><p>Although optional (see Section 5.4 of <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>),
 we will register <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">my_c_sum_wrapper</strong>
-as a callable function explicitly. This way, R will not struggle to find
-the specific entry point in the resulting dynamically linked library (DLL).
-We do this in <code class="file docutils literal notranslate"><span class="pre">src/cpackagedemo.c</span></code>:</p>
+as a callable function explicitly. This way, R will not be struggling
+to find the specific entry point in the resulting dynamically linked library
+(DLL). We do this in <code class="file docutils literal notranslate"><span class="pre">src/cpackagedemo.c</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;R_ext/Rdynload.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;rfuns.h&quot;</span>
 
@@ -467,7 +467,7 @@ We do this in <code class="file docutils literal notranslate"><span class="pre">
 <span class="cm">   each entry is like {exported_name, fun_pointer, number_of_arguments} */</span>
 <span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">R_CallMethodDef</span><span class="w"> </span><span class="n">cCallMethods</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="p">{</span><span class="s">&quot;my_c_sum_wrapper&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">DL_FUNC</span><span class="p">)</span><span class="o">&amp;</span><span class="n">my_c_sum_wrapper</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="w">  </span><span class="c1">// the end of the list</span>
+<span class="w">    </span><span class="p">{</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="w">  </span><span class="c1">// the end of the list (sentinel)</span>
 <span class="p">};</span>
 
 <span class="cm">/* registers the list of callable functions */</span>
@@ -479,7 +479,7 @@ We do this in <code class="file docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 <div style="margin-top: 1em"></div><p>The function can be invoked from R using <strong class="command">.Call</strong>.
-We do it in <code class="file docutils literal notranslate"><span class="pre">R/my_sum.R</span></code>:</p>
+Here are the contents of <code class="file docutils literal notranslate"><span class="pre">R/my_sum.R</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">my_sum</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1"># prepare input data:</span>
@@ -502,7 +502,8 @@ for registering the exported R names and indicating the DLL to use:</p>
 </div>
 <div style="margin-top: 1em"></div><p>Once the package is built and installed
 (e.g., by running “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">INSTALL</span> <span class="pre">&lt;pkgdir&gt;</span></code>” in the
-terminal), we can test it by calling:</p>
+terminal or calling <strong class="command">install.packages</strong>),
+we can test it by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;cpackagedemo&quot;</span><span class="p">)</span>
 <span class="nf">my_sum</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="o">/</span><span class="m">100</span><span class="p">)</span>
 <span class="c1">## [1] 0.49856</span>
@@ -510,32 +511,30 @@ terminal), we can test it by calling:</p>
 <span class="c1">## [1] &quot;runif(100)/100&quot;</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id33">
+<div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.2</span>
         
     </div><div class="proof-content">
-<p>Extend the package (locally) by adding a function to compute the index
-of the greatest element in a numeric vector.
-Note that C uses 0-based array indexing, whereas, in R, the first element
-is at index 1.
-Compare its run time against <strong class="command">which.max</strong>
-using <strong class="command">proc.time</strong>.</p>
+<p>Extend the package by adding a function to compute the index of the greatest
+element in a numeric vector. Note that C uses 0-based array indexing whereas
+in R, the first element is at index 1. Compare its run time against
+<strong class="command">which.max</strong> using <strong class="command">proc.time</strong>.</p>
 </div></div></section>
 <section id="r-cmd-shlib">
 <h3><span class="section-number">14.1.2. </span><code class="code docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span></code><a class="headerlink" href="#r-cmd-shlib" title="Permalink to this heading">#</a></h3>
-<p>The “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>” command compiles one or more source files
+<p>The “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>” shell command compiles one or more source files
 without the need for turning them into standalone packages;
-see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>. Then, <strong class="command">dyn.load</strong> loads the resulting DLL.</p>
-<div class="proof proof-type-exercise" id="id34">
+see <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>. Then, <strong class="command">dyn.load</strong> loads the resulting DLL.</p>
+<div class="proof proof-type-exercise" id="id33">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.3</span>
         
     </div><div class="proof-content">
 <p>(*) Compile <code class="file docutils literal notranslate"><span class="pre">src/cfuns.c</span></code> and <code class="file docutils literal notranslate"><span class="pre">src/rfuns.c</span></code> from our
-demo package using “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>”. Call <strong class="command">dyn.load</strong>.
+demo package using “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span></code>”. Call <strong class="command">dyn.load</strong>.
 Write an R function that uses <strong class="command">.Call</strong> to invoke
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">my_c_sum_wrapper</strong> from the second source file.</p>
 </div></div><p>The direct <code class="docutils literal notranslate"><span class="pre">SHLIB</span></code> approach is convenient for learning C programming,
@@ -543,9 +542,9 @@ including running simple examples. We will thus use it
 for didactic reasons in this chapter.
 The <code class="file docutils literal notranslate"><span class="pre">inst/examples/csource.R</span></code> file in our demo package
 includes the implementation of an R function called <strong class="command">csource</strong>.
-It compiles a given C source file, loads the resulting DLL, and
-extracts and executes a designated R code chunk
-(preferably defining a function that refers to <strong class="command">.Call</strong>).</p>
+It compiles a given C source file, and loads the resulting DLL.
+It also extracts and executes a designated R code chunk
+preferably defining a function that refers to <strong class="command">.Call</strong>.</p>
 <p>Here is an example source file, <code class="file docutils literal notranslate"><span class="pre">inst/examples/helloworld.c</span></code>
 in the <strong class="program">cpackagedemo</strong> source code repository:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// the necessary header files are automatically included by `csource`</span>
@@ -575,7 +574,7 @@ in the <strong class="program">cpackagedemo</strong> source code repository:</p>
 <span class="c1">## I&#39;m afraid I&#39;ve no choice but to sell you all for scientific experiments.</span>
 </pre></div>
 </div>
-<div class="proof proof-type-exercise" id="id35">
+<div class="proof proof-type-exercise" id="id34">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.4</span>
@@ -584,9 +583,9 @@ in the <strong class="program">cpackagedemo</strong> source code repository:</p>
 <p>(*)
 C++ is also supported. It can be thought of as a superset of the C language,
 but the devil is in the detail. Change the name of the above file to
-<code class="file docutils literal notranslate"><span class="pre">helloworld2.cpp</span></code>, add “<code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> before the function
+<code class="file docutils literal notranslate"><span class="pre">helloworld2.cpp</span></code>, add <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> before the function
 declaration, and compile it.</p>
-</div></div><div class="proof proof-type-exercise" id="id36">
+</div></div><div class="proof proof-type-exercise" id="id35">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.5</span>
@@ -594,7 +593,7 @@ declaration, and compile it.</p>
     </div><div class="proof-content">
 <p>(*)
 Verify that C and C++ source files can coexist in R packages.</p>
-</div></div><div class="proof proof-type-example" id="id37">
+</div></div><div class="proof proof-type-example" id="id36">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.6</span>
@@ -606,10 +605,10 @@ functions ourselves (a few hours’ worth of work),
 let alone read with understanding.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># compiles a C or C++ source file using R CMD SHLIB,</span>
 <span class="c1"># loads the resulting DLL, and executes the embedded R code</span>
+
 <span class="n">csource</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span>
 <span class="w">    </span><span class="n">fname</span><span class="p">,</span>
-<span class="w">    </span><span class="n">libname</span><span class="o">=</span><span class="nf">regmatches</span><span class="p">(</span><span class="nf">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span>
-<span class="w">        </span><span class="nf">regexpr</span><span class="p">(</span><span class="s">&quot;[^.]*(?=\\..*)&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)),</span>
+<span class="w">    </span><span class="n">libname</span><span class="o">=</span><span class="kc">NULL</span><span class="p">,</span><span class="w">  </span><span class="c1"># defaults to the base name of `fname` without extension</span>
 <span class="w">    </span><span class="n">shlibargs</span><span class="o">=</span><span class="nf">character</span><span class="p">(),</span>
 <span class="w">    </span><span class="n">headers</span><span class="o">=</span><span class="nf">paste0</span><span class="p">(</span>
 <span class="w">        </span><span class="s">&quot;#include &lt;R.h&gt;\n&quot;</span><span class="p">,</span>
@@ -617,12 +616,18 @@ let alone read with understanding.</p>
 <span class="w">        </span><span class="s">&quot;#include &lt;Rmath.h&gt;\n&quot;</span>
 <span class="w">    </span><span class="p">),</span>
 <span class="w">    </span><span class="n">R</span><span class="o">=</span><span class="nf">file.path</span><span class="p">(</span><span class="nf">R.home</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;bin/R&quot;</span><span class="p">)</span>
-<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">)</span>
+<span class="p">{</span>
 <span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">file.exists</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
-<span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">libname</span><span class="p">),</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">libname</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 <span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">shlibargs</span><span class="p">))</span>
 <span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">headers</span><span class="p">))</span>
 <span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nf">if </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">libname</span><span class="p">))</span>
+<span class="w">        </span><span class="n">libname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">regmatches</span><span class="p">(</span><span class="nf">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span>
+<span class="w">            </span><span class="nf">regexpr</span><span class="p">(</span><span class="s">&quot;[^.]*(?=\\..*)&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+
+<span class="w">    </span><span class="nf">stopifnot</span><span class="p">(</span><span class="nf">is.character</span><span class="p">(</span><span class="n">libname</span><span class="p">),</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">libname</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 
 <span class="w">    </span><span class="c1"># read the source file:</span>
 <span class="w">    </span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="nf">readLines</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
@@ -632,7 +637,7 @@ let alone read with understanding.</p>
 <span class="w">    </span><span class="n">dynlib_ext</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">.Platform</span><span class="p">[[</span><span class="s">&quot;dynlib.ext&quot;</span><span class="p">]]</span>
 <span class="w">    </span><span class="n">libpath</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">file.path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span><span class="w"> </span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">libname</span><span class="p">,</span><span class="w"> </span><span class="n">dynlib_ext</span><span class="p">))</span>
 <span class="w">    </span><span class="n">cfname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">file.path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span><span class="w"> </span><span class="nf">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
-<span class="w">    </span><span class="n">rfname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sub</span><span class="p">(</span><span class="s">&quot;\\..*?$&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.R&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cfname</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">rfname</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sub</span><span class="p">(</span><span class="s">&quot;\\..*?$&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.R&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cfname</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># .R extension</span>
 
 <span class="w">    </span><span class="c1"># separate the /* R ... &lt;R code&gt; ... R */ chunk from the source file:</span>
 <span class="w">    </span><span class="n">rpart</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">regexec</span><span class="p">(</span><span class="s">&quot;(?smi)^/\\* R\\s?(.*)R \\*/$&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span>
@@ -690,14 +695,14 @@ let alone read with understanding.</p>
 <p>All R objects are stored as instances of the C language structure
 <code class="docutils literal notranslate"><span class="pre">SEXPREC</span></code>. Usually, we access them via
 pointers, which are of the type <code class="docutils literal notranslate"><span class="pre">SEXP</span></code> (S expression).</p>
-<p>C functions referred to via <strong class="command">.Call</strong>
-take the very generic <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s on input. They output some <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>.
+<p>C functions referred to via <strong class="command">.Call</strong> take the very generic
+<code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s on input. They output some other <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>.
 One of the said structure’s fields represents
 the actual R object type (<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> numbers);
 see <a class="reference internal" href="#tab-sexp-types"><span class="std std-numref">Table 14.1</span></a> for a selection.</p>
-<div class="table-wrapper colwidths-given docutils container" id="id38">
-<span id="tab-sexp-types"></span><span id="tab-sexp-types"></span><table class="docutils align-default" id="id38">
-<caption><span class="caption-number">Table 14.1 </span><span class="caption-text">Basic R types in C</span><a class="headerlink" href="#id38" title="Permalink to this table">#</a></caption>
+<div class="table-wrapper colwidths-given docutils container" id="id37">
+<span id="tab-sexp-types"></span><span id="tab-sexp-types"></span><table class="docutils align-default" id="id37">
+<caption><span class="caption-number">Table 14.1 </span><span class="caption-text">Basic R types in C.</span><a class="headerlink" href="#id37" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 16%" />
 <col style="width: 36%" />
@@ -753,14 +758,14 @@ see <a class="reference internal" href="#tab-sexp-types"><span class="std std-nu
 </tbody>
 </table>
 </div>
-<div class="proof proof-type-example" id="id39">
+<div class="proof proof-type-example" id="id38">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.7</span>
         
     </div><div class="proof-content">
 <p>To illustrate that any R object is available as a <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>, let us consider
-<code class="file docutils literal notranslate"><span class="pre">inst/examples/sexptype.c</span></code> from <strong class="program">cpackagedemo</strong>:</p>
+the <code class="file docutils literal notranslate"><span class="pre">inst/examples/sexptype.c</span></code> file from <strong class="program">cpackagedemo</strong>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_test_sexptype</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">Rprintf</span><span class="p">(</span><span class="s">&quot;type of x: %s (SEXPTYPE=%d)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
@@ -789,13 +794,13 @@ see <a class="reference internal" href="#tab-sexp-types"><span class="std std-nu
 <p>We should refer to particular <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s
 via their descriptive names (constants; e.g., <code class="docutils literal notranslate"><span class="pre">STRSXP</span></code>),
 not their numeric identifiers (e.g., 16);
-see Section 1.1 of <span id="id12">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">66</a>]</span> for the complete list<a class="footnote-reference brackets" href="#footsexptype" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+see Section 1.1 of <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">66</a>]</span> for the complete list<a class="footnote-reference brackets" href="#footsexptype" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
 </div></div></section>
 <section id="accessing-elements-in-simple-atomic-vectors">
 <h3><span class="section-number">14.2.2. </span>Accessing elements in simple atomic vectors<a class="headerlink" href="#accessing-elements-in-simple-atomic-vectors" title="Permalink to this heading">#</a></h3>
 <p><a class="reference internal" href="#tab-sexp-array"><span class="std std-numref">Table 14.2</span></a> gives the most important vector-like
-<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s (atomic and generic), their corresponding C
-types and the functions to access the underlying array pointers.
+<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s (atomic and generic), the C types of their elements,
+and the functions to access the underlying array pointers.
 A call to <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">XLENGTH</strong> returns
 the length of a given sequence.</p>
 <p>We have already seen an example function that processes a numeric vector;
@@ -803,9 +808,9 @@ see <strong class="program">C</strong><code class="code docutils literal notrans
 <p>Let us stress that writing functions that accept only <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">double</span></code>
 array pointers and their lengths makes them easily reusable in other
 environments. In many data analysis applications, we do not need much more.</p>
-<div class="table-wrapper colwidths-given docutils container" id="id40">
-<span id="tab-sexp-array"></span><span id="tab-sexp-array"></span><table class="docutils align-default" id="id40">
-<caption><span class="caption-number">Table 14.2 </span><span class="caption-text">Basic array-like R types and their elements in C</span><a class="headerlink" href="#id40" title="Permalink to this table">#</a></caption>
+<div class="table-wrapper colwidths-given docutils container" id="id39">
+<span id="tab-sexp-array"></span><span id="tab-sexp-array"></span><table class="docutils align-default" id="id39">
+<caption><span class="caption-number">Table 14.2 </span><span class="caption-text">Basic array-like R types and their elements in C.</span><a class="headerlink" href="#id39" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 16%" />
 <col style="width: 64%" />
@@ -859,12 +864,12 @@ environments. In many data analysis applications, we do not need much more.</p>
 we get direct access to data that might be shared amongst many objects
 (compare <a class="reference internal" href="330-environment.html#sec-copy-on-demand"><span class="std std-numref">Section 16.1.4</span></a>).
 <code class="docutils literal notranslate"><span class="pre">SEXPREC</span></code>s are simply passed by pointers (since <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s are
-exactly them). We must thus refrain<a class="footnote-reference brackets" href="#footmod" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>
-from modifying the objects passed as function parameters.
+exactly them). We must thus refrain<a class="footnote-reference brackets" href="#footmod" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>
+from modifying the objects passed as function arguments.
 See below for ways to create new vectors, e.g., for storing auxiliary
 or return values.</p>
 </div>
-<div class="proof proof-type-example" id="id41">
+<div class="proof proof-type-example" id="id40">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.8</span>
@@ -893,12 +898,12 @@ or return values.</p>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
 <span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span>
 <span class="nf">test_sharedmem</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-<span class="c1">## [1] 2</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">))</span>
+<span class="c1">## [1] 2 2</span>
 </pre></div>
 </div>
 <p>modifies <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code> in place! It is not the same semantics as
-the one we are used to when interacting with R. Hence, we
+the one we got used to when interacting with R. Hence, we
 must always make a copy.</p>
 </div></div></section>
 <section id="representation-of-missing-values">
@@ -907,9 +912,9 @@ must always make a copy.</p>
 Therefore, in R, they have to be emulated.
 <a class="reference internal" href="#tab-sexp-na"><span class="std std-numref">Table 14.3</span></a> lists the relevant constants
 and the conventional ways for testing for missingness.</p>
-<div class="table-wrapper colwidths-given docutils container" id="id42">
-<span id="tab-sexp-na"></span><span id="tab-sexp-na"></span><table class="docutils align-default" id="id42">
-<caption><span class="caption-number">Table 14.3 </span><span class="caption-text">Representation of missing values</span><a class="headerlink" href="#id42" title="Permalink to this table">#</a></caption>
+<div class="table-wrapper colwidths-given docutils container" id="id41">
+<span id="tab-sexp-na"></span><span id="tab-sexp-na"></span><table class="docutils align-default" id="id41">
+<caption><span class="caption-number">Table 14.3 </span><span class="caption-text">Representation of missing values.</span><a class="headerlink" href="#id41" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 16%" />
 <col style="width: 54%" />
@@ -956,10 +961,10 @@ testing for missingness must be performed first.</p>
 <p>The case of <code class="docutils literal notranslate"><span class="pre">double</span></code>s is slightly less irksome, for a missing
 value is represented as a special not-a-number.
 Many arithmetic operations on <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s
-return <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s as well, albeit there is no guarantee<a class="footnote-reference brackets" href="#footnanrepr" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>
+return <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s as well, albeit there is no guarantee<a class="footnote-reference brackets" href="#footnanrepr" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>
 that they will be of precisely the same type as <code class="docutils literal notranslate"><span class="pre">NA_REAL</span></code>. Thus, manual
-testing for the missingness is also advised.</p>
-<div class="proof proof-type-example" id="id43">
+testing for missingness is also advised.</p>
+<div class="proof proof-type-example" id="id42">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.9</span>
@@ -1006,8 +1011,10 @@ to compute the arithmetic mean of an <code class="docutils literal notranslate">
 <span class="cm">R */</span>
 </pre></div>
 </div>
-<p>There is some inherent code duplication: <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">double</span></code> are
-distinct types, and they need to be handled separately. Some tests:</p>
+<p>There is some inherent code duplication but <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">double</span></code> are
+distinct types. Thus, they need to be handled separately
+(we could have convert them to <code class="docutils literal notranslate"><span class="pre">double</span></code>s at the R level too).
+Some tests:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">csource</span><span class="p">(</span><span class="s">&quot;~/R/cpackagedemo/inst/examples/mean_naomit.c&quot;</span><span class="p">)</span>
 <span class="nf">mean_naomit</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1L</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_integer_</span><span class="p">,</span><span class="w"> </span><span class="m">3L</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_integer_</span><span class="p">,</span><span class="w"> </span><span class="m">5L</span><span class="p">))</span>
 <span class="c1">## [1] 3</span>
@@ -1015,19 +1022,20 @@ distinct types, and they need to be handled separately. Some tests:</p>
 <span class="c1">## [1] NA</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id44">
+</div></div><div class="proof proof-type-exercise" id="id43">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.10</span>
         
     </div><div class="proof-content">
-<p>Implement <strong class="command">all</strong> and <strong class="command">any</strong> in C.</p>
+<p>Implement <strong class="command">all</strong> and <strong class="command">any</strong> in C.
+Add the <code class="docutils literal notranslate"><span class="pre">na.rm</span></code> argument.</p>
 </div></div></section>
 <section id="memory-allocation">
 <span id="sec-memory-management"></span><h3><span class="section-number">14.2.4. </span>Memory allocation<a class="headerlink" href="#memory-allocation" title="Permalink to this heading">#</a></h3>
 <p>R implements a simple yet effective garbage collector
 that relies on reference counting.
-Occasionally<a class="footnote-reference brackets" href="#footgc" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>, memory blocks deemed no longer reachable
+Occasionally<a class="footnote-reference brackets" href="#footgc" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>, memory blocks deemed no longer reachable
 are either freed or marked as reusable.</p>
 <p>To allocate a new vector of length one and set
 its only element, we can call
@@ -1045,7 +1053,7 @@ to be set manually after creation.</p>
 <p class="admonition-title">Important</p>
 <p>We must protect all allocated vectors from garbage
 collection when we use them inside our functions.
-For this purpose, R maintains a stack<a class="footnote-reference brackets" href="#footpreserve" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> of objects guarded
+For this purpose, R maintains a stack<a class="footnote-reference brackets" href="#footpreserve" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a> of objects guarded
 against premature annihilation.
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">PROTECT</strong><code class="code docutils literal notranslate"><span class="pre">(sexp)</span></code>
 pushes a given object pointer onto the top of the list.
@@ -1067,7 +1075,7 @@ creating it (like in <strong class="command">return Rf_ScalarReal</strong><code 
 in a C function invoked by <strong class="command">.Call</strong>).</p></li>
 </ul>
 </div>
-<div class="proof proof-type-example" id="id45">
+<div class="proof proof-type-example" id="id44">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.11</span>
@@ -1150,7 +1158,7 @@ We are of course fully responsible for releasing it via
 <p>There is also <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">R_alloc</strong><code class="code docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">size)</span></code>
 which allocates <code class="docutils literal notranslate"><span class="pre">n*size</span></code> bytes. The memory will automatically be
 garbage-collected at the end of a <strong class="command">.Call</strong>.</p>
-<div class="proof proof-type-example" id="id46">
+<div class="proof proof-type-example" id="id45">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.12</span>
@@ -1201,7 +1209,7 @@ garbage-collected at the end of a <strong class="command">.Call</strong>.</p>
 vector, depending on the size of the input vector
 (whether it is shorter than <span class="math">\(2^{31}-1\)</span>). As an exercise,
 rewrite the above to take that into account: integer arithmetic is faster.</p>
-</div></div><div class="proof proof-type-example" id="id47">
+</div></div><div class="proof proof-type-example" id="id46">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.13</span>
@@ -1259,7 +1267,7 @@ whenever it is about to overflow.</p>
 </div></div></section>
 <section id="lists">
 <h3><span class="section-number">14.2.5. </span>Lists<a class="headerlink" href="#lists" title="Permalink to this heading">#</a></h3>
-<p>For safety reasons<a class="footnote-reference brackets" href="#footrc" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>, we do not get access to the underlying pointers
+<p>For safety reasons<a class="footnote-reference brackets" href="#footrc" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>, we do not get access to the underlying pointers
 in lists and character vectors. List items can be read by calling
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">VECTOR_ELT</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">index)</span></code>
 and can be set with
@@ -1268,7 +1276,7 @@ and can be set with
 Hence, after extracting an element, its <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> needs to be tested
 using one of the functions listed in <a class="reference internal" href="#tab-sexp-types"><span class="std std-numref">Table 14.1</span></a>.
 This is tiresome.</p>
-<div class="proof proof-type-example" id="id48">
+<div class="proof proof-type-example" id="id47">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.14</span>
@@ -1333,7 +1341,7 @@ on all its elements.</p>
 <span class="c1">## [1]  9 11</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id49">
+</div></div><div class="proof proof-type-exercise" id="id48">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.15</span>
@@ -1344,7 +1352,7 @@ Use <strong class="program">C</strong><code class="code docutils literal notrans
 to check whether a given object is an atomic or a generic vector,
 and hence if <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">XLENGTH</strong>
 can be called thereon.</p>
-</div></div><div class="proof proof-type-exercise" id="id50">
+</div></div><div class="proof proof-type-exercise" id="id49">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.16</span>
@@ -1354,7 +1362,7 @@ can be called thereon.</p>
 Consider scanning the input list twice.
 First, determine the size of the output vector.
 Second, fill the return object with the un-listed values.</p>
-</div></div><div class="proof proof-type-exercise" id="id51">
+</div></div><div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.17</span>
@@ -1394,7 +1402,7 @@ As typical in C, a string is terminated by byte 0.</p>
 <a class="reference internal" href="160-character.html#sec-string-input-repr"><span class="std std-numref">Section 6.1.1</span></a>. For portability
 and peace of mind, it is best to preprocess the arguments to
 <strong class="command">.Call</strong> using <strong class="command">enc2utf8</strong>, which
-converts all strings to UTF-8<a class="footnote-reference brackets" href="#footrprintf" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>.</p>
+converts all strings to UTF-8<a class="footnote-reference brackets" href="#footrprintf" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.</p>
 <p>Despite being the most universal encoding, UTF-8 does not
 represent a single code point using a fixed number of bytes.
 For instance, computing the string length
@@ -1404,7 +1412,7 @@ of <em>bytes</em>, not including the trailing 0.</p>
 <p>It is thus best to leave the processing of strings to the
 dedicated libraries, e.g., <a class="reference external" href="https://icu.unicode.org/">ICU</a>
 or rely on functions from the <strong class="program">stringi</strong>
-package <span id="id20">[<a class="reference internal" href="999-bibliography.html#id6" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. URL: https://stringi.gagolewski.com/, DOI: 10.18637/jss.v103.i02.">27</a>]</span> at the R level.</p>
+package <span id="id19">[<a class="reference internal" href="999-bibliography.html#id6" title="Gagolewski, M. (2022).  stringi: Fast and portable character string processing in R. Journal of Statistical Software, 103(2):1–59. URL: https://stringi.gagolewski.com/, DOI: 10.18637/jss.v103.i02.">27</a>]</span> at the R level.</p>
 </div>
 <p>C strings can be converted to <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>s by calling
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_mkCharCE</strong><code class="code docutils literal notranslate"><span class="pre">(stringbuf,</span> <span class="pre">CE_UTF8)</span></code>
@@ -1418,7 +1426,7 @@ e.g., using <strong class="program">C</strong><code class="code docutils literal
 </section>
 <section id="calling-r-functions-from-c">
 <h3><span class="section-number">14.2.7. </span>Calling R functions from C (**)<a class="headerlink" href="#calling-r-functions-from-c" title="Permalink to this heading">#</a></h3>
-<p>Section 5.11 of <span id="id21">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> discusses ways to call R functions in C.
+<p>Section 5.11 of <span id="id20">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> discusses ways to call R functions in C.
 To understand them, we will first need to study the material
 from the remaining chapters of our book,
 i.e., environments and the related evaluation model.
@@ -1429,7 +1437,7 @@ implemented in C on objective functions written in R.</p>
 <span id="sec-xptr"></span><h3><span class="section-number">14.2.8. </span>External pointers (**)<a class="headerlink" href="#external-pointers" title="Permalink to this heading">#</a></h3>
 <p>There is a separate basic R type for storing arbitrary
 C pointers, <code class="docutils literal notranslate"><span class="pre">externalptr</span></code> (<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> of <code class="docutils literal notranslate"><span class="pre">EXTPTRSXP</span></code>);
-see Section 5.13 of <span id="id22">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for more details.</p>
+see Section 5.13 of <span id="id21">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for more details.</p>
 <p>We can use them to maintain dynamic data structures
 or resource handlers between calls to R functions.
 The problem with these is that pointers are passed as… pointers.
@@ -1438,7 +1446,7 @@ where changes to the state of the referenced object will
 be visible outside the call.</p>
 <p>Furthermore, pointers are not serialisable. They cannot be saved
 for use in another R session.</p>
-<div class="proof proof-type-example" id="id52">
+<div class="proof proof-type-example" id="id51">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.18</span>
@@ -1583,7 +1591,7 @@ the <code class="docutils literal notranslate"><span class="pre">STRSXP</span></
 <code class="docutils literal notranslate"><span class="pre">&quot;levels&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;names&quot;</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">&quot;row.names&quot;</span></code> strings.</p>
-<div class="proof proof-type-example" id="id53">
+<div class="proof proof-type-example" id="id52">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.19</span>
@@ -1628,7 +1636,7 @@ is of a specific class:</p>
 <p>Note that a matrix has an <em>implicit</em> class (reported by
 the <strong class="command">class</strong> function), but its <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute does
 not have to be set. Hence the negative result.</p>
-</div></div><div class="proof proof-type-example" id="id54">
+</div></div><div class="proof proof-type-example" id="id53">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.20</span>
@@ -1644,7 +1652,7 @@ with elements in the set {1, 2, …, <em>k</em>, <code class="docutils literal n
 for some <em>k</em>. They are equipped with the <code class="docutils literal notranslate"><span class="pre">levels</span></code> attribute,
 being a character vector of length <em>k</em>. Their class
 attribute is set to <code class="docutils literal notranslate"><span class="pre">&quot;factor&quot;</span></code>.</p>
-<div class="proof proof-type-example" id="id55">
+<div class="proof proof-type-example" id="id54">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.21</span>
@@ -1695,7 +1703,7 @@ of occurrences of each factor level is given below.</p>
 <span class="c1">##     2     1     4</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id56">
+</div></div><div class="proof proof-type-exercise" id="id55">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.22</span>
@@ -1725,7 +1733,7 @@ and the <em>j</em>-th column is at <code class="docutils literal notranslate"><s
 <p><strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_allocMatrix</strong><code class="code docutils literal notranslate"><span class="pre">(sexptype,</span> <span class="pre">n,</span> <span class="pre">m)</span></code>
 allocates a new matrix. The <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attributes must be handled
 manually, though.</p>
-<div class="proof proof-type-example" id="id57">
+<div class="proof proof-type-example" id="id56">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.23</span>
@@ -1782,7 +1790,7 @@ numeric matrix:</p>
 <span class="c1">## Yes  57  14  75  192</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id58">
+</div></div><div class="proof proof-type-exercise" id="id57">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.24</span>
@@ -1826,7 +1834,7 @@ over <strong class="program">C</strong><code class="code docutils literal notran
 <p><strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">unif_rand</strong> returns
 a single pseudorandom deviate from the uniform distribution
 on the unit interval. It is the basis for generating numbers
-from all other supported distributions (Section 6.7.1 of <span id="id23">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>).</p>
+from all other supported distributions (Section 6.7.1 of <span id="id22">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>).</p>
 <p>It uses the same pseudorandom generator as we described
 in <a class="reference internal" href="120-numeric.html#sec-pseudorandom"><span class="std std-numref">Section 2.1.5</span></a>. To read and memorise
 its seed (the `<code class="docutils literal notranslate"><span class="pre">.Random.seed</span></code>` object in the global environment),
@@ -1834,7 +1842,7 @@ we have to call
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">GetRNGstate</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code> and
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">PutRNGstate</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>
 at the beginning and the end of our function, respectively.</p>
-<div class="proof proof-type-example" id="id59">
+<div class="proof proof-type-example" id="id58">
 
     <div class="proof-title">
         <span class="proof-type">Example 14.25</span>
@@ -1884,7 +1892,7 @@ at the beginning and the end of our function, respectively.</p>
 <span class="c1">##  [1] 0 1 0 1 1 0 1 1 1 0 1 0 1 1 0 1 0 0 0 1</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id60">
+</div></div><div class="proof proof-type-exercise" id="id59">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.26</span>
@@ -1896,7 +1904,7 @@ In the case of ambiguity, return a randomly chosen candidate.</p>
 </div></div></section>
 <section id="mathematical-functions-from-the-r-api">
 <h3><span class="section-number">14.4.3. </span>Mathematical functions from the R API<a class="headerlink" href="#mathematical-functions-from-the-r-api" title="Permalink to this heading">#</a></h3>
-<p>Section 6.7 of <span id="id24">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>
+<p>Section 6.7 of <span id="id23">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>
 lists the available statistical distribution functions,
 mathematical routines and constants, and other numerical
 utilities.</p>
@@ -1906,8 +1914,8 @@ utilities.</p>
 <p>A package may use header files from another package.
 For this to be possible, it must include the dependency name
 in the <code class="docutils literal notranslate"><span class="pre">LinkingTo</span></code> field of its <code class="file docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file;
-see <span id="id25">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for discussion.</p>
-<div class="proof proof-type-exercise" id="id61">
+see <span id="id24">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for discussion.</p>
+<div class="proof proof-type-exercise" id="id60">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.27</span>
@@ -1930,13 +1938,13 @@ by setting <code class="docutils literal notranslate"><span class="pre">PKG_CFLA
 which is overall challenging to ensure if we do not wish to exclude
 W****ws users, we might be required to author custom
 <code class="file docutils literal notranslate"><span class="pre">configure</span></code> (and <code class="file docutils literal notranslate"><span class="pre">configure.win</span></code>) scripts.</p>
-<p>For more information, see <span id="id26">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>. In particular,
-it discusses how to use OpenMP<a class="footnote-reference brackets" href="#footopenmp" id="id27" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a> in our projects.</p>
+<p>For more information, see <span id="id25">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>. In particular,
+it discusses how to use OpenMP<a class="footnote-reference brackets" href="#footopenmp" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> in our projects.</p>
 </section>
 </section>
 <section id="exercises">
 <h2><span class="section-number">14.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id62">
+<div class="proof proof-type-exercise" id="id61">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.28</span>
@@ -1957,7 +1965,7 @@ vectors if we merely would like to define grouping variables?</p></li>
 of matrix elements?</p></li>
 <li><p>How are R data frames handled in C?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id63">
+</div></div><div class="proof proof-type-exercise" id="id62">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.29</span>
@@ -1973,14 +1981,14 @@ of matrix elements?</p></li>
 <strong class="command">order</strong>,
 <strong class="command">unique</strong>, and
 <strong class="command">split</strong> functions.</p>
-</div></div><div class="proof proof-type-exercise" id="id64">
+</div></div><div class="proof proof-type-exercise" id="id63">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.30</span>
         
     </div><div class="proof-content">
-<p>(*) Read <em>Writing R Extensions</em> <span id="id28">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> in its entirety.</p>
-</div></div><div class="proof proof-type-exercise" id="id65">
+<p>(*) Read <em>Writing R Extensions</em> <span id="id27">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> in its entirety.</p>
+</div></div><div class="proof proof-type-exercise" id="id64">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.31</span>
@@ -1992,41 +2000,34 @@ repository. Explore the header files in
 the <code class="file docutils literal notranslate"><span class="pre">src/include</span></code> subdirectory. They are part of the callable API.</p>
 </div></div><hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="footknuth" role="note">
+<aside class="footnote brackets" id="footlangs" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
-<p>C and C++ are as fast as we can get without applying
-fancy CPU-specific optimisations and similar hacks.
-Nevertheless, D.E. Knuth once said: <em>The real problem is
+<p>Plain C and C++ are as fast as we can get without applying
+fancy CPU-specific optimisations and similar hacks. Fortran is also
+supported but will not be covered in this book because of its smaller
+popularity. Additionally, some external packages are gateways to other
+languages, such as Java.</p>
+<p>Nevertheless, D.E. Knuth once said: <em>The real problem is
 that programmers have spent far too much time worrying
 about efficiency in the wrong places and at the wrong times;
 premature optimisation is the root of all
-evil (or at least most of it) in programming</em> <span id="id29">[<a class="reference internal" href="999-bibliography.html#id74" title="Knuth, D.E. (1974).  Computer programming as an art. Communications of the ACM, 17(12):667–673. URL: https://www.cs.tufts.edu/~nr/cs257/archive/don-knuth/as-an-art.pdf.">39</a>]</span>.</p>
-</aside>
-<aside class="footnote brackets" id="footlangs" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>Fortran is also supported but will not be covered
-in this book because of its smaller popularity. Some external
-packages are gateways to other languages, such as Java.</p>
+evil (or at least most of it) in programming</em> <span id="id28">[<a class="reference internal" href="999-bibliography.html#id74" title="Knuth, D.E. (1974).  Computer programming as an art. Communications of the ACM, 17(12):667–673. URL: https://www.cs.tufts.edu/~nr/cs257/archive/don-knuth/as-an-art.pdf.">39</a>]</span>.</p>
 </aside>
 <aside class="footnote brackets" id="rcpp" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
 <p>Hence, we are not interested in the overall very
 convenient <strong class="program">Rcpp</strong> or <strong class="program">cpp11</strong> packages.
 They define C++ classes that make interacting
-with R objects more pleasant for some users.
-(**) If you have time and skills to help write a lightweight,
-more abstract version of <strong class="program">Rcpp</strong> that would also
-work with Python and other popular languages,
-please contact yours truly.</p>
+with R objects more pleasant for some users.</p>
 </aside>
 <aside class="footnote brackets" id="noaltrep" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
-<p>Thus, we will not discuss the ALTREP <span id="id30">[<a class="reference internal" href="999-bibliography.html#id69" title="Tierney, L., Becker, G., and Kalibera, T. (2018).  ALTREP: Alternative Representations for R Objects. URL: https://svn.r-project.org/R/branches/ALTREP/ALTREP.html.">55</a>]</span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<p>Thus, we will not discuss the ALTREP <span id="id29">[<a class="reference internal" href="999-bibliography.html#id69" title="Tierney, L., Becker, G., and Kalibera, T. (2018).  ALTREP: Alternative Representations for R Objects. URL: https://svn.r-project.org/R/branches/ALTREP/ALTREP.html.">55</a>]</span>
 representation of objects, ways to deal with environments
 or pairlists, etc.</p>
 </aside>
 <aside class="footnote brackets" id="footstride" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">5</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">4</a><span class="fn-bracket">]</span></span>
 <p>(*) A slightly more sophisticated representation
 (used, e.g., in GNU GSL and <strong class="program">numpy</strong>) deals with
 a <em>sliced</em> array, where we additionally store
@@ -2036,32 +2037,32 @@ This way, we could apply the same function on selected rows
 of a matrix (if it is in the column-major order).</p>
 </aside>
 <aside class="footnote brackets" id="footsexptype" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">6</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">5</a><span class="fn-bracket">]</span></span>
 <p><code class="file docutils literal notranslate"><span class="pre">src/include/Rinternals.h</span></code> in
 R’s source code repository;
 see, e.g., <a class="reference external" href="https://svn.r-project.org/R/trunk">https://svn.r-project.org/R/trunk</a>.</p>
 </aside>
 <aside class="footnote brackets" id="footmod" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">7</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">6</a><span class="fn-bracket">]</span></span>
 <p>(*) Unless we know what we are doing, e.g., we are certain
 that we deal with a local variable in an R function
 that invokes our <strong class="command">.Call</strong>.</p>
 </aside>
 <aside class="footnote brackets" id="footnanrepr" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">8</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">7</a><span class="fn-bracket">]</span></span>
 <p>(**) Namely, <code class="docutils literal notranslate"><span class="pre">NA</span></code>s are encoded as un-signalling <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s
 <code class="docutils literal notranslate"><span class="pre">0x7ff00000000007A2</span></code> of the type <code class="docutils literal notranslate"><span class="pre">double</span></code>
 (the lower 32 payload bits are equal to 1954, decimally);
 see <code class="file docutils literal notranslate"><span class="pre">src/arithmetic.c</span></code> in R’s source code.
 The payload propagation is not fully covered by the current
-IEEE 754 floating point standard; see <span id="id31">[<a class="reference internal" href="999-bibliography.html#id75" title="Fog, A. (2018).  NaN Payload Propagation – Unresolved Issues. URL: https://grouper.ieee.org/groups/msc/ANSI_IEEE-Std-754-2019/background/nan-propagation.pdf.">22</a>]</span>
+IEEE 754 floating point standard; see <span id="id30">[<a class="reference internal" href="999-bibliography.html#id75" title="Fog, A. (2018).  NaN Payload Propagation – Unresolved Issues. URL: https://grouper.ieee.org/groups/msc/ANSI_IEEE-Std-754-2019/background/nan-propagation.pdf.">22</a>]</span>
 for discussion. Reliance on such behaviour will thus make
 our code platform-dependent. R itself sometimes does that;
 theoretically, this may cause some <code class="docutils literal notranslate"><span class="pre">NA</span></code>s to be converted
 to (other) <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s.</p>
 </aside>
 <aside class="footnote brackets" id="footgc" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">9</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">8</a><span class="fn-bracket">]</span></span>
 <p>A <em>safe</em> strategy is to assume that any call to a function
 from R’s API may trigger the memory cleanup.
 On a side note, we may call the <strong class="command">gc</strong> function
@@ -2069,7 +2070,7 @@ in R to enforce rubbish removal. It also reports
 the current memory usage.</p>
 </aside>
 <aside class="footnote brackets" id="footpreserve" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">10</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">9</a><span class="fn-bracket">]</span></span>
 <p>(**) <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">R_PreserveObject</strong>
 protects an arbitrary <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>
 until <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">R_ReleaseObject</strong> is called
@@ -2077,14 +2078,14 @@ manually. With this mechanism, objects are not automatically
 released at the end of a <strong class="command">.Call</strong>.</p>
 </aside>
 <aside class="footnote brackets" id="footrc" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">11</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">10</a><span class="fn-bracket">]</span></span>
 <p>To get the object reference counting right.
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">SET_VECTOR_ELT</strong>
-needs to  the old element and start protecting
+needs to unprotect the old element and start protecting
 the new one.</p>
 </aside>
 <aside class="footnote brackets" id="footrprintf" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">12</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">11</a><span class="fn-bracket">]</span></span>
 <p>Take care when using
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rprintf</strong>, though.
 It should only be used to output messages in the <em>native</em> encoding,
@@ -2093,7 +2094,7 @@ although this landscape is slowly changing.
 Sticking to ASCII is the riskless choice.</p>
 </aside>
 <aside class="footnote brackets" id="footopenmp" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">13</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">12</a><span class="fn-bracket">]</span></span>
 <p>Most functions we use in R are single-threaded
 by design. It is up to the user to decide whether and how they
 would like their code to be parallelised. More often than not,
@@ -2145,7 +2146,7 @@ it defines parallel versions of <strong class="command">lapply</strong> and <str
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-26T19:56:18+1000.
+              Last updated on 2023-06-26T22:01:39+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

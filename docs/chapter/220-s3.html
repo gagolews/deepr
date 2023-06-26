@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.1.9006 (draft)
+v0.9.2.9007 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -298,14 +298,13 @@ Make sure to check out the author’s other book,
 <span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2022).  Minimalist Data Wrangling with Python. Zenodo. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">26</a>]</span>.</em></p>
 </div></blockquote>
 <p>Let <code class="docutils literal notranslate"><span class="pre">x</span></code> be a randomly generated matrix with 1 000 000 rows and 1 000 columns,
-<code class="docutils literal notranslate"><span class="pre">y</span></code> be a data frame with results from the latest survey
-indicating that things are not the way most people (no matter the side
-of the many political spectra) think they are,
+<code class="docutils literal notranslate"><span class="pre">y</span></code> be a data frame with results from the latest survey indicating that
+things are way more complicated than what most people think,
 and <code class="docutils literal notranslate"><span class="pre">z</span></code> be another matrix, this time with many zeroes.</p>
 <p>The human brain is not capable of dealing with excessive data
 that are immoderately specific. This is why we have a natural tendency
 to <em>group</em> different entities based on their similarities.
-This way, we form more abstract classes of things.</p>
+This way, we form more abstract classes of objects.</p>
 <p>Also, many of us are inherently lazy. Oftentimes we take shortcuts
 to minimise energy (at a price to be paid later).</p>
 <p>Printing out a matrix, a data frame, and a time series
@@ -487,7 +486,7 @@ the <code class="docutils literal notranslate"><span class="pre">class</span></c
 if the corresponding attribute is not set. We call it an <em>implicit</em>
 class. Compare the following and the outputs generated
 by <strong class="command">typeof</strong>:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span><span class="w">  </span><span class="c1"># no `class` set because NULL cannot have attributes at all</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">class</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span><span class="w">  </span><span class="c1"># no `class` set because NULL cannot have any attributes</span>
 <span class="c1">## [1] &quot;NULL&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span><span class="w">  </span><span class="c1"># no attributes so class is implicit (= typeof)</span>
 <span class="c1">## [1] &quot;logical&quot;</span>
@@ -994,7 +993,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-06-26 10:02:11 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-06-26 21:30:53 AEST&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1062,7 +1061,7 @@ to the next class by calling <strong class="command">NextMethod</strong>.</p>
 <p>For instance, if we are in <strong class="command">f.class1</strong>, a call to
 <strong class="command">NextMethod</strong><code class="code docutils literal notranslate"><span class="pre">(f)</span></code> will try invoking
 <strong class="command">f.class2</strong>. If such a method does not exist,
-further methods in the search chain will be poked,
+further methods in the search chain will be probed,
 falling back to the default method if necessary.
 We will give an illustration later.</p>
 </section>
@@ -1249,13 +1248,13 @@ what we deal with here is:</p>
 1970-01-01T00:00:00+0000 (midnight GMT/UTC).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class represents date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-06-26 10:02:11 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-06-26 21:30:53 AEST&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1687737731</span>
+<span class="c1">## [1] 1687779053</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1386,7 +1385,7 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.251   0.007   0.260</span>
+<span class="c1">##   0.246   0.016   0.263</span>
 </pre></div>
 </div>
 <p>The function returns an object of the class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1394,7 +1393,7 @@ Inspect how it is represented internally.</p>
 </div></div></section>
 <section id="factors">
 <span id="sec-factor"></span><h3><span class="section-number">10.3.2. </span>Factors<a class="headerlink" href="#factors" title="Permalink to this heading">#</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">factor</span></code> class is often used to represent categorical (qualitative)
+<p>The <code class="docutils literal notranslate"><span class="pre">factor</span></code> class is often used to represent qualitative
 data, e.g., species, groups, types. In fact, <code class="docutils literal notranslate"><span class="pre">categorical</span></code> (the example
 class that we played with above) was inspired by the built-in <code class="docutils literal notranslate"><span class="pre">factor</span></code>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sausage&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span><span class="p">))</span>
@@ -1668,8 +1667,8 @@ study an example where we define:</p>
 <li><p><strong class="command">group_by</strong> (a function that splits a data frame with respect to
 a combination of levels in given named columns
 and returns a list of data frames with class <code class="docutils literal notranslate"><span class="pre">list_dfs</span></code>),</p></li>
-<li><p><strong class="command">aggregate.list_dfs</strong> (which applies an aggregation function o
-n every column of all data frames in a given list), and</p></li>
+<li><p><strong class="command">aggregate.list_dfs</strong> (which applies an aggregation function on
+every column of all data frames in a given list), and</p></li>
 <li><p><strong class="command">mean.list_dfs</strong> (a specialised version of the former
 that calls <strong class="command">mean</strong>).</p></li>
 </ul>
@@ -2264,7 +2263,7 @@ see the list of <code class="docutils literal notranslate"><span class="pre">SEX
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">4</a><span class="fn-bracket">]</span></span>
 <p>In particular, <a class="reference internal" href="310-compiled.html#sec-xptr"><span class="std std-numref">Section 14.2.8</span></a> mentions
 <code class="docutils literal notranslate"><span class="pre">externalptr</span></code>s which are simple pointers to memory blocks
-which can be instances of any C <code class="docutils literal notranslate"><span class="pre">struct</span></code>s or C++ <code class="docutils literal notranslate"><span class="pre">class</span></code>es.
+that can be instances of any C <code class="docutils literal notranslate"><span class="pre">struct</span></code>s or C++ <code class="docutils literal notranslate"><span class="pre">class</span></code>es.
 This makes R a very extensible language.</p>
 </aside>
 <aside class="footnote brackets" id="footsplit" role="note">
@@ -2283,7 +2282,7 @@ see <a class="reference internal" href="#sec-built-in-generics"><span class="std
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">7</a><span class="fn-bracket">]</span></span>
 <p>However, it cannot be implied by reading
 the above source code. <strong class="command">UseMethod</strong> heavily
-relies on some obscure hacks. It can only be called inside
+relies on some obscure hacks. We may only call it inside
 a function’s body. Once invoked, it does not return to the generic.
 Before dispatching to a particular method,
 it creates a couple of hidden variables which give more detail
@@ -2529,7 +2528,7 @@ This would be beautiful, but it is not the case in R.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-26T19:56:18+1000.
+              Last updated on 2023-06-26T22:01:39+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

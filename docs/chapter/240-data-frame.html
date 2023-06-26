@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.1.9006 (draft)
+v0.9.2.9007 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -437,9 +437,8 @@ But they were not.</p>
 </pre></div>
 </div>
 <p>The method for the S3 class <code class="docutils literal notranslate"><span class="pre">table</span></code> (mentioned in <a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>)
-can be helpful as well.
-Here is an example contingency table together with its
-<em>unstacked</em> (wide) version.</p>
+can be helpful as well. Here is an example contingency table together
+with its <em>unstacked</em> (wide) version.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">table</span><span class="p">(</span><span class="n">mtcars</span><span class="p">[[</span><span class="s">&quot;vs&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">mtcars</span><span class="p">[[</span><span class="s">&quot;cyl&quot;</span><span class="p">]]))</span>
 <span class="c1">##</span>
 <span class="c1">##      4  6  8</span>
@@ -825,7 +824,7 @@ Besides, some example data frames continue to enjoy factor-typed columns, e.g.:<
 </section>
 <section id="internal-representation">
 <span id="sec-df-representation"></span><h3><span class="section-number">12.1.6. </span>Internal representation<a class="headerlink" href="#internal-representation" title="Permalink to this heading">#</a></h3>
-<p>Objects of the S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> are built on lists
+<p>Objects of the S3 class <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> are erected on lists
 of vectors of the same length or matrices with identical row counts.
 Each list element defines a column or column group.</p>
 <p>Apart from <code class="docutils literal notranslate"><span class="pre">class</span></code>, data frames must be equipped with the following
@@ -1001,7 +1000,7 @@ operators behave as expected. `<strong class="command">[[</strong>` fetches
 </pre></div>
 </div>
 <div style="margin-top: 1em"></div><p>Just like with lists, the replacement versions of these
-operators can add new or modify existing columns.</p>
+operators can add new columns or modify existing ones.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="c1"># example data frame</span>
 <span class="c1">##         a        b c    d1    d2</span>
 <span class="c1">## 1 0.28758 0.070508 A FALSE FALSE</span>
@@ -1449,7 +1448,7 @@ where we list only the matching pairs:</p>
 <span class="c1">## 3 a2 b2 c2</span>
 </pre></div>
 </div>
-<p>The common column is included only once in the result.</p>
+<p>The common column is included in the result only once.</p>
 <p>Next, the <em>left join</em> guarantees that all elements in the first
 data frame will be included in the result:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">merge</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">all.x</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># by=&quot;v&quot;, all.y=FALSE</span>
@@ -1639,7 +1638,7 @@ class can be called directly on any array-like object:</p>
 </div>
 <p>It is an instance of array <em>reshaping</em>. More precisely, we call
 it <em>stacking</em>. We converted from a <em>wide</em> (okay, in this example,
-not so wide, as we only have two columns) to a <em>long</em> format.</p>
+not so wide, as we only have two columns) to a <em>long</em> (tall) format.</p>
 <p>The above can also be achieved by means of the <strong class="command">reshape</strong> function
 which is more flexible and operates directly on data frames
 (but is harder to use):</p>
@@ -1930,7 +1929,7 @@ applied on all columns in a data frame.</p>
 </pre></div>
 </div>
 <p>The second argument, <code class="docutils literal notranslate"><span class="pre">by</span></code>, must be list-like (this includes data frames).
-Neither a factor nor an atomic vector are acceptable.
+Neither a factor nor an atomic vector is acceptable.
 Also, if the function being applied returns many values, they
 will be wrapped into a matrix column:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">aggregate</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="m">5</span><span class="p">],</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">Min</span><span class="o">=</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">Max</span><span class="o">=</span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">))))</span>
@@ -2366,9 +2365,9 @@ to the <strong class="command">subset</strong> function:</p>
 <span class="c1">## 43          4.4  setosa</span>
 </pre></div>
 </div>
-<p>Neither the second nor the third argument make senses
+<p>Neither the second nor the third argument makes sense
 as a standalone R expression. We have not defined
-the named variables used therein:</p>
+the named variables used there:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Sepal.Length</span><span class="o">&lt;</span><span class="m">4.5</span><span class="w">            </span><span class="c1"># utter nonsense</span>
 <span class="c1">## Error in eval(expr, envir, enclos): object &#39;Sepal.Length&#39; not found</span>
 <span class="o">-</span><span class="p">(</span><span class="n">Sepal.Width</span><span class="o">:</span><span class="n">Petal.Width</span><span class="p">)</span><span class="w">  </span><span class="c1"># gibberish</span>
@@ -2508,7 +2507,7 @@ to be a versatile tool for rapid prototyping, calling specialised procedures
 written in C or Java, and wrangling data that <em>fit into memory</em>.
 Even though some operations from the mentioned packages
 may be much faster for larger datasets, the speed is less often an issue
-in practice that most users might think.</p>
+in practice than what most users might think.</p>
 <p>For larger problems, techniques for working with batches of data, sampling
 methods, or aggregating data stored elsewhere are often the way to go,
 especially when building machine learning models or
@@ -2516,9 +2515,9 @@ visualisation<a class="footnote-reference brackets" href="#footlargeplot" id="id
 will be stored in external, normalised databases, and we will need to
 join a few tables to fetch something interesting from the perspective
 of the current task’s context.</p>
-<p>Thus, we cannot stress enough that SQL, not the other tools, is the most
-powerful interface to more considerable amounts of data in many situations.
-Learning it will give us the skills that we can use later in other
+<p>Thus, we cannot stress enough that, in many situations, SQL, not the other
+tools, is the most powerful interface to more considerable amounts of data.
+Learning it will give us the skills we can use later in other
 programming environments.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2837,7 +2836,7 @@ to an SQLite database.</p>
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
 <p>We are already highly skilled in dealing with
 unstructured data and turning them into something that is much
-more regular. The numerous functions that
+more regular. The numerous functions, which
 we have covered in the first part of this book,
 let us extract meaningful data from text,
 handle missing values, engineer features, and so forth.</p>
@@ -2966,7 +2965,7 @@ see <a class="reference internal" href="250-graphics.html#chap-graphics"><span c
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-26T19:56:18+1000.
+              Last updated on 2023-06-26T22:01:39+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
