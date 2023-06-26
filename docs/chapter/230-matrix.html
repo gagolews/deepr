@@ -367,13 +367,14 @@ It requires the number of rows and columns to be specified explicitly.</p>
 </div>
 <p>The elements were consumed in the column-major order.</p>
 <p>Arrays of other dimensionalities are also possible.
-Here is a one-dimensional array. When printed, it is indistinguishable
-from an atomic vector (but the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute is still
-set to <code class="docutils literal notranslate"><span class="pre">array</span></code>):</p>
+Let us define a one-dimensional array:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">array</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="m">6</span><span class="p">)</span>
 <span class="c1">## [1] 1 2 3 4 5 6</span>
 </pre></div>
 </div>
+<p>When printed, it is indistinguishable
+from an atomic vector (but the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute is still
+set to <code class="docutils literal notranslate"><span class="pre">array</span></code>).</p>
 <p>And now for something completely different: a three-dimensional array
 of size <span class="math">\(3\times 4\times 2\)</span>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">array</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">24</span><span class="p">,</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
@@ -580,7 +581,7 @@ with somewhat surprising <code class="docutils literal notranslate"><span class=
 <section id="beyond-numeric-arrays">
 <h3><span class="section-number">11.1.4. </span>Beyond numeric arrays<a class="headerlink" href="#beyond-numeric-arrays" title="Permalink to this heading">#</a></h3>
 <p>Arrays based on non-numeric vectors are also possible.
-For instance, we will later stress that comparisons featuring matrices
+For instance, we will later stress that matrix comparisons
 are performed elementwisely. They spawn logical matrices:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">3</span>
 <span class="c1">##       [,1]  [,2] [,3]</span>
@@ -695,7 +696,7 @@ incompatible with the newly requested dimensionality.</p>
 <strong class="command">colnames</strong> functions.</p>
 </div></div><p>Interestingly, for one-dimensional arrays, the
 <strong class="command">names</strong> function returns a reasonable value
-(based on the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute, which is a list featuring one character
+(based on the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute, which is a list with one character
 vector), despite the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute’s not being set.</p>
 <p>What is more, the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attribute itself can be named:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">names</span><span class="p">(</span><span class="nf">dimnames</span><span class="p">(</span><span class="n">A</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ROWS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;COLUMNS&quot;</span><span class="p">)</span>
@@ -865,7 +866,7 @@ see also <strong class="command">unname</strong>, which can take care of them on
 in a given numeric matrix (see also <strong class="command">unique</strong>).</p>
 </div></div></section>
 <section id="dropping-dimensions">
-<h3><span class="section-number">11.2.4. </span>Dropping dimensions<a class="headerlink" href="#dropping-dimensions" title="Permalink to this heading">#</a></h3>
+<span id="sec-index-matrix-drop"></span><h3><span class="section-number">11.2.4. </span>Dropping dimensions<a class="headerlink" href="#dropping-dimensions" title="Permalink to this heading">#</a></h3>
 <p>Extracting an individual element or a single row/column from a matrix
 brings about an atomic vector. If the resulting object’s <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute
 consists of 1s only, it will be removed whatsoever; see also the
@@ -1394,14 +1395,12 @@ involve rather straightforward matrix algebra and numerical mathematics.
 Suffice it to say that anyone serious about data science and scientific
 computing should learn the necessary theory;
 see, for example, <span id="id5">[<a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2007).  Matrix Algebra. Springer.">30</a>]</span> and <span id="id6">[<a class="reference internal" href="999-bibliography.html#id41" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">31</a>]</span>.</p>
-<p>R is a convenient interface to the stable and well-tested
-algorithms from, amongst others, <code class="docutils literal notranslate"><span class="pre">LAPACK</span></code> and
-<code class="docutils literal notranslate"><span class="pre">BLAS</span></code><a class="footnote-reference brackets" href="#footblas" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Below we mention a few of them.
-Many external packages feature hundreds of
-algorithms tackling differential equations, constrained
-and unconstrained optimisation, etc. Exploring the relevant
-<a class="reference external" href="https://cran.r-project.org/web/views">CRAN Task Views</a>
-can give a comprehensive overview.</p>
+<p>R is a convenient interface to the stable and well-tested algorithms from,
+amongst others, <code class="docutils literal notranslate"><span class="pre">LAPACK</span></code> and <code class="docutils literal notranslate"><span class="pre">BLAS</span></code><a class="footnote-reference brackets" href="#footblas" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Below we mention a few of
+them. External packages implement hundreds of algorithms tackling
+differential equations, constrained and unconstrained optimisation, etc.;
+<a class="reference external" href="https://cran.r-project.org/web/views">CRAN Task Views</a> provide a good
+overview.</p>
 <section id="matrix-multiplication">
 <h3><span class="section-number">11.4.1. </span>Matrix multiplication<a class="headerlink" href="#matrix-multiplication" title="Permalink to this heading">#</a></h3>
 <p>`<strong class="command">*</strong>` performs <em>elementwise</em> multiplication.
@@ -1791,7 +1790,7 @@ the workhorse behind the <strong class="command">lm</strong> method accepting an
 its singular value decomposition (SVD) is given by
 <span class="math">\(\mathbf{X}=\mathbf{U} \mathbf{D} \mathbf{V}^T\)</span>,
 where <span class="math">\(\mathbf{D}\)</span> is a <span class="math">\(p\times p\)</span> diagonal matrix
-(featuring the singular values of <span class="math">\(\mathbf{X}\)</span>,
+(with the singular values of <span class="math">\(\mathbf{X}\)</span>,
 <span class="math">\(d_{1,1}\ge\dots\ge d_{p,p}\ge 0\)</span>, <span class="math">\(p=\min\{n,m\}\)</span>),
 and <span class="math">\(\mathbf{U}\)</span> and <span class="math">\(\mathbf{V}\)</span> are orthogonal matrices
 of dimensions <span class="math">\(n\times p\)</span> and <span class="math">\(m\times p\)</span>, respectively.</p>
@@ -1826,7 +1825,7 @@ for dense and sparse matrices, including rectangular, symmetric,
 triangular, band, and diagonal ones.</p>
 <p>For instance, large graph (e.g., in network sciences)
 or preference (e.g., in recommender systems) data can be represented
-using sparse matrices, i.e., those which feature many zeroes.
+using sparse matrices, i.e., those with many zeroes.
 After all, it is much more likely for two vertices in a network
 <em>not</em> to be joined by an edge than to be connected.
 For example:</p>
@@ -2169,8 +2168,8 @@ spawns <span class="math">\(\mathbf{Q}\)</span> that is a unitary matrix.</p>
 =\mathbf{V} \mathbf{D}^+ \mathbf{U}^T=\mathbf{R}^{-1}\mathbf{Q}^T\)</span>,
 with
 <span class="math">\(\mathbf{X}^+ \mathbf{X}=\mathbf{I}\)</span>.
-Here <span class="math">\(\mathbf{D}^+\)</span> is a transposed version of <span class="math">\(\mathbf{D}\)</span>
-featuring the reciprocals of its non-zero elements.</p>
+Here, <span class="math">\(\mathbf{D}^+\)</span> is a transposed version of <span class="math">\(\mathbf{D}\)</span>
+carrying the reciprocals of its non-zero elements.</p>
 </aside>
 <aside class="footnote brackets" id="footpcasvd" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">8</a><span class="fn-bracket">]</span></span>
@@ -2216,7 +2215,7 @@ featuring the reciprocals of its non-zero elements.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-24T17:50:59+1000.
+              Last updated on 2023-06-26T19:56:18+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
