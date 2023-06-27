@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.2.9007 (draft)
+v0.9.9.9009 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -512,7 +512,7 @@ equipped with the <code class="docutils literal notranslate"><span class="pre">d
 <span class="c1">## [1] 3 1</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># implicit class</span>
 <span class="c1">## [1] &quot;matrix&quot; &quot;array&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># it is still a numeric vector (under the hood)</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="c1"># it is still a numeric vector (under the bonnet)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 </pre></div>
 </div>
@@ -592,7 +592,7 @@ and we can always call it directly:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now, calling <strong class="command">print</strong> automatically dispatches
+<p>Calling <strong class="command">print</strong> automatically dispatches
 the control flow to the above method:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;a&quot; &quot;c&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;c&quot;</span>
@@ -993,7 +993,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-06-26 21:30:53 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-06-27 14:11:54 AEST&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 12:59:59&quot;</span>
 </pre></div>
@@ -1231,7 +1231,7 @@ as a simple exercise for the studious reader.</p>
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, time, etc.<a class="headerlink" href="#date-time-etc" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class represents… dates (calendar ones, not fruits).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2023-06-26&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
+<span class="c1">## [1] &quot;2023-06-27&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
@@ -1241,20 +1241,20 @@ what we deal with here is:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 19534    -1     0    NA</span>
+<span class="c1">## [1] 19535    -1     0    NA</span>
 </pre></div>
 </div>
 <p>which is the number of days since the <em>UNIX epoch</em>,
 1970-01-01T00:00:00+0000 (midnight GMT/UTC).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class represents date-time objects:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2023-06-26 21:30:53 AEST&quot;</span>
+<span class="c1">## [1] &quot;2023-06-27 14:11:54 AEST&quot;</span>
 <span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
 <span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
 <span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1687779053</span>
+<span class="c1">## [1] 1687839114</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
@@ -1385,7 +1385,7 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.246   0.016   0.263</span>
+<span class="c1">##   0.244   0.016   0.259</span>
 </pre></div>
 </div>
 <p>The function returns an object of the class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -2146,9 +2146,9 @@ Was that straightforward?</p>
     </div><div class="proof-content">
 <p>Explain why the two following calls return significantly different results.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2023-06-26&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2023-06-27&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19534&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;19535&quot;</span>
 </pre></div>
 </div>
 <p>Propose a workaround.</p>
@@ -2528,7 +2528,7 @@ This would be beautiful, but it is not the case in R.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-26T22:01:39+1000.
+              Last updated on 2023-06-27T15:21:15+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

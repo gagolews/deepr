@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.2.9007 (draft)
+v0.9.9.9009 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -600,8 +600,8 @@ Verify that C and C++ source files can coexist in R packages.</p>
         
     </div><div class="proof-content">
 <p>(*) It might be very educative to study the implementation
-of <strong class="command">csource</strong>. By now, we should be able to author such
-functions ourselves (a few hours’ worth of work),
+of <strong class="command">csource</strong>. We should be able to author such
+functions ourselves now (a few hours’ worth of work),
 let alone read with understanding.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># compiles a C or C++ source file using R CMD SHLIB,</span>
 <span class="c1"># loads the resulting DLL, and executes the embedded R code</span>
@@ -893,7 +893,7 @@ or return values.</p>
 <span class="cm">R */</span>
 </pre></div>
 </div>
-<p>And now, calling the above function on an example vector:</p>
+<p>Calling the above function on an example vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">csource</span><span class="p">(</span><span class="s">&quot;~/R/cpackagedemo/inst/examples/sharedmem.c&quot;</span><span class="p">)</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
 <span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span>
@@ -1033,10 +1033,9 @@ Add the <code class="docutils literal notranslate"><span class="pre">na.rm</span
 </div></div></section>
 <section id="memory-allocation">
 <span id="sec-memory-management"></span><h3><span class="section-number">14.2.4. </span>Memory allocation<a class="headerlink" href="#memory-allocation" title="Permalink to this heading">#</a></h3>
-<p>R implements a simple yet effective garbage collector
-that relies on reference counting.
-Occasionally<a class="footnote-reference brackets" href="#footgc" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>, memory blocks deemed no longer reachable
-are either freed or marked as reusable.</p>
+<p>R implements a simple yet effective garbage collector that relies
+on reference counting. Occasionally<a class="footnote-reference brackets" href="#footgc" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>, memory blocks that can
+no longer be reached are either freed or marked as reusable.</p>
 <p>To allocate a new vector of length one and set
 its only element, we can call
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">ScalarLogical</strong>,
@@ -1051,18 +1050,16 @@ logical and numeric sequences (amongst others). They will need
 to be set manually after creation.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>We must protect all allocated vectors from garbage
-collection when we use them inside our functions.
-For this purpose, R maintains a stack<a class="footnote-reference brackets" href="#footpreserve" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a> of objects guarded
-against premature annihilation.
-<strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">PROTECT</strong><code class="code docutils literal notranslate"><span class="pre">(sexp)</span></code>
+<p>All allocated vectors must be manually protected from garbage collection.
+To guard against premature annihilation, R maintains a stack<a class="footnote-reference brackets" href="#footpreserve" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>
+of objects. <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">PROTECT</strong><code class="code docutils literal notranslate"><span class="pre">(sexp)</span></code>
 pushes a given object pointer onto the top of the list.
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">UNPROTECT</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span></code>
 pops the last <em>n</em> elements therefrom (in a last-in-first-out manner).
 At the end of a <strong class="command">.Call</strong>, R checks if the number
 of protects matches that of unprotects. If it is not the case,
 a warning is generated.</p>
-<p>Protection is not needed:</p>
+<p>Protection is <em>not</em> needed:</p>
 <ul class="simple">
 <li><p>for arguments to functions referred to by  <strong class="command">.Call</strong>,
 as they are already in use and hence protected;</p></li>
@@ -1087,7 +1084,7 @@ from garbage collection while data are being prepared.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_square1</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1">// no need to call PROTECT(x), it is already in use</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of the type &#39;double&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be of the type &#39;double&#39;&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
@@ -1096,13 +1093,13 @@ from garbage collection while data are being prepared.</p>
 <span class="w">    </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">yp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ISNA</span><span class="p">(</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="w"> </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ISNA</span><span class="p">(</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="w"> </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w">  </span><span class="c1">// NA_REAL</span>
 <span class="w">        </span><span class="k">else</span><span class="w">             </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">  </span><span class="c1">// pops 1 object from the protect stack;</span>
+<span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">  </span><span class="c1">// pops one object from the protect stack;</span>
 <span class="w">        </span><span class="c1">// does not trigger garbage collection, so we can return `y` now</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w">  </span><span class="c1">// R will retrieve and protect it</span>
 <span class="p">}</span>
 
 <span class="cm">/* R</span>
@@ -1114,13 +1111,13 @@ from garbage collection while data are being prepared.</p>
 <span class="cm">R */</span>
 </pre></div>
 </div>
-<p>Alternatively, in this case, we may use
+<p>As an alternative, in this case, we may use
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_duplicate</strong>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_square2</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be a vector of type &#39;double&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be of the type &#39;double&#39;&quot;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT</span><span class="p">(</span><span class="n">Rf_duplicate</span><span class="p">(</span><span class="n">x</span><span class="p">));</span><span class="w">  </span><span class="c1">// OK; it&#39;s a pointer</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT</span><span class="p">(</span><span class="n">Rf_duplicate</span><span class="p">(</span><span class="n">x</span><span class="p">));</span><span class="w">  </span><span class="c1">// OK; just replaces the pointer (address)</span>
 
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 <span class="w">    </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
@@ -1128,7 +1125,6 @@ from garbage collection while data are being prepared.</p>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ISNA</span><span class="p">(</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
 
 <span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -1155,9 +1151,6 @@ during a function’s runtime using the well-known
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">malloc</strong> (or <strong class="command">new</strong> in C++).
 We are of course fully responsible for releasing it via
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">free</strong> (or <strong class="command">delete</strong>).</p>
-<p>There is also <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">R_alloc</strong><code class="code docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">size)</span></code>
-which allocates <code class="docutils literal notranslate"><span class="pre">n*size</span></code> bytes. The memory will automatically be
-garbage-collected at the end of a <strong class="command">.Call</strong>.</p>
 <div class="proof proof-type-example" id="id45">
 
     <div class="proof-title">
@@ -1179,14 +1172,14 @@ garbage-collected at the end of a <strong class="command">.Call</strong>.</p>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">NA_LOGICAL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 <span class="w">            </span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
 
+<span class="w">    </span><span class="c1">// Rf_allocVector can longjmp, memory leak possible...</span>
 <span class="w">    </span><span class="n">SEXP</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT</span><span class="p">(</span><span class="n">Rf_allocVector</span><span class="p">(</span><span class="n">REALSXP</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">));</span>
-<span class="w">    </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">yp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="w">  </span><span class="c1">// yes, type is double - ready for long vectors</span>
+<span class="w">    </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">yp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="w">  </span><span class="c1">// yes, the type is double; ready for long vectors</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">k</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
 <span class="w">        </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="c1">// R uses 1-based indexing</span>
+
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
 <span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">d</span><span class="p">);</span><span class="w">  </span><span class="c1">// we don&#39;t want any memory leaks!</span>
-
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -1205,14 +1198,44 @@ garbage-collected at the end of a <strong class="command">.Call</strong>.</p>
 <span class="c1">## [1] 1 3 5</span>
 </pre></div>
 </div>
-<p>Note that R’s <strong class="command">which</strong> returns either an <code class="docutils literal notranslate"><span class="pre">int</span></code> or a <code class="docutils literal notranslate"><span class="pre">double</span></code>
-vector, depending on the size of the input vector
-(whether it is shorter than <span class="math">\(2^{31}-1\)</span>). As an exercise,
-rewrite the above to take that into account: integer arithmetic is faster.</p>
-</div></div><div class="proof proof-type-example" id="id46">
+</div></div><div class="proof proof-type-exercise" id="id46">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.13</span>
+        <span class="proof-type">Exercise 14.13</span>
+        
+    </div><div class="proof-content">
+<p>R’s <strong class="command">which</strong> returns either an <code class="docutils literal notranslate"><span class="pre">int</span></code> or a <code class="docutils literal notranslate"><span class="pre">double</span></code> vector, depending
+on the size of the input vector (whether it is shorter than <span class="math">\(2^{31}-1\)</span>).
+Rewrite the above to take that into account: integer arithmetic is
+slightly faster.</p>
+</div></div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(*)
+R’s exception handling uses a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Setjmp.h">long jump</a>.
+Therefore, when calling <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_error</strong>
+(whether directly or not) normal stack unwinding will not necessarily occur.
+This is particularly important when using C++ objects which deallocate memory
+in their destructors for they do not have to be invoked whatsoever.</p>
+<p>In the above example, a call to
+<strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_allocVector</strong> may trigger a long jump,
+e.g., if we run out of available memory. In such a case, <code class="docutils literal notranslate"><span class="pre">d</span></code> will
+not be freed.</p>
+<p>Thus, care should be taken to make sure there are no memory leaks.
+We can sometimes switch to
+<strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">R_alloc</strong><code class="code docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">size)</span></code>
+which allocates <code class="docutils literal notranslate"><span class="pre">n*size</span></code> bytes. The memory it requests will automatically be
+garbage-collected at the end of a <strong class="command">.Call</strong>.</p>
+<p>Otherwise, we should ensure that blocks relying on manual memory
+allocation are not mixed with the calls to R API functions.
+In our <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">which1</strong>, it would be better
+to determine the desired size of <code class="docutils literal notranslate"><span class="pre">y</span></code> and allocate it before
+calling <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">malloc</strong>.</p>
+</div>
+<div class="proof proof-type-example" id="id47">
+
+    <div class="proof-title">
+        <span class="proof-type">Example 14.14</span>
         
     </div><div class="proof-content">
 <p>(*) If we do not like that we are potentially wasting memory
@@ -1226,22 +1249,25 @@ from the language’s standard library.</p>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isLogical</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` should be of the type &#39;logical&#39;&quot;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOGICAL</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// precompute k, Rf_allocVector can do a longjmp</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">NA_LOGICAL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="n">SEXP</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT</span><span class="p">(</span><span class="n">Rf_allocVector</span><span class="p">(</span><span class="n">REALSXP</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">));</span>
+<span class="w">    </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">yp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="w">  </span><span class="c1">// ready for long vectors</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w">  </span><span class="c1">// allocates memory</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">NA_LOGICAL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 <span class="w">            </span><span class="n">d</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">SEXP</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT</span><span class="p">(</span><span class="n">Rf_allocVector</span><span class="p">(</span><span class="n">REALSXP</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
-<span class="w">    </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">yp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REAL</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="w">  </span><span class="c1">// ready for long vectors</span>
 <span class="w">    </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
-<span class="w">        </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="c1">// R uses 1-based indexing</span>
-<span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="w">        </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="c1">// R uses 1-based indexing</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w">  </span><span class="c1">// d&#39;s destructor will be called automatically</span>
 <span class="p">}</span>
 
 <span class="cm">/* R</span>
@@ -1260,8 +1286,8 @@ from the language’s standard library.</p>
 <span class="nf">stopifnot</span><span class="p">(</span><span class="nf">which</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nf">which2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Alternatively, we could use <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">realloc</strong>
-to extend an initially small buffer allocated using
+<p>Alternatively, we could have used <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">realloc</strong>
+to extend an initially small buffer created using
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">malloc</strong> by, say, 50%
 whenever it is about to overflow.</p>
 </div></div></section>
@@ -1275,11 +1301,11 @@ and can be set with
 <p>Note that lists (<code class="docutils literal notranslate"><span class="pre">VECSXP</span></code>s) are comprised of <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s of any type.
 Hence, after extracting an element, its <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> needs to be tested
 using one of the functions listed in <a class="reference internal" href="#tab-sexp-types"><span class="std std-numref">Table 14.1</span></a>.
-This is tiresome.</p>
-<div class="proof proof-type-example" id="id47">
+This can be tiresome.</p>
+<div class="proof proof-type-example" id="id48">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.14</span>
+        <span class="proof-type">Example 14.15</span>
         
     </div><div class="proof-content">
 <p>Here is a rather useless function that fetches the first and
@@ -1300,7 +1326,7 @@ on all its elements.</p>
 <span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Rf_isVectorList</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">SEXP</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT</span><span class="p">(</span><span class="n">Rf_allocVector</span><span class="p">(</span><span class="n">VECSXP</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
 <span class="w">        </span><span class="c1">// VECTOR_ELT(x, i) is PROTECTed by the container;</span>
-<span class="w">        </span><span class="c1">// SET_VECTOR_ELT does not trigger GC, so no need to call PROTECT</span>
+<span class="w">        </span><span class="c1">// SET_VECTOR_ELT does not trigger GC; no need to call PROTECT</span>
 <span class="w">        </span><span class="c1">// on the result of C_firstlast(...) in this context</span>
 <span class="w">        </span><span class="n">SET_VECTOR_ELT</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">C_firstlast</span><span class="p">(</span><span class="n">VECTOR_ELT</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)));</span>
 <span class="w">        </span><span class="n">SET_VECTOR_ELT</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">C_firstlast</span><span class="p">(</span><span class="n">VECTOR_ELT</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="mi">-1</span><span class="p">)));</span>
@@ -1341,10 +1367,10 @@ on all its elements.</p>
 <span class="c1">## [1]  9 11</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id48">
+</div></div><div class="proof proof-type-exercise" id="id49">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 14.15</span>
+        <span class="proof-type">Exercise 14.16</span>
         
     </div><div class="proof-content">
 <p>Implement a C function that returns the longest vector in a given list.
@@ -1352,35 +1378,35 @@ Use <strong class="program">C</strong><code class="code docutils literal notrans
 to check whether a given object is an atomic or a generic vector,
 and hence if <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">XLENGTH</strong>
 can be called thereon.</p>
-</div></div><div class="proof proof-type-exercise" id="id49">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 14.16</span>
-        
-    </div><div class="proof-content">
-<p>Inscribe your version of <strong class="command">unlist</strong>.
-Consider scanning the input list twice.
-First, determine the size of the output vector.
-Second, fill the return object with the un-listed values.</p>
 </div></div><div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.17</span>
         
     </div><div class="proof-content">
+<p>Inscribe your version of <strong class="command">unlist</strong>.
+Consider scanning the input list twice.
+First, determine the size of the output vector.
+Second, fill the return object with the un-listed values.</p>
+</div></div><div class="proof proof-type-exercise" id="id51">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.18</span>
+        
+    </div><div class="proof-content">
 <p>Write a C function that takes a list of numeric vectors
-of identical lengths on input. Return their elementwise sum:
+of identical lengths. Return their elementwise sum:
 the first element of the output should be the sum of the first
-elements in every vector, and so forth.</p>
+elements in every input vector, and so forth.</p>
 </div></div></section>
 <section id="character-vectors-and-individual-strings">
 <h3><span class="section-number">14.2.6. </span>Character vectors and individual strings (*)<a class="headerlink" href="#character-vectors-and-individual-strings" title="Permalink to this heading">#</a></h3>
 <p>Character vectors (<code class="docutils literal notranslate"><span class="pre">STRSXP</span></code>s) are similar to <code class="docutils literal notranslate"><span class="pre">VECSXP</span></code>s
-except that they only carry individual strings. The latter are
+except that they only carry individual strings which are
 represented using a separate data type, <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>.
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">STRING_ELT</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">index)</span></code> and
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">SET_STRING_ELT</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">index,</span> <span class="pre">newval)</span></code>
-work as the element getters and setters.</p>
+play the role of the element getters and setters.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If we are not interested in text processing but rather in
@@ -1404,7 +1430,7 @@ and peace of mind, it is best to preprocess the arguments to
 <strong class="command">.Call</strong> using <strong class="command">enc2utf8</strong>, which
 converts all strings to UTF-8<a class="footnote-reference brackets" href="#footrprintf" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>.</p>
 <p>Despite being the most universal encoding, UTF-8 does not
-represent a single code point using a fixed number of bytes.
+represent each code point using a fixed number of bytes.
 For instance, computing the string length
 requires iterating over all its elements. For <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code>s,
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">XLENGTH</strong> returns the number
@@ -1435,8 +1461,7 @@ implemented in C on objective functions written in R.</p>
 </section>
 <section id="external-pointers">
 <span id="sec-xptr"></span><h3><span class="section-number">14.2.8. </span>External pointers (**)<a class="headerlink" href="#external-pointers" title="Permalink to this heading">#</a></h3>
-<p>There is a separate basic R type for storing arbitrary
-C pointers, <code class="docutils literal notranslate"><span class="pre">externalptr</span></code> (<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> of <code class="docutils literal notranslate"><span class="pre">EXTPTRSXP</span></code>);
+<p>For storing arbitrary C pointers, there is a separate basic R type named <code class="docutils literal notranslate"><span class="pre">externalptr</span></code> (<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> of <code class="docutils literal notranslate"><span class="pre">EXTPTRSXP</span></code>);
 see Section 5.13 of <span id="id21">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for more details.</p>
 <p>We can use them to maintain dynamic data structures
 or resource handlers between calls to R functions.
@@ -1446,10 +1471,10 @@ where changes to the state of the referenced object will
 be visible outside the call.</p>
 <p>Furthermore, pointers are not serialisable. They cannot be saved
 for use in another R session.</p>
-<div class="proof proof-type-example" id="id51">
+<div class="proof proof-type-example" id="id52">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.18</span>
+        <span class="proof-type">Example 14.19</span>
         
     </div><div class="proof-content">
 <p>(**) <code class="file docutils literal notranslate"><span class="pre">inst/examples/stack.cpp</span></code> provides a C++ implementation
@@ -1475,7 +1500,7 @@ of arbitrary R objects:</p>
 <span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;not an external pointer&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="n">SEXP</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">R_ExternalPtrTag</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w">  </span><span class="c1">// our convention, this can be anything</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">TYPEOF</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">CHARSXP</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">CHAR</span><span class="p">(</span><span class="n">tag</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;stack&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">TYPEOF</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">CHARSXP</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">CHAR</span><span class="p">(</span><span class="n">tag</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;stack&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;not a stack&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="n">S</span><span class="o">*</span><span class="w"> </span><span class="n">sp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">S</span><span class="o">*</span><span class="p">)</span><span class="n">R_ExternalPtrAddr</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
@@ -1546,8 +1571,8 @@ of arbitrary R objects:</p>
 <span class="cm">R */</span>
 </pre></div>
 </div>
-<p>Note how we preserve R objects from garbage collection.</p>
-<p>Some tests:</p>
+<p>Note how we preserve R objects from garbage collection.
+Some tests:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">csource</span><span class="p">(</span><span class="s">&quot;~/R/cpackagedemo/inst/examples/stack.cpp&quot;</span><span class="p">)</span>
 <span class="n">s</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stack_create</span><span class="p">()</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -1572,7 +1597,7 @@ of arbitrary R objects:</p>
 <p>From <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>, we know that compound types
 such as matrices, factors, or data frames are
 represented using basic data structures.
-Usually, they are atomic vectors of lists organised in a predefined manner.</p>
+Usually, they are atomic vectors or lists organised in a predefined manner.</p>
 <p><strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_getAttrib</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">attrname)</span></code> and
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_setAttrib</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">attrname,</span> <span class="pre">newval)</span></code>
 gets and sets specific attributes of an object <code class="docutils literal notranslate"><span class="pre">x</span></code>.
@@ -1591,14 +1616,14 @@ the <code class="docutils literal notranslate"><span class="pre">STRSXP</span></
 <code class="docutils literal notranslate"><span class="pre">&quot;levels&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;names&quot;</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">&quot;row.names&quot;</span></code> strings.</p>
-<div class="proof proof-type-example" id="id52">
+<div class="proof proof-type-example" id="id53">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.19</span>
+        <span class="proof-type">Example 14.20</span>
         
     </div><div class="proof-content">
-<p>Consider a function for testing whether a given object
-is of a specific class:</p>
+<p>Consider a function for testing whether an object
+is of a given class:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
 
 <span class="n">SEXP</span><span class="w"> </span><span class="nf">C_isofclass</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">SEXP</span><span class="w"> </span><span class="n">class</span><span class="p">)</span>
@@ -1636,10 +1661,10 @@ is of a specific class:</p>
 <p>Note that a matrix has an <em>implicit</em> class (reported by
 the <strong class="command">class</strong> function), but its <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute does
 not have to be set. Hence the negative result.</p>
-</div></div><div class="proof proof-type-example" id="id53">
+</div></div><div class="proof proof-type-example" id="id54">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.20</span>
+        <span class="proof-type">Example 14.21</span>
         
     </div><div class="proof-content">
 <p>Write a function that fetches a particular <em>named</em> element
@@ -1650,24 +1675,24 @@ in a list.</p>
 <p>Factors (<a class="reference internal" href="220-s3.html#sec-factor"><span class="std std-numref">Section 10.3.2</span></a>) are represented as integer vectors
 with elements in the set {1, 2, …, <em>k</em>, <code class="docutils literal notranslate"><span class="pre">NA_integer_</span></code>}
 for some <em>k</em>. They are equipped with the <code class="docutils literal notranslate"><span class="pre">levels</span></code> attribute,
-being a character vector of length <em>k</em>. Their class
-attribute is set to <code class="docutils literal notranslate"><span class="pre">&quot;factor&quot;</span></code>.</p>
-<div class="proof proof-type-example" id="id54">
+being a character vector of length <em>k</em>. Their <code class="docutils literal notranslate"><span class="pre">class</span></code>
+attribute is set to <code class="docutils literal notranslate"><span class="pre">factor</span></code>.</p>
+<div class="proof proof-type-example" id="id55">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.21</span>
+        <span class="proof-type">Example 14.22</span>
         
     </div><div class="proof-content">
 <p>An example implementation of a function to compute the number
 of occurrences of each factor level is given below.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_table1</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isFactor</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` is not an object of class &#39;factor&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isFactor</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`x` is not a &#39;factor&#39; object&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INTEGER</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w">  </span><span class="c1">// x is INTSXP</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INTEGER</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w">  </span><span class="c1">// `x` is INTSXP</span>
 
-<span class="w">    </span><span class="n">SEXP</span><span class="w"> </span><span class="n">levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rf_getAttrib</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">R_LevelsSymbol</span><span class="p">);</span><span class="w">  </span><span class="c1">// levels is STRSXP</span>
+<span class="w">    </span><span class="n">SEXP</span><span class="w"> </span><span class="n">levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rf_getAttrib</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">R_LevelsSymbol</span><span class="p">);</span><span class="w">  </span><span class="c1">// `levels` is a STRSXP</span>
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">levels</span><span class="p">);</span>
 
 <span class="w">    </span><span class="n">SEXP</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT</span><span class="p">(</span><span class="n">Rf_allocVector</span><span class="p">(</span><span class="n">REALSXP</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">));</span>
@@ -1703,10 +1728,10 @@ of occurrences of each factor level is given below.</p>
 <span class="c1">##     2     1     4</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id55">
+</div></div><div class="proof proof-type-exercise" id="id56">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 14.22</span>
+        <span class="proof-type">Exercise 14.23</span>
         
     </div><div class="proof-content">
 <p>Create a function to compute the most frequently occurring
@@ -1718,13 +1743,13 @@ If a mode is ambiguous, return all the possible candidates.</p>
 <p>Matrices (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>) are <em>flat</em> atomic vectors or lists with
 the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute being a vector of length two.
 The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute does not have to be set
-(but the <strong class="command">class</strong> function returns <code class="docutils literal notranslate"><span class="pre">&quot;matrix&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;array&quot;</span></code>).</p>
+(but the <strong class="command">class</strong> function returns <code class="docutils literal notranslate"><span class="pre">matrix</span></code> and <code class="docutils literal notranslate"><span class="pre">array</span></code>).</p>
 <p>Matrices are so important in data analysis that they have been blessed
 with a few dedicated functions available at the C level.
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_isMatrix</strong> tests if a given
 object meets the criteria mentioned above.</p>
-<p>R relies on the Fortran order of matrix elements:
-they are aligned columnwisely. Let <code class="docutils literal notranslate"><span class="pre">A</span></code> be a matrix
+<p>R relies on the Fortran order of matrix elements, i.e.,
+they use the column-major alignment. Let <code class="docutils literal notranslate"><span class="pre">A</span></code> be a matrix
 with <em>n</em> rows and <em>m</em> columns
 (compare <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_nrows</strong>
 and <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_ncols</strong>).
@@ -1733,14 +1758,13 @@ and the <em>j</em>-th column is at <code class="docutils literal notranslate"><s
 <p><strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_allocMatrix</strong><code class="code docutils literal notranslate"><span class="pre">(sexptype,</span> <span class="pre">n,</span> <span class="pre">m)</span></code>
 allocates a new matrix. The <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> attributes must be handled
 manually, though.</p>
-<div class="proof proof-type-example" id="id56">
+<div class="proof proof-type-example" id="id57">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.23</span>
+        <span class="proof-type">Example 14.24</span>
         
     </div><div class="proof-content">
-<p>Here is a function to compute the transpose of a given
-numeric matrix:</p>
+<p>Here is a function to compute the transpose of a numeric matrix:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">SEXP</span><span class="w"> </span><span class="nf">C_transpose</span><span class="p">(</span><span class="n">SEXP</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isMatrix</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">Rf_isReal</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -1763,8 +1787,9 @@ numeric matrix:</p>
 <span class="w">        </span><span class="n">SET_VECTOR_ELT</span><span class="p">(</span><span class="n">tdimnames</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">VECTOR_ELT</span><span class="p">(</span><span class="n">dimnames</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
 <span class="w">        </span><span class="n">Rf_setAttrib</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">R_DimNamesSymbol</span><span class="p">,</span><span class="w"> </span><span class="n">tdimnames</span><span class="p">);</span><span class="w">  </span><span class="c1">// set dimnames</span>
 <span class="w">        </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// dimnames might have the names attribute too (left as an exercise)</span>
+<span class="w">        </span><span class="c1">// dimnames may have the names attribute too (left as an exercise)</span>
 <span class="w">    </span><span class="p">}</span>
+
 <span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1773,6 +1798,7 @@ numeric matrix:</p>
 <span class="cm">transpose &lt;- function(x)</span>
 <span class="cm">{</span>
 <span class="cm">    if (!is.matrix(x)) x &lt;- as.matrix(x)</span>
+<span class="cm">    if (!is.double(x)) x[] &lt;- as.double(x)  # preserves attributes</span>
 <span class="cm">    .Call(&quot;C_transpose&quot;, x, PACKAGE=&quot;transpose&quot;)</span>
 <span class="cm">}</span>
 <span class="cm">R */</span>
@@ -1790,10 +1816,10 @@ numeric matrix:</p>
 <span class="c1">## Yes  57  14  75  192</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id57">
+</div></div><div class="proof proof-type-exercise" id="id58">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 14.24</span>
+        <span class="proof-type">Exercise 14.25</span>
         
     </div><div class="proof-content">
 <p>Author a C function named <strong class="command">table2</strong> that computes a two-way
@@ -1804,14 +1830,14 @@ contingency table.</p>
 <p>Data frames (<a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>) are lists of <em>m</em> vectors
 of identical lengths <em>n</em> or matrices of <em>n</em> rows for some <em>n</em> and <em>m</em>.
 The character vectors stored in the <code class="docutils literal notranslate"><span class="pre">row.names</span></code> and <code class="docutils literal notranslate"><span class="pre">names</span></code> attributes
-give the <em>n</em> row and <em>m</em> column labels.
-They are objects of the S3 class <code class="docutils literal notranslate"><span class="pre">&quot;data.frame&quot;</span></code>.</p>
-<p>We process data frames as ordinary lists.
-However, in many applications, it is enough to write
-functions that accept ordinary numeric matrices instead.
-If element grouping is required, they can be accompanied by a factor
-or a list of factor variables. Do not complicate our lives
-beyond necessity.</p>
+give the <em>n</em> row and <em>m</em> column labels. They are objects of the S3 class
+<code class="docutils literal notranslate"><span class="pre">data.frame</span></code>.</p>
+<p>We process data frames as ordinary lists. However, assuming we only want to
+process numeric data, we can extract the columns of interest and put
+them inside a matrix at the R level. If element grouping is required,
+they can be accompanied by a factor or a list of factor variables.
+In many applications, this is a good-enough strategy.
+Let us not complicate our lives beyond what is necessary.</p>
 </section>
 </section>
 <section id="using-existing-function-libraries">
@@ -1819,7 +1845,7 @@ beyond necessity.</p>
 <section id="checking-for-user-interrupts">
 <h3><span class="section-number">14.4.1. </span>Checking for user interrupts<a class="headerlink" href="#checking-for-user-interrupts" title="Permalink to this heading">#</a></h3>
 <p>Long computations may lead to R’s becoming unresponsive.
-For instance, the user may request to cancel the evaluation of
+The user may always request to cancel the evaluation of
 the current expression by pressing <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">C</kbd></kbd>.</p>
 <p>To process the event queue, we should occasionally call
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">R_CheckUserInterrupt</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>,
@@ -1842,10 +1868,10 @@ we have to call
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">GetRNGstate</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code> and
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">PutRNGstate</strong><code class="code docutils literal notranslate"><span class="pre">()</span></code>
 at the beginning and the end of our function, respectively.</p>
-<div class="proof proof-type-example" id="id58">
+<div class="proof proof-type-example" id="id59">
 
     <div class="proof-title">
-        <span class="proof-type">Example 14.25</span>
+        <span class="proof-type">Example 14.26</span>
         
     </div><div class="proof-content">
 <p>Below is a function to generate a pseudorandom bit sequence:</p>
@@ -1854,7 +1880,7 @@ at the beginning and the end of our function, respectively.</p>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Rf_isInteger</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">XLENGTH</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 <span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;`n` should be a single integer&quot;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">_n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INTEGER</span><span class="p">(</span><span class="n">n</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">_n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INTEGER</span><span class="p">(</span><span class="n">n</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NA_INTEGER</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">_n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 <span class="w">        </span><span class="n">Rf_error</span><span class="p">(</span><span class="s">&quot;incorrect `n`&quot;</span><span class="p">);</span>
 
@@ -1862,8 +1888,8 @@ at the beginning and the end of our function, respectively.</p>
 <span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">yp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INTEGER</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 
 <span class="w">    </span><span class="n">GetRNGstate</span><span class="p">();</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">_n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
-<span class="w">        </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">unif_rand</span><span class="p">()</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">_n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">unif_rand</span><span class="p">()</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">);</span><span class="w">  </span><span class="c1">// not the best way to sample bits</span>
 <span class="w">    </span><span class="n">PutRNGstate</span><span class="p">();</span>
 
 <span class="w">    </span><span class="n">UNPROTECT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
@@ -1892,10 +1918,10 @@ at the beginning and the end of our function, respectively.</p>
 <span class="c1">##  [1] 0 1 0 1 1 0 1 1 1 0 1 0 1 1 0 1 0 0 0 1</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id59">
+</div></div><div class="proof proof-type-exercise" id="id60">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 14.26</span>
+        <span class="proof-type">Exercise 14.27</span>
         
     </div><div class="proof-content">
 <p>Create a function to compute the most frequently occurring
@@ -1915,16 +1941,16 @@ utilities.</p>
 For this to be possible, it must include the dependency name
 in the <code class="docutils literal notranslate"><span class="pre">LinkingTo</span></code> field of its <code class="file docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file;
 see <span id="id24">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for discussion.</p>
-<div class="proof proof-type-exercise" id="id60">
+<div class="proof proof-type-exercise" id="id61">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 14.27</span>
+        <span class="proof-type">Exercise 14.28</span>
         
     </div><div class="proof-content">
 <p>The <strong class="program">BH</strong> package on CRAN gives access to Boost,
-which are header-only C++ libraries defining many algorithms
+the header-only C++ libraries that define many useful algorithms
 and data structures. Create an R package that calls
-<strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="program">boost</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="program">math</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">gcd</strong> after issuing
+<strong class="program">C++</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="program">boost</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="program">math</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">gcd</strong> after issuing
 the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;boost/math/common_factor.hpp&gt;</span></code> directive.</p>
 </div></div></section>
 <section id="specifying-compiler-and-linker-flags">
@@ -1944,31 +1970,31 @@ it discusses how to use OpenMP<a class="footnote-reference brackets" href="#foot
 </section>
 <section id="exercises">
 <h2><span class="section-number">14.5. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id61">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 14.28</span>
-        
-    </div><div class="proof-content">
-<p>Answer the following questions.</p>
-<ul class="simple">
-<li><p>What are the most common <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s?</p></li>
-<li><p>How are missing values represented?</p></li>
-<li><p>How can we check if an integer is a missing value?
-What about a floating-point variable?</p></li>
-<li><p>How to prevent <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s from being garbage-collected?</p></li>
-<li><p>How are character vectors represented?
-What is the difference between a <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code> and a <code class="docutils literal notranslate"><span class="pre">STRSXP</span></code>?</p></li>
-<li><p>Why is it better to process factor objects than raw character
-vectors if we merely would like to define grouping variables?</p></li>
-<li><p>How are R matrices handled in C? Does R use the C or Fortran order
-of matrix elements?</p></li>
-<li><p>How are R data frames handled in C?</p></li>
-</ul>
-</div></div><div class="proof proof-type-exercise" id="id62">
+<div class="proof proof-type-exercise" id="id62">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.29</span>
+        
+    </div><div class="proof-content">
+<p>Answer the following questions about the C language API for R.</p>
+<ul class="simple">
+<li><p>What are the most common <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s?</p></li>
+<li><p>How are missing values represented?</p></li>
+<li><p>How can we check if an <code class="docutils literal notranslate"><span class="pre">int</span></code> is a missing value?
+What about a <code class="docutils literal notranslate"><span class="pre">double</span></code>?</p></li>
+<li><p>How to prevent <code class="docutils literal notranslate"><span class="pre">SEXP</span></code>s from being garbage-collected?</p></li>
+<li><p>How are character vectors represented?
+What is the difference between a <code class="docutils literal notranslate"><span class="pre">CHARSXP</span></code> and a <code class="docutils literal notranslate"><span class="pre">STRSXP</span></code>?</p></li>
+<li><p>Why is it better to handle factor objects rather than raw character
+vectors if we merely would like to define grouping variables?</p></li>
+<li><p>How are R matrices represented in C? Does R use the C or Fortran order
+of matrix elements?</p></li>
+<li><p>How are R data frames handled in C?</p></li>
+</ul>
+</div></div><div class="proof proof-type-exercise" id="id63">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.30</span>
         
     </div><div class="proof-content">
 <p>Implement the C versions of the
@@ -1981,17 +2007,17 @@ of matrix elements?</p></li>
 <strong class="command">order</strong>,
 <strong class="command">unique</strong>, and
 <strong class="command">split</strong> functions.</p>
-</div></div><div class="proof proof-type-exercise" id="id63">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 14.30</span>
-        
-    </div><div class="proof-content">
-<p>(*) Read <em>Writing R Extensions</em> <span id="id27">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> in its entirety.</p>
 </div></div><div class="proof proof-type-exercise" id="id64">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 14.31</span>
+        
+    </div><div class="proof-content">
+<p>(*) Read <em>Writing R Extensions</em> <span id="id27">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> in its entirety.</p>
+</div></div><div class="proof proof-type-exercise" id="id65">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 14.32</span>
         
     </div><div class="proof-content">
 <p>(*) Download R’s source code from <a class="reference external" href="https://stat.ethz.ch/R/daily">CRAN</a>
@@ -2007,11 +2033,11 @@ fancy CPU-specific optimisations and similar hacks. Fortran is also
 supported but will not be covered in this book because of its smaller
 popularity. Additionally, some external packages are gateways to other
 languages, such as Java.</p>
-<p>Nevertheless, D.E. Knuth once said: <em>The real problem is
+<p>Nevertheless, D.E. Knuth once said: “The real problem is
 that programmers have spent far too much time worrying
 about efficiency in the wrong places and at the wrong times;
 premature optimisation is the root of all
-evil (or at least most of it) in programming</em> <span id="id28">[<a class="reference internal" href="999-bibliography.html#id74" title="Knuth, D.E. (1974).  Computer programming as an art. Communications of the ACM, 17(12):667–673. URL: https://www.cs.tufts.edu/~nr/cs257/archive/don-knuth/as-an-art.pdf.">39</a>]</span>.</p>
+evil (or at least most of it) in programming” <span id="id28">[<a class="reference internal" href="999-bibliography.html#id74" title="Knuth, D.E. (1974).  Computer programming as an art. Communications of the ACM, 17(12):667–673. URL: https://www.cs.tufts.edu/~nr/cs257/archive/don-knuth/as-an-art.pdf.">39</a>]</span>.</p>
 </aside>
 <aside class="footnote brackets" id="rcpp" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
@@ -2146,7 +2172,7 @@ it defines parallel versions of <strong class="command">lapply</strong> and <str
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-26T22:01:39+1000.
+              Last updated on 2023-06-27T15:21:15+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

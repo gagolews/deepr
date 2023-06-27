@@ -190,7 +190,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com' style="display: contents">Marek Gagolewski</a><br />
-v0.9.2.9007 (draft)
+v0.9.9.9009 (draft)
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -300,7 +300,7 @@ Make sure to check out the author’s other book,
 <p>In this and the remaining chapters, we will learn some hocus-pocus
 that should only be of interest to the advanced-to-be<a class="footnote-reference brackets" href="#footbegend" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and
 open-minded R programmers who would like to understand what
-is going on under our language’s hood.
+is going on under our language’s bonnet.
 In particular, we will inspect the mechanisms behind
 why certain functions act differently from what we would expect them to do
 if a <em>standard</em> evaluation scheme was followed
@@ -314,22 +314,22 @@ mentioned in <a class="reference internal" href="240-data-frame.html#sec-metapro
 is evaluated <em>first</em> and its value<a class="footnote-reference brackets" href="#footofref" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
 (in this case: probably a numeric vector) is only then passed
 to the <strong class="command">plot</strong> function as the actual parameter.
-Thus, if <code class="docutils literal notranslate"><span class="pre">x</span></code> was set to be
-<strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">10,</span> <span class="pre">length.out=1001)</span></code>,
+Thus, if <code class="docutils literal notranslate"><span class="pre">x</span></code> is set to be <strong class="command">seq</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">10,</span> <span class="pre">length.out=1001)</span></code>,
 the above never means anything else than:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0.00</span><span class="p">,</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span><span class="w"> </span><span class="m">0.02</span><span class="p">,</span><span class="w"> </span><span class="m">0.03</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1.0000</span><span class="p">,</span><span class="w"> </span><span class="m">1.0101</span><span class="p">,</span><span class="w"> </span><span class="m">1.0202</span><span class="p">,</span><span class="w"> </span><span class="m">1.0305</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>But R was heavily inspired by the S language from whom it
+<p>But R was heavily inspired by the S language from which it
 has taken the notion of lazy arguments (<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>).
-It is equipped with the ability to apply a set of
+It is thus equipped with the ability to apply a set of
 techniques referred to as <em>metaprogramming</em> (computing on the language,
-reflection). With it, we can define functions that can peek outside their
-small world and clearly see the code fragment passed as their arguments.
+reflection). With it, we can define functions that do not take their
+arguments for granted and clearly see the code fragments passed to them.
 Having access to such <em>unevaluated expressions</em>, we
 can do to them whatever we please: print, modify,
 evaluate on different data, or ignore whatsoever.</p>
-<p>In theory, this enables implementing many <em>potentially helpful</em><a class="footnote-reference brackets" href="#footlazygood" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>
+<p>In theory, this enables implementing many
+<em>potentially helpful</em><a class="footnote-reference brackets" href="#footlazygood" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>,
 beginner-friendly features and express certain
 requests in a more concise manner. For instance, that the y-axis labels
 in <a class="reference internal" href="120-numeric.html#fig-ex-log-scale"><span class="std std-numref">Figure 2.2</span></a> could be generated automatically is
@@ -340,21 +340,24 @@ but also the expression that generated it, <strong class="command">exp</strong><
 metaprogramming has the endless potential to arouse chaos, confusion,
 and division in the user community. In particular, we can introduce
 a dialect <em>within</em> our language that people outside our circle
-will not be able to understand.</p>
-<p>Therefore, cursed be us, for we are about to start eating from
+will not be able to understand. Once it becomes a dominant one,
+other users will feel excluded.</p>
+<p>Cursed be us, for we are about to start eating from
 the tree of the knowledge of good and evil. But remember:
 with great power comes great fun (and responsibility).</p>
 <section id="expressions-at-a-glance">
 <span id="sec-expr-theory"></span><h2><span class="section-number">15.1. </span>Expressions at a glance<a class="headerlink" href="#expressions-at-a-glance" title="Permalink to this heading">#</a></h2>
-<p>At the most general level, expressions (statements)
+<p>At the most general level, <em>expressions</em> (statements)
 in a language like R can be classified into two groups:</p>
 <ul>
 <li><p><em>simple expressions</em>:</p>
 <ul class="simple">
 <li><p><em>constants</em> (e.g., <code class="docutils literal notranslate"><span class="pre">3.14</span></code>, <code class="docutils literal notranslate"><span class="pre">2i</span></code>, <code class="docutils literal notranslate"><span class="pre">42L</span></code>,
-<code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;character</span> <span class="pre">string&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">-1.3e-16</span></code>,
+<code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>, <code class="docutils literal notranslate"><span class="pre">Inf</span></code>, <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, <code class="docutils literal notranslate"><span class="pre">NA</span></code>, <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;character</span> <span class="pre">string&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">-1.3e-16</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">0x123abc</span></code>),</p></li>
-<li><p><em>names</em> (symbols, identifiers),</p></li>
+<li><p><em>names</em> (symbols, identifiers; e.g.,
+<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">iris</span></code>, <code class="docutils literal notranslate"><span class="pre">sum</span></code>, <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>, <code class="docutils literal notranslate"><span class="pre">spam</span></code>, `<code class="docutils literal notranslate"><span class="pre">+</span></code>`, `<code class="docutils literal notranslate"><span class="pre">[&lt;-</span></code>`, and <code class="docutils literal notranslate"><span class="pre">spanish_inquisition</span></code>),</p></li>
 </ul>
 </li>
 <li><p><em>compound expressions</em> – combinations of <span class="math">\(n+1\)</span> expressions
@@ -369,33 +372,33 @@ in a language like R can be classified into two groups:</p>
 represent a <em>call</em> to <span class="math">\(f\)</span> (an <em>operator</em>) on a sequence of arguments
 <span class="math">\(e_1,e_2,\dots,e_n\)</span> (<em>operands</em>). It is why, equivalently, we
 denote them with <span class="math">\(f(e_1,e_2,\dots,e_n)\)</span>.</p>
-<p>On the other hand, <em>names</em> such as <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">iris</span></code>, <code class="docutils literal notranslate"><span class="pre">sum</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">spam</span></code> have no meaning without an explicitly stated context.
-This will be a topic we will explore in <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.
-Prior to that, we treat them as meaning-less.</p>
+<p>On the other hand, <em>names</em> have no meaning without an explicitly stated
+context, which we will explore in <a class="reference internal" href="330-environment.html#chap-environment"><span class="std std-numref">Chapter 16</span></a>.
+Prior to that, we treat them as <em>meaning-less</em>.</p>
 <p>Hence, for the time being, we are only interested
 in the <em>syntax</em> or <em>grammar</em> of our language, not the <em>semantics</em>.
 We are abstract in the sense that, in the expression
-<strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(rates)+2</span></code><a class="footnote-reference brackets" href="#footsugar" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>,
-neither
-<code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span></code>, nor even `<strong class="command">+</strong>` have the <em>usual</em> sense.
+<strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(rates)+2</span></code>, which we know from
+<a class="reference internal" href="210-design.html#sec-operfun"><span class="std std-numref">Section 9.3.5</span></a> that we can equivalently express as
+`<strong class="command">+</strong>`<code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(rates),</span> <span class="pre">2)</span></code>,
+neither <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span></code>, nor even `<code class="docutils literal notranslate"><span class="pre">+</span></code>` have the <em>usual</em> sense.
 Therefore, we should treat them as equivalent to, say,
 <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">g</strong><code class="code docutils literal notranslate"><span class="pre">(x),</span> <span class="pre">2)</span></code> or
-<strong class="command">spam</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">bacon</strong><code class="code docutils literal notranslate"><span class="pre">(spanish_inquisition),</span> <span class="pre">2)</span></code>.</p>
+<strong class="command">nobody</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">expects</strong><code class="code docutils literal notranslate"><span class="pre">(spanish_inquisition),</span> <span class="pre">2)</span></code>.</p>
 </section>
 <section id="language-objects">
 <span id="sec-language-objects"></span><h2><span class="section-number">15.2. </span>Language objects<a class="headerlink" href="#language-objects" title="Permalink to this heading">#</a></h2>
 <p>There are three types of <em>language objects</em> in R:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (<code class="docutils literal notranslate"><span class="pre">symbol</span></code>) – stores object names in the sense of
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (<code class="docutils literal notranslate"><span class="pre">symbol</span></code>) – represents object names in the sense of
 <em>simple expressions: names</em> in <a class="reference internal" href="#sec-expr-theory"><span class="std std-numref">Section 15.1</span></a>;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">call</span></code> – represents unevaluated function calls
+<li><p><code class="docutils literal notranslate"><span class="pre">call</span></code> – stores unevaluated function calls
 in the sense of <em>compound expressions</em> above;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">expression</span></code> – quite confusingly, represents a <em>sequence</em>
 of simple or compound expressions (constants, names, or calls).</p></li>
 </ul>
 <p>One way to create a simple or compound expression
-is by <em>quoting</em>, where interpreter is asked to refrain from
+is by <em>quoting</em>, where the R interpreter is asked to refrain from
 evaluating a given command:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">quote</span><span class="p">(</span><span class="n">spam</span><span class="p">)</span><span class="w">  </span><span class="c1"># name (symbol)</span>
 <span class="c1">## spam</span>
@@ -405,7 +408,9 @@ evaluating a given command:</p>
 <span class="c1">## 1 + 2 + 3 * pi</span>
 </pre></div>
 </div>
-<p>None of the above was executed.</p>
+<p>None of the above was executed.
+In particular, <code class="docutils literal notranslate"><span class="pre">spam</span></code> has no <em>sense</em> in the current context (whichever
+that is). It is not the meaning that we are after now.</p>
 <p>Single strings can be converted to names by calling:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)</span>
 <span class="c1">## spam</span>
@@ -416,21 +421,21 @@ evaluating a given command:</p>
 <span class="c1">## sin(1.5707963267949)</span>
 </pre></div>
 </div>
-<p>Sometimes we had rather quote the arguments passed:</p>
+<p>Sometimes we would rather have the arguments quoted:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">call</span><span class="p">(</span><span class="s">&quot;sin&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="kc">pi</span><span class="o">/</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## sin(pi/2)</span>
 <span class="nf">call</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">exp</span><span class="p">(</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="nf">exp</span><span class="p">(</span><span class="m">1</span><span class="p">)),</span><span class="w"> </span><span class="kc">pi</span><span class="p">,</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="kc">pi</span><span class="p">))</span>
 <span class="c1">## c(1, 2.71828182845905, exp(1), 3.14159265358979, pi)</span>
 </pre></div>
 </div>
-<div style="margin-top: 1em"></div><p>Objects of the type <code class="docutils literal notranslate"><span class="pre">expression</span></code> can be thought of as list-like objects
+<div style="margin-top: 1em"></div><p>Objects of the type <code class="docutils literal notranslate"><span class="pre">expression</span></code> can be thought of as list-like sequences
 that consist of simple or compound expressions.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">exprs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expression</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">spam</span><span class="p">,</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="m">+2</span><span class="p">))</span>
 <span class="c1">## expression(1, spam, mean(x) + 2)</span>
 </pre></div>
 </div>
-<p>All arguments were quoted.</p>
-<p>We can select or subset the individual statements using the extraction
+<p>All arguments were quoted.
+We can select or subset the individual statements using the extraction
 or index operators:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">exprs</span><span class="p">[</span><span class="m">-1</span><span class="p">]</span>
 <span class="c1">## expression(spam, mean(x) + 2)</span>
@@ -445,12 +450,12 @@ or index operators:</p>
         
     </div><div class="proof-content">
 <p>Check the type of the object returned by a call to
-“<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">&quot;two&quot;,</span> <span class="pre">sd,</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4:5),</span> </code><strong class="command">expression</strong><code class="code docutils literal notranslate"><span class="pre">(3+3))</span></code>”.</p>
+<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">&quot;two&quot;,</span> <span class="pre">sd,</span> </code><strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4:5),</span> </code><strong class="command">expression</strong><code class="code docutils literal notranslate"><span class="pre">(3+3))</span></code>.</p>
 </div></div><div style="margin-top: 1em"></div><p>There is also an option to <em>parse</em> a given text fragment
 or a whole source file:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">parse</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;mean(x)+2&quot;</span><span class="p">)</span>
 <span class="c1">## expression(mean(x) + 2)</span>
-<span class="nf">parse</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;  # two code lines (a comment to be ignored by the parser)</span>
+<span class="nf">parse</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;  # two code lines (comments are ignored by the parser)</span>
 <span class="s">    x &lt;- runif(5, -1, 1)</span>
 <span class="s">    print(mean(x)+2)</span>
 <span class="s">&quot;</span><span class="p">)</span>
@@ -462,7 +467,7 @@ or a whole source file:</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <strong class="command">deparse</strong> function converts language
-objects to character vectors. For instance:</p>
+objects to character vectors, e.g.:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">deparse</span><span class="p">(</span><span class="nf">quote</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="m">+2</span><span class="p">)))</span>
 <span class="c1">## [1] &quot;mean(x + 2)&quot;</span>
 </pre></div>
@@ -495,12 +500,12 @@ respectively.</p>
 <h2><span class="section-number">15.3. </span>Calls as combinations of expressions<a class="headerlink" href="#calls-as-combinations-of-expressions" title="Permalink to this heading">#</a></h2>
 <p>We have mentioned that calls (compound expressions)
 are combinations of simple or compound expressions
-of the form <span class="math">\((f, e_1, \dots, e_n)\)</span>.</p>
-<p>The first expression on the list, denoted above with <span class="math">\(f\)</span>,
+of the form <span class="math">\((f, e_1, \dots, e_n)\)</span>.
+The first expression on the list, denoted above with <span class="math">\(f\)</span>,
 plays a special role. It is precisely seen in the following examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">as.call</span><span class="p">(</span><span class="nf">expression</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
 <span class="c1">## f(x)</span>
-<span class="nf">as.call</span><span class="p">(</span><span class="nf">expression</span><span class="p">(</span><span class="n">`+`</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
+<span class="nf">as.call</span><span class="p">(</span><span class="nf">expression</span><span class="p">(</span><span class="n">`+`</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># `+`(1, x)</span>
 <span class="c1">## 1 + x</span>
 <span class="nf">as.call</span><span class="p">(</span><span class="nf">expression</span><span class="p">(</span><span class="n">`while`</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## while (i &lt; 10) i &lt;- i + 1</span>
@@ -513,9 +518,10 @@ plays a special role. It is precisely seen in the following examples:</p>
 <p>Recall from <a class="reference internal" href="210-design.html#sec-syntactic-sugar"><span class="std std-numref">Section 9.3</span></a> that operators
 and language constructs such as <strong class="command">if</strong> and
 <strong class="command">while</strong> are ordinary functions.</p>
-<p>Furthermore:</p>
+<p>Furthermore, keyword arguments will result in the underlying sequence’s
+being named:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="m">1+2</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="m">2</span><span class="p">))</span>
-<span class="nf">length</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+<span class="nf">length</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span><span class="w">  </span><span class="c1"># three arguments –&gt; length-4 sequence</span>
 <span class="c1">## [1] 4</span>
 <span class="nf">names</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span><span class="w">  </span><span class="c1"># NULL if no arguments are named</span>
 <span class="c1">## [1] &quot;&quot;  &quot;&quot;  &quot;a&quot; &quot;b&quot;</span>
@@ -528,49 +534,39 @@ an object of the type <code class="docutils literal notranslate"><span class="pr
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="m">1</span><span class="o">+</span><span class="n">x</span><span class="p">)</span>
 <span class="n">expr</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span>
 <span class="c1">## `+`</span>
-<span class="n">expr</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">]</span>
-<span class="c1">## 1(x)</span>
+<span class="n">expr</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)]</span>
+<span class="c1">## x + 1</span>
+<span class="n">expr</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)]</span>
+<span class="c1">## 1(x, `+`, x)</span>
 </pre></div>
 </div>
 <p>A compound expression was defined recursively:
-it may consist of other compound expressions.</p>
-<p>For instance, the following expression:</p>
+it may consist of other compound expressions.
+For instance, the following statement:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span>
 <span class="w">    </span><span class="nf">while </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;i =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;i = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 <span class="w">        </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="m">+1</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>can be rewritten using the <span class="math">\(f(...)\)</span> notation like:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">`while`</span><span class="p">(</span><span class="nf">`&lt;`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="nf">`{`</span><span class="p">(</span><span class="w"> </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;i =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">`&lt;-`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nf">`+`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))))</span>
-</pre></div>
-</div>
-<p>Equivalently, in the Polish notation
-(the prefix notation; <span class="math">\((f, ...)\)</span>; traditionally used in Lisp),
-it will look like:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-<span class="w">    </span><span class="n">`while`</span><span class="p">,</span>
-<span class="w">    </span><span class="p">(</span><span class="n">`&lt;`</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span>
-<span class="w">        </span><span class="n">`{`</span><span class="p">,</span>
-<span class="w">        </span><span class="p">(</span><span class="n">cat</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;i =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">(</span>
-<span class="w">            </span><span class="n">`&lt;-`</span><span class="p">,</span>
-<span class="w">            </span><span class="n">i</span><span class="p">,</span>
-<span class="w">            </span><span class="p">(</span><span class="n">`+`</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
-<span class="w">        </span><span class="p">)</span>
+<p>can be rewritten<a class="footnote-reference brackets" href="#footsexprlisp" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> using the <span class="math">\(f(...)\)</span> notation like:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">quote</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">`while`</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">`&lt;`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span>
+<span class="w">        </span><span class="nf">`{`</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;i = &quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">`&lt;-`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="nf">`+`</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)))</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>Thus, for example, we can dig into the subexpressions
-using a series of extractions:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="p">[[</span><span class="m">2</span><span class="p">]][[</span><span class="m">1</span><span class="p">]]</span><span class="w">  </span><span class="c1"># or expr[[c(2, 1)]]</span>
+<p>We can dig into all the subexpressions using a series of extractions:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="p">[[</span><span class="m">2</span><span class="p">]][[</span><span class="m">1</span><span class="p">]]</span><span class="w">  </span><span class="c1"># expr[[c(2, 1)]]</span>
 <span class="c1">## `&lt;`</span>
-<span class="n">expr</span><span class="p">[[</span><span class="m">3</span><span class="p">]][[</span><span class="m">2</span><span class="p">]][[</span><span class="m">4</span><span class="p">]]</span><span class="w">  </span><span class="c1"># or expr[[c(3, 2, 4)]]</span>
-<span class="c1">## [1] &quot;\n&quot;</span>
+<span class="n">expr</span><span class="p">[[</span><span class="m">3</span><span class="p">]][[</span><span class="m">3</span><span class="p">]][[</span><span class="m">3</span><span class="p">]]</span><span class="w">  </span><span class="c1"># expr[[c(3, 3, 3)]]</span>
+<span class="c1">## i + 1</span>
+<span class="n">expr</span><span class="p">[[</span><span class="m">3</span><span class="p">]][[</span><span class="m">3</span><span class="p">]][[</span><span class="m">3</span><span class="p">]][[</span><span class="m">1</span><span class="p">]]</span><span class="w">  </span><span class="c1"># expr[[c(3, 3, 3, 1)]]</span>
+<span class="c1">## `+`</span>
 </pre></div>
 </div>
 <div class="proof proof-type-example" id="id14">
@@ -596,11 +592,12 @@ parse tree:</p>
 <span class="c1">##   ..$ : num 10</span>
 <span class="c1">##  $ :List of 3</span>
 <span class="c1">##   ..$ : symbol {</span>
-<span class="c1">##   ..$ :List of 4</span>
-<span class="c1">##   .. ..$ : symbol cat</span>
-<span class="c1">##   .. ..$ : chr &quot;i =&quot;</span>
-<span class="c1">##   .. ..$ : symbol i</span>
-<span class="c1">##   .. ..$ : chr &quot;\n&quot;</span>
+<span class="c1">##   ..$ :List of 5</span>
+<span class="c1">##   .. ..$    : symbol cat</span>
+<span class="c1">##   .. ..$    : chr &quot;i = &quot;</span>
+<span class="c1">##   .. ..$    : symbol i</span>
+<span class="c1">##   .. ..$    : chr &quot;\n&quot;</span>
+<span class="c1">##   .. ..$ sep: chr &quot;&quot;</span>
 <span class="c1">##   ..$ :List of 3</span>
 <span class="c1">##   .. ..$ : symbol &lt;-</span>
 <span class="c1">##   .. ..$ : symbol i</span>
@@ -618,27 +615,29 @@ This includes the ability to manipulate it on the fly.
 This is because, just like on lists, we can freely use the
 replacement versions of `<strong class="command">[</strong>` and `<strong class="command">[[</strong>` on
 objects of the type <code class="docutils literal notranslate"><span class="pre">call</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="p">[[</span><span class="m">2</span><span class="p">]][[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;&lt;=&quot;</span><span class="p">)</span>
-<span class="n">expr</span><span class="p">[[</span><span class="m">3</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span><span class="p">[[</span><span class="m">2</span><span class="p">]][[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;&lt;=&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># was: `&lt;`</span>
+<span class="n">expr</span><span class="p">[[</span><span class="m">3</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># was: {...}</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
 <span class="c1">## while (i &lt;= 10) i &lt;- i * 2</span>
 </pre></div>
 </div>
-<p>We are only limited by our imagination.</p>
+<p>We are only limited by our imagination. We should spend some time
+and contemplate how powerful this is, knowing that soon we are going
+to be able to evaluate any expression in different contexts.</p>
 </section>
 </section>
-<section id="inspecting-function-definitions-and-arguments-thereto">
-<h2><span class="section-number">15.4. </span>Inspecting function definitions and arguments thereto<a class="headerlink" href="#inspecting-function-definitions-and-arguments-thereto" title="Permalink to this heading">#</a></h2>
+<section id="inspecting-function-definition-and-usage">
+<h2><span class="section-number">15.4. </span>Inspecting function definition and usage<a class="headerlink" href="#inspecting-function-definition-and-usage" title="Permalink to this heading">#</a></h2>
 <section id="getting-the-body-and-formal-arguments">
 <span id="sec-body-formals"></span><h3><span class="section-number">15.4.1. </span>Getting the body and formal arguments<a class="headerlink" href="#getting-the-body-and-formal-arguments" title="Permalink to this heading">#</a></h3>
-<p>Consider the following definition:</p>
+<p>Consider the following function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 <span class="w">    </span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="w">  </span><span class="c1"># whatever</span>
 </pre></div>
 </div>
 <p>We know from the first part of this book that calling <strong class="command">print</strong>
-on a function will reveal its source code.</p>
-<p>It turns out that we can get access to the list of parameters
+on a function reveals its source code.
+But there is more. We can fetch its formal parameters
 in the form of a named list<a class="footnote-reference brackets" href="#footpairlist" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">formals</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="c1">## $x</span>
@@ -648,22 +647,24 @@ in the form of a named list<a class="footnote-reference brackets" href="#footpai
 <span class="c1">## [1] 1</span>
 </pre></div>
 </div>
-<p>Note that the expressions generating the values of the default arguments
+<p>Note that the expressions corresponding to the default arguments
 are stored as ordinary list elements
 (for more details, see <a class="reference internal" href="340-lazy.html#sec-default-args-eval"><span class="std std-numref">Section 17.2</span></a>).</p>
-<p>Furthermore, we can get access to the function’s body:</p>
+<p>Furthermore, we can access the function’s body:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="c1">## x + y</span>
 </pre></div>
 </div>
 <p>It is an object of the now well-known class <code class="docutils literal notranslate"><span class="pre">call</span></code>.
 Thus, we can customise it as we please:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># change from `+` to `*`</span>
-<span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.call</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam&quot;</span><span class="p">)),</span><span class="w"> </span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)))</span>
-<span class="n">test</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># change `+` to `*`</span>
+<span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.call</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">as.name</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">quote</span><span class="p">(</span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;spam\n&quot;</span><span class="p">)),</span><span class="w"> </span><span class="nf">body</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="c1">## function (x, y = 1)</span>
 <span class="c1">## {</span>
-<span class="c1">##     cat(&quot;spam&quot;)</span>
+<span class="c1">##     cat(&quot;spam\n&quot;)</span>
 <span class="c1">##     x * y</span>
 <span class="c1">## }</span>
 </pre></div>
@@ -672,7 +673,7 @@ Thus, we can customise it as we please:</p>
 <section id="getting-the-expression-passed-as-an-actual-argument">
 <span id="sec-substitute"></span><h3><span class="section-number">15.4.2. </span>Getting the expression passed as an actual argument<a class="headerlink" href="#getting-the-expression-passed-as-an-actual-argument" title="Permalink to this heading">#</a></h3>
 <p>A call to <strong class="command">substitute</strong> reveals
-the expression used to generate a function’s argument.</p>
+the expression passed as a function’s argument.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nf">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -703,7 +704,7 @@ see <a class="reference internal" href="210-design.html#sec-metaprogramming-intr
 name of the package to be loaded both in the form of a character string
 and a <em>name</em>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;gsl&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># preferred</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">gsl</span><span class="p">)</span><span class="w">  </span><span class="c1"># discouraged - via as.character(substitute(package))</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">gsl</span><span class="p">)</span><span class="w">  </span><span class="c1"># discouraged; via as.character(substitute(package))</span>
 </pre></div>
 </div>
 <p>A user saves two keystrokes at the cost of not being able
@@ -715,8 +716,8 @@ to prepare the package name programmatically before the call:</p>
 </pre></div>
 </div>
 <p>In order to make the above possible, we need to
-alter the <code class="docutils literal notranslate"><span class="pre">character.only</span></code> argument (which defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>):</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">which_package</span><span class="p">,</span><span class="w"> </span><span class="n">character.only</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+alter the function’s <code class="docutils literal notranslate"><span class="pre">character.only</span></code> argument (which defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>):</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">which_package</span><span class="p">,</span><span class="w"> </span><span class="n">character.only</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># OK</span>
 </pre></div>
 </div>
 </div></div><div class="proof proof-type-exercise" id="id16">
@@ -725,7 +726,7 @@ alter the <code class="docutils literal notranslate"><span class="pre">character
         <span class="proof-type">Exercise 15.4</span>
         
     </div><div class="proof-content">
-<p>In many functions, it is quite common to see a call like
+<p>In many functions, we can see a call like
 <strong class="command">deparse</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(arg))</span></code> or
 <strong class="command">as.character</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(arg))</span></code>.
 Study the source code of <strong class="command">plot.default</strong>,
@@ -737,7 +738,7 @@ functionality without using reflection techniques.</p>
 </div></div></section>
 <section id="checking-if-an-argument-is-missing">
 <span id="sec-missing-arg"></span><h3><span class="section-number">15.4.3. </span>Checking if an argument is missing<a class="headerlink" href="#checking-if-an-argument-is-missing" title="Permalink to this heading">#</a></h3>
-<p>There is an easy way to check whether an argument was provided:</p>
+<p><strong class="command">missing</strong> checks whether an argument was provided:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nf">missing</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 <span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
@@ -784,6 +785,8 @@ For instance:</p>
 <span class="c1">## test(x = &quot;spam&quot;, y = &quot;bacon&quot;, &quot;eggs&quot;, u = &quot;ham&quot; &lt; &quot;jam&quot;, b = x)</span>
 </pre></div>
 </div>
+<p>In both cases, the results are objects of the type <code class="docutils literal notranslate"><span class="pre">call</span></code>.
+We know how to manipulate them already.</p>
 <p>Another example where we see that we can
 access the call stack much more deeply:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -814,16 +817,16 @@ access the call stack much more deeply:</p>
 <p class="admonition-title">Note</p>
 <p>Let us formalise the order of matching function parameters <em>to</em> the passed
 arguments. As described in Section 4.3 of <span id="id8">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2023).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">67</a>]</span>,
-it proceeds as follows:</p>
+it proceeds as follows.</p>
 <ol class="arabic simple">
-<li><p>keyword arguments with names matched exactly,
-each name matched at most once,</p></li>
-<li><p>remaining keyword arguments, but with the partial matching of
-names listed before the ellipsis, `<strong class="command">...</strong>`,
-each match must be unambiguous,</p></li>
-<li><p>positional matching to the remaining parameters,</p></li>
-<li><p>all remaining arguments (named or not) will be consumed by the ellipsis
-(if present).</p></li>
+<li><p>First, keyword arguments with names are matched exactly,
+each name is matched at most once.</p></li>
+<li><p>Then, we take the remaining keyword arguments, but with the partial
+matching of names listed before the ellipsis, `<strong class="command">...</strong>`.
+Each match must be unambiguous.</p></li>
+<li><p>Third, we apply the positional matching to the remaining parameters.</p></li>
+<li><p>Last, the ellipsis (if present) consumes all the remaining
+arguments (named or not).</p></li>
 </ol>
 <p>For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">spam</span><span class="p">,</span><span class="w"> </span><span class="n">jasmine</span><span class="p">,</span><span class="w"> </span><span class="n">jam</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">option</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span>
@@ -883,7 +886,7 @@ that of the type <code class="docutils literal notranslate"><span class="pre">ex
 <li><p>What do <strong class="command">formals</strong> and <strong class="command">body</strong> return
 when called on a function object?</p></li>
 <li><p>How to test if an argument to a function was given?
-Provide a use case for such a verification.</p></li>
+Provide a use case for such a verification step.</p></li>
 <li><p>Give a few ways to create an unevaluated call.</p></li>
 <li><p>What is the purpose of
 <strong class="command">deparse</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">substitute</strong><code class="code docutils literal notranslate"><span class="pre">(...))</span></code>?
@@ -897,11 +900,11 @@ Give a few examples of functions that use this technique.</p></li>
         <span class="proof-type">Exercise 15.9</span>
         
     </div><div class="proof-content">
-<p>Write a function that takes the dot-dot-dot argument (<a class="reference internal" href="210-design.html#sec-ellipsis"><span class="std std-numref">Section 9.4.6</span></a>).
+<p>Write a function that takes the dot-dot-dot argument.
 Using <strong class="command">match.call</strong> (amongst others), determine the list
-of all the expressions passed via `<strong class="command">...</strong>`;
-some might be named (just like in one of the above examples).
-The solution is given in <a class="reference internal" href="340-lazy.html#sec-ellipsis-eval"><span class="std std-numref">Section 17.3</span></a>.</p>
+of all the expressions passed via `<strong class="command">...</strong>`.
+Allow some of them to be named (just like in one of the above examples).
+The solution will be given in <a class="reference internal" href="340-lazy.html#sec-ellipsis-eval"><span class="std std-numref">Section 17.3</span></a>.</p>
 </div></div><div class="proof proof-type-exercise" id="id22">
 
     <div class="proof-title">
@@ -947,19 +950,34 @@ them. The fact that we call them <em>advanced</em> will not make us <em>cool</em
 if we start horsing around with nonstandard evaluation.
 <em>Perverse</em> is perhaps a better label.</p>
 </aside>
-<aside class="footnote brackets" id="footsugar" role="note">
+<aside class="footnote brackets" id="footsexprlisp" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
-<p>Which we know that we can equivalently express
-as “`<strong class="command">+</strong>`<code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">mean</strong><code class="code docutils literal notranslate"><span class="pre">(rates),</span> <span class="pre">2)</span></code>”;
-see <a class="reference internal" href="210-design.html#sec-operfun"><span class="std std-numref">Section 9.3.5</span></a>.</p>
+<p>(*) Equivalently, in the fully parenthesised Polish notation
+<span class="math">\((f, ...)\)</span> (the prefix notation; traditionally used in source
+code s-expressions in Lisp), we would express it like:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># (this is not valid R syntax)</span>
+<span class="p">(</span>
+<span class="w">    </span><span class="n">`while`</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="n">`&lt;`</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="n">`{`</span><span class="p">,</span>
+<span class="w">        </span><span class="p">(</span><span class="n">cat</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;i = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span>
+<span class="w">            </span><span class="n">`&lt;-`</span><span class="p">,</span>
+<span class="w">            </span><span class="n">i</span><span class="p">,</span>
+<span class="w">            </span><span class="p">(</span><span class="n">`+`</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </aside>
 <aside class="footnote brackets" id="footpairlist" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
-<p>Actually, a special internal datatype called
-<code class="docutils literal notranslate"><span class="pre">pairlist</span></code>, which is rarely seen in R; see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">66</a>]</span> and
-<span id="id12">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for information on how to deal with them at the C level.
-From this course’s perspective, seeing pairlists
-as named lists is perfectly fine.</p>
+<p>(*) Actually, a special internal datatype called
+<code class="docutils literal notranslate"><span class="pre">pairlist</span></code>, which is rarely seen at the R level; see <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">66</a>]</span> and
+<span id="id12">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for information on how to deal with them in C. In the
+current context, seeing pairlists as named lists is perfectly fine.</p>
 </aside>
 <aside class="footnote brackets" id="footinception" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">7</a><span class="fn-bracket">]</span></span>
@@ -1005,7 +1023,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-06-26T22:01:39+1000.
+              Last updated on 2023-06-27T15:21:15+1000.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1034,7 +1052,7 @@ returns a modified version of itself.</p>
 <li><a class="reference internal" href="#manipulating-calls">15.3.2. Manipulating calls</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#inspecting-function-definitions-and-arguments-thereto">15.4. Inspecting function definitions and arguments thereto</a><ul>
+<li><a class="reference internal" href="#inspecting-function-definition-and-usage">15.4. Inspecting function definition and usage</a><ul>
 <li><a class="reference internal" href="#getting-the-body-and-formal-arguments">15.4.1. Getting the body and formal arguments</a></li>
 <li><a class="reference internal" href="#getting-the-expression-passed-as-an-actual-argument">15.4.2. Getting the expression passed as an actual argument</a></li>
 <li><a class="reference internal" href="#checking-if-an-argument-is-missing">15.4.3. Checking if an argument is missing</a></li>
