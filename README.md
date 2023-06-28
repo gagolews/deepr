@@ -2,12 +2,7 @@
 
 <img src="docs/_static/img/cover.png" align="right" height="225" />
 
-*Deep R Programming* by [Marek Gagolewski][1] is a
-**comprehensive course on one of the most popular languages for data science**
-(statistical computing, graphics, machine learning, data wrangling and
-analytics). It **introduces the base language**
-in-depth. It is aimed at ambitious students, professionals, and researchers
-who want to become **independent users** of this powerful environment.
+*Deep R Programming* by [Marek Gagolewski][1] is a comprehensive and in-depth introductory course on one of the most popular languages for data science. It equips ambitious students, professionals, and researchers with the knowledge and skills to become independent users of this potent environment so that they can tackle any problem related to data wrangling and analytics, numerical computing, statistics, and machine learning.
 
 > Any remarks and bug fixes are appreciated. Please submit them via
 > this repository's *Issues* tracker. Thank you.
@@ -63,7 +58,7 @@ in outlets such as *Proceedings of the National Academy of Sciences (PNAS)*,
 
 In his "spare" time, he writes books for his students
 (check out his [*Minimalist Data Wrangling with Python*](https://datawranglingpy.gagolewski.com/))
-and develops open-source (libre) data analysis software, such as
+and develops open-source data analysis software, such as
 [`stringi`](https://stringi.gagolewski.com/) (one of the most often downloaded
 R packages),
 [`genieclust`](https://genieclust.gagolewski.com/) (a fast and robust
