@@ -1,6 +1,5 @@
-# Deep R Programming
-
-<img src="docs/_static/img/cover.png" align="right" height="225" />
+<a href="https://deepr.gagolewski.com/"><img src="docs/_static/img/cover.png" align="right" height="225" /></a>
+# [Deep R Programming](https://deepr.gagolewski.com)
 
 *Deep R Programming* by [Marek Gagolewski][1] is a comprehensive and in-depth introductory course on one of the most popular languages for data science. It equips ambitious students, professionals, and researchers with the knowledge and skills to become independent users of this potent environment so that they can tackle any problem related to data wrangling and analytics, numerical computing, statistics, and machine learning.
 
@@ -51,9 +50,7 @@ URL: <https://deepr.gagolewski.com/>.
 
 Dr habil. [Marek Gagolewski][1]
 is currently a Senior Lecturer in Data Science/Applied AI
-at Deakin University in Melbourne, Australia
-and an Associate Professor at the Systems
-Research Institute, Polish Academy of Sciences.
+at Deakin University in Melbourne, Australia.
 
 His research interests are related to data science, in particular: modelling
 complex phenomena, developing usable, general-purpose algorithms, studying
