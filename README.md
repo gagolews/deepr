@@ -1,24 +1,21 @@
+<!-- NOTE EDIT in *-src; *-public is a clone! -->
+
 <a href="https://deepr.gagolewski.com/"><img src="docs/_static/img/cover.png" align="right" height="225" /></a>
-# [Deep R Programming](https://deepr.gagolewski.com)
+# [Deep R Programming](https://deepr.gagolewski.com/)
 
-*Deep R Programming* by [Marek Gagolewski][1] is a comprehensive and in-depth introductory course on one of the most popular languages for data science. It equips ambitious students, professionals, and researchers with the knowledge and skills to become independent users of this potent environment so that they can tackle any problem related to data wrangling and analytics, numerical computing, statistics, and machine learning.
-
-> Any remarks and bug fixes are appreciated. Please submit them via
-> this repository's *Issues* tracker. Thank you.
-
+*Deep R Programming* is a comprehensive and in-depth introductory course on one of the most popular languages for data science. It equips ambitious students, professionals, and researchers with the knowledge and skills to become independent users of this potent environment so that they can tackle any problem related to data wrangling and analytics, numerical computing, statistics, and machine learning.
 
 For many students around the world, educational resources are hardly
-affordable. Therefore, the author has decided that this book should remain
-an independent, non-profit, open-access project.
-Whilst, for some people, the presence of a "designer tag" from a
-major publisher might still be a proxy for quality, it is his hope
-that this publication will prove useful to those who seek knowledge for
-knowledge's sake.
-
-You can read it at:
+affordable. Therefore, I have has decided that this book should remain
+an independent, non-profit, open-access project. You can read it at:
 
 * <https://deepr.gagolewski.com/> (a browser-friendly version)
 * <https://deepr.gagolewski.com/deepr.pdf> (PDF)
+
+Whilst, for some people, the presence of a "designer tag" from a
+major publisher might still be a proxy for quality, it is my hope
+that this publication will prove useful to those who seek knowledge for
+knowledge's sake.
 
 A **printed version** can be ordered from
 [Amazon](https://www.amazon.com/dp/064557192X):
@@ -34,6 +31,7 @@ A **printed version** can be ordered from
 [SE](https://amazon.se/dp/064557192X)
 [UK](https://amazon.co.uk/dp/064557192X)
 [US](https://amazon.com/dp/064557192X).
+I receive no revenue from sales.
 
 
 **Please spread the news about this project.**
@@ -44,6 +42,9 @@ Zenodo, Melbourne,
 DOI: [10.5281/zenodo.7490464](https://dx.doi.org/10.5281/zenodo.7490464),
 ISBN: 978-0-6455719-2-9,
 URL: <https://deepr.gagolewski.com/>.
+
+Any remarks and bug fixes are appreciated. Please submit them via
+this repository's *Issues* tracker. Thank you.
 
 
 ## About the Author
@@ -85,4 +86,4 @@ This material is licensed under the Creative Commons
 (CC BY-NC-ND 4.0).
 
 [1]: https://www.gagolewski.com/
-[2]: https://creativecommons.org/licenses/by-nc-nd/4.0/
+[2]: https://creativecommons.org/licenses/by-nc-nd/4.0
