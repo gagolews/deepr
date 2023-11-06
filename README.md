@@ -12,27 +12,13 @@ an independent, non-profit, open-access project. You can read it at:
 * <https://deepr.gagolewski.com/> (a browser-friendly version)
 * <https://deepr.gagolewski.com/deepr.pdf> (PDF)
 
+You can also order a
+[paper copy](https://deepr.gagolewski.com/order-paper-copy.html).
+
 Whilst, for some people, the presence of a "designer tag" from a
 major publisher might still be a proxy for quality, it is my hope
 that this publication will prove useful to those who seek knowledge for
 knowledge's sake.
-
-A **printed version** can be ordered from
-[Amazon](https://www.amazon.com/dp/064557192X):
-[AU](https://amazon.com.au/dp/064557192X)
-[CA](https://amazon.ca/dp/064557192X)
-[DE](https://amazon.de/dp/064557192X)
-[ES](https://amazon.es/dp/064557192X)
-[FR](https://amazon.fr/dp/064557192X)
-[IT](https://amazon.it/dp/064557192X)
-[JP](https://amazon.co.jp/dp/064557192X)
-[NL](https://amazon.nl/dp/064557192X)
-[PL](https://amazon.pl/dp/064557192X)
-[SE](https://amazon.se/dp/064557192X)
-[UK](https://amazon.co.uk/dp/064557192X)
-[US](https://amazon.com/dp/064557192X).
-I receive no revenue from sales.
-
 
 **Please spread the news about this project.**
 

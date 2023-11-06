@@ -20,8 +20,8 @@ this is how we all learn, after all.
 Any bug/typo reports/fixes are appreciated, as well as interesting and
 non-trivial remarks that could lead to the improvement of the presented
 material or my learning something noteworthy. Please use the
-[*Issues*](https://github.com/gagolews/deepr/issues)
-tracker to notify me about these.
+[*Issues*](https://github.com/gagolews/deepr)
+tracker to notify me about them.
 
 Please spread the news about this project.
 
