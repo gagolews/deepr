@@ -28,7 +28,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="14. Interfacing compiled code (**)" href="310-compiled.html" /><link rel="prev" title="12. Data frames" href="240-data-frame.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/250-graphics.html" />
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/deepr.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/deepr.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>13. Graphics - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
     <link rel="stylesheet" type="text/css" href="../_static/katex-math.css?v=91adb8b6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=dd03ec4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=cc2833c3" />
     
     
 
@@ -307,7 +307,7 @@ see <a class="reference internal" href="#fig-graphics-systems"><span class="std 
 is very flexible but might seem quite complicated.
 Some readers might have come across
 the <strong class="program">lattice</strong> <span id="id3">[<a class="reference internal" href="999-bibliography.html#id45" title="Sarkar, D. (2008).  Lattice: Multivariate Data Visualization with R. Springer. URL: http://lmdvr.r-forge.r-project.org/.">53</a>]</span>
-and <strong class="program">ggplot2</strong> <span id="id4">[<a class="reference internal" href="999-bibliography.html#id47" title="Wickham, H. (2016).  ggplot2: Elegant Graphics for Data Analysis. Springer, 2nd edition.">58</a>, <a class="reference internal" href="999-bibliography.html#id46" title="Wilkinson, L. (2005).  The Grammar of Graphics. Springer.">61</a>]</span> packages
+and <strong class="program">ggplot2</strong> <span id="id4">[<a class="reference internal" href="999-bibliography.html#id47" title="Wickham, H. (2016).  ggplot2: Elegant Graphics for Data Analysis. Springer, 2nd edition.">60</a>, <a class="reference internal" href="999-bibliography.html#id46" title="Wilkinson, L. (2005).  The Grammar of Graphics. Springer.">63</a>]</span> packages
 before. They are built on top of <strong class="program">grid</strong>.</p></li>
 <li><p>On the other hand, its traditional (S-style) counterpart,
 <em>base</em> <strong class="program">graphics</strong> (e.g., <span id="id5">[<a class="reference internal" href="999-bibliography.html#id53" title="Becker, R.A., Chambers, J.M., and Wilks, A.R. (1988).  The New S Language: A Programming Environment for Data Analysis and Graphics. Chapman &amp; Hall.">7</a>]</span>),
@@ -321,12 +321,13 @@ from the perspective of this course’s philosophy.</p></li>
 <p class="admonition-title">Note</p>
 <p><em>All</em> figures in this book were generated using <strong class="program">graphics</strong>
 and its dependants. They are <em>sufficiently</em> aesthetic, aren’t they?
-Form precedes essence.</p>
+Form precedes essence
+(but see <span id="id6">[<a class="reference internal" href="999-bibliography.html#id77" title="Tufte, E.R. (2001).  The Visual Display of Quantitative Information. Graphics Press.">56</a>, <a class="reference internal" href="999-bibliography.html#id76" title="Wainer, H. (1997).  Visual Revelations: Graphical Tales of Fate and Deception from Napoleon Bonaparte to Ross Perot. Copernicus.">59</a>]</span>).</p>
 </div>
-<figure class="align-default" id="id15">
+<figure class="align-default" id="id17">
 <span id="fig-graphics-systems"></span><img alt="../_images/graphics-systems.png" src="../_images/graphics-systems.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.1 </span><span class="caption-text">Relation between the graphics subsystems.</span><a class="headerlink" href="#id15" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.1 </span><span class="caption-text">Relation between the graphics subsystems.</span><a class="headerlink" href="#id17" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <section id="graphics-primitives">
@@ -335,7 +336,7 @@ Form precedes essence.</p>
 of virtual objects to be placed on an abstract canvas,
 letting some algorithm decide how and when to delineate them. We <em>just draw</em>.
 We do so by calling functions that plot the following <em>graphics primitives</em>
-(see, e.g., <span id="id6">[<a class="reference internal" href="999-bibliography.html#id56" title="Hughes, J., van Dam, A., McGuire, M., Sklar, D., Foley, J., Feiner, S., and Akeley, K. (2013).  Computer Graphics: Principles and Practice. Addison-Wesley, 3rd edition.">36</a>, <a class="reference internal" href="999-bibliography.html#id57" title="Marschner, S. and Shirley, P. (2021).  Fundamentals of Computer Graphics. AK Peters/CRC Press, 5th edition.">44</a>]</span>):</p>
+(see, e.g., <span id="id7">[<a class="reference internal" href="999-bibliography.html#id56" title="Hughes, J., van Dam, A., McGuire, M., Sklar, D., Foley, J., Feiner, S., and Akeley, K. (2013).  Computer Graphics: Principles and Practice. Addison-Wesley, 3rd edition.">36</a>, <a class="reference internal" href="999-bibliography.html#id57" title="Marschner, S. and Shirley, P. (2021).  Fundamentals of Computer Graphics. AK Peters/CRC Press, 5th edition.">44</a>]</span>):</p>
 <ul class="simple">
 <li><p>symbols (e.g., pixels, circles, stars)
 of different shapes and colours,</p></li>
@@ -361,7 +362,7 @@ we will be able to create any drawing from scratch.</p>
 effects. Objects are drawn on the active plot one by one,
 and their state cannot be modified later.</p>
 </div>
-<div class="proof proof-type-example" id="id16">
+<div class="proof proof-type-example" id="id18">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.1</span>
@@ -395,10 +396,10 @@ to find the corresponding shapes in the plot.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id17">
+<figure class="align-default" id="id19">
 <span id="fig-primitives-demo"></span><img alt="../_images/primitives-demo-1.png" src="../_images/primitives-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.2 </span><span class="caption-text">Graphics primitives: plotting symbols, line segments, polygons, text labels, and bitmaps. Objects are added one after another, with newer ones drawn <em>over</em> the already existing shapes.</span><a class="headerlink" href="#id17" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.2 </span><span class="caption-text">Graphics primitives: plotting symbols, line segments, polygons, text labels, and bitmaps. Objects are added one after another, with newer ones drawn <em>over</em> the already existing shapes.</span><a class="headerlink" href="#id19" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><section id="symbols-points">
@@ -418,7 +419,7 @@ It is vectorised with respect to, amongst others,
 the <code class="docutils literal notranslate"><span class="pre">col</span></code> (colour; see <a class="reference internal" href="#sec-colours"><span class="std std-numref">Section 13.2.1</span></a>), <code class="docutils literal notranslate"><span class="pre">cex</span></code> (scale, defaults to 1),
 and <code class="docutils literal notranslate"><span class="pre">pch</span></code> (plotting character or symbol, defaults to 1, i.e., a circle)
 arguments.</p>
-<div class="proof proof-type-example" id="id18">
+<div class="proof proof-type-example" id="id20">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.2</span>
@@ -450,10 +451,10 @@ can be drawn); strings longer than one will be truncated.</p></li>
 <span class="c1">##     value &#39;26&#39;</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id19">
+<figure class="align-default" id="id21">
 <span id="fig-pch"></span><img alt="../_images/pch-1.png" src="../_images/pch-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.3 </span><span class="caption-text">Plotting characters and symbols (<code class="docutils literal notranslate"><span class="pre">pch</span></code>).</span><a class="headerlink" href="#id19" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.3 </span><span class="caption-text">Plotting characters and symbols (<code class="docutils literal notranslate"><span class="pre">pch</span></code>).</span><a class="headerlink" href="#id21" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -474,10 +475,10 @@ functions (with post- and pre-increments, respectively),
 and <code class="docutils literal notranslate"><span class="pre">type=&quot;h&quot;</span></code> draws bar plot-like vertical lines.
 See <a class="reference internal" href="#fig-line-type"><span class="std std-numref">Figure 13.4</span></a> for an illustration
 (implement something similar yourself as an exercise).</p>
-<figure class="align-default" id="id20">
+<figure class="align-default" id="id22">
 <span id="fig-line-type"></span><img alt="../_images/line-type-1.png" src="../_images/line-type-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.4 </span><span class="caption-text">Different <code class="docutils literal notranslate"><span class="pre">type</span></code> argument settings in <strong class="command">lines</strong> or <strong class="command">points</strong>.</span><a class="headerlink" href="#id20" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.4 </span><span class="caption-text">Different <code class="docutils literal notranslate"><span class="pre">type</span></code> argument settings in <strong class="command">lines</strong> or <strong class="command">points</strong>.</span><a class="headerlink" href="#id22" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">col</span></code> argument controls the line colour (see <a class="reference internal" href="#sec-colours"><span class="std std-numref">Section 13.2.1</span></a>),
@@ -490,13 +491,13 @@ Consecutive digits give the lengths of the dashes and blanks (alternating).
 For instance, <code class="docutils literal notranslate"><span class="pre">lty=&quot;1343&quot;</span></code> yields a dash of length 1, followed by a space of
 length 3, then a dash of length 4, followed by a blank of length 3.
 The whole sequence will be recycled for as long as necessary.</p>
-<figure class="align-default" id="id21">
+<figure class="align-default" id="id23">
 <span id="fig-lty"></span><img alt="../_images/lty-1.png" src="../_images/lty-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.5 </span><span class="caption-text">Line types (<code class="docutils literal notranslate"><span class="pre">lty</span></code>).</span><a class="headerlink" href="#id21" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.5 </span><span class="caption-text">Line types (<code class="docutils literal notranslate"><span class="pre">lty</span></code>).</span><a class="headerlink" href="#id23" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="proof proof-type-example" id="id22">
+<div class="proof proof-type-example" id="id24">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.3</span>
@@ -519,13 +520,13 @@ truth using the <em>sine</em> function; see <a class="reference internal" href="
 <span class="p">}</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id23">
+<figure class="align-default" id="id25">
 <span id="fig-sampling"></span><img alt="../_images/sampling-1.png" src="../_images/sampling-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.6 </span><span class="caption-text">The sine function approximated with line segments. Sampling more densely gives the illusion of smoothness.</span><a class="headerlink" href="#id23" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.6 </span><span class="caption-text">The sine function approximated with line segments. Sampling more densely gives the illusion of smoothness.</span><a class="headerlink" href="#id25" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id24">
+</div></div><div class="proof proof-type-exercise" id="id26">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.4</span>
@@ -533,7 +534,7 @@ truth using the <em>sine</em> function; see <a class="reference internal" href="
     </div><div class="proof-content">
 <p>Implement your version of the <strong class="command">segments</strong> function
 using a call to <strong class="command">lines</strong>.</p>
-</div></div><div class="proof proof-type-exercise" id="id25">
+</div></div><div class="proof proof-type-exercise" id="id27">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.5</span>
@@ -552,7 +553,7 @@ to change the line end and join styles (from the default rounded caps).</p>
 colour and line type (<code class="docutils literal notranslate"><span class="pre">border</span></code>, <code class="docutils literal notranslate"><span class="pre">lty</span></code>, <code class="docutils literal notranslate"><span class="pre">lwd</span></code>).
 If the <code class="docutils literal notranslate"><span class="pre">col</span></code> argument is not missing, the polygon is filled
 (or hatched; cf. the <code class="docutils literal notranslate"><span class="pre">density</span></code> and <code class="docutils literal notranslate"><span class="pre">angle</span></code> arguments).</p>
-<div class="proof proof-type-example" id="id26">
+<div class="proof proof-type-example" id="id28">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.6</span>
@@ -575,10 +576,10 @@ to a circle.</p>
 <span class="nf">regular_poly</span><span class="p">(</span><span class="m">8.5</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="n">border</span><span class="o">=</span><span class="s">&quot;brown&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;lightyellow&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id27">
+<figure class="align-default" id="id29">
 <span id="fig-circles"></span><img alt="../_images/circles-1.png" src="../_images/circles-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.7 </span><span class="caption-text">Regular polygons drawn using <strong class="command">polygon</strong>.</span><a class="headerlink" href="#id27" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.7 </span><span class="caption-text">Regular polygons drawn using <strong class="command">polygon</strong>.</span><a class="headerlink" href="#id29" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Note the <code class="docutils literal notranslate"><span class="pre">asp=1</span></code> argument to the <strong class="command">plot.window</strong> function
@@ -587,7 +588,7 @@ x- and y-axes. This way, the circle looks like one and not an oval.</p>
 </div></div><p>Notice that the last vertex adjoins the first one.
 Also, if we are absent-minded (or particularly creative),
 we can produce self-intersecting or otherwise degenerate shapes.</p>
-<div class="proof proof-type-exercise" id="id28">
+<div class="proof proof-type-exercise" id="id30">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.7</span>
@@ -604,10 +605,10 @@ Moreover, by setting the <code class="docutils literal notranslate"><span class=
 below, to the left of, etc., the pivots.
 Some further position adjustments are also possible (<code class="docutils literal notranslate"><span class="pre">adj</span></code>, <code class="docutils literal notranslate"><span class="pre">offset</span></code>);
 see <a class="reference internal" href="#fig-textdemo"><span class="std std-numref">Figure 13.8</span></a>.</p>
-<figure class="align-default" id="id29">
+<figure class="align-default" id="id31">
 <span id="fig-textdemo"></span><img alt="../_images/textdemo-1.png" src="../_images/textdemo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.8 </span><span class="caption-text">The positioning of text with <strong class="command">text</strong> (plotting symbols added for reference).</span><a class="headerlink" href="#id29" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.8 </span><span class="caption-text">The positioning of text with <strong class="command">text</strong> (plotting symbols added for reference).</span><a class="headerlink" href="#id31" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p><code class="docutils literal notranslate"><span class="pre">col</span></code> specifies the colour, <code class="docutils literal notranslate"><span class="pre">cex</span></code> affects the size, and <code class="docutils literal notranslate"><span class="pre">srt</span></code>
@@ -639,7 +640,7 @@ the LaTeX typesetting system.</p>
 whose elements represent pixels (see <a class="reference internal" href="#fig-primitives-demo"><span class="std std-numref">Figure 13.2</span></a>
 for an example). They can be used for drawing heat maps or backgrounds of
 contour plots; see <a class="reference internal" href="#sec-heat-map"><span class="std std-numref">Section 13.3.4</span></a>.</p>
-<div class="proof proof-type-example" id="id30">
+<div class="proof proof-type-example" id="id32">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.8</span>
@@ -661,10 +662,10 @@ image, with and without interpolation.</p>
 <span class="nf">rasterImage</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">interpolate</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">  </span><span class="c1"># right subplot</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id31">
+<figure class="align-default" id="id33">
 <span id="fig-gradient"></span><img alt="../_images/gradient-1.png" src="../_images/gradient-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.9 </span><span class="caption-text">Example bitmaps drawn with <strong class="command">rasterImage</strong>, with (left) and without (right) colour interpolation.</span><a class="headerlink" href="#id31" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.9 </span><span class="caption-text">Example bitmaps drawn with <strong class="command">rasterImage</strong>, with (left) and without (right) colour interpolation.</span><a class="headerlink" href="#id33" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -679,11 +680,11 @@ e.g., the plot’s margins (see <a class="reference internal" href="#sec-plot-ma
 or user coordinates (see <a class="reference internal" href="#sec-plot-usr-axis"><span class="std std-numref">Section 13.2.3</span></a>).
 The reference list of available parameters is given in <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;par&quot;)</span></code>.
 Below we discuss the most noteworthy ones.</p>
-<p>Moreover, some functions source<a class="footnote-reference brackets" href="#pardefexcept" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> the values of their default
+<p>Moreover, some functions source<a class="footnote-reference brackets" href="#pardefexcept" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> the values of their default
 arguments by querying <strong class="command">par</strong>. This is the case of,
 e.g., <code class="docutils literal notranslate"><span class="pre">col</span></code>, <code class="docutils literal notranslate"><span class="pre">pch</span></code>, <code class="docutils literal notranslate"><span class="pre">lty</span></code> in the <strong class="command">points</strong> and <strong class="command">lines</strong>
 function.</p>
-<div class="proof proof-type-exercise" id="id32">
+<div class="proof proof-type-exercise" id="id34">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.9</span>
@@ -719,7 +720,7 @@ predefined tags known to the <strong class="command">colours</strong> function:<
 RGB colour space: three series of hexadecimal numbers of two digits each,
 i.e., between <span class="math">\(\text{00}_\text{hex}=0\)</span>
 (off) and <span class="math">\(\text{FF}_\text{hex}=255\)</span> (full on),
-giving the intensity of the red, green, and blue channels<a class="footnote-reference brackets" href="#footrgb" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+giving the intensity of the red, green, and blue channels<a class="footnote-reference brackets" href="#footrgb" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 <p>In practice, the <strong class="command">col2rgb</strong> and <strong class="command">rgb</strong> functions
 can convert between the decimal and hexadecimal representations:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;green&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cyan&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;magenta&quot;</span><span class="p">,</span>
@@ -757,7 +758,7 @@ codes can be mapped to consecutive colours from any palette;
 see <a class="reference internal" href="#fig-irisplot-factors"><span class="std std-numref">Figure 13.17</span></a> below for an example.</p>
 </li>
 </ul>
-<div class="proof proof-type-example" id="id33">
+<div class="proof proof-type-example" id="id35">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.10</span>
@@ -769,8 +770,8 @@ see <a class="reference internal" href="#fig-irisplot-factors"><span class="std 
 <span class="c1">## [8] &quot;gray62&quot;</span>
 </pre></div>
 </div>
-<p>These are<a class="footnote-reference brackets" href="#footcolourblind" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, in order: black, red, green, blue, cyan,
-magenta, yellow, and grey; see<a class="footnote-reference brackets" href="#footbwonline" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> <a class="reference internal" href="#fig-palette"><span class="std std-numref">Figure 13.10</span></a>.</p>
+<p>These are<a class="footnote-reference brackets" href="#footcolourblind" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, in order: black, red, green, blue, cyan,
+magenta, yellow, and grey; see<a class="footnote-reference brackets" href="#footbwonline" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> <a class="reference internal" href="#fig-palette"><span class="std std-numref">Figure 13.10</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">k</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="nf">palette</span><span class="p">())</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">));</span><span class="w"> </span><span class="nf">plot.new</span><span class="p">();</span><span class="w"> </span><span class="nf">plot.window</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="m">+1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="nf">points</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
@@ -778,10 +779,10 @@ magenta, yellow, and grey; see<a class="footnote-reference brackets" href="#foot
 <span class="nf">text</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">pos</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id34">
+<figure class="align-default" id="id36">
 <span id="fig-palette"></span><img alt="../_images/palette-1.png" src="../_images/palette-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.10 </span><span class="caption-text">The default colour <strong class="command">palette</strong>.</span><a class="headerlink" href="#id34" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.10 </span><span class="caption-text">The default colour <strong class="command">palette</strong>.</span><a class="headerlink" href="#id36" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><p>Choosing usable colours requires talents that most
@@ -801,7 +802,7 @@ from blue through green to brown (like in a topographic map
 with elevation colouring).
 They may be of use, e.g., when drawing contour plots;
 compare <a class="reference internal" href="#fig-contour"><span class="std std-numref">Figure 13.27</span></a>.</p>
-<div class="proof proof-type-exercise" id="id35">
+<div class="proof proof-type-exercise" id="id37">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.11</span>
@@ -809,10 +810,10 @@ compare <a class="reference internal" href="#fig-contour"><span class="std std-n
     </div><div class="proof-content">
 <p>Create a demo of the aforementioned palettes
 in a similar (or nicer) style to that in <a class="reference internal" href="#fig-palette-pals"><span class="std std-numref">Figure 13.11</span></a>.</p>
-<figure class="align-default" id="id36">
+<figure class="align-default" id="id38">
 <span id="fig-palette-pals"></span><img alt="../_images/palette-pals-1.png" src="../_images/palette-pals-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.11 </span><span class="caption-text">Qualitative colour palettes in <strong class="command">palette.pals</strong>; <em>R4</em> is the default one, as seen in <a class="reference internal" href="#fig-palette"><span class="std std-numref">Figure 13.10</span></a>.</span><a class="headerlink" href="#id36" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.11 </span><span class="caption-text">Qualitative colour palettes in <strong class="command">palette.pals</strong>; <em>R4</em> is the default one, as seen in <a class="reference internal" href="#fig-palette"><span class="std std-numref">Figure 13.10</span></a>.</span><a class="headerlink" href="#id38" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -844,7 +845,7 @@ to the user coordinates.</p>
 but this can be changed with the <code class="docutils literal notranslate"><span class="pre">xpd</span></code> parameter;
 see also the more flexible <strong class="command">clip</strong> function.</p>
 </div>
-<div class="proof proof-type-example" id="id37">
+<div class="proof proof-type-example" id="id39">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.12</span>
@@ -875,10 +876,10 @@ and <strong class="command">title</strong> to print the descriptive labels.</p>
 <span class="nf">lines</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">1.25</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">),</span><span class="w"> </span><span class="n">xpd</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w">  </span><span class="c1"># clip to figure region</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id38">
+<figure class="align-default" id="id40">
 <span id="fig-margins1"></span><img alt="../_images/margins1-1.png" src="../_images/margins1-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.12 </span><span class="caption-text">Figure layout with default inner and outer margins (<code class="docutils literal notranslate"><span class="pre">mar=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(5.1,</span> <span class="pre">4.1,</span> <span class="pre">4.1,</span> <span class="pre">2.1)</span></code> and <code class="docutils literal notranslate"><span class="pre">oma=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0)</span></code> text lines, respectively). We see that a lot of space is wasted and hence some tweaking might be necessary to suit our needs better. Note the clipping of the solid line to the grey plot region.</span><a class="headerlink" href="#id38" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.12 </span><span class="caption-text">Figure layout with default inner and outer margins (<code class="docutils literal notranslate"><span class="pre">mar=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(5.1,</span> <span class="pre">4.1,</span> <span class="pre">4.1,</span> <span class="pre">2.1)</span></code> and <code class="docutils literal notranslate"><span class="pre">oma=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0)</span></code> text lines, respectively). We see that a lot of space is wasted and hence some tweaking might be necessary to suit our needs better. Note the clipping of the solid line to the grey plot region.</span><a class="headerlink" href="#id40" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -899,7 +900,7 @@ use <code class="docutils literal notranslate"><span class="pre">asp=1</span></c
 <li><p><code class="docutils literal notranslate"><span class="pre">log</span></code> – logarithmic scaling on particular axes:
 <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> (none; default), <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;y&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;xy&quot;</span></code>.</p></li>
 </ul>
-<div class="proof proof-type-example" id="id39">
+<div class="proof proof-type-example" id="id41">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.13</span>
@@ -919,7 +920,7 @@ the extremes of the user coordinates in the form
 which uses the base-10 logarithmic scale. In this case, its actual range is
 <code class="docutils literal notranslate"><span class="pre">10^</span></code><strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;usr&quot;)[3:4]</span></code>
 because <span class="math">\(\log_{10} 1=0\)</span> and <span class="math">\(\log_{10} 1000=3\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id40">
+</div></div><div class="proof proof-type-exercise" id="id42">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.14</span>
@@ -957,7 +958,7 @@ the tick marks.</p>
 </div>
 <p><strong class="command">axis</strong> relies on the same algorithm as <strong class="command">axTicks</strong>.
 Alternatively, we can provide custom tick locations and labels.</p>
-<div class="proof proof-type-example" id="id41">
+<div class="proof proof-type-example" id="id43">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.15</span>
@@ -986,10 +987,10 @@ Alternatively, we can provide custom tick locations and labels.</p>
 <span class="nf">box</span><span class="p">()</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id42">
+<figure class="align-default" id="id44">
 <span id="fig-mysettsgraph"></span><img alt="../_images/mysettsgraph-1.png" src="../_images/mysettsgraph-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.13 </span><span class="caption-text">Custom axes and other settings.</span><a class="headerlink" href="#id42" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.13 </span><span class="caption-text">Custom axes and other settings.</span><a class="headerlink" href="#id44" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -1021,7 +1022,7 @@ to convert between the user and physical sizes (in inches).
 It is based on the ratios
 <code class="docutils literal notranslate"><span class="pre">(usr[2]-usr[1])/pin[1]</span></code> and <code class="docutils literal notranslate"><span class="pre">(usr[4]-usr[3])/pin[2]</span></code>;
 compare the <strong class="command">xinch</strong> and <strong class="command">yinch</strong> functions.</p>
-<div class="proof proof-type-example" id="id43">
+<div class="proof proof-type-example" id="id45">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.16</span>
@@ -1029,13 +1030,13 @@ compare the <strong class="command">xinch</strong> and <strong class="command">y
     </div><div class="proof-content">
 <p>(*) <a class="reference internal" href="#fig-user-coords"><span class="std std-numref">Figure 13.14</span></a> shows how we can pinpoint
 the edges of the figure and device region in user coordinates.</p>
-</div></div><figure class="align-default" id="id44">
+</div></div><figure class="align-default" id="id46">
 <span id="fig-user-coords"></span><img alt="../_images/user-coords-1.png" src="../_images/user-coords-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.14 </span><span class="caption-text">User vs device coordinates. Note that the virtual inch does not correspond to the physical one, as some scaling was applied.</span><a class="headerlink" href="#id44" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.14 </span><span class="caption-text">User vs device coordinates. Note that the virtual inch does not correspond to the physical one, as some scaling was applied.</span><a class="headerlink" href="#id46" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="proof proof-type-exercise" id="id45">
+<div class="proof proof-type-exercise" id="id47">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.17</span>
@@ -1060,7 +1061,7 @@ Each invocation of <strong class="command">plot.new</strong> starts a new figure
 Consecutive figures are either placed in a rowwise manner (<code class="docutils literal notranslate"><span class="pre">mfrow</span></code>)
 or the columnwise one (<code class="docutils literal notranslate"><span class="pre">mfcol</span></code>). Alternatively,
 the <code class="docutils literal notranslate"><span class="pre">mfg</span></code> parameter can enforce a custom order.</p>
-<div class="proof proof-type-example" id="id46">
+<div class="proof proof-type-example" id="id48">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.18</span>
@@ -1090,10 +1091,10 @@ aligned on a <span class="math">\(2\times 2\)</span> grid.</p>
 <span class="w">    </span><span class="nf">mtext</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Outer margin %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">side</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">outer</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id47">
+<figure class="align-default" id="id49">
 <span id="fig-margins2"></span><img alt="../_images/margins2-1.png" src="../_images/margins2-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.15 </span><span class="caption-text">A page with four figures created using <strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(mfrow=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2))</span></code>.</span><a class="headerlink" href="#id47" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.15 </span><span class="caption-text">A page with four figures created using <strong class="command">par</strong><code class="code docutils literal notranslate"><span class="pre">(mfrow=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2))</span></code>.</span><a class="headerlink" href="#id49" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><p>Thanks to <code class="docutils literal notranslate"><span class="pre">mfrow</span></code> and <code class="docutils literal notranslate"><span class="pre">mfcol</span></code>, we can create a scatter plot matrix
@@ -1172,7 +1173,7 @@ which might increase the drawing speed on certain interactive devices.</p>
 <p>The current plot can be copied to another device (e.g.,
 a PDF file) using <strong class="command">dev.print</strong>.</p>
 </div>
-<div class="proof proof-type-exercise" id="id48">
+<div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.19</span>
@@ -1184,10 +1185,10 @@ sine curve. Generate a series of video frames like in
 Then, use <a class="reference external" href="https://imagemagick.org/"><strong class="program">ImageMagick</strong></a>
 (compare <a class="reference internal" href="170-function.html#sec-external-programs"><span class="std std-numref">Section 7.3.2</span></a> or rely on another tool)
 to combine these files as a single animated PNG.</p>
-<figure class="align-default" id="id49">
+<figure class="align-default" id="id51">
 <span id="fig-animation"></span><img alt="../_images/animation-1.png" src="../_images/animation-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.16 </span><span class="caption-text">Selected frames of an example animation. They can be stored in separate files and then combined as a single animated PNG.</span><a class="headerlink" href="#id49" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.16 </span><span class="caption-text">Selected frames of an example animation. They can be stored in separate files and then combined as a single animated PNG.</span><a class="headerlink" href="#id51" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -1203,7 +1204,7 @@ pairs plots, etc.</p>
 <p>Below we review a few of them. We also show how they can be customised
 or even rewritten from scratch if we are not completely happy with them.
 They will inspire us to practice lower-level graphics programming.</p>
-<div class="proof proof-type-exercise" id="id50">
+<div class="proof proof-type-exercise" id="id52">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.20</span>
@@ -1217,7 +1218,7 @@ and how they affect <strong class="command">plot.new</strong>, <strong class="co
 <h3><span class="section-number">13.3.1. </span>Scatter and function plots with <strong class="command">plot.default</strong> and <strong class="command">matplot</strong><a class="headerlink" href="#scatter-and-function-plots-with-plot-default-and-matplot" title="Link to this heading">#</a></h3>
 <p>The default method for the S3 generic <strong class="command">plot</strong>
 is a convenient wrapper around <strong class="command">points</strong> and <strong class="command">lines</strong>.</p>
-<div class="proof proof-type-example" id="id51">
+<div class="proof proof-type-example" id="id53">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.21</span>
@@ -1247,13 +1248,13 @@ Take note of a call to the <strong class="command">legend</strong> function.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id52">
+<figure class="align-default" id="id54">
 <span id="fig-irisplot-factors"></span><img alt="../_images/irisplot-factors-1.png" src="../_images/irisplot-factors-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.17 </span><span class="caption-text"><strong class="command">as.numeric</strong> can define different plotting styles for each factor level.</span><a class="headerlink" href="#id52" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.17 </span><span class="caption-text"><strong class="command">as.numeric</strong> can define different plotting styles for each factor level.</span><a class="headerlink" href="#id54" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id53">
+</div></div><div class="proof proof-type-exercise" id="id55">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.22</span>
@@ -1262,7 +1263,7 @@ Take note of a call to the <strong class="command">legend</strong> function.</p>
 <p>Pass <code class="docutils literal notranslate"><span class="pre">ann=FALSE</span></code> and <code class="docutils literal notranslate"><span class="pre">axes=FALSE</span></code> to <strong class="command">plot</strong> to
 suppress the addition of axes and labels. Then, draw them manually
 using the functions discussed in the previous section.</p>
-</div></div><div class="proof proof-type-exercise" id="id54">
+</div></div><div class="proof proof-type-exercise" id="id56">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.23</span>
@@ -1272,7 +1273,7 @@ using the functions discussed in the previous section.</p>
 Then, call <strong class="command">lines</strong> to add <span class="math">\(y=\cos x\)</span>.
 Later, do the same using a single reference to <strong class="command">matplot</strong>.
 Include a legend.</p>
-</div></div><div class="proof proof-type-example" id="id55">
+</div></div><div class="proof proof-type-example" id="id57">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.24</span>
@@ -1295,13 +1296,13 @@ the two-dimensional histograms that we will later depict in
 <span class="w">        </span><span class="n">pch</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Height&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Weight&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id56">
+<figure class="align-default" id="id58">
 <span id="fig-semitrans-scatter"></span><img alt="../_images/semitrans-scatter-1.png" src="../_images/semitrans-scatter-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.18 </span><span class="caption-text">Semi-transparent symbols can reflect the points’ distribution density.</span><a class="headerlink" href="#id56" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.18 </span><span class="caption-text">Semi-transparent symbols can reflect the points’ distribution density.</span><a class="headerlink" href="#id58" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-example" id="id57">
+</div></div><div class="proof proof-type-example" id="id59">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.25</span>
@@ -1326,13 +1327,13 @@ temperature intervals was added using a call to <strong class="command">polygon<
 <span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">bg</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id58">
+<figure class="align-default" id="id60">
 <span id="fig-semitrans-ribbon"></span><img alt="../_images/semitrans-ribbon-1.png" src="../_images/semitrans-ribbon-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.19 </span><span class="caption-text">Example time series. A semi-transparent ribbon was added by calling <strong class="command">polygon</strong> to highlight the area between the low-high ranges (intervals).</span><a class="headerlink" href="#id58" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.19 </span><span class="caption-text">Example time series. A semi-transparent ribbon was added by calling <strong class="command">polygon</strong> to highlight the area between the low-high ranges (intervals).</span><a class="headerlink" href="#id60" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-example" id="id59">
+</div></div><div class="proof proof-type-example" id="id61">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.26</span>
@@ -1359,13 +1360,13 @@ hue being a function of a third variable.</p>
 <span class="nf">mtext</span><span class="p">(</span><span class="s">&quot;Waist Ø&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">side</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id60">
+<figure class="align-default" id="id62">
 <span id="fig-colour-scatter"></span><img alt="../_images/colour-scatter-1.png" src="../_images/colour-scatter-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.20 </span><span class="caption-text">A 2D scatter plot with a third variable represented by colours.</span><a class="headerlink" href="#id60" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.20 </span><span class="caption-text">A 2D scatter plot with a third variable represented by colours.</span><a class="headerlink" href="#id62" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id61">
+</div></div><div class="proof proof-type-exercise" id="id63">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.27</span>
@@ -1373,7 +1374,7 @@ hue being a function of a third variable.</p>
     </div><div class="proof-content">
 <p>Implement your version of <strong class="command">pairs</strong>, being the function
 to draw a scatter plot matrix (a pairs plot).</p>
-</div></div><div class="proof proof-type-exercise" id="id62">
+</div></div><div class="proof proof-type-exercise" id="id64">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.28</span>
@@ -1384,7 +1385,7 @@ There are <strong class="command">plot</strong> methods overloaded for them. Ins
 code. Then, inspired by this, create a function to compute and display
 the empirical cumulative distribution function corresponding to a given
 numeric vector.</p>
-</div></div><div class="proof proof-type-exercise" id="id63">
+</div></div><div class="proof proof-type-exercise" id="id65">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.29</span>
@@ -1401,7 +1402,7 @@ for depicting this dataset?</p>
 <h3><span class="section-number">13.3.2. </span>Bar plots and histograms<a class="headerlink" href="#bar-plots-and-histograms" title="Link to this heading">#</a></h3>
 <p>A bar plot is drawn using a series of rectangles (i.e., certain polygons)
 of different heights (or widths, if we request horizontal alignment).</p>
-<div class="proof proof-type-example" id="id64">
+<div class="proof proof-type-example" id="id66">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.30</span>
@@ -1441,10 +1442,10 @@ with a cumulative percentage curve; see <a class="reference internal" href="#fig
 <span class="w">    </span><span class="n">pos</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)[(</span><span class="n">cumpcto_med</span><span class="o">&gt;</span><span class="m">80</span><span class="p">)</span><span class="m">+1</span><span class="p">],</span><span class="w"> </span><span class="n">offset</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id65">
+<figure class="align-default" id="id67">
 <span id="fig-pareto-chart"></span><img alt="../_images/pareto-chart-1.png" src="../_images/pareto-chart-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.21 </span><span class="caption-text">An example Pareto chart (a fancy bar plot). Double axes have a general tendency to confuse the reader.</span><a class="headerlink" href="#id65" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.21 </span><span class="caption-text">An example Pareto chart (a fancy bar plot). Double axes have a general tendency to confuse the reader.</span><a class="headerlink" href="#id67" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Note that <strong class="command">barplot</strong> returned the midpoints of the bars,
@@ -1452,7 +1453,7 @@ which we put in good use.
 By default, it sets the <code class="docutils literal notranslate"><span class="pre">xaxs=&quot;i&quot;</span></code> graphics parameter and thus
 does not extend the x-axis range by 4% on both sides. This would not make
 us happy here, therefore we needed to change it manually.</p>
-</div></div><div class="proof proof-type-exercise" id="id66">
+</div></div><div class="proof proof-type-exercise" id="id68">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.31</span>
@@ -1462,13 +1463,13 @@ us happy here, therefore we needed to change it manually.</p>
 the number of adults who did not survive the sinking of the deadliest
 1912 cruise; see <a class="reference internal" href="#fig-bar-plot-titanic"><span class="std std-numref">Figure 13.22</span></a> and the
 <code class="docutils literal notranslate"><span class="pre">Titanic</span></code> dataset.</p>
-<figure class="align-default" id="id67">
+<figure class="align-default" id="id69">
 <span id="fig-bar-plot-titanic"></span><img alt="../_images/bar-plot-titanic-1.png" src="../_images/bar-plot-titanic-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.22 </span><span class="caption-text">An example bar plot representing a two-way contingency table.</span><a class="headerlink" href="#id67" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.22 </span><span class="caption-text">An example bar plot representing a two-way contingency table.</span><a class="headerlink" href="#id69" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id68">
+</div></div><div class="proof proof-type-exercise" id="id70">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.32</span>
@@ -1498,13 +1499,13 @@ the intervals cover the whole data range.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id69">
+<figure class="align-default" id="id71">
 <span id="fig-hist-demo"></span><img alt="../_images/hist-demo-1.png" src="../_images/hist-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.23 </span><span class="caption-text">Example histograms for the same dataset.</span><a class="headerlink" href="#id69" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.23 </span><span class="caption-text">Example histograms for the same dataset.</span><a class="headerlink" href="#id71" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="proof proof-type-exercise" id="id70">
+<div class="proof proof-type-exercise" id="id72">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.33</span>
@@ -1514,7 +1515,7 @@ the intervals cover the whole data range.</p>
 Note the invisibly-returned list of the S3 class <code class="docutils literal notranslate"><span class="pre">histogram</span></code>.
 Then, study <strong class="program">graphics</strong><code class="code docutils literal notranslate"><span class="pre">:::</span></code><strong class="command">plot.histogram</strong>.
 Implement similar functions yourself.</p>
-</div></div><div class="proof proof-type-exercise" id="id71">
+</div></div><div class="proof proof-type-exercise" id="id73">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.34</span>
@@ -1523,7 +1524,7 @@ Implement similar functions yourself.</p>
 <p>Modify your function to draw a scatter plot matrix
 so that it gives the histograms of the marginal distributions
 on its diagonal.</p>
-</div></div><div class="proof proof-type-example" id="id72">
+</div></div><div class="proof proof-type-example" id="id74">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.35</span>
@@ -1559,13 +1560,13 @@ over the process (e.g., supports vertical layout).</p>
 <span class="w">    </span><span class="n">xlim</span><span class="o">=</span><span class="nf">range</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">range</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="w">  </span><span class="c1"># default xlim, ylim</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id73">
+<figure class="align-default" id="id75">
 <span id="fig-layout-demo"></span><img alt="../_images/layout-demo-1.png" src="../_images/layout-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.24 </span><span class="caption-text">A scatter plot with marginal histograms: three (four) plots on one page, but on a nonuniform grid created using <strong class="command">layout</strong>.</span><a class="headerlink" href="#id73" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.24 </span><span class="caption-text">A scatter plot with marginal histograms: three (four) plots on one page, but on a nonuniform grid created using <strong class="command">layout</strong>.</span><a class="headerlink" href="#id75" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-example" id="id74">
+</div></div><div class="proof proof-type-example" id="id76">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.36</span>
@@ -1593,13 +1594,13 @@ see <a class="reference internal" href="#fig-semitrans-density"><span class="std
 <span class="w">    </span><span class="n">lty</span><span class="o">=</span><span class="nf">seq_along</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]])))</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id75">
+<figure class="align-default" id="id77">
 <span id="fig-semitrans-density"></span><img alt="../_images/semitrans-density-1.png" src="../_images/semitrans-density-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.25 </span><span class="caption-text">Kernel density estimators of sepal length split by species in the <code class="docutils literal notranslate"><span class="pre">iris</span></code> dataset. Note the semi-transparent polygons (again).</span><a class="headerlink" href="#id75" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.25 </span><span class="caption-text">Kernel density estimators of sepal length split by species in the <code class="docutils literal notranslate"><span class="pre">iris</span></code> dataset. Note the semi-transparent polygons (again).</span><a class="headerlink" href="#id77" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id76">
+</div></div><div class="proof proof-type-exercise" id="id78">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.37</span>
@@ -1621,10 +1622,10 @@ see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-
 <span class="nf">grid_kde</span><span class="p">(</span><span class="n">tips</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="o">=</span><span class="s">&quot;tip&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="s">&quot;smoker&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hue</span><span class="o">=</span><span class="s">&quot;sex&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id77">
+<figure class="align-default" id="id79">
 <span id="fig-trellis-demo"></span><img alt="../_images/trellis-demo-1.png" src="../_images/trellis-demo-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.26 </span><span class="caption-text">An example grid plot (also known as a trellis, panel, conditioning, or lattice plot) with kernel density estimators for a numeric variable (amount of tip in a US restaurant) split by a combination of three factor levels (smoker, time, sex).</span><a class="headerlink" href="#id77" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.26 </span><span class="caption-text">An example grid plot (also known as a trellis, panel, conditioning, or lattice plot) with kernel density estimators for a numeric variable (amount of tip in a US restaurant) split by a combination of three factor levels (smoker, time, sex).</span><a class="headerlink" href="#id79" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div></section>
@@ -1633,7 +1634,7 @@ see <a class="reference internal" href="#fig-trellis-demo"><span class="std std-
 <p>We have already seen a chart generated by the <strong class="command">boxplot</strong> function
 in <a class="reference internal" href="150-indexing.html#fig-toothgrowth-boxplot"><span class="std std-numref">Figure 5.1</span></a>. Tinkering with it will
 give us robust practice, which in turn shall make us perfect.</p>
-<div class="proof proof-type-exercise" id="id78">
+<div class="proof proof-type-exercise" id="id80">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.38</span>
@@ -1645,14 +1646,14 @@ give us robust practice, which in turn shall make us perfect.</p>
 <code class="docutils literal notranslate"><span class="pre">dose</span></code>s added; also, on the x-axis, only <em>unique</em> <code class="docutils literal notranslate"><span class="pre">dose</span></code>s are printed),</p></li>
 <li><p>different <code class="docutils literal notranslate"><span class="pre">supp</span></code>s have different colours (add a legend explaining them).</p></li>
 </ol>
-</div></div><div class="proof proof-type-exercise" id="id79">
+</div></div><div class="proof proof-type-exercise" id="id81">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.39</span>
         
     </div><div class="proof-content">
 <p>Write a function for drawing box plots using graphics primitives.</p>
-</div></div><div class="proof proof-type-exercise" id="id80">
+</div></div><div class="proof proof-type-exercise" id="id82">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.40</span>
@@ -1660,7 +1661,7 @@ give us robust practice, which in turn shall make us perfect.</p>
     </div><div class="proof-content">
 <p>(*) Write a function for drawing violin plots.
 They are similar to box plots but use kernel density estimators.</p>
-</div></div><div class="proof proof-type-exercise" id="id81">
+</div></div><div class="proof proof-type-exercise" id="id83">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.41</span>
@@ -1677,7 +1678,7 @@ the magnitude of the <span class="math">\(z\)</span> component can be expressed 
 brightness or hue.</p>
 <p><strong class="command">image</strong> is a convenient wrapper around <strong class="command">rasterImage</strong>,
 which can draw contour plots, two-dimensional histograms, heatmaps, etc.</p>
-<div class="proof proof-type-example" id="id82">
+<div class="proof proof-type-example" id="id84">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.42</span>
@@ -1695,17 +1696,17 @@ A call to <strong class="command">contour</strong> adds labelled contour lines
 <span class="nf">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">nlevels</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id83">
+<figure class="align-default" id="id85">
 <span id="fig-contour"></span><img alt="../_images/contour-1.png" src="../_images/contour-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.27 </span><span class="caption-text">A filled contour plot with labelled contour lines.</span><a class="headerlink" href="#id83" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.27 </span><span class="caption-text">A filled contour plot with labelled contour lines.</span><a class="headerlink" href="#id85" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div></div><p>In <strong class="command">image</strong>, the number of rows in <code class="docutils literal notranslate"><span class="pre">z</span></code> matches the length of <code class="docutils literal notranslate"><span class="pre">x</span></code>,
 whereas the number of columns is equal to the size of <code class="docutils literal notranslate"><span class="pre">y</span></code>.
 This might be counterintuitive; if <code class="docutils literal notranslate"><span class="pre">z</span></code> is printed,
 the image is its 90-degree rotated version.</p>
-<div class="proof proof-type-example" id="id84">
+<div class="proof proof-type-example" id="id86">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.43</span>
@@ -1730,13 +1731,13 @@ in the <code class="docutils literal notranslate"><span class="pre">nhanes</span
 <span class="w">    </span><span class="n">cex</span><span class="o">=</span><span class="m">0.89</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id85">
+<figure class="align-default" id="id87">
 <span id="fig-corr-heatmap"></span><img alt="../_images/corr-heatmap-1.png" src="../_images/corr-heatmap-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.28 </span><span class="caption-text">A correlation heatmap drawn using <strong class="command">image</strong>.</span><a class="headerlink" href="#id85" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.28 </span><span class="caption-text">A correlation heatmap drawn using <strong class="command">image</strong>.</span><a class="headerlink" href="#id87" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id86">
+</div></div><div class="proof proof-type-exercise" id="id88">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.44</span>
@@ -1745,7 +1746,7 @@ in the <code class="docutils literal notranslate"><span class="pre">nhanes</span
 <p>Check out the <strong class="command">heatmap</strong> function,
 which uses hierarchical clustering to find an aesthetic reordering of the
 matrix’s items.</p>
-</div></div><div class="proof proof-type-example" id="id87">
+</div></div><div class="proof proof-type-example" id="id89">
 
     <div class="proof-title">
         <span class="proof-type">Example 13.45</span>
@@ -1774,13 +1775,13 @@ quite differently from the semi-transparent symbols in
 <span class="w">    </span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id88">
+<figure class="align-default" id="id90">
 <span id="fig-colour-density2d"></span><img alt="../_images/colour-density2d-1.png" src="../_images/colour-density2d-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 13.29 </span><span class="caption-text">Two-dimensional histograms with different numbers of bins, where the bin count is reflected by the colour.</span><a class="headerlink" href="#id88" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 13.29 </span><span class="caption-text">Two-dimensional histograms with different numbers of bins, where the bin count is reflected by the colour.</span><a class="headerlink" href="#id90" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-</div></div><div class="proof proof-type-exercise" id="id89">
+</div></div><div class="proof proof-type-exercise" id="id91">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.46</span>
@@ -1792,7 +1793,7 @@ and plot it using <strong class="command">contour</strong>.</p>
 </section>
 <section id="exercises">
 <h2><span class="section-number">13.4. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
-<div class="proof proof-type-exercise" id="id90">
+<div class="proof proof-type-exercise" id="id92">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.47</span>
@@ -1826,7 +1827,7 @@ of the current page (following the page’s diagonal)?</p></li>
 <code class="docutils literal notranslate"><span class="pre">mfrow=</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code>?</p></li>
 <li><p>How to export the current plot to a PDF file?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id91">
+</div></div><div class="proof proof-type-exercise" id="id93">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.48</span>
@@ -1836,7 +1837,7 @@ of the current page (following the page’s diagonal)?</p></li>
 time series. Then, add the 7- and 30-day moving averages.
 (*) Also, fit a local polynomial (moving) regression model
 using the Savitzky–Golay filter (see <strong class="command">loess</strong>).</p>
-</div></div><div class="proof proof-type-exercise" id="id92">
+</div></div><div class="proof proof-type-exercise" id="id94">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.49</span>
@@ -1844,7 +1845,7 @@ using the Savitzky–Golay filter (see <strong class="command">loess</strong>).<
     </div><div class="proof-content">
 <p>(*) Draw (from scratch) a candlestick plot
 for the 2022 <a class="reference external" href="https://github.com/gagolews/teaching-data/raw/master/marek/btcusd_ohlc_2022.csv">BTC-to-USD rates</a>.</p>
-</div></div><div class="proof proof-type-exercise" id="id93">
+</div></div><div class="proof proof-type-exercise" id="id95">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.50</span>
@@ -1853,7 +1854,7 @@ for the 2022 <a class="reference external" href="https://github.com/gagolews/tea
 <p>(*) Create a function to draw a normal quantile-quantile (Q-Q) plot,
 i.e., for inspecting whether a numeric sample might come from a normal
 distribution.</p>
-</div></div><div class="proof proof-type-exercise" id="id94">
+</div></div><div class="proof proof-type-exercise" id="id96">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.51</span>
@@ -1865,7 +1866,7 @@ to its Gini index of income inequality.
 You can easily find the data on Wikipedia.
 Try to find an open dataset that gives the borders of each country
 as vertices of a polygon (e.g., in the form of a (geo)JSON file).</p>
-</div></div><div class="proof proof-type-exercise" id="id95">
+</div></div><div class="proof proof-type-exercise" id="id97">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 13.52</span>
@@ -1874,9 +1875,10 @@ as vertices of a polygon (e.g., in the form of a (geo)JSON file).</p>
 <p>Next time you see a pleasant data visualisation somewhere,
 try to reproduce it using base <strong class="program">graphics</strong>.</p>
 </div></div><div style="margin-top: 1em"></div><p>For further information on graphics generation in R,
-see, e.g., Chapter 12 of <span id="id11">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">57</a>]</span>, <span id="id12">[<a class="reference internal" href="999-bibliography.html#id44" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">48</a>]</span>,
-and <span id="id13">[<a class="reference internal" href="999-bibliography.html#id54" title="Rahlf, T. (2019).  Data Visualisation with R: 111 Examples. Springer Nature, 2nd edition. URL: http://www.datavisualisation-r.com/.">52</a>]</span>.
-In this chapter, we were only interested in <em>static</em> graphics,
+see, e.g., Chapter 12 of <span id="id12">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2023).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">58</a>]</span>, <span id="id13">[<a class="reference internal" href="999-bibliography.html#id44" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">48</a>]</span>,
+and <span id="id14">[<a class="reference internal" href="999-bibliography.html#id54" title="Rahlf, T. (2019).  Data Visualisation with R: 111 Examples. Springer Nature, 2nd edition. URL: http://www.datavisualisation-r.com/.">52</a>]</span>. Good introductory textbooks to data visualisation
+as an art include <span id="id15">[<a class="reference internal" href="999-bibliography.html#id77" title="Tufte, E.R. (2001).  The Visual Display of Quantitative Information. Graphics Press.">56</a>, <a class="reference internal" href="999-bibliography.html#id76" title="Wainer, H. (1997).  Visual Revelations: Graphical Tales of Fate and Deception from Napoleon Bonaparte to Ross Perot. Copernicus.">59</a>]</span>.</p>
+<p>In this chapter, we were only interested in <em>static</em> graphics,
 e.g., for use in printed publications or plain websites.
 Interactive plots that a user might tinker with in a web browser
 are a different story.</p>
@@ -1884,14 +1886,14 @@ are a different story.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="pardefexcept" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">1</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">1</a><span class="fn-bracket">]</span></span>
 <p>Alas, it is not as straightforward as that.
 For instance, <strong class="command">polygon</strong> is unaffected by the <code class="docutils literal notranslate"><span class="pre">col</span></code> setting,
 <strong class="command">axis</strong> uses <code class="docutils literal notranslate"><span class="pre">col.axis</span></code> instead, etc.
 We should always consult the documentation.</p>
 </aside>
 <aside class="footnote brackets" id="footrgb" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">2</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">2</a><span class="fn-bracket">]</span></span>
 <p>From school, we probably know the
 <em>subtractive</em> CMY (cyan, magenta, yellow) model, where
 we obtain, e.g., a green colour by using blue-ish and yellow crayons
@@ -1903,17 +1905,17 @@ total darkness emerges when we emit no light,
 yellow emerges when mixing red and green beams, etc.</p>
 </aside>
 <aside class="footnote brackets" id="footcolourblind" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">3</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">3</a><span class="fn-bracket">]</span></span>
 <p>Actually, red-ish, green-ish, etc.
 The choice is more aesthetic than when pure red, green, etc.
 was used (before R 4.0.0). It is also expected to be more
 friendly to people who have colour vision deficiencies.
 We know that roughly every 1 in 12 men (8%) and 1 in 200 women (0.5%),
 especially in the red-green or blue-yellow spectrum;
-see <span id="id14">[<a class="reference internal" href="999-bibliography.html#id5" title="Okabe, M. and Ito, K. (2002).  Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. URL: https://jfly.uni-koeln.de/color.">50</a>]</span> for more details.</p>
+see <span id="id16">[<a class="reference internal" href="999-bibliography.html#id5" title="Okabe, M. and Ito, K. (2002).  Color Universal Design (CUD): How to make figures and presentations that are friendly to Colorblind people. URL: https://jfly.uni-koeln.de/color.">50</a>]</span> for more details.</p>
 </aside>
 <aside class="footnote brackets" id="footbwonline" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">4</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">4</a><span class="fn-bracket">]</span></span>
 <p>The readers of the printed version of this book
 should know that its online version displays this figure
 (and all others) in full colour. See you there.</p>
@@ -1957,7 +1959,7 @@ should know that its online version displays this figure
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-08T09:42:20+1100.
+              Last updated on 2023-11-30T09:17:57+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

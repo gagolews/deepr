@@ -28,7 +28,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="15. Unevaluated expressions (*)" href="320-language.html" /><link rel="prev" title="13. Graphics" href="250-graphics.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/310-compiled.html" />
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/deepr.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/deepr.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>14. Interfacing compiled code (**) - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
     <link rel="stylesheet" type="text/css" href="../_static/katex-math.css?v=91adb8b6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=dd03ec4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=cc2833c3" />
     
     
 
@@ -318,7 +318,7 @@ in R (e.g., other C or C++ libraries).</p></li>
 <p>In the current chapter, we will demonstrate that R works very well as
 a user-friendly interface to compiled code.</p>
 <p>This topic is overall very technical. The definitive reference
-is the <em>Writing R Extensions</em> manual <span id="id3">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>, but see also Chapter 11
+is the <em>Writing R Extensions</em> manual <span id="id3">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span>, but see also Chapter 11
 of <span id="id4">[<a class="reference internal" href="999-bibliography.html#id19" title="Chambers, J.M. (2008).  Software for Data Analysis. Programming with R. Springer.">10</a>]</span>. Furthermore, R’s source code provides many working
 examples of how to deal with R objects in C.</p>
 <p>Here, we will only cover the most important basics.
@@ -452,7 +452,7 @@ we must convert it to an R object so that it can be returned to our
 environment. Here, it is a newly allocated
 numeric vector of length one. We did this by calling
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">Rf_ScalarReal</strong>.</p>
-<div style="margin-top: 1em"></div><p>Although optional (see Section 5.4 of <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>),
+<div style="margin-top: 1em"></div><p>Although optional (see Section 5.4 of <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span>),
 we will register <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">my_c_sum_wrapper</strong>
 as a callable function explicitly. This way, R will not be struggling
 to find the specific entry point in the resulting dynamically linked library
@@ -523,7 +523,7 @@ in R, the first element is at index 1. Compare its run time against
 <h3><span class="section-number">14.1.2. </span><code class="code docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span></code><a class="headerlink" href="#r-cmd-shlib" title="Link to this heading">#</a></h3>
 <p>The “<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">SHLIB</span> <span class="pre">&lt;files&gt;</span></code>” shell command compiles one or more source files
 without the need for turning them into standalone packages;
-see <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>. Then, <strong class="command">dyn.load</strong> loads the resulting DLL.</p>
+see <span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span>. Then, <strong class="command">dyn.load</strong> loads the resulting DLL.</p>
 <div class="proof proof-type-exercise" id="id33">
 
     <div class="proof-title">
@@ -791,7 +791,7 @@ the <code class="file docutils literal notranslate"><span class="pre">inst/examp
 <p>We should refer to particular <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s
 via their descriptive names (constants; e.g., <code class="docutils literal notranslate"><span class="pre">STRSXP</span></code>),
 not their numeric identifiers (e.g., 16);
-see Section 1.1 of <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">66</a>]</span> for the complete list<a class="footnote-reference brackets" href="#footsexptype" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
+see Section 1.1 of <span id="id11">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2023).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">68</a>]</span> for the complete list<a class="footnote-reference brackets" href="#footsexptype" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
 </div></div></section>
 <section id="accessing-elements-in-simple-atomic-vectors">
 <h3><span class="section-number">14.2.2. </span>Accessing elements in simple atomic vectors<a class="headerlink" href="#accessing-elements-in-simple-atomic-vectors" title="Link to this heading">#</a></h3>
@@ -1449,7 +1449,7 @@ e.g., using <strong class="program">C</strong><code class="code docutils literal
 </section>
 <section id="calling-r-functions-from-c">
 <h3><span class="section-number">14.2.7. </span>Calling R functions from C (**)<a class="headerlink" href="#calling-r-functions-from-c" title="Link to this heading">#</a></h3>
-<p>Section 5.11 of <span id="id20">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> discusses ways to call R functions in C.
+<p>Section 5.11 of <span id="id20">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span> discusses ways to call R functions in C.
 To understand them, we will first need to study the material
 from the remaining chapters of our book,
 i.e., environments and the related evaluation model.
@@ -1459,7 +1459,7 @@ implemented in C on objective functions written in R.</p>
 <section id="external-pointers">
 <span id="sec-xptr"></span><h3><span class="section-number">14.2.8. </span>External pointers (**)<a class="headerlink" href="#external-pointers" title="Link to this heading">#</a></h3>
 <p>For storing arbitrary C pointers, there is a separate basic R type named <code class="docutils literal notranslate"><span class="pre">externalptr</span></code> (<code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code> of <code class="docutils literal notranslate"><span class="pre">EXTPTRSXP</span></code>);
-see Section 5.13 of <span id="id21">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for more details.</p>
+see Section 5.13 of <span id="id21">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span> for more details.</p>
 <p>We can use them to maintain dynamic data structures
 or resource handlers between calls to R functions.
 The problem with these is that pointers are passed as… pointers.
@@ -1857,7 +1857,7 @@ over <strong class="program">C</strong><code class="code docutils literal notran
 <p><strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">unif_rand</strong> returns
 a single pseudorandom deviate from the uniform distribution
 on the unit interval. It is the basis for generating numbers
-from all other supported distributions (Section 6.7.1 of <span id="id22">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>).</p>
+from all other supported distributions (Section 6.7.1 of <span id="id22">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span>).</p>
 <p>It uses the same pseudorandom generator as we described
 in <a class="reference internal" href="120-numeric.html#sec-pseudorandom"><span class="std std-numref">Section 2.1.5</span></a>. To read and memorise
 its seed (the `<code class="docutils literal notranslate"><span class="pre">.Random.seed</span></code>` object in the global environment),
@@ -1927,7 +1927,7 @@ In the case of ambiguity, return a randomly chosen candidate.</p>
 </div></div></section>
 <section id="mathematical-functions-from-the-r-api">
 <h3><span class="section-number">14.4.3. </span>Mathematical functions from the R API<a class="headerlink" href="#mathematical-functions-from-the-r-api" title="Link to this heading">#</a></h3>
-<p>Section 6.7 of <span id="id23">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>
+<p>Section 6.7 of <span id="id23">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span>
 lists the available statistical distribution functions,
 mathematical routines and constants, and other numerical
 utilities.</p>
@@ -1937,7 +1937,7 @@ utilities.</p>
 <p>A package may use header files from another package.
 For this to be possible, it must include the dependency name
 in the <code class="docutils literal notranslate"><span class="pre">LinkingTo</span></code> field of its <code class="file docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file;
-see <span id="id24">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> for discussion.</p>
+see <span id="id24">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span> for discussion.</p>
 <div class="proof proof-type-exercise" id="id61">
 
     <div class="proof-title">
@@ -1961,7 +1961,7 @@ by setting <code class="docutils literal notranslate"><span class="pre">PKG_CFLA
 which is overall challenging to ensure if we do not wish to exclude
 W****ws users, we might be required to author custom
 <code class="file docutils literal notranslate"><span class="pre">configure</span></code> (and <code class="file docutils literal notranslate"><span class="pre">configure.win</span></code>) scripts.</p>
-<p>For more information, see <span id="id25">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span>. In particular,
+<p>For more information, see <span id="id25">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span>. In particular,
 it discusses how to use OpenMP<a class="footnote-reference brackets" href="#footopenmp" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> in our projects.</p>
 </section>
 </section>
@@ -2010,7 +2010,7 @@ of matrix elements?</p></li>
         <span class="proof-type">Exercise 14.31</span>
         
     </div><div class="proof-content">
-<p>(*) Read <em>Writing R Extensions</em> <span id="id27">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">63</a>]</span> in its entirety.</p>
+<p>(*) Read <em>Writing R Extensions</em> <span id="id27">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2023).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">65</a>]</span> in its entirety.</p>
 </div></div><div class="proof proof-type-exercise" id="id65">
 
     <div class="proof-title">
@@ -2168,7 +2168,7 @@ than starting a process that spawns many child threads.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-11-08T09:42:20+1100.
+              Last updated on 2023-11-30T09:17:57+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

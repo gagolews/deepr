@@ -1,7 +1,8 @@
 <!-- NOTE EDIT in *-src; *-public is a clone! -->
 
-<a href="https://deepr.gagolewski.com/"><img src="docs/_static/img/cover.png" align="right" height="225" /></a>
 # [Deep R Programming](https://deepr.gagolewski.com/)
+
+<a href="https://deepr.gagolewski.com/"><img src="docs/_static/img/cover.png" align="right" height="225" /></a>
 
 *Deep R Programming* is a comprehensive and in-depth introductory course on one of the most popular languages for data science. It equips ambitious students, professionals, and researchers with the knowledge and skills to become independent users of this potent environment so that they can tackle any problem related to data wrangling and analytics, numerical computing, statistics, and machine learning.
 
