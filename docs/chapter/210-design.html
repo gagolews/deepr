@@ -1638,11 +1638,11 @@ a corresponding <span class="math">\(y\)</span> can be determined for any <span 
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55e845acf040&gt;</span>
+<span class="c1">## &lt;environment: 0x55f283f8c860&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55e846272228&gt;</span>
+<span class="c1">## &lt;environment: 0x55f284737dc0&gt;</span>
 </pre></div>
 </div>
 <p>We might wonder how they can produce different results.
@@ -1966,11 +1966,13 @@ the meaning of such special syntax.</p>
 <p>(*)
 Some functions have rather peculiar default arguments.
 For instance, in the manual page of <strong class="command">prop.test</strong>,
-we read that the <code class="docutils literal notranslate"><span class="pre">alternative</span></code>
-parameter defaults to <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;two.sided&quot;,</span> <span class="pre">&quot;less&quot;,</span> <span class="pre">&quot;greater&quot;)</span></code>
-but that <code class="docutils literal notranslate"><span class="pre">&quot;two.sided&quot;</span></code> is actually the default one.</p>
+we read that the <code class="docutils literal notranslate"><span class="pre">alternative</span></code> parameter defaults to
+<strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;two.sided&quot;,</span> <span class="pre">&quot;less&quot;,</span> <span class="pre">&quot;greater&quot;)</span></code>.
+However, if a user does not set this argument explicitly,
+<code class="docutils literal notranslate"><span class="pre">alternative=&quot;two.sided&quot;</span></code> (the first element in the above vector),
+will actually be assumed.</p>
 <p>If we call <strong class="command">print</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">prop.test</strong><code class="code docutils literal notranslate"><span class="pre">)</span></code>,
-we will find the code line responsible for this behaviour:
+we will find the code line responsible for this odd behaviour:
 “<code class="docutils literal notranslate"><span class="pre">alternative</span> <span class="pre">&lt;-</span> </code><strong class="command">match.arg</strong><code class="code docutils literal notranslate"><span class="pre">(alternative)</span></code>”.
 Consider the following example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test_match_arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;c&quot;</span><span class="p">))</span><span class="w"> </span><span class="nf">match.arg</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1983,11 +1985,11 @@ Consider the following example:</p>
 <span class="c1">## Error in match.arg(x): &#39;arg&#39; should be one of &quot;a&quot;, &quot;b&quot;, &quot;c&quot;</span>
 </pre></div>
 </div>
-<p>In this setting, <strong class="command">match.arg</strong> only allows an actual parameter
-from a given set of choices but selects the first
-option if the argument is missing.</p>
-<p>Unfortunately, we have to learn this behaviour by heart because
-looking at the above source code gives us no clue about this being possible.
+<p>In the current context, <strong class="command">match.arg</strong> only allows an actual parameter
+from a given set of choices. However, if the argument is missing,
+it selects the first option.</p>
+<p>Unfortunately, we have to learn this behaviour by heart,
+because the above source code is far from self-explanatory.
 If such an expression was normally evaluated, we would use
 either the default argument or whatever the user passed as <code class="docutils literal notranslate"><span class="pre">x</span></code> (but
 then the function would not know the range of possible choices). A call to
@@ -2451,7 +2453,7 @@ lines/proprietary solutions/payable services, etc.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2023-12-10T17:42:02+1100.
+              Last updated on 2023-12-24T00:03:42+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
