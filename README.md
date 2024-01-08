@@ -66,7 +66,7 @@ and many [others](https://github.com/gagolews).
 
 --------------------------------------------------------------------------------
 
-Copyright (C) 2022–2023, [Marek Gagolewski][1]. Some rights reserved.
+Copyright (C) 2022–2024, [Marek Gagolewski][1]. Some rights reserved.
 
 This material is licensed under the Creative Commons
 [Attribution-NonCommercial-NoDerivatives 4.0 International][2] License
