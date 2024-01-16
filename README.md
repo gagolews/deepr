@@ -38,7 +38,8 @@ this repository's *Issues* tracker. Thank you.
 
 Dr habil. [Marek Gagolewski][1]
 is currently a Senior Lecturer in Data Science/Applied AI
-at Deakin University in Melbourne, Australia.
+at Deakin University in Melbourne, Australia and an Associate Professor
+at the Systems Research Institute of the Polish Academy of Sciences.
 
 His research interests are related to data science, in particular: modelling
 complex phenomena, developing usable, general-purpose algorithms, studying
@@ -55,13 +56,12 @@ in outlets such as *Proceedings of the National Academy of Sciences (PNAS)*,
 *IEEE Transactions on Fuzzy Systems*, and *Journal of Informetrics*.
 
 In his "spare" time, he writes books for his students
-(check out his [*Minimalist Data Wrangling with Python*](https://datawranglingpy.gagolewski.com/))
-and develops open-source data analysis software, such as
+(check out [*Minimalist Data Wrangling with Python*](https://datawranglingpy.gagolewski.com/))
+and [develops](https://github.com/gagolews) open-source software for data analysis, such as
 [`stringi`](https://stringi.gagolewski.com/) (one of the most often downloaded
-R packages),
+R packages) and
 [`genieclust`](https://genieclust.gagolewski.com/) (a fast and robust
-hierarchical clustering algorithm in both Python and R),
-and many [others](https://github.com/gagolews).
+hierarchical clustering algorithm in both Python and R).
 
 
 --------------------------------------------------------------------------------
