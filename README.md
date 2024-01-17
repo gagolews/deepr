@@ -24,8 +24,7 @@ knowledge's sake.
 **Please spread the news about this project.**
 
 Consider citing this book as:
-[Gagolewski M.][1] (2023), *Deep R Programming*,
-Zenodo, Melbourne,
+[Gagolewski M.][1] (2024), *Deep R Programming*, Melbourne,
 DOI: [10.5281/zenodo.7490464](https://dx.doi.org/10.5281/zenodo.7490464),
 ISBN: 978-0-6455719-2-9,
 URL: <https://deepr.gagolewski.com/>.
