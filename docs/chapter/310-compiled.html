@@ -1052,10 +1052,10 @@ To guard against premature annihilation, R maintains a stack<a class="footnote-r
 of objects. <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">PROTECT</strong><code class="code docutils literal notranslate"><span class="pre">(sexp)</span></code>
 pushes a given object pointer onto the top of the list.
 <strong class="program">C</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">UNPROTECT</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span></code>
-pops the last <em>n</em> elements therefrom (in a last-in-first-out manner).
+pops the last <em>n</em> elements from it in the last-in-first-out manner.
 At the end of a <strong class="command">.Call</strong>, R checks if the number
-of protects matches that of unprotects. If it is not the case,
-a warning is generated.</p>
+of protects matches that of unprotects and generates a warning
+if there is a stack imbalance.</p>
 <p>Protection is <em>not</em> needed:</p>
 <ul class="simple">
 <li><p>for arguments to functions referred to by  <strong class="command">.Call</strong>,
@@ -1591,7 +1591,7 @@ Some tests:</p>
 <h2><span class="section-number">14.3. </span>Dealing with compound types<a class="headerlink" href="#dealing-with-compound-types" title="Link to this heading">#</a></h2>
 <section id="reading-and-setting-attributes">
 <h3><span class="section-number">14.3.1. </span>Reading and setting attributes<a class="headerlink" href="#reading-and-setting-attributes" title="Link to this heading">#</a></h3>
-<p>From <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>, we know that compound types
+<p>From <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>, we know that compound types
 such as matrices, factors, or data frames are
 represented using basic data structures.
 Usually, they are atomic vectors or lists organised in a predefined manner.</p>
@@ -1737,7 +1737,7 @@ If a mode is ambiguous, return all the possible candidates.</p>
 </div></div></section>
 <section id="matrices">
 <h3><span class="section-number">14.3.3. </span>Matrices<a class="headerlink" href="#matrices" title="Link to this heading">#</a></h3>
-<p>Matrices (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>) are <em>flat</em> atomic vectors or lists with
+<p>Matrices (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>) are <em>flat</em> atomic vectors or lists with
 the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute being a vector of length two.
 The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute does not have to be set
 (but the <strong class="command">class</strong> function returns <code class="docutils literal notranslate"><span class="pre">matrix</span></code> and <code class="docutils literal notranslate"><span class="pre">array</span></code>).</p>
@@ -1824,7 +1824,7 @@ contingency table.</p>
 </div></div></section>
 <section id="data-frames">
 <h3><span class="section-number">14.3.4. </span>Data frames<a class="headerlink" href="#data-frames" title="Link to this heading">#</a></h3>
-<p>Data frames (<a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>) are lists of <em>m</em> vectors
+<p>Data frames (<a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>) are lists of <em>m</em> vectors
 of identical lengths <em>n</em> or matrices of <em>n</em> rows for some <em>n</em> and <em>m</em>.
 The character vectors stored in the <code class="docutils literal notranslate"><span class="pre">row.names</span></code> and <code class="docutils literal notranslate"><span class="pre">names</span></code> attributes
 give the <em>n</em> row and <em>m</em> column labels. They are objects of the S3 class
@@ -2168,7 +2168,7 @@ than starting a process that spawns many child threads.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-01-18T09:37:23+1100.
+              Last updated on 2024-01-19T16:20:29+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
