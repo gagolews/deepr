@@ -377,8 +377,8 @@ monotonous, dreary, and uninspiring. What is more, we might be able
 to compose a function from scratch much more quickly than to get through
 the whole garbage dump called the internet from where, only occasionally,
 we can dig out some pearls. Let us remember that we advocate for minimalism
-in this book. We will reflect on such issues in <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>.
-There is also the <em>personal growth</em> side: we become better programmers
+in this book. We will reflect on such issues in <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>.
+There is also the <em>personal growth</em> side: we become more skilled programmers
 by crunching those exercises.</p>
 </div>
 <section id="creating-and-invoking-functions">
@@ -526,7 +526,7 @@ It is best to provide positionally-matched arguments
 before the keyword-based ones; see <a class="reference internal" href="320-language.html#sec-sys-call"><span class="std std-numref">Section 15.4.4</span></a>
 for more details.</p>
 <p>Also, <a class="reference internal" href="220-s3.html#sec-pipe"><span class="std std-numref">Section 10.4</span></a> introduces the (overused) forward pipe
-operator, `<strong class="command">|&gt;</strong>`, which will enable us to write
+operator, `<strong class="command">|&gt;</strong>`, which will enable us to rewrite
 the above as “<code class="docutils literal notranslate"><span class="pre">&quot;spam&quot;</span> <span class="pre">|&gt;</span> <span class="pre">concat(u)</span></code>”.</p>
 </div>
 </section>
@@ -535,11 +535,11 @@ the above as “<code class="docutils literal notranslate"><span class="pre">&qu
 <p>We have been informed that a function’s body is a <em>single</em> R expression
 whose evaluated value is passed to the user as its output.
 This may sound restrictive and in contrast with what we have
-experienced so far. Rarely are we faced with such simple computing tasks,
+experienced so far. Seldom are we faced with such simple computing tasks,
 and we have already seen R functions performing quite sophisticated
 operations.</p>
 <p>Grammatically, a single R expression can be arbitrarily complex
-(<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>). We can use curly braces to group many calls
+(<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>). We can use curly braces to group many calls
 that are to be evaluated one after another. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;first expression\n&quot;</span><span class="p">)</span>
@@ -570,7 +570,7 @@ will be considered its output value.</p>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
-<p>The above code block can also be written more concisely
+<p>This code block can also be written more concisely
 by replacing newlines with semicolons, albeit with perhaps some
 loss in readability:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="m">3</span><span class="p">}</span>
@@ -586,9 +586,8 @@ about `<strong class="command">{</strong>`.</p>
         <span class="proof-type">Example 7.3</span>
         
     </div><div class="proof-content">
-<p>Here is a version of the above <strong class="command">concat</strong> function,
-which guarantees a more <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>-style
-missing values’ propagation:</p>
+<p>Here is a version of our <strong class="command">concat</strong> function that guarantees
+a more <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>-style missing values’ propagation:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">concat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
@@ -637,7 +636,7 @@ of the GNU General Public License version 2. Therefore,
 we are not only encouraged to run the software for whatever purpose,
 but also study and modify its source code without restrictions.
 To facilitate this, we can display all function definitions:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span><span class="w">  </span><span class="c1"># code of the above procedure</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span><span class="w">  </span><span class="c1"># the code of the above procedure</span>
 <span class="c1">## function(a, b)</span>
 <span class="c1">## {</span>
 <span class="c1">##     z &lt;- paste(a, b, sep=&quot;&quot;)</span>
@@ -661,7 +660,7 @@ of <strong class="command">paste</strong>, <strong class="command">.Primitive</s
 or <strong class="command">.Call</strong> in <strong class="command">runif</strong>.
 Therefore, we will sometimes have to dig a bit deeper to access
 the underlying definition; see
-<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a> for more details.</p>
+<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a> for more details.</p>
 </div>
 </section>
 </section>
@@ -742,7 +741,7 @@ part of the book, will let the functions be:</p>
 <li><p>modified at runtime.</p></li>
 </ul>
 </div>
-<p>Below we review the most basic higher-order functions,
+<p>Let us review the most basic higher-order functions,
 including <strong class="command">do.call</strong> and <strong class="command">Map</strong>.</p>
 </section>
 <section id="calling-on-precomputed-arguments-with-do-call">
@@ -838,8 +837,8 @@ R-ish versions (e.g., using the subsetting operator, `<strong class="command">[<
 <p>In data-centric computing, we are frequently faced with tasks that
 involve processing each vector element independently, one after another.
 Such use cases can benefit from vectorised operations like those discussed
-in <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>, <a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>,
-and <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>.</p>
+in <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>, <a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>,
+and <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>.</p>
 <p>Unfortunately, most of the functions that we introduced so far
 cannot be applied on lists.
 For instance, if we try calling <strong class="command">sqrt</strong> on a generic vector,
@@ -1026,7 +1025,7 @@ we have mentioned the <strong class="program">gsl</strong> package:</p>
 <p>Here, <strong class="command">poch</strong> is an object exported by package <strong class="program">gsl</strong>.
 If we did not call <strong class="command">library</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;gsl&quot;)</span></code>,
 trying to access the former would raise an error.</p>
-<p>We could have also accessed the above function
+<p>We could have also accessed the preceding function
 without attaching it to the search path using
 the <strong class="program">pkg</strong><code class="code docutils literal notranslate"><span class="pre">::object</span></code> syntax,
 namely, <strong class="program">gsl</strong><code class="code docutils literal notranslate"><span class="pre">::</span></code><strong class="command">poch</strong>.</p>
@@ -1071,15 +1070,14 @@ and <strong class="command">library</strong>. Certain other extensions are also 
 <span class="c1">## [6] &quot;methods&quot;</span>
 </pre></div>
 </div>
-<p>This list can, theoretically, be changed<a class="footnote-reference brackets" href="#footchangedefs" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.
-However, in this book, we assume that the above are always attached
-because it is reasonable to do so.
-This is why in <a class="reference internal" href="120-numeric.html#sec-numeric-aggregation"><span class="std std-numref">Section 2.4.5</span></a>,
+<p>In this book, we assume that they are always attached
+(even though this list can, theoretically, be changed<a class="footnote-reference brackets" href="#footchangedefs" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>).
+Due to this, in <a class="reference internal" href="120-numeric.html#sec-numeric-aggregation"><span class="std std-numref">Section 2.4.5</span></a>,
 there was no need to call, for example,
 <strong class="command">library</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;stats&quot;)</span></code>
 before referring to the <strong class="command">var</strong> and <strong class="command">sd</strong> functions.</p>
 <p>On a side note, <strong class="program">grDevices</strong> and <strong class="program">graphics</strong>
-will be discussed in <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a>.
+will be discussed in <a class="reference internal" href="250-graphics.html#chap-graphics"><span class="std std-numref">Chapter 13</span></a>.
 <strong class="program">methods</strong> will be mentioned in <a class="reference internal" href="220-s3.html#sec-s4"><span class="std std-numref">Section 10.5</span></a>.
 <strong class="program">datasets</strong> brings a few example R objects on which
 we can exercise our skills.
@@ -1115,7 +1113,7 @@ see <strong class="command">help</strong><code class="code docutils literal notr
 on a W****ws or m**OS box;
 see <strong class="command">getOption</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;pkgType&quot;)</span></code>. This is because these two
 operating systems require additional build tools, especially if a package
-relies on C or C++ code; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>
+relies on C or C++ code; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>
 and Section C.3 of <span id="id6">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">67</a>]</span>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cran.r-project.org/bin/windows/Rtools"><strong class="program">RTools</strong></a> on W****ws,</p></li>
@@ -1179,7 +1177,7 @@ Sure, bug fixes and well-thought-out additional
 features are usually welcome. Still, just we wait until someone
 updates a package’s API for the <span class="math">\(n\)</span>-th time, <span class="math">\(n \ge 2\)</span>,
 breaking our so-far flawless program.</p>
-<p>Hence, when designing software projects (see <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>
+<p>Hence, when designing software projects (see <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>
 for more details), we must ask ourselves the ultimate
 question: do we really need to import that package with lots of dependencies
 from which we will just use only about 3–5 functions?
@@ -1229,7 +1227,7 @@ There are many tools at a developer’s hand and each tool is specialised
 at solving a single, well-defined problem.</p>
 <p>Apart from the many
 <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_Unix_commands">standard UNIX commands</a>,
-we may consider the following:</p>
+we may consider:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pandoc.org/"><strong class="program">pandoc</strong></a> converts documents
 between markup formats, e.g., Markdown, HTML, reStructuredText,
@@ -1293,7 +1291,7 @@ might be written in very portable C, C++, or Fortran
 and define bindings for easier access from within R, Python, Julia, etc.
 It is the case with FFTW, LIBSVM, mlpack, OpenBLAS,
 ICU, and GNU GSL, amongst many others.
-<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a> explains basic ways to refer to
+<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a> explains basic ways to refer to
 such compiled code.</p>
 <p>Also, the <strong class="program">rJava</strong> package can dynamically
 create JVM objects and access their fields and methods.
@@ -1625,7 +1623,7 @@ that are processed on R’s startup; see <strong class="command">help</strong><c
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-01-19T16:20:29+1100.
+              Last updated on 2024-01-20T13:24:58+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

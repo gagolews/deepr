@@ -424,7 +424,7 @@ of some features depends on the user environment’s configuration:</p>
 <h3><span class="section-number">8.1.2. </span>Nested <strong class="command">if</strong>s<a class="headerlink" href="#nested-ifs" title="Link to this heading">#</a></h3>
 <p>If more than two test cases are possible, i.e.,
 when we need to go beyond either <code class="docutils literal notranslate"><span class="pre">condition</span></code> or
-<code class="docutils literal notranslate"><span class="pre">!condition</span></code>, then we can use the following construction:</p>
+<code class="docutils literal notranslate"><span class="pre">!condition</span></code>, then we can use the following construct:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">expression_a</span>
 <span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="nf">if </span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -439,7 +439,7 @@ when we need to go beyond either <code class="docutils literal notranslate"><spa
 <p>This evaluates all conditions <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, … (in this order)
 until the first positive case is found
 and then executes the corresponding <code class="docutils literal notranslate"><span class="pre">expression</span></code>.</p>
-<p>It is worth stressing that the above is nothing else than a series
+<p>It is worth stressing that the foregoing is nothing else than a series
 of nested <strong class="command">if</strong> statements but written in a more
 readable<a class="footnote-reference brackets" href="#footswitch" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> manner:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -486,7 +486,7 @@ we get an error:</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If we think that we are immune to writing code violating the above
+<p>If we think that we are immune to writing code violating the preceding
 constraints, just we
 wait until the <code class="docutils literal notranslate"><span class="pre">condition</span></code> becomes a function of data
 for which there is no sanity-checking in place.</p>
@@ -503,7 +503,7 @@ for which there is no sanity-checking in place.</p>
 <span class="c1">##     needed</span>
 </pre></div>
 </div>
-<p>In <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>, we will be particularly interested
+<p>In <a class="reference internal" href="210-design.html#chap-design"><span class="std std-numref">Chapter 9</span></a>, we will be particularly interested
 in ways to ensure input data integrity so that such cases will either fail
 gracefully or succeed bombastically.
 In the above example, we should probably ensure that <code class="docutils literal notranslate"><span class="pre">x</span></code> is a single finite
@@ -534,7 +534,7 @@ we have the <em>scalar</em> `<strong class="command">||</strong>` (alternative) 
 </div>
 <p>Contrary to their vectorised counterparts (`<strong class="command">|</strong>`
 and `<strong class="command">&amp;</strong>`),
-the scalar operators are lazy (<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>) in the sense
+the scalar operators are lazy (<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>) in the sense
 that they evaluate the first operand and then determine if the computing
 of the second one is necessary
 (because, e.g., <code class="docutils literal notranslate"><span class="pre">FALSE</span> <span class="pre">&amp;&amp;</span> <span class="pre">whatever</span></code> is always <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> anyway).</p>
@@ -674,7 +674,7 @@ of vectorised operations such as
 <strong class="command">Map</strong>, and
 <strong class="command">Reduce</strong>.
 Oftentimes, compared to their loop-based counterparts, they are more
-readable and efficient. We will explore this in the exercises below.</p>
+readable and efficient. We will explore this in the coming exercises.</p>
 <p>However, at times, using an explicit <strong class="command">while</strong> or <strong class="command">for</strong> loop
 might be the only natural way to solve a problem,
 for instance, when processing chunks of data streams.
@@ -753,7 +753,7 @@ For example:</p>
 </pre></div>
 </div>
 <p>Another example:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">fridge</span><span class="p">))</span><span class="w">  </span><span class="c1"># better: seq_along(fridge), see below</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">fridge</span><span class="p">))</span><span class="w">  </span><span class="c1"># better: seq_along(fridge); see below</span>
 <span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fridge</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 <span class="c1">## spam, spam, bacon, eggs,</span>
 </pre></div>
@@ -791,7 +791,7 @@ behaviour because we ask to iterate over <code class="docutils literal notransla
 <span class="c1">## logical(0)</span>
 </pre></div>
 </div>
-<p>Recall from <a class="reference internal" href="150-indexing.html#chap-indexing"><span class="std std-numref">Chapter 5</span></a> that
+<p>Recall from <a class="reference internal" href="150-indexing.html#chap-indexing"><span class="std std-numref">Chapter 5</span></a> that
 <code class="docutils literal notranslate"><span class="pre">x[1]</span></code> tries to access an out-of-bounds element here,
 and <code class="docutils literal notranslate"><span class="pre">x[0]</span></code> returns nothing.</p>
 <p>We generally suggest replacing
@@ -802,7 +802,7 @@ wherever possible.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The above model <strong class="command">for</strong> loop is roughly equivalent to:</p>
+<p>The preceding model <strong class="command">for</strong> loop is roughly equivalent to:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span>
 <span class="n">tmp_vector</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vector</span>
 <span class="n">tmp_iter</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
@@ -851,7 +851,7 @@ Here is the most basic version of
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> might be of different lengths.
-Feel free to upgrade the above code by adding a warning like
+Feel free to upgrade this code by adding a warning like
 <em>the longer argument is not a multiple of the length of the shorter one</em>.
 Also, rewrite it without using the modulo operator, `<strong class="command">%%</strong>`.</p>
 </div></div></section>
@@ -1122,13 +1122,13 @@ established connections of different types, e.g., <strong class="command">file</
 <p>A frequent scenario involves reading a very large CSV, JSON, or XML file
 only by thousands of lines/records at a time,
 parsing and cleansing them, and exporting them to SQL databases
-(which we will exercise in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>).</p>
+(which we will exercise in <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>).</p>
 </div>
 </section>
 </section>
 <section id="exercises">
 <h2><span class="section-number">8.4. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
-<p>From now on, we must stay alert. Many, if not all, of the following tasks,
+<p>From now on, we must stay alert. Many, if not all, of the undermentioned tasks,
 can still be implemented without the explicit use of the R loops but
 based only on the operations covered in the previous chapters.
 If this is the case, try composing both the looped
@@ -1234,20 +1234,20 @@ each element in a numeric vector to a number of decimal digits.</p>
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p>(*) Somewhat related is the <strong class="command">switch</strong> function
 which relies on the lazy evaluation of its arguments
-(<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>).
+(<a class="reference internal" href="340-lazy.html#chap-lazy"><span class="std std-numref">Chapter 17</span></a>).
 However, it can always be replaced by a series of <strong class="command">if</strong>s.</p>
 </aside>
 <aside class="footnote brackets" id="footcpp" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
 <p>In such a case, rewriting it in C or C++ might
-be beneficial; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
+be beneficial; see <a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>.</p>
 </aside>
 <aside class="footnote brackets" id="footalg" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
 <p>It might be the case that a <strong class="command">for</strong>-based solution is
 faster (e.g., for larger objects) because of the use
 of a more efficient algorithm. Such cases will
-benefit from a rewrite in C or C++ (<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>).</p>
+benefit from a rewrite in C or C++ (<a class="reference internal" href="310-compiled.html#chap-compiled"><span class="std std-numref">Chapter 14</span></a>).</p>
 </aside>
 </aside>
 </section>
@@ -1288,7 +1288,7 @@ benefit from a rewrite in C or C++ (<a class="reference internal" href="310-comp
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-01-19T16:20:29+1100.
+              Last updated on 2024-01-20T13:24:58+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>

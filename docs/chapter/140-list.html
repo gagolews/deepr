@@ -299,17 +299,17 @@ In this more technical part, we will introduce <em>lists</em>, which serve
 as universal containers for R objects of any size and type.
 Moreover, we will also show that each R object can be equipped
 with a number of optional <em>attributes</em>. Thanks to them, we will
-be able to label elements in any vector, and, in <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>,
+be able to label elements in any vector, and, in <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>,
 introduce new complex data types such as matrices and data frames.</p>
 <section id="type-hierarchy-and-conversion">
 <span id="sec-type-hierarchy"></span><h2><span class="section-number">4.1. </span>Type hierarchy and conversion<a class="headerlink" href="#type-hierarchy-and-conversion" title="Link to this heading">#</a></h2>
 <p>So far, we have been playing with three types of atomic vectors:</p>
 <ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">logical</span></code> (<a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>),</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code> (<a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logical</span></code> (<a class="reference internal" href="130-logical.html#chap-logical"><span class="std std-numref">Chapter 3</span></a>),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code> (<a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">character</span></code> (which we have barely touched upon yet, but
 rest assured that they will be covered in detail very soon; see
-<a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>).</p></li>
+<a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>).</p></li>
 </ol>
 <p>To determine the type of an object programmatically,
 we can call the <strong class="command">typeof</strong> function.</p>
@@ -399,7 +399,7 @@ whereas <code class="docutils literal notranslate"><span class="pre">character</
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The logical <code class="docutils literal notranslate"><span class="pre">NA</span></code> is converted to <code class="docutils literal notranslate"><span class="pre">NA_real_</span></code> and <code class="docutils literal notranslate"><span class="pre">NA_character_</span></code>
-in the above examples. R users tend to rely on implicit type
+in the preceding examples. R users tend to rely on implicit type
 conversion when they write  <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">NA,</span> <span class="pre">4)</span></code>
 rather than <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">NA_real_,</span> <span class="pre">4)</span></code>.
 In most cases, this is fine, but it might make us less vigilant.</p>
@@ -437,9 +437,9 @@ This measure can be equivalently defined as:</p>
 \mathcal{L}(\boldsymbol{p}, \boldsymbol{y}) = -\frac{1}{n}\left(\sum_{i=1}^n y_i\log(p_i)+ (1-y_i)\log(1-p_i) \right).
 \]</div>
 </div>
-<p>Implement the above formula (using vectorised operations,
-but not relying on <strong class="command">ifelse</strong> this time)
-and compute the cross-entropy loss between, for instance,
+<p>Using vectorised operations, but not relying on <strong class="command">ifelse</strong> this time,
+implement this formula. Then, compute the cross-entropy loss between,
+for instance,
 “<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&lt;-</span> </code><strong class="command">sample</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(FALSE,</span> <span class="pre">TRUE),</span> <span class="pre">n)</span></code>”
 and
 “<code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&lt;-</span> </code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span></code>” for some <code class="docutils literal notranslate"><span class="pre">n</span></code>.
@@ -470,7 +470,7 @@ of the <strong class="command">list</strong> function:</p>
 <span class="c1">## [1] 3</span>
 </pre></div>
 </div>
-<p>Notice that the above is not the same as <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>.
+<p>Notice that it is not the same as <strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>.
 We got a sequence that wraps three numeric vectors, each of length one.
 More examples:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;and so forth&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># different types</span>
@@ -591,7 +591,7 @@ by calling <strong class="command">unlist</strong>:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
-<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a> will mention the <strong class="command">simplify2array</strong> function,
+<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a> will mention the <strong class="command">simplify2array</strong> function,
 which generalises <strong class="command">unlist</strong>
 in a way that can sometimes give rise to a matrix.</p>
 </div>
@@ -657,7 +657,7 @@ They can be introduced by calling, amongst others<a class="footnote-reference br
 </div>
 <section id="developing-perceptual-indifference-to-most-attributes">
 <h3><span class="section-number">4.4.1. </span>Developing perceptual indifference to most attributes<a class="headerlink" href="#developing-perceptual-indifference-to-most-attributes" title="Link to this heading">#</a></h3>
-<p>Let us see how the above <code class="docutils literal notranslate"><span class="pre">x</span></code> is reported on the console:</p>
+<p>Let us see how the foregoing <code class="docutils literal notranslate"><span class="pre">x</span></code> is reported on the console:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1">##  [1]  1  2  3  4  5  6  7  8  9 10</span>
 <span class="c1">## attr(,&quot;attribute1&quot;)</span>
@@ -671,7 +671,7 @@ We need to get used to that. Most of the time, we suggest to treat
 the “<code class="docutils literal notranslate"><span class="pre">attr</span></code>…” parts of the display as if they were printed
 in tiny font.</p>
 <p>Equipping an object with attributes <em>does not usually change its nature</em>;
-see, however, <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a> for a few exceptions. The above <code class="docutils literal notranslate"><span class="pre">x</span></code> is still
+see, however, <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a> for a few exceptions. The above <code class="docutils literal notranslate"><span class="pre">x</span></code> is still
 treated as an ordinary sequence of numbers by most functions:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">   </span><span class="c1"># the same as sum(1:10); `sum` does not care about any attributes</span>
 <span class="c1">## [1] 55</span>
@@ -714,8 +714,8 @@ further computations:</p>
 <span class="c1">## [1] &quot;omit&quot;</span>
 </pre></div>
 </div>
-<p>We ignore the <code class="docutils literal notranslate"><span class="pre">class</span></code> part until <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>.</p>
-<p>As another example, <strong class="command">gregexpr</strong> discussed in <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>
+<p>We ignore the <code class="docutils literal notranslate"><span class="pre">class</span></code> part until <a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>.</p>
+<p>As another example, <strong class="command">gregexpr</strong> discussed in <a class="reference internal" href="160-character.html#chap-character"><span class="std std-numref">Chapter 6</span></a>
 searches for a given pattern in a character vector:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">needle</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam|durian&quot;</span><span class="w">  </span><span class="c1"># pattern to search for: spam OR durian</span>
 <span class="n">haystack</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam, bacon, and durian-flavoured spam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spammer&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># text</span>
@@ -792,14 +792,14 @@ Namely, the most prevalent amongst the <em>special attributes</em> are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">names</span></code>, <code class="docutils literal notranslate"><span class="pre">row.names</span></code>, and <code class="docutils literal notranslate"><span class="pre">dimnames</span></code>
 are used to label the elements of atomic and generic vectors (see below)
-as well as rows and columns in matrices (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>)
-and data frames (<a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>),</p></li>
+as well as rows and columns in matrices (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>)
+and data frames (<a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">dim</span></code> turns flat vectors into matrices
-and other tensors (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>),</p></li>
+and other tensors (<a class="reference internal" href="230-matrix.html#chap-matrix"><span class="std std-numref">Chapter 11</span></a>),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">levels</span></code> labels the underlying integer codes in factor objects
 (<a class="reference internal" href="220-s3.html#sec-factor"><span class="std std-numref">Section 10.3.2</span></a>),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">class</span></code> can be used to bring forth new complex data structures
-based on basic types (<a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>).</p></li>
+based on basic types (<a class="reference internal" href="220-s3.html#chap-s3"><span class="std std-numref">Chapter 10</span></a>).</p></li>
 </ul>
 <p>We call them <em>special</em> because:</p>
 <ul class="simple">
@@ -854,7 +854,7 @@ of our code and data.</p>
 <p>Verify that the above <code class="docutils literal notranslate"><span class="pre">x</span></code> is still an ordinary numeric vector
 by calling <strong class="command">typeof</strong> and <strong class="command">sum</strong> on it.</p>
 </div></div><p>Let us stress that we can ignore the <code class="docutils literal notranslate"><span class="pre">names</span></code> attribute whatsoever.
-If we apply any operation discussed in <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>,
+If we apply any operation discussed in <a class="reference internal" href="120-numeric.html#chap-numeric"><span class="std std-numref">Chapter 2</span></a>,
 we will garner the same result regardless whether such extra information
 is present or not.</p>
 <p>It is just the <strong class="command">print</strong> function that changed its behaviour slightly.
@@ -875,7 +875,7 @@ Non-special attributes are still printed in the standard way:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="150-indexing.html#chap-indexing"><span class="std std-numref">Chapter 5</span></a> will also mention that some operations
+<p><a class="reference internal" href="150-indexing.html#chap-indexing"><span class="std std-numref">Chapter 5</span></a> will also mention that some operations
 (such as indexing) gain superpowers in the presence of the <code class="docutils literal notranslate"><span class="pre">names</span></code>
 attribute.</p>
 </div>
@@ -927,7 +927,7 @@ Most of the time, lists are used merely as <em>containers</em>
 for other R objects. This is a dull yet essential role.
 However, let us just mention here that
 every data frame is, in fact, a generic vector
-(see <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>). Each column corresponds
+(see <a class="reference internal" href="240-data-frame.html#chap-data-frame"><span class="std std-numref">Chapter 12</span></a>). Each column corresponds
 to a named list element:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="n">iris</span><span class="p">))</span><span class="w">  </span><span class="c1"># some data frame</span>
 <span class="c1">##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
@@ -1188,7 +1188,7 @@ see <a class="reference internal" href="210-design.html#sec-replacementfun"><spa
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-01-19T16:20:29+1100.
+              Last updated on 2024-01-20T13:24:58+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
