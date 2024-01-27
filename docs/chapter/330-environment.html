@@ -187,7 +187,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.0.9003
+v1.0.0.9004
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -350,9 +350,9 @@ behaviour also in the case of element extraction:</p>
 </div>
 <section id="printing">
 <h3><span class="section-number">16.1.1. </span>Printing<a class="headerlink" href="#printing" title="Link to this heading">#</a></h3>
-<p>Printing an environment leads to a quite awkward result:</p>
+<p>Printing an environment leads to an uncanny result:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span><span class="w">  </span><span class="c1"># same with str(e1)</span>
-<span class="c1">## &lt;environment: 0x560d4bcc50d8&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3baad60d8&gt;</span>
 </pre></div>
 </div>
 <p>It is the address where <code class="docutils literal notranslate"><span class="pre">e1</span></code> is stored in the computer’s memory.
@@ -407,7 +407,7 @@ and vice versa using <strong class="command">as.list</strong> and <strong class=
 <span class="c1">## $z</span>
 <span class="c1">## NULL</span>
 <span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="m">42</span><span class="p">,</span><span class="w"> </span><span class="n">whatever</span><span class="o">=</span><span class="s">&quot;it&#39;s not going to be printed anyway&quot;</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x560d4b8a87b8&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3ba6b97b8&gt;</span>
 <span class="nf">as.list</span><span class="p">(</span><span class="nf">as.environment</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="m">3</span><span class="p">)))</span><span class="w">  </span><span class="c1"># no duplicates allowed</span>
 <span class="c1">## $y</span>
 <span class="c1">## [1] 2</span>
@@ -540,9 +540,9 @@ the assign- and pass-by-reference strategies.</p>
 <p>then the names <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are bound to the same object
 in the computer’s memory:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x560d4b3d8ef0&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3ba1e9ef0&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="c1">## &lt;environment: 0x560d4b3d8ef0&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3ba1e9ef0&gt;</span>
 </pre></div>
 </div>
 <p>Therefore:</p>
@@ -811,19 +811,19 @@ It can be fetched and set using the <strong class="command">parent.env</strong> 
 let’s create two new environments
 whose enclosures are explicitly set as follows:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e4</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e3</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x560d4981e4b8&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3b862f4b8&gt;</span>
 <span class="p">(</span><span class="n">e5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">new.env</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">e4</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x560d4a686bb8&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3b9497bb8&gt;</span>
 </pre></div>
 </div>
 <p>To verify that everything is in order, we can inspect
 the following:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">e3</span><span class="p">)</span><span class="w">  </span><span class="c1"># this is the address of e3</span>
-<span class="c1">## &lt;environment: 0x560d4bb55b00&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3ba966b00&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e4</span><span class="p">)</span><span class="w">  </span><span class="c1"># e3 is the enclosing environment of e4</span>
-<span class="c1">## &lt;environment: 0x560d4bb55b00&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3ba966b00&gt;</span>
 <span class="nf">parent.env</span><span class="p">(</span><span class="n">e5</span><span class="p">)</span><span class="w">  </span><span class="c1"># e4 is the enclosing environment of e5</span>
-<span class="c1">## &lt;environment: 0x560d4981e4b8&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3b862f4b8&gt;</span>
 </pre></div>
 </div>
 <p>Also, let’s bind two different objects to the name <code class="docutils literal notranslate"><span class="pre">y</span></code> in <code class="docutils literal notranslate"><span class="pre">e5</span></code> and <code class="docutils literal notranslate"><span class="pre">e3</span></code>.</p>
@@ -968,14 +968,14 @@ the enclosures recursively.</p>
 <span class="w">    </span><span class="n">ecur</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">parent.env</span><span class="p">(</span><span class="n">ecur</span><span class="p">)</span><span class="w">  </span><span class="c1"># advance to its enclosure</span>
 <span class="p">}</span>
 <span class="c1">## &lt;environment: R_GlobalEnv&gt; ()</span>
-<span class="c1">## &lt;environment: 0x560d4b8f16a8&gt; (.marekstuff)</span>
+<span class="c1">## &lt;environment: 0x55c3ba7026a8&gt; (.marekstuff)</span>
 <span class="c1">## &lt;environment: package:stats&gt; (package:stats)</span>
 <span class="c1">## &lt;environment: package:graphics&gt; (package:graphics)</span>
 <span class="c1">## &lt;environment: package:grDevices&gt; (package:grDevices)</span>
 <span class="c1">## &lt;environment: package:utils&gt; (package:utils)</span>
 <span class="c1">## &lt;environment: package:datasets&gt; (package:datasets)</span>
 <span class="c1">## &lt;environment: package:methods&gt; (package:methods)</span>
-<span class="c1">## &lt;environment: 0x560d498a9f18&gt; (Autoloads)</span>
+<span class="c1">## &lt;environment: 0x55c3b86baf18&gt; (Autoloads)</span>
 <span class="c1">## &lt;environment: base&gt; ()                          `&lt;` found here!</span>
 <span class="c1">## &lt;environment: R_EmptyEnv&gt; ()</span>
 <span class="c1">## Error in parent.env(ecur): the empty environment has no parent</span>
@@ -1091,10 +1091,10 @@ save a few keystrokes.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">iris</span></code> list was converted to an environment,
 and the necessary enclosures were set accordingly:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">()))</span>
-<span class="c1">## &lt;environment: 0x560d4c55e020&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3bb36ef90&gt;</span>
 <span class="c1">##  - attr(*, &quot;name&quot;)= chr &quot;iris&quot;</span>
 <span class="nf">str</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">parent.env</span><span class="p">(</span><span class="nf">globalenv</span><span class="p">())))</span>
-<span class="c1">## &lt;environment: 0x560d4b8f16a8&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3ba7026a8&gt;</span>
 <span class="c1">##  - attr(*, &quot;name&quot;)= chr &quot;.marekstuff&quot;</span>
 </pre></div>
 </div>
@@ -1252,7 +1252,7 @@ and we return to the previous environment from the call stack.</p>
 <p>First call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x560d4987c6a0&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3b868d6a0&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 4</span>
 <span class="c1">##  $ x: num 2</span>
@@ -1261,7 +1261,7 @@ and we return to the previous environment from the call stack.</p>
 <p>Second call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
 <span class="c1">## [1] &quot;x&quot;</span>
-<span class="c1">## &lt;environment: 0x560d4b3fb388&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3ba20c388&gt;</span>
 <span class="c1">## List of 2</span>
 <span class="c1">##  $ y: num 9</span>
 <span class="c1">##  $ x: num 3</span>
@@ -1371,8 +1371,8 @@ one that also happens to define <code class="docutils literal notranslate"><span
 
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;bacon&quot;</span>
 <span class="nf">test</span><span class="p">()</span>
-<span class="c1">## test: current env: &lt;environment: 0x560d4a670178&gt;</span>
-<span class="c1">## subtest: enclosing env: &lt;environment: 0x560d4a670178&gt;</span>
+<span class="c1">## test: current env: &lt;environment: 0x55c3b9481178&gt;</span>
+<span class="c1">## subtest: enclosing env: &lt;environment: 0x55c3b9481178&gt;</span>
 <span class="c1">## x = spam</span>
 <span class="c1">## subtest: enclosing env: &lt;environment: R_GlobalEnv&gt;</span>
 <span class="c1">## x = bacon</span>
@@ -1417,7 +1417,7 @@ mentioned <strong class="command">approxfun</strong>. To recall:</p>
 <span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x560d49fcf738&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3b8de0738&gt;</span>
 </pre></div>
 </div>
 <p>The variables <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, etc., that <strong class="command">f1</strong>’s source code
@@ -1454,10 +1454,10 @@ used after the call. Thus, it will not be garbage-collected.</p>
 <p>Example calls:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">square</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x560d4bc97298&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3baaa8298&gt;</span>
 <span class="p">(</span><span class="n">cube</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gen_power</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>
 <span class="c1">## function(x) x^p</span>
-<span class="c1">## &lt;environment: 0x560d4bd08198&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3bab19198&gt;</span>
 <span class="nf">square</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 <span class="c1">## [1] 4</span>
 <span class="nf">cube</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
@@ -1550,7 +1550,7 @@ implements a simple counter that is increased by one on each call thereto.</p>
 <h3><span class="section-number">16.3.4. </span>Accessing the calling environment<a class="headerlink" href="#accessing-the-calling-environment" title="Link to this heading">#</a></h3>
 <p>We know that the environment associated with a function
 is not necessarily the same as the environment
-from which the function was called, sometimes quite confusingly referred
+from which the function was called, sometimes confusingly referred
 to as the <em>parent frame</em>.</p>
 <p>R maintains a whole <em>frame stack</em>. The global environment is assigned
 the number 0. Each call to a function increases the stack by one frame,
@@ -1661,7 +1661,7 @@ as their associated environment. As a consequence, <strong class="command">bambo
 refer to <strong class="command">prepare_message</strong> directly.</p>
 <div style="margin-top: 1em"></div><p>It will be educative to inspect the enclosure of <code class="docutils literal notranslate"><span class="pre">namespace:rpackagedemo</span></code>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">parent.env</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-<span class="c1">## &lt;environment: 0x560d4a2ad7e8&gt;</span>
+<span class="c1">## &lt;environment: 0x55c3b90be040&gt;</span>
 <span class="c1">## attr(,&quot;name&quot;)</span>
 <span class="c1">## [1] &quot;imports:rpackagedemo&quot;</span>
 <span class="nf">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
@@ -2092,7 +2092,7 @@ see Section 1 of <span id="id28">[<a class="reference internal" href="999-bibli
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-01-23T13:04:53+1100.
+              Last updated on 2024-01-28T10:00:09+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2153,7 +2153,7 @@ see Section 1 of <span id="id28">[<a class="reference internal" href="999-bibli
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=27f4eb99"></script>
+</div><script src="../_static/documentation_options.js?v=ec7d7b54"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>

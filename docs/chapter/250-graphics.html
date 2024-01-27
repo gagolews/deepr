@@ -187,7 +187,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.0.9003
+v1.0.0.9004
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -304,7 +304,7 @@ see <a class="reference internal" href="#fig-graphics-systems"><span class="std 
 <ol class="arabic simple">
 <li><p>The (historically) newer one, <strong class="program">grid</strong>
 (e.g., <span id="id2">[<a class="reference internal" href="999-bibliography.html#id44" title="Murrell, P. (2011).  R Graphics. Chapman &amp; Hall/CRC.">48</a>]</span>),
-is very flexible but might seem quite complicated.
+is very flexible but might seem complicated.
 Some readers might have come across
 the <strong class="program">lattice</strong> <span id="id3">[<a class="reference internal" href="999-bibliography.html#id45" title="Sarkar, D. (2008).  Lattice: Multivariate Data Visualization with R. Springer. URL: http://lmdvr.r-forge.r-project.org/.">53</a>]</span>
 and <strong class="program">ggplot2</strong> <span id="id4">[<a class="reference internal" href="999-bibliography.html#id47" title="Wickham, H. (2016).  ggplot2: Elegant Graphics for Data Analysis. Springer, 2nd edition.">60</a>, <a class="reference internal" href="999-bibliography.html#id46" title="Wilkinson, L. (2005).  The Grammar of Graphics. Springer.">63</a>]</span> packages
@@ -352,7 +352,7 @@ There are many functions that provide
 the most popular chart types: histograms, bar plots,
 dendrograms, etc. They will suit our basic needs.
 We will review them in <a class="reference internal" href="#sec-high-level-plotting"><span class="std std-numref">Section 13.3</span></a>.</p>
-<p>The more basic routines we discuss next will still be of service
+<p>The more primitive routines we discuss next will still be of service
 for fine-tuning our figures and adding further details.
 However, if the prefabricated components are not what we are after,
 we will be able to create any drawing from scratch.</p>
@@ -621,8 +621,7 @@ italic (<code class="docutils literal notranslate"><span class="pre">3</span></c
 See, however, <a class="reference internal" href="#sec-grdevices"><span class="std std-numref">Section 13.2.6</span></a> for some workarounds.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>(*) There is limited support for basic mathematical
-symbols and formulae. It relies
+<p>(*) There is limited support for mathematical symbols and formulae. It relies
 on some quirky syntax that we enter using unevaluated R expressions
 (<a class="reference internal" href="320-language.html#chap-language"><span class="std std-numref">Chapter 15</span></a>). Still, it should be enough to meet our most basic
 needs. For instance, passing <strong class="command">quote</strong><code class="code docutils literal notranslate"><span class="pre">(beta[i]^j)</span></code>
@@ -1017,9 +1016,8 @@ in <em>virtual</em> user coordinates, as given by <code class="docutils literal 
 They are automatically mapped to the <em>physical</em> device region,
 taking into account the page size, outer and inner margins, etc.</p>
 </div>
-<p>Knowing the above, some basic scaling can be used
-to convert between the user and physical sizes (in inches).
-It is based on the ratios
+<p>Knowing the above, some scaling can be used to convert between the user
+and physical sizes (in inches). It is based on the ratios
 <code class="docutils literal notranslate"><span class="pre">(usr[2]-usr[1])/pin[1]</span></code> and <code class="docutils literal notranslate"><span class="pre">(usr[4]-usr[3])/pin[2]</span></code>;
 compare the <strong class="command">xinch</strong> and <strong class="command">yinch</strong> functions.</p>
 <div class="proof proof-type-example" id="id45">
@@ -1496,7 +1494,7 @@ the intervals cover the whole data range.</p>
 <span class="w">    </span><span class="c1"># Sturges (a heuristic) is the default; any value is merely a suggestion</span>
 <span class="w">    </span><span class="nf">hist</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">]],</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Sepal length&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="n">main</span><span class="o">=</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="o">=</span><span class="n">breaks</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="nf">box</span><span class="p">()</span><span class="w">  </span><span class="c1"># weirdly, we need to add it manually</span>
+<span class="w">    </span><span class="nf">box</span><span class="p">()</span><span class="w">  </span><span class="c1"># oddly, we need to add it manually</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1756,7 +1754,7 @@ matrix’s items.</p>
     </div><div class="proof-content">
 <p><a class="reference internal" href="#fig-colour-density2d"><span class="std std-numref">Figure 13.29</span></a> depicts a two-dimensional histogram.
 It approaches the idea of reflecting the points’ density
-quite differently from the semi-transparent symbols in
+differently from the semi-transparent symbols in
 <a class="reference internal" href="#fig-semitrans-scatter"><span class="std std-numref">Figure 13.18</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">histogram_2d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span>
 <span class="p">{</span>
@@ -1961,7 +1959,7 @@ should know that its online version displays this figure
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-01-23T13:04:53+1100.
+              Last updated on 2024-01-28T10:00:09+1100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2019,7 +2017,7 @@ should know that its online version displays this figure
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=27f4eb99"></script>
+</div><script src="../_static/documentation_options.js?v=ec7d7b54"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
