@@ -42,14 +42,14 @@ Warsaw University of Technology.
 His research interests are related to data science, in particular: modelling
 complex phenomena, developing usable, general-purpose algorithms, studying
 their analytical properties, and finding out how people use, misuse,
-understand, and misunderstand methods of data analysis in research, commercial,
+understand, and misunderstand methods of data analysis in scientific, business,
 and decision-making settings.
 
-He's an author of 95+ publications, including journal papers
+He is an author of ~100 publications, including journal papers
 in outlets such as *Proceedings of the National Academy of Sciences (PNAS)*,
-*Journal of Statistical Software*, *The R Journal*, *Information Fusion*,
-*International Journal of Forecasting*, *Statistical Modelling*,
-*Physica A: Statistical Mechanics and its Applications*,
+*Journal of Statistical Software*, *The R Journal*, *Journal of Classification*,
+*Information Fusion*, *International Journal of Forecasting*,
+*Statistical Modelling*, *Physica A: Statistical Mechanics and its Applications*,
 *Information Sciences*, *Knowledge-Based Systems*,
 *IEEE Transactions on Fuzzy Systems*, and *Journal of Informetrics*.
 

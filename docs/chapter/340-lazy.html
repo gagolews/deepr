@@ -28,12 +28,12 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="998-changelog.html" /><link rel="prev" title="16. Environments and evaluation (*)" href="330-environment.html" />
         <link rel="canonical" href="https://deepr.gagolewski.com/chapter/340-lazy.html" />
 
-    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/deepr.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="https://www.gagolewski.com/_static/img/deepr.png"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
         <title>17. Lazy evaluation (**) - Deep R Programming</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
     <link rel="stylesheet" type="text/css" href="../_static/katex-math.css?v=91adb8b6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=1e0fcfc0" />
@@ -101,7 +101,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -116,7 +116,7 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
@@ -124,7 +124,7 @@
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
       <path d="M13 12h5" />
@@ -132,6 +132,60 @@
       <path d="M13 18h1" />
       <path d="M13 9h4" />
       <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -187,7 +241,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.0.9004
+v1.0.0.9005
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -258,11 +312,7 @@ v1.0.0.9004
         <div class="content-icon-container">
           <div class="edit-this-page">
   <a class="muted-link" href="https://github.com/gagolews/deepr" title="Edit this page">
-    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-    </svg>
+    <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
 </div><div class="theme-toggle-container theme-toggle-content">
@@ -280,7 +330,7 @@ v1.0.0.9004
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="lazy-evaluation">
-<span id="chap-lazy"></span><h1><span class="section-number">17. </span>Lazy evaluation (**)<a class="headerlink" href="#lazy-evaluation" title="Link to this heading">#</a></h1>
+<span id="chap-lazy"></span><h1><span class="section-number">17. </span>Lazy evaluation (**)<a class="headerlink" href="#lazy-evaluation" title="Link to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>This open-access textbook
 is, and will remain, freely available for everyone’s enjoyment
@@ -309,7 +359,7 @@ As we can take the expressions used to generate them
 we shall see that we can ignore their meaning in the original (caller’s)
 context and compute them in a very different one.</p>
 <section id="evaluation-of-function-arguments">
-<span id="sec-lazy-args"></span><h2><span class="section-number">17.1. </span>Evaluation of function arguments<a class="headerlink" href="#evaluation-of-function-arguments" title="Link to this heading">#</a></h2>
+<span id="sec-lazy-args"></span><h2><span class="section-number">17.1. </span>Evaluation of function arguments<a class="headerlink" href="#evaluation-of-function-arguments" title="Link to this heading">¶</a></h2>
 <p>We know that calls such as
 `<strong class="command">if</strong>`<code class="code docutils literal notranslate"><span class="pre">(test,</span> <span class="pre">ifyes,</span> <span class="pre">ifno)</span></code>,
 `<strong class="command">||</strong>`<code class="code docutils literal notranslate"><span class="pre">(mustbe,</span> <span class="pre">maybe)</span></code>,
@@ -550,7 +600,7 @@ function (but it is probably very rarely needed there). Compare:</p>
 <p>(*) Implement your version of the <strong class="command">bquote</strong> function.</p>
 </div></div></section>
 <section id="evaluation-of-default-arguments">
-<span id="sec-default-args-eval"></span><h2><span class="section-number">17.2. </span>Evaluation of default arguments<a class="headerlink" href="#evaluation-of-default-arguments" title="Link to this heading">#</a></h2>
+<span id="sec-default-args-eval"></span><h2><span class="section-number">17.2. </span>Evaluation of default arguments<a class="headerlink" href="#evaluation-of-default-arguments" title="Link to this heading">¶</a></h2>
 <p>As we know from <a class="reference internal" href="210-design.html#sec-default-args"><span class="std std-numref">Section 9.4.4</span></a>, default arguments
 are special expressions specified in a function’s parameter list.</p>
 <div class="admonition important">
@@ -679,7 +729,7 @@ are set to <strong class="command">parent.frame</strong>. What does that mean?</
 </div>
 </div></div></section>
 <section id="ellipsis-revisited">
-<span id="sec-ellipsis-eval"></span><h2><span class="section-number">17.3. </span>Ellipsis revisited<a class="headerlink" href="#ellipsis-revisited" title="Link to this heading">#</a></h2>
+<span id="sec-ellipsis-eval"></span><h2><span class="section-number">17.3. </span>Ellipsis revisited<a class="headerlink" href="#ellipsis-revisited" title="Link to this heading">¶</a></h2>
 <p>If our function has the dot-dot-dot parameter,
 `<code class="code docutils literal notranslate"><span class="pre">...</span></code>`, whatever we pass through it
 is packed into a pairlist of promise expressions. Thus, we can
@@ -817,7 +867,7 @@ as if they were local variables:</p>
 <p>Write your version of the <strong class="command">stopifnot</strong> function.</p>
 </div></div></section>
 <section id="on-exit">
-<span id="sec-on-exit"></span><h2><span class="section-number">17.4. </span><strong class="command">on.exit</strong> (*)<a class="headerlink" href="#on-exit" title="Link to this heading">#</a></h2>
+<span id="sec-on-exit"></span><h2><span class="section-number">17.4. </span><strong class="command">on.exit</strong> (*)<a class="headerlink" href="#on-exit" title="Link to this heading">¶</a></h2>
 <p><strong class="command">on.exit</strong> registers an expression to be evaluated
 at the very end of a call, regardless of whether the function
 exited due to an error or not. It might be used to
@@ -892,7 +942,7 @@ call the following expressions?</p>
 </div>
 </div></div></section>
 <section id="metaprogramming-and-laziness-in-action-examples">
-<span id="sec-metaprogramming-implement"></span><h2><span class="section-number">17.5. </span>Metaprogramming and laziness in action: Examples (*)<a class="headerlink" href="#metaprogramming-and-laziness-in-action-examples" title="Link to this heading">#</a></h2>
+<span id="sec-metaprogramming-implement"></span><h2><span class="section-number">17.5. </span>Metaprogramming and laziness in action: Examples (*)<a class="headerlink" href="#metaprogramming-and-laziness-in-action-examples" title="Link to this heading">¶</a></h2>
 <p>Due to lazy evaluation, we can define functions that permit
 any random syntactically valid gibberish to be fed as their arguments.
 Nothing but basic decency stops us from interpreting them in
@@ -911,7 +961,7 @@ Nevertheless, R’s computing on the language capabilities
 might interest some advanced programmers (e.g., package
 developers).</p>
 <section id="match-arg">
-<h3><span class="section-number">17.5.1. </span><strong class="command">match.arg</strong><a class="headerlink" href="#match-arg" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.5.1. </span><strong class="command">match.arg</strong><a class="headerlink" href="#match-arg" title="Link to this heading">¶</a></h3>
 <p><strong class="command">match.arg</strong> was mentioned in <a class="reference internal" href="210-design.html#sec-metaprogramming-intro"><span class="std std-numref">Section 9.4.7</span></a>.
 When called normally, it matches a string against a set of possible
 choices, similarly to <strong class="command">pmatch</strong>:</p>
@@ -979,7 +1029,7 @@ In particular, notice the following fragment:</p>
 </div>
 </div></div></section>
 <section id="curve">
-<h3><span class="section-number">17.5.2. </span><strong class="command">curve</strong><a class="headerlink" href="#curve" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.5.2. </span><strong class="command">curve</strong><a class="headerlink" href="#curve" title="Link to this heading">¶</a></h3>
 <p>The <strong class="command">curve</strong> function can be called, e.g.,  like:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">curve</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="kc">pi</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1001</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 </pre></div>
@@ -987,7 +1037,7 @@ In particular, notice the following fragment:</p>
 <figure class="align-default" id="id29">
 <span id="fig-curve-plot"></span><img alt="../_images/curve-plot-1.png" src="../_images/curve-plot-1.png" />
 <figcaption>
-<p><span class="caption-number">Figure 17.1 </span><span class="caption-text">An example plot generated by calling <strong class="command">curve</strong>.</span><a class="headerlink" href="#id29" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 17.1 </span><span class="caption-text">An example plot generated by calling <strong class="command">curve</strong>.</span><a class="headerlink" href="#id29" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>It results in <a class="reference internal" href="#fig-curve-plot"><span class="std std-numref">Figure 17.1</span></a>.
@@ -1016,7 +1066,7 @@ Take note of the following code fragment:</p>
 </div>
 </div></div></section>
 <section id="with-and-within">
-<h3><span class="section-number">17.5.3. </span><strong class="command">with</strong> and <strong class="command">within</strong><a class="headerlink" href="#with-and-within" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.5.3. </span><strong class="command">with</strong> and <strong class="command">within</strong><a class="headerlink" href="#with-and-within" title="Link to this heading">¶</a></h3>
 <p>Environments and named lists (and hence data frames)
 are similar (<a class="reference internal" href="330-environment.html#sec-env-vs-list"><span class="std std-numref">Section 16.1.2</span></a>).
 Due to this, the <code class="docutils literal notranslate"><span class="pre">envir</span></code> argument to <strong class="command">eval</strong> can be set to either.
@@ -1094,7 +1144,7 @@ is like a call to <strong class="command">sapply</strong>, but it guarantees
 that the result is a logical vector.</p>
 </div></div></section>
 <section id="transform">
-<h3><span class="section-number">17.5.4. </span><strong class="command">transform</strong><a class="headerlink" href="#transform" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.5.4. </span><strong class="command">transform</strong><a class="headerlink" href="#transform" title="Link to this heading">¶</a></h3>
 <p>We can call <strong class="command">transform</strong> to modify/add columns
 in a data frame using vectorised functions. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">head</span><span class="p">(</span><span class="nf">transform</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">log_hp</span><span class="o">=</span><span class="nf">log</span><span class="p">(</span><span class="n">hp</span><span class="p">),</span><span class="w"> </span><span class="n">am</span><span class="o">=</span><span class="m">2</span><span class="o">*</span><span class="n">am</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="n">hp</span><span class="o">=</span><span class="kc">NULL</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">)</span>
@@ -1125,10 +1175,13 @@ newly created variables so that new columns can be added.</p>
 <span class="c1">##     matched &lt;- !is.na(inx)</span>
 <span class="c1">##     if (any(matched)) {</span>
 <span class="c1">##         `_data`[inx[matched]] &lt;- e[matched]</span>
-<span class="c1">##         `_data` &lt;- data.frame(`_data`)</span>
+<span class="c1">##         `_data` &lt;- data.frame(`_data`, check.names = FALSE)</span>
 <span class="c1">##     }</span>
-<span class="c1">##     if (!all(matched))</span>
-<span class="c1">##         do.call(&quot;data.frame&quot;, c(list(`_data`), e[!matched]))</span>
+<span class="c1">##     if (!all(matched)) {</span>
+<span class="c1">##         args &lt;- e[!matched]</span>
+<span class="c1">##         args[[&quot;check.names&quot;]] &lt;- FALSE</span>
+<span class="c1">##         do.call(&quot;data.frame&quot;, c(list(`_data`), args))</span>
+<span class="c1">##     }</span>
 <span class="c1">##     else `_data`</span>
 <span class="c1">## }</span>
 <span class="c1">## &lt;environment: namespace:base&gt;</span>
@@ -1137,7 +1190,7 @@ newly created variables so that new columns can be added.</p>
 <p>In particular, note that <code class="docutils literal notranslate"><span class="pre">e</span></code> is a named list.</p>
 </div></div></section>
 <section id="subset">
-<h3><span class="section-number">17.5.5. </span><strong class="command">subset</strong><a class="headerlink" href="#subset" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.5.5. </span><strong class="command">subset</strong><a class="headerlink" href="#subset" title="Link to this heading">¶</a></h3>
 <p>The <strong class="command">subset</strong> function selects rows and columns
 of a data frame that meet certain criteria. For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">subset</span><span class="p">(</span><span class="n">airquality</span><span class="p">,</span><span class="w"> </span><span class="n">Temp</span><span class="o">&gt;</span><span class="m">95</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Temp</span><span class="o">&lt;</span><span class="m">57</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="n">Month</span><span class="o">:</span><span class="n">Day</span><span class="p">))</span>
@@ -1187,7 +1240,7 @@ integer and then treating them as numeric indexes.</p>
 </div>
 </div></div></section>
 <section id="forward-pipe-operator">
-<h3><span class="section-number">17.5.6. </span>Forward pipe operator<a class="headerlink" href="#forward-pipe-operator" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.5.6. </span>Forward pipe operator<a class="headerlink" href="#forward-pipe-operator" title="Link to this heading">¶</a></h3>
 <p><a class="reference internal" href="220-s3.html#sec-pipe"><span class="std std-numref">Section 10.4</span></a> mentioned the pipe operator, `<strong class="command">|&gt;</strong>`.
 We can compose its simplified version manually:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">`%&gt;%`</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
@@ -1244,7 +1297,7 @@ One more then:</p>
 thousands of users (“What is this thing?”).</p>
 </section>
 <section id="other-ideas">
-<h3><span class="section-number">17.5.7. </span>Other ideas (**)<a class="headerlink" href="#other-ideas" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.5.7. </span>Other ideas (**)<a class="headerlink" href="#other-ideas" title="Link to this heading">¶</a></h3>
 <p>Why stop ourselves here? We can create way more invasive functions that
 read the local variables in the calling functions
 (unless they are primitive; in R, there are often exceptions
@@ -1320,7 +1373,7 @@ to support such kinds of indexers.</p>
 </section>
 </section>
 <section id="processing-formulae">
-<span id="sec-formula"></span><h2><span class="section-number">17.6. </span>Processing formulae, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#processing-formulae" title="Link to this heading">#</a></h2>
+<span id="sec-formula"></span><h2><span class="section-number">17.6. </span>Processing formulae, `<strong class="command">~</strong>` (*)<a class="headerlink" href="#processing-formulae" title="Link to this heading">¶</a></h2>
 <p>Formulae were introduced to S in the early 1990s <span id="id6">[<a class="reference internal" href="999-bibliography.html#id52" title="Chambers, J.M. and Hastie, T.J. (1991).  Statistical Models in S. Chapman &amp; Hall.">13</a>]</span>.
 Their original raison d’être was to specify
 <em>statistical models</em>; compare <a class="reference internal" href="220-s3.html#sec-formula-intro"><span class="std std-numref">Section 10.3.4</span></a>.</p>
@@ -1410,6 +1463,11 @@ specified columns therein:</p>
 </pre></div>
 </div>
 </li>
+<li><p>Order a data frame with respect to one or more columns:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sort_by</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">am</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">mpg</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
 <li><p>Fit a linear regression model of the form
 <span class="math">\(y=a+bx\)</span>, where <span class="math">\(y\)</span> is  <code class="docutils literal notranslate"><span class="pre">iris[[&quot;Sepal.Length&quot;]]</span></code>
 and <span class="math">\(x\)</span> is <code class="docutils literal notranslate"><span class="pre">iris[[&quot;Petal.Length&quot;]]</span></code>:</p>
@@ -1476,7 +1534,7 @@ with such a name, not an S3 method), and <strong class="command">t.test.default<
 but one that lets us specify the function to plot using a formula.</p>
 </div></div></section>
 <section id="exercises">
-<h2><span class="section-number">17.7. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.7. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">¶</a></h2>
 <div class="proof proof-type-exercise" id="id41">
 
     <div class="proof-title">
@@ -1518,7 +1576,7 @@ Or are there cases where evaluation is eager?</p></li>
 </div>
 </div></div></section>
 <section id="outro">
-<h2><span class="section-number">17.8. </span>Outro<a class="headerlink" href="#outro" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.8. </span>Outro<a class="headerlink" href="#outro" title="Link to this heading">¶</a></h2>
 <p>Recall our first approximation to the classification
 of R data types that we presented in the <a class="reference internal" href="000-preface.html#chap-preface"><span class="std std-ref">Preface</span></a>.
 To summarise what we have covered in this book, let’s contemplate
@@ -1526,7 +1584,7 @@ To summarise what we have covered in this book, let’s contemplate
 <figure class="align-default" id="id43">
 <span id="fig-data-types-full"></span><img alt="../_images/data-types-full.png" src="../_images/data-types-full.png" />
 <figcaption>
-<p><span class="caption-number">Figure 17.2 </span><span class="caption-text">R data types.</span><a class="headerlink" href="#id43" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figure 17.2 </span><span class="caption-text">R data types.</span><a class="headerlink" href="#id43" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>If we omitted something, it was most likely on purpose:
@@ -1605,7 +1663,7 @@ Such exceptions go against this natural coping strategy of theirs.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-06-10T11:28:18+0200.
+              Last updated on 2024-07-11T14:32:30+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1655,13 +1713,13 @@ Such exceptions go against this natural coping strategy of theirs.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=ec7d7b54"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+</div><script src="../_static/documentation_options.js?v=4805ff4d"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     <script src="../_static/proof.js"></script>
-    <script src="../_static/katex.min.js?v=deb2f140"></script>
-    <script src="../_static/auto-render.min.js?v=8b9f325c"></script>
+    <script src="../_static/katex.min.js?v=be8ff15f"></script>
+    <script src="../_static/auto-render.min.js?v=ad136472"></script>
     <script src="../_static/katex_autorenderer.js?v=bebc588a"></script>
     </body>
 </html>
