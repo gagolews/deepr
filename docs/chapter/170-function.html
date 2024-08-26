@@ -241,7 +241,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.0.9005
+v1.0.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -342,7 +342,7 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://github.com/gagolews/deepr">bug/typo reports/fixes</a>
 are appreciated. Make sure to check out
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span> too.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span>, too.</em></p>
 </div></blockquote>
 <p>R is a <em>functional</em> language, i.e., one where functions play first fiddle.
 Each action we perform reduces itself to a call to some function
@@ -440,8 +440,8 @@ by crunching those exercises.</p>
 </pre></div>
 </div>
 <p>First, <code class="docutils literal notranslate"><span class="pre">args</span></code> is a (possibly empty) list of comma-separated parameter
-names which act as <em>input</em> variables.</p>
-<p>Second, <code class="docutils literal notranslate"><span class="pre">body</span></code> is a <em>single</em> R expression that is evaluated
+names which act as <em>input</em> variables.
+Second, <code class="docutils literal notranslate"><span class="pre">body</span></code> is a <em>single</em> R expression that is evaluated
 when the function is called.
 The value this expression yields will constitute the function’s
 output.</p>
@@ -907,9 +907,7 @@ In many situations,
 it may be used as a more elegant alternative
 to <strong class="command">for</strong> loops that we will introduce in the next chapter.</p>
 <div style="margin-top: 1em"></div><p>First<a class="footnote-reference brackets" href="#footlapply" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, a call to <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x)</span></code>
-yields a list whose <span class="math">\(i\)</span>-th element is equal to
-<strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x[[i]])</span></code>
-(recall that `<strong class="command">[[</strong>` works on atomic vectors too).
+yields a list whose <span class="math">\(i\)</span>-th element is equal to <strong class="command">f</strong><code class="code docutils literal notranslate"><span class="pre">(x[[i]])</span></code>.
 For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">  </span><span class="c1"># an example named list</span>
 <span class="w">    </span><span class="n">x1</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span>
@@ -937,7 +935,20 @@ For example:</p>
 <span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w">  </span><span class="c1"># compute three aggregates, convert to an atomic vector</span>
 <span class="c1">##  x1  x2  x3</span>
 <span class="c1">## 2.0 0.5  NA</span>
-<span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">))</span><span class="w">  </span><span class="c1"># x is atomic now</span>
+</pre></div>
+</div>
+<div class="proof proof-type-exercise" id="id12">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 7.6</span>
+        
+    </div><div class="proof-content">
+<p>Given a list of numeric vectors, fetch their last elements
+in the form of an atomic vector.</p>
+</div></div><p>Recall that `<strong class="command">[[</strong>` works on atomic vectors, too.
+Thus, we can call, e.g.:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">)</span>
+<span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
 <span class="c1">## [[1]]</span>
 <span class="c1">## [1] 0.4 0.8</span>
 <span class="c1">##</span>
@@ -992,21 +1003,19 @@ over), we can wrap them inside a separate list
 and toss it via the <code class="docutils literal notranslate"><span class="pre">MoreArgs</span></code> argument
 (à la <strong class="command">do.call</strong>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">MoreArgs</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span><span class="w">  </span><span class="c1"># mean(..., na.rm=TRUE)</span>
-<span class="c1">##  x1  x2  x3</span>
-<span class="c1">## 2.0 0.5 0.4</span>
+<span class="c1">## [1] 2 4 6</span>
 </pre></div>
 </div>
 <p>Alternatively, we can always construct a custom anonymous function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">unlist</span><span class="p">(</span><span class="nf">Map</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">))</span>
-<span class="c1">##  x1  x2  x3</span>
-<span class="c1">## 2.0 0.5 0.4</span>
+<span class="c1">## [1] 2 4 6</span>
 </pre></div>
 </div>
 </div>
-<div class="proof proof-type-exercise" id="id12">
+<div class="proof proof-type-exercise" id="id13">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.6</span>
+        <span class="proof-type">Exercise 7.7</span>
         
     </div><div class="proof-content">
 <p>Here is an example list of files
@@ -1020,10 +1029,10 @@ and toss it via the <code class="docutils literal notranslate"><span class="pre"
 </div>
 <p>Call <strong class="command">Map</strong> to read them with <strong class="command">scan</strong>.
 Determine each series’ minimal, mean, and maximal value.</p>
-</div></div><div class="proof proof-type-exercise" id="id13">
+</div></div><div class="proof proof-type-exercise" id="id14">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.7</span>
+        <span class="proof-type">Exercise 7.8</span>
         
     </div><div class="proof-content">
 <p>Implement your version of the <strong class="command">Filter</strong>
@@ -1134,10 +1143,10 @@ we can exercise our skills.
 The functions from <strong class="program">utils</strong>,
 <strong class="program">graphics</strong>, and <strong class="program">stats</strong>
 already appeared here and there.</p>
-<div class="proof proof-type-exercise" id="id14">
+<div class="proof proof-type-exercise" id="id15">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.8</span>
+        <span class="proof-type">Exercise 7.9</span>
         
     </div><div class="proof-content">
 <p>Use the <strong class="command">find</strong> function to determine which packages define
@@ -1174,10 +1183,10 @@ on m**OS.</p></li>
 users, CRAN also distributes the platform-specific binary versions
 of the packages (.zip or .tgz files).
 <strong class="command">install.packages</strong> will try to fetch them by default.</p>
-<div class="proof proof-type-example" id="id15">
+<div class="proof proof-type-example" id="id16">
 
     <div class="proof-title">
-        <span class="proof-type">Example 7.9</span>
+        <span class="proof-type">Example 7.10</span>
         
     </div><div class="proof-content">
 <p>It is very easy to retrieve a package’s source directly from
@@ -1206,10 +1215,10 @@ can be passed to <strong class="command">install.packages</strong>:</p>
 <span class="nf">file.remove</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">))</span><span class="w">  </span><span class="c1"># clean up</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id16">
+</div></div><div class="proof proof-type-exercise" id="id17">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.10</span>
+        <span class="proof-type">Exercise 7.11</span>
         
     </div><div class="proof-content">
 <p>Use the <strong class="program">git2r</strong> package to clone the <strong class="command">git</strong>
@@ -1271,9 +1280,9 @@ environment variables) relative to the current project:</p>
 <p>Many tasks can be accomplished by calling external programs.
 Such an approach is particularly natural on UNIX-like systems,
 which classically follow modular, minimalist design patterns.
-There are many tools at a developer’s hand and each tool is specialised
-at solving a single, well-defined problem.</p>
-<p>Apart from the many
+There are many tools at a developer’s hand and each of them
+is specialised at solving a single, well-defined problem.
+Apart from the many
 <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_Unix_commands">standard UNIX commands</a>,
 we may consider:</p>
 <ul class="simple">
@@ -1296,9 +1305,9 @@ other than R.</p></li>
 </ul>
 <p>The good news is that we are not limited to calling R from the system shell
 in the interactive or batch mode; see <a class="reference internal" href="110-basics.html#sec-ide"><span class="std std-numref">Section 1.2</span></a>.
-Our environment serves well as a glue language too.</p>
-<p>The <strong class="command">system2</strong> function invokes a system command.
-Communication between such programs may be done using,
+Our environment serves particularly well as a glue language, too.</p>
+<p>The <strong class="command">system2</strong> function invokes an external command.
+The communication between different programs may be done using,
 e.g., intermediate text, JSON, CSV, XML, or any other files.
 The <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> arguments control the
 redirection of the standard I/O streams.</p>
@@ -1318,8 +1327,8 @@ through a call to <strong class="command">getwd</strong> and <strong class="comm
 By default, it is the directory where the current R session was started.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Relying on <strong class="command">system2</strong> assumes that the commands
-it refers to are available on the target platform. Hence,
+<p>Relying on <strong class="command">system2</strong> assumes that the commands referred to
+are available on the target platform. Hence,
 it might not be portable unless additional assumptions
 are made, e.g., that a user runs a UNIX-like system and
 that certain libraries are available. We strongly recommend GNU/Linux
@@ -1358,10 +1367,10 @@ database in Python but visualise it in R).</p>
 </section>
 <section id="exercises">
 <h2><span class="section-number">7.4. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">¶</a></h2>
-<div class="proof proof-type-exercise" id="id17">
+<div class="proof proof-type-exercise" id="id18">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.11</span>
+        <span class="proof-type">Exercise 7.12</span>
         
     </div><div class="proof-content">
 <p>Answer the following questions.</p>
@@ -1386,10 +1395,10 @@ about this strategy?</p></li>
 <li><p>How to ensure that we will always run an R session with
 only specific versions of a set of packages?</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id18">
+</div></div><div class="proof proof-type-exercise" id="id19">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.12</span>
+        <span class="proof-type">Exercise 7.13</span>
         
     </div><div class="proof-content">
 <p>Write a function that computes the Gini index of
@@ -1399,10 +1408,10 @@ which, assuming <span class="math">\(x_1\le x_2\le\dots\le x_n\)</span>, is equa
 <div class="math">
 \[G(x_1,\dots,x_n) = \frac{ \sum_{i=1}^{n} (n-2i+1) x_{i} }{ (n-1) \sum_{i=1}^n x_i }.\]</div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id19">
+</div></div><div class="proof proof-type-exercise" id="id20">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.13</span>
+        <span class="proof-type">Exercise 7.14</span>
         
     </div><div class="proof-content">
 <p>Implement a function <strong class="command">between</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">a,</span> <span class="pre">b)</span></code>
@@ -1410,10 +1419,10 @@ that verifies whether each element in <code class="docutils literal notranslate"
 interval. Return a logical vector of the same length as <code class="docutils literal notranslate"><span class="pre">x</span></code>.
 Ensure the function is correctly vectorised with respect to all
 the arguments and handles missing data correctly.</p>
-</div></div><div class="proof proof-type-exercise" id="id20">
+</div></div><div class="proof proof-type-exercise" id="id21">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.14</span>
+        <span class="proof-type">Exercise 7.15</span>
         
     </div><div class="proof-content">
 <p>Write your version of the <strong class="command">strrep</strong> function
@@ -1427,25 +1436,25 @@ called <strong class="command">dup</strong>.</p>
 <span class="c1">## [1] &quot;aaaa&quot; &quot;bbbb&quot; &quot;cccc&quot;</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id21">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 7.15</span>
-        
-    </div><div class="proof-content">
-<p>Given a list <code class="docutils literal notranslate"><span class="pre">x</span></code>, generate its sublist with all the elements
-equal to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> removed.</p>
 </div></div><div class="proof proof-type-exercise" id="id22">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.16</span>
         
     </div><div class="proof-content">
-<p>Implement your version of the <strong class="command">sequence</strong> function.</p>
+<p>Given a list <code class="docutils literal notranslate"><span class="pre">x</span></code>, generate its sublist with all the elements
+equal to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> removed.</p>
 </div></div><div class="proof proof-type-exercise" id="id23">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 7.17</span>
+        
+    </div><div class="proof-content">
+<p>Implement your version of the <strong class="command">sequence</strong> function.</p>
+</div></div><div class="proof proof-type-exercise" id="id24">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 7.18</span>
         
     </div><div class="proof-content">
 <p>Using <strong class="command">Map</strong>, how can we generate window indexes like below?</p>
@@ -1465,20 +1474,20 @@ equal to <code class="docutils literal notranslate"><span class="pre">NULL</span
 <p>Write a function <strong class="command">windows</strong><code class="code docutils literal notranslate"><span class="pre">(k,</span> <span class="pre">n)</span></code> that yields
 index windows of length <span class="math">\(k\)</span> with elements between <span class="math">\(1\)</span> and <span class="math">\(n\)</span>
 (the above example is for <span class="math">\(k=3\)</span> and <span class="math">\(k=6\)</span>).</p>
-</div></div><div class="proof proof-type-exercise" id="id24">
+</div></div><div class="proof proof-type-exercise" id="id25">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.18</span>
+        <span class="proof-type">Exercise 7.19</span>
         
     </div><div class="proof-content">
 <p>Write a function to extract all <span class="math">\(q\)</span>-grams, <span class="math">\(q \ge 1\)</span>,
 from a given character vector. Return a list of
 character vectors. For example,
 bigrams (2-grams) in <code class="docutils literal notranslate"><span class="pre">&quot;abcd&quot;</span></code> are: <code class="docutils literal notranslate"><span class="pre">&quot;ab&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bc&quot;</span></code>, “cd”`.</p>
-</div></div><div class="proof proof-type-exercise" id="id25">
+</div></div><div class="proof proof-type-exercise" id="id26">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.19</span>
+        <span class="proof-type">Exercise 7.20</span>
         
     </div><div class="proof-content">
 <p>Implement a function <strong class="command">movstat</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x,</span> <span class="pre">k)</span></code>
@@ -1493,10 +1502,10 @@ For instance:</p>
 <span class="c1">## [1]  3.0000  6.0000 13.3333  3.3333</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id26">
+</div></div><div class="proof proof-type-exercise" id="id27">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.20</span>
+        <span class="proof-type">Exercise 7.21</span>
         
     </div><div class="proof-content">
 <p>Recode a character vector with a small number of distinct values
@@ -1509,10 +1518,10 @@ to a vector where each unique code is assigned a positive integer from
 <span class="c1">## [1] 1 3 2 1 2 1</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id27">
+</div></div><div class="proof proof-type-exercise" id="id28">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.21</span>
+        <span class="proof-type">Exercise 7.22</span>
         
     </div><div class="proof-content">
 <p>Implement a function that returns the number of occurrences of
@@ -1528,10 +1537,10 @@ Hint: use <strong class="command">match</strong> and <strong class="command">tab
 <span class="c1">##    1    5    3    1    1</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id28">
+</div></div><div class="proof proof-type-exercise" id="id29">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.22</span>
+        <span class="proof-type">Exercise 7.23</span>
         
     </div><div class="proof-content">
 <p>Extend the built-in <strong class="command">duplicated</strong> function.
@@ -1544,10 +1553,10 @@ of a repeated value is it (starting from the beginning of the vector).</p>
 <span class="c1">##  [1] 1 1 1 2 2 3 1 4 5 3 2</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id29">
+</div></div><div class="proof proof-type-exercise" id="id30">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.23</span>
+        <span class="proof-type">Exercise 7.24</span>
         
     </div><div class="proof-content">
 <p>Based on a call to <strong class="command">Map</strong>, implement your version of
@@ -1556,20 +1565,20 @@ Then, extend it to handle the second argument
 being a list of the form <strong class="command">list</strong><code class="code docutils literal notranslate"><span class="pre">(y1,</span> <span class="pre">y2,</span> <span class="pre">...)</span></code>
 representing the product of many levels.
 If the <span class="math">\(y\)</span>s are of different lengths, apply the recycling rule.</p>
-</div></div><div class="proof proof-type-exercise" id="id30">
+</div></div><div class="proof proof-type-exercise" id="id31">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.24</span>
+        <span class="proof-type">Exercise 7.25</span>
         
     </div><div class="proof-content">
 <p>Implement <strong class="command">my_unsplit</strong> being your version of
 <strong class="command">unsplit</strong>. For any <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">g</span></code> of the same lengths, ensure
 that <strong class="command">my_unsplit</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">split</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">g),</span> <span class="pre">g)</span></code> is
 equal to <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
-</div></div><div class="proof proof-type-exercise" id="id31">
+</div></div><div class="proof proof-type-exercise" id="id32">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.25</span>
+        <span class="proof-type">Exercise 7.26</span>
         
     </div><div class="proof-content">
 <p>Write a function that takes as arguments:
@@ -1587,10 +1596,10 @@ To obtain a single value:</p>
 <span class="math">\(u\in\left(\sum_{j=1}^{m-1} p_{j}, \sum_{j=1}^m p_{j}\right]\)</span>,</p></li>
 <li><p>the result is then <span class="math">\(x_m\)</span>.</p></li>
 </ol>
-</div></div><div class="proof proof-type-exercise" id="id32">
+</div></div><div class="proof proof-type-exercise" id="id33">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.26</span>
+        <span class="proof-type">Exercise 7.27</span>
         
     </div><div class="proof-content">
 <p>Write a function that takes as arguments:
@@ -1600,10 +1609,10 @@ To obtain a single value:</p>
 Let <span class="math">\(f\)</span> be the piecewise linear spline that interpolates the points
 <span class="math">\((x_1,y_1),\dots,(x_n,y_n)\)</span>.
 Return a vector <code class="docutils literal notranslate"><span class="pre">w</span></code> of length <span class="math">\(k\)</span> such that <span class="math">\(w_i=f(z_i)\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id33">
+</div></div><div class="proof proof-type-exercise" id="id34">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 7.27</span>
+        <span class="proof-type">Exercise 7.28</span>
         
     </div><div class="proof-content">
 <p>(*) Write functions <strong class="command">dpareto</strong>, <strong class="command">ppareto</strong>,
@@ -1621,9 +1630,8 @@ the <code class="docutils literal notranslate"><span class="pre">SIMPLIFY</span>
 </aside>
 <aside class="footnote brackets" id="footlapply" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>This use case scenario  can also be programmed
-using <strong class="command">lapply</strong>;
-<strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">f,</span> <span class="pre">...)</span></code>
+<p>This use case scenario can also be programmed
+using <strong class="command">lapply</strong>; <strong class="command">lapply</strong><code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">f,</span> <span class="pre">...)</span></code>
 is equivalent to <strong class="command">Map</strong><code class="code docutils literal notranslate"><span class="pre">(f,</span> <span class="pre">x,</span> <span class="pre">MoreArgs=list(...))</span></code>.</p>
 </aside>
 <aside class="footnote brackets" id="footchangedefs" role="doc-footnote">
@@ -1671,7 +1679,7 @@ that are processed on R’s startup; see <strong class="command">help</strong><c
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-08-21T14:34:51+0200.
+              Last updated on 2024-08-26T12:21:30+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1730,7 +1738,7 @@ that are processed on R’s startup; see <strong class="command">help</strong><c
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=4805ff4d"></script>
+</div><script src="../_static/documentation_options.js?v=d29a5c0e"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>

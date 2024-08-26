@@ -241,7 +241,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.0.9005
+v1.0.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -342,7 +342,7 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://github.com/gagolews/deepr">bug/typo reports/fixes</a>
 are appreciated. Make sure to check out
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span> too.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span>, too.</em></p>
 </div></blockquote>
 <p>After two brain-teasing chapters, it is time to cool it down a little.
 In this more technical part, we will introduce <em>lists</em>, which serve
@@ -371,10 +371,9 @@ we can call the <strong class="command">typeof</strong> function.</p>
 <span class="c1">## [1] &quot;character&quot;</span>
 </pre></div>
 </div>
-<p>It turns out that we can easily convert between
-these types, either on our explicit demand (<em>type casting</em>)
-or on-the-fly (<em>coercion</em>, when we perform an operation that expects
-something different from the kind of input it was fed with).</p>
+<p>We can easily convert between these types, either on our explicit demand
+(<em>type casting</em>) or on-the-fly (<em>coercion</em>, when we perform an operation
+that expects something different from the kind of input it was fed with).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(*)
@@ -432,8 +431,8 @@ is commonly applied in other programming languages as well.</p>
 <section id="implicit-conversion-coercion">
 <h3><span class="section-number">4.1.2. </span>Implicit conversion (coercion)<a class="headerlink" href="#implicit-conversion-coercion" title="Link to this heading">¶</a></h3>
 <p>Recall that we referred to the three vector types as <em>atomic</em> ones.
-They can only be used to store elements of the <em>same type</em>.</p>
-<p>If we make an attempt at composing an object of mixed types with
+They can only be used to store elements of the <em>same type</em>.
+If we make an attempt at composing an object of mixed types with
 <strong class="command">c</strong>, the common type will be determined in such a way that
 data are stored without information loss:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;three&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
@@ -487,10 +486,9 @@ This measure can be equivalently defined as:</p>
 \mathcal{L}(\boldsymbol{p}, \boldsymbol{y}) = -\frac{1}{n}\left(\sum_{i=1}^n y_i\log(p_i)+ (1-y_i)\log(1-p_i) \right).
 \]</div>
 </div>
-<p>Using vectorised operations, but not relying on <strong class="command">ifelse</strong> this time,
-implement this formula. Then, compute the cross-entropy loss between,
+<p>Implement this formula using vectorised operations, but not relying on <strong class="command">ifelse</strong> this time. Then, compute the cross-entropy loss between,
 for instance,
-“<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&lt;-</span> </code><strong class="command">sample</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(FALSE,</span> <span class="pre">TRUE),</span> <span class="pre">n)</span></code>”
+“<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">&lt;-</span> </code><strong class="command">sample</strong><code class="code docutils literal notranslate"><span class="pre">(</span></code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(FALSE,</span> <span class="pre">TRUE),</span> <span class="pre">n,</span> <span class="pre">replace=TRUE)</span></code>”
 and
 “<code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&lt;-</span> </code><strong class="command">runif</strong><code class="code docutils literal notranslate"><span class="pre">(n)</span></code>” for some <code class="docutils literal notranslate"><span class="pre">n</span></code>.
 Note how seamlessly we translate between
@@ -690,12 +688,11 @@ will actually result in its removal, e.g., when subsetting a list.</p>
 <section id="object-attributes">
 <span id="sec-attribute"></span><h2><span class="section-number">4.4. </span>Object attributes<a class="headerlink" href="#object-attributes" title="Link to this heading">¶</a></h2>
 <p>Lists can embrace many entities in the form of a single item sequence.
-Attributes, on the other hand, give means to inject <em>extra</em> data
-into an object.</p>
-<p>Attributes are unordered <code class="docutils literal notranslate"><span class="pre">key=value</span></code> pairs,
+<em>Attributes</em>, on the other hand, give means to inject <em>extra</em> data
+into an object. They are unordered <code class="docutils literal notranslate"><span class="pre">key=value</span></code> pairs,
 where <code class="docutils literal notranslate"><span class="pre">key</span></code> is a single string,
 and <code class="docutils literal notranslate"><span class="pre">value</span></code> is any R object except <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.
-They can be introduced by calling, amongst others<a class="footnote-reference brackets" href="#attr1" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, the
+We can introduce them by calling, amongst others<a class="footnote-reference brackets" href="#attr1" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, the
 <strong class="command">structure</strong> function:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x_simple</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">10</span>
 <span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">structure</span><span class="p">(</span>
@@ -737,10 +734,9 @@ specifically been programmed to pay attention to them.</p>
 </section>
 <section id="but-there-are-a-few-use-cases">
 <span id="sec-list-use-cases"></span><h3><span class="section-number">4.4.2. </span>But there are a few use cases<a class="headerlink" href="#but-there-are-a-few-use-cases" title="Link to this heading">¶</a></h3>
-<p>Some R functions add attributes to the return value
-to sneak extra information that <em>might</em> be useful,
-just in case.</p>
-<p>For instance, <strong class="command">na.omit</strong>, whose main aim is to remove missing
+<p>Some R functions add attributes to the return value to sneak extra
+information that <em>might</em> be useful, just in case.
+For instance, <strong class="command">na.omit</strong>, whose main aim is to remove missing
 values from an atomic vector, yields:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">70</span><span class="p">)</span>
 <span class="p">(</span><span class="n">y_na_free</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">na.omit</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
@@ -751,13 +747,13 @@ values from an atomic vector, yields:</p>
 <span class="c1">## [1] &quot;omit&quot;</span>
 </pre></div>
 </div>
-<p>We can enjoy the <code class="docutils literal notranslate"><span class="pre">NA</span></code>-free version of <code class="docutils literal notranslate"><span class="pre">y</span></code> in any
-further computations:</p>
+<p>We can enjoy the <code class="docutils literal notranslate"><span class="pre">NA</span></code>-free version of <code class="docutils literal notranslate"><span class="pre">y</span></code> in further computations:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mean</span><span class="p">(</span><span class="n">y_na_free</span><span class="p">)</span>
 <span class="c1">## [1] 38</span>
 </pre></div>
 </div>
-<p>Additionally, the <code class="docutils literal notranslate"><span class="pre">na.action</span></code> attribute tells us <em>where</em> the missing observations were:</p>
+<p>Additionally, the <code class="docutils literal notranslate"><span class="pre">na.action</span></code> attribute indicates the former whereabouts
+of the missing observations:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attr</span><span class="p">(</span><span class="n">y_na_free</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;na.action&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># read the attribute value</span>
 <span class="c1">## [1] 3 6</span>
 <span class="c1">## attr(,&quot;class&quot;)</span>
@@ -1011,7 +1007,7 @@ to a named list element:</p>
 </pre></div>
 </div>
 <p>Therefore, the functions we discuss in this chapter
-are of use in processing such structured data too.</p>
+are of use in processing such structured data, too.</p>
 </div>
 </section>
 <section id="altering-and-removing-attributes">
@@ -1180,7 +1176,7 @@ to read a JSON file in the form of a named list.</p>
 the current chapter boring, let’s rejoice:
 some of the exercises and remarks that we will encounter in the
 next part, which is devoted to vector indexing,
-will definitely be deliciously stimulating!</p>
+will definitely be deliciously stimulating.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footasnumeric" role="doc-footnote">
@@ -1238,7 +1234,7 @@ see <a class="reference internal" href="210-design.html#sec-replacementfun"><spa
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-08-21T14:34:51+0200.
+              Last updated on 2024-08-26T12:21:30+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1291,7 +1287,7 @@ see <a class="reference internal" href="210-design.html#sec-replacementfun"><spa
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=4805ff4d"></script>
+</div><script src="../_static/documentation_options.js?v=d29a5c0e"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>

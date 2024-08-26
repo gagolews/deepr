@@ -241,7 +241,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.0.9005
+v1.0.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -342,12 +342,13 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://github.com/gagolews/deepr">bug/typo reports/fixes</a>
 are appreciated. Make sure to check out
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span> too.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span>, too.</em></p>
 </div></blockquote>
 <p>When we equip an atomic or generic vector with the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute,
 it automatically becomes an object of the S3 class <code class="docutils literal notranslate"><span class="pre">array</span></code>.
-In particular, two-dimensional arrays (primary S3 class <code class="docutils literal notranslate"><span class="pre">matrix</span></code>) allow us
-to represent <em>tabular</em> data where items are aligned into rows and columns:</p>
+In particular, two-dimensional arrays (of the primary S3 class <code class="docutils literal notranslate"><span class="pre">matrix</span></code>)
+allow us to represent <em>tabular</em> data where items are aligned into rows
+and columns:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w">  </span><span class="c1"># a matrix with two rows and three columns</span>
 <span class="c1">##      [,1] [,2] [,3]</span>
 <span class="c1">## [1,]    1    3    5</span>
@@ -356,21 +357,21 @@ to represent <em>tabular</em> data where items are aligned into rows and columns
 </div>
 <p>Combined with the fact that there are many functions overloaded
 for the <code class="docutils literal notranslate"><span class="pre">matrix</span></code> class, we have just opened up a whole world of new
-possibilities, which we explore in this chapter.</p>
-<p>In particular, we discuss how to perform the algebraic operations
+possibilities, which we explore in this chapter.
+Namely, we will discuss how to perform the algebraic operations
 such as matrix multiplication, transpose, finding eigenvalues,
-and performing various decompositions. We also cover data wrangling
-operations such as array subsetting and column- and rowwise aggregation.</p>
+and performing various decompositions. We will also cover data wrangling
+operations such as array subsetting and column- and rowwise aggregation.
+Furthermore, the next chapter will present data frames:
+matrix-like objects whose columns can be of any (not necessarily
+the same) type.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Oftentimes, a numeric matrix with <span class="math">\(n\)</span> rows and <span class="math">\(m\)</span> columns
-is used to represent <span class="math">\(n\)</span> points (samples)
+is used to represent <span class="math">\(n\)</span> points (samples, observations)
 in an <span class="math">\(m\)</span>-dimensional space (with <span class="math">\(m\)</span> numeric features or variables),
 <span class="math">\(\mathbb{R}^m\)</span>.</p>
 </div>
-<p>Furthermore, in the next chapter, we will introduce data frames:
-matrix-like objects whose columns can be of any (not necessarily
-the same) type.</p>
 <section id="creating-arrays">
 <h2><span class="section-number">11.1. </span>Creating arrays<a class="headerlink" href="#creating-arrays" title="Link to this heading">¶</a></h2>
 <section id="matrix-and-array">
@@ -384,7 +385,7 @@ the same) type.</p>
 </div>
 <p>It converted an atomic vector of length six to a matrix with two rows.
 The number of columns was determined automatically (<code class="docutils literal notranslate"><span class="pre">ncol=3</span></code> could have
-been passed to get the same result).</p>
+been passed, additionally or instead, to get the same result).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>By default, the elements of the input vector are read column by column:</p>
@@ -442,7 +443,7 @@ of size <span class="math">\(3\times 4\times 2\)</span>:</p>
 </div>
 <p>It can be thought of as two matrices of size <span class="math">\(3\times 4\)</span>
 (because how else can we print out a 3D object on a 2D console?).</p>
-<p>The <strong class="command">array</strong> function can be fed with the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> argument too.
+<p>The <strong class="command">array</strong> function can be fed with the <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> argument, too.
 For instance, the above three-dimensional hypertable
 would require a list of three character vectors
 of sizes 3, 4, and 2, respectively.</p>
@@ -1293,7 +1294,7 @@ on each <em>column</em> of <code class="docutils literal notranslate"><span clas
 </div>
 <p>Take note of the columnwise order of the output values.</p>
 <p><strong class="command">apply</strong> also works on higher-dimensional arrays:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># over the first axis, &quot;Class&quot; (dimnames work too)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># over the first axis, &quot;Class&quot; (dimnames works too)</span>
 <span class="c1">##     1st     2nd     3rd    Crew</span>
 <span class="c1">##  40.625  35.625  88.250 110.625</span>
 <span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># over c(&quot;Class&quot;, &quot;Age&quot;)</span>
@@ -2260,7 +2261,7 @@ carrying the reciprocals of its non-zero elements.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-08-21T14:34:51+0200.
+              Last updated on 2024-08-26T12:21:30+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2331,7 +2332,7 @@ carrying the reciprocals of its non-zero elements.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=4805ff4d"></script>
+</div><script src="../_static/documentation_options.js?v=d29a5c0e"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>

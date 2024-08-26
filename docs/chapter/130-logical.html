@@ -241,7 +241,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.0.9005
+v1.0.1
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -342,16 +342,15 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://github.com/gagolews/deepr">bug/typo reports/fixes</a>
 are appreciated. Make sure to check out
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span> too.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2024).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span>, too.</em></p>
 </div></blockquote>
 <section id="creating-logical-vectors">
 <h2><span class="section-number">3.1. </span>Creating logical vectors<a class="headerlink" href="#creating-logical-vectors" title="Link to this heading">¶</a></h2>
-<p>R defines three(!) logical constants:
-<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, and <code class="docutils literal notranslate"><span class="pre">NA</span></code>, which represent
-“yes”, “no”, and “???”, respectively.
-Each of them, when instantiated, is an atomic vector of length one.</p>
-<p>Some of the functions we introduced in the previous chapter can be used
-to generate logical vectors as well:</p>
+<p>R defines three(!) logical constants: <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, and <code class="docutils literal notranslate"><span class="pre">NA</span></code>
+representing, respectively, “yes”, “no”, and “???”.
+When instantiated, each of them is an atomic vector of length one.
+To generate logical vectors of arbitrary size, we can call
+some of the functions introduced in the previous chapter, for instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="c1">## [1]  TRUE FALSE FALSE    NA  TRUE FALSE</span>
 <span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w"> </span><span class="n">each</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
@@ -420,7 +419,7 @@ testing for missingness should rather be performed via a call
 to the vectorised <strong class="command">is.na</strong> function.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
 <span class="c1">## [1]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
-<span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># works for logical vectors too</span>
+<span class="nf">is.na</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">  </span><span class="c1"># works for logical vectors, too</span>
 <span class="c1">## [1] FALSE FALSE  TRUE FALSE</span>
 </pre></div>
 </div>
@@ -529,8 +528,8 @@ to be represented exactly:</p>
 <p class="admonition-title">Important</p>
 <p>The double-precision floating point format (IEEE 754)
 is not specific to R. It is used by most other computing environments,
-including Python and C++.</p>
-<p>For discussion, see <span id="id2">[<a class="reference internal" href="999-bibliography.html#id39" title="Goldberg, D. (1991).  What every computer scientist should know about floating-point arithmetic. ACM Computing Surveys, 21(1):5–48. URL: https://perso.ens-lyon.fr/jean-michel.muller/goldberg.pdf.">32</a>, <a class="reference internal" href="999-bibliography.html#id38" title="Higham, N.J. (2002).  Accuracy and Stability of Numerical Algorithms. SIAM. DOI: 10.1137/1.9780898718027.">35</a>, <a class="reference internal" href="999-bibliography.html#id33" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">42</a>]</span>, and the more
+including Python and C++.
+For discussion, see <span id="id2">[<a class="reference internal" href="999-bibliography.html#id39" title="Goldberg, D. (1991).  What every computer scientist should know about floating-point arithmetic. ACM Computing Surveys, 21(1):5–48. URL: https://perso.ens-lyon.fr/jean-michel.muller/goldberg.pdf.">32</a>, <a class="reference internal" href="999-bibliography.html#id38" title="Higham, N.J. (2002).  Accuracy and Stability of Numerical Algorithms. SIAM. DOI: 10.1137/1.9780898718027.">35</a>, <a class="reference internal" href="999-bibliography.html#id33" title="Knuth, D.E. (1997).  The Art of Computer Programming II: Seminumerical Algorithms. Addison-Wesley.">42</a>]</span>, and the more
 statistically-orientated <span id="id3">[<a class="reference internal" href="999-bibliography.html#id41" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">31</a>]</span>.</p>
 </div>
 <p>Can we do anything about these issues?</p>
@@ -781,12 +780,11 @@ simplify the following expressions:</p>
 </section>
 <section id="choosing-elements-with-ifelse">
 <h2><span class="section-number">3.4. </span>Choosing elements with <strong class="command">ifelse</strong><a class="headerlink" href="#choosing-elements-with-ifelse" title="Link to this heading">¶</a></h2>
-<p>The <strong class="command">ifelse</strong> function is a vectorised version
-of the scalar <strong class="command">if</strong>…<strong class="command">else</strong> conditional statement,
-which we will forgo for as long as until <a class="reference internal" href="180-flow.html#chap-flow"><span class="std std-numref">Chapter 8</span></a>.
-It permits us to select an element from one of two vectors
-based on some logical condition.</p>
-<p>A call to <strong class="command">ifelse</strong><code class="code docutils literal notranslate"><span class="pre">(l,</span> <span class="pre">t,</span> <span class="pre">f)</span></code>, where <code class="docutils literal notranslate"><span class="pre">l</span></code> is a logical vector,
+<p>The <strong class="command">ifelse</strong> function is a vectorised version of the scalar
+<strong class="command">if</strong>…<strong class="command">else</strong> conditional statement, which we will forgo
+for as long as until <a class="reference internal" href="180-flow.html#chap-flow"><span class="std std-numref">Chapter 8</span></a>. It permits us to select an element
+from one of two vectors based on some logical condition. A call to
+<strong class="command">ifelse</strong><code class="code docutils literal notranslate"><span class="pre">(l,</span> <span class="pre">t,</span> <span class="pre">f)</span></code>, where <code class="docutils literal notranslate"><span class="pre">l</span></code> is a logical vector,
 returns a vector <code class="docutils literal notranslate"><span class="pre">y</span></code> such that:</p>
 <div class="math-wrapper docutils container">
 <div class="math">
@@ -1048,7 +1046,7 @@ in operation chains.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-08-21T14:34:51+0200.
+              Last updated on 2024-08-26T12:21:30+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1098,7 +1096,7 @@ in operation chains.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=4805ff4d"></script>
+</div><script src="../_static/documentation_options.js?v=d29a5c0e"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
