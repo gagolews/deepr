@@ -420,10 +420,9 @@ Here is a one-dimensional array:</p>
 <span class="c1">## [1] 1 2 3 4 5 6</span>
 </pre></div>
 </div>
-<p>When printed, it is indistinguishable
-from an atomic vector (but the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute is still
-set to <code class="docutils literal notranslate"><span class="pre">array</span></code>).</p>
-<p>And now for something completely different: a three-dimensional array
+<p>When printed, it is indistinguishable from an atomic vector
+(but the <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute is still set to <code class="docutils literal notranslate"><span class="pre">array</span></code>).
+And now for something completely different: a three-dimensional array
 of size <span class="math">\(3\times 4\times 2\)</span>:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">array</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">24</span><span class="p">,</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span>
 <span class="c1">## , , 1</span>
@@ -624,7 +623,7 @@ it <em>always</em> returns a matrix: shorter vectors are recycled
 </div>
 <p>Notice that <strong class="command">sapply</strong> may return an atomic vector
 with somewhat surprising <code class="docutils literal notranslate"><span class="pre">names</span></code>.</p>
-</div></div><p>See <a class="reference internal" href="240-data-frame.html#sec-df-group-by"><span class="std std-numref">Section 12.3.7</span></a> for a few more examples.</p>
+</div></div><p>More examples appear in <a class="reference internal" href="240-data-frame.html#sec-df-group-by"><span class="std std-numref">Section 12.3.7</span></a>.</p>
 </section>
 <section id="beyond-numeric-arrays">
 <h3><span class="section-number">11.1.4. </span>Beyond numeric arrays<a class="headerlink" href="#beyond-numeric-arrays" title="Link to this heading">¶</a></h3>
@@ -1292,8 +1291,8 @@ on each <em>column</em> of <code class="docutils literal notranslate"><span clas
 <span class="c1">## Max   4.0  8.0 12.0</span>
 </pre></div>
 </div>
-<p>Take note of the columnwise order of the output values.</p>
-<p><strong class="command">apply</strong> also works on higher-dimensional arrays:</p>
+<p>Take note of the columnwise order of the output values.
+Moreover, <strong class="command">apply</strong> also works on higher-dimensional arrays:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">apply</span><span class="p">(</span><span class="n">Titanic</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w">  </span><span class="c1"># over the first axis, &quot;Class&quot; (dimnames works too)</span>
 <span class="c1">##     1st     2nd     3rd    Crew</span>
 <span class="c1">##  40.625  35.625  88.250 110.625</span>
@@ -1356,8 +1355,8 @@ Second, we can apply matrix-scalar operations:</p>
 </pre></div>
 </div>
 <p>They multiplied each element in <code class="docutils literal notranslate"><span class="pre">B</span></code> by -1
-and squared every element in <code class="docutils literal notranslate"><span class="pre">A</span></code>, respectively.</p>
-<p>The behaviour of relational operators is of course similar:</p>
+and squared every element in <code class="docutils literal notranslate"><span class="pre">A</span></code>, respectively.
+The behaviour of relational operators is of course similar:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">100</span>
 <span class="c1">##       [,1]  [,2]  [,3]</span>
 <span class="c1">## [1,]  TRUE  TRUE  TRUE</span>
@@ -1374,8 +1373,8 @@ elements are ordered columnwisely, we have that:</p>
 </pre></div>
 </div>
 <p>It multiplied every element in the first <em>row</em> by 10 and
-each element in the second row by 100.</p>
-<p>If we wish to multiply each element in the first, second, …, etc.
+each element in the second row by 100.
+If we wish to multiply each element in the first, second, …, etc.
 <em>column</em> by the first, second, …, etc. value in a vector,
 we should <em>not</em> call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">)</span>
@@ -1455,8 +1454,8 @@ For what we call the (algebraic) <em>matrix</em> multiplication,
 we use the `<strong class="command">%*%</strong>` operator. It can only be performed
 on two matrices of <em>compatible sizes</em>:
 the number of columns in the left matrix must match
-the number of rows in the right operand.</p>
-<p>Given <span class="math">\(\mathbf{A}\in\mathbb{R}^{n\times p}\)</span>
+the number of rows in the right operand.
+Given <span class="math">\(\mathbf{A}\in\mathbb{R}^{n\times p}\)</span>
 and <span class="math">\(\mathbf{B}\in\mathbb{R}^{p\times m}\)</span>, their multiply is a matrix
 <span class="math">\(\mathbf{C}=\mathbf{A}\mathbf{B}\in\mathbb{R}^{n\times m}\)</span>
 such that <span class="math">\(c_{i,j}\)</span> is the dot product of the <span class="math">\(i\)</span>-th row in <span class="math">\(\mathbf{A}\)</span>
@@ -1552,9 +1551,8 @@ we can compute the operator norms:</p>
 \end{array}
 \]</div>
 </div>
-<p>where <span class="math">\(\sigma_1\)</span> gives the largest singular value (see below).</p>
-<p>Also, passing <code class="docutils literal notranslate"><span class="pre">&quot;F&quot;</span></code> as the second argument
-yields the Frobenius norm,
+<p>where <span class="math">\(\sigma_1\)</span> gives the largest singular value (see below).
+Also, passing <code class="docutils literal notranslate"><span class="pre">&quot;F&quot;</span></code> as the second argument yields the Frobenius norm,
 <span class="math">\(\|\mathbf{A}\|_F = \sqrt{\sum_{i=1}^n \sum_{j=1}^m a_{i,j}^2}\)</span>,
 and <code class="docutils literal notranslate"><span class="pre">&quot;M&quot;</span></code> computes the maximum norm,
 <span class="math">\(\|\mathbf{A}\|_M = \max_{{i=1,\dots,n\atop j=1,\dots,m}} |a_{i,j}|\)</span>.</p>
@@ -1589,7 +1587,7 @@ For example, let’s consider three vectors in <span class="math">\(\mathbb{R}^2
 </div>
 <p>Thus, the Euclidean distance between the first and the third vector,
 <span class="math">\(\|\mathbf{x}_{1,\cdot}-\mathbf{x}_{3,\cdot}\|_2=\sqrt{ (x_{1,1}-x_{3,1})^2 + (x_{1,2}-x_{3,2})^2 }\)</span>,
-is roughly 1.41421.
+is roughly 1.4142.
 The maximum, Manhattan, and Canberra distances/metrics
 are also available, amongst others.</p>
 <div class="proof proof-type-exercise" id="id33">
@@ -1765,8 +1763,8 @@ Then <span class="math">\(\mathbf{A}=\mathbf{Q}\mathbf{R}\)</span> is its QR
 decomposition (in the so-called narrow form),
 if <span class="math">\(\mathbf{Q}\)</span> is an orthogonal <span class="math">\(n\times m\)</span> matrix
 and <span class="math">\(\mathbf{R}\)</span> is an upper triangular
-<span class="math">\(m\times m\)</span> one.</p>
-<p>The <strong class="command">qr</strong> function returns an object of the S3 class <code class="docutils literal notranslate"><span class="pre">qr</span></code>
+<span class="math">\(m\times m\)</span> one.
+The <strong class="command">qr</strong> function returns an object of the S3 class <code class="docutils literal notranslate"><span class="pre">qr</span></code>
 from which we can extract  the two components; see the
 <strong class="command">qr.Q</strong> and <strong class="command">qr.R</strong> functions.</p>
 <div class="proof proof-type-example" id="id39">
@@ -1840,9 +1838,9 @@ where <span class="math">\(\mathbf{D}\)</span> is a <span class="math">\(p\times
 (with the singular values of <span class="math">\(\mathbf{X}\)</span>,
 <span class="math">\(d_{1,1}\ge\dots\ge d_{p,p}\ge 0\)</span>, <span class="math">\(p=\min\{n,m\}\)</span>),
 and <span class="math">\(\mathbf{U}\)</span> and <span class="math">\(\mathbf{V}\)</span> are orthogonal matrices
-of dimensions <span class="math">\(n\times p\)</span> and <span class="math">\(m\times p\)</span>, respectively.</p>
-<p><strong class="command">svd</strong> may not only be used to determine the solution to
-linear regression<a class="footnote-reference brackets" href="#footregsvd" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>
+of dimensions <span class="math">\(n\times p\)</span> and <span class="math">\(m\times p\)</span>, respectively.
+The corresponding <strong class="command">svd</strong> function may not only be used to
+determine the solution to linear regression<a class="footnote-reference brackets" href="#footregsvd" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>
 but also to perform the principal component analysis<a class="footnote-reference brackets" href="#footpcasvd" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.
 Namely, <span class="math">\(\mathbf{V}\)</span> gives the eigenvectors of <span class="math">\(\mathbf{X}^T \mathbf{X}\)</span>.
 Assuming that <span class="math">\(\mathbf{X}\)</span> is centred at <span class="math">\(\boldsymbol{0}\)</span>,
@@ -1869,8 +1867,8 @@ we can determine the principal directions also by calling:</p>
 <p>The <strong class="program">Matrix</strong> package is perhaps the most widely known showcase of
 the S4 object orientation (<a class="reference internal" href="220-s3.html#sec-s4"><span class="std std-numref">Section 10.5</span></a>). It defines classes and methods
 for dense and sparse matrices, including rectangular, symmetric,
-triangular, band, and diagonal ones.</p>
-<p>For instance, large graph (e.g., in network sciences)
+triangular, band, and diagonal ones.
+In particular, large graph (e.g., in network sciences)
 or preference (e.g., in recommender systems) data can be represented
 using sparse matrices, i.e., those with many zeroes.
 After all, it is much more likely for two vertices in a network
@@ -2010,9 +2008,10 @@ with <span class="math">\(b_{1,j}=\min_i x_{i,j}\)</span> and <span class="math"
         
     </div><div class="proof-content">
 <p>Let <span class="math">\(\mathbf{t}\)</span> be a vector of <span class="math">\(n\)</span> integers in <span class="math">\(\{1,\dots,k\}\)</span>.
-Write a function to one-hot encode each <span class="math">\(t_i\)</span>.
-Return a 0–1 matrix <span class="math">\(\mathbf{R}\)</span> of size <span class="math">\(n\times k\)</span> such that <span class="math">\(r_{i,j}=1\)</span>
-if and only if <span class="math">\(j = t_i\)</span>.
+Write a function to one-hot encode each <span class="math">\(t_i\)</span>, i.e., return a 0–1 matrix
+<span class="math">\(\mathbf{R}\)</span> of size <span class="math">\(n\times k\)</span> such that <span class="math">\(r_{i,j}=1\)</span> if and only
+if <span class="math">\(j = t_i\)</span> (such a representation is beneficial when solving, e.g.,
+a multiclass classification problem by means of <span class="math">\(k\)</span> binary classifiers).
 For example, if <span class="math">\(\mathbf{t}=[1, 2, 3, 2, 4]\)</span> and <span class="math">\(k=4\)</span>, then:</p>
 <div class="math-wrapper docutils container">
 <div class="math">
@@ -2028,8 +2027,6 @@ For example, if <span class="math">\(\mathbf{t}=[1, 2, 3, 2, 4]\)</span> and <sp
 \right].
 \]</div>
 </div>
-<p>On a side note, such a representation is beneficial when solving,
-e.g., a multiclass classification problem by means of <span class="math">\(k\)</span> binary classifiers.</p>
 <p>Then, compose another function, but this time setting
 <span class="math">\(r_{i,j}=1\)</span> if and only if <span class="math">\(j\ge t_i\)</span>, e.g.:</p>
 <div class="math-wrapper docutils container">
@@ -2193,7 +2190,7 @@ also <code class="docutils literal notranslate"><span class="pre">dim</span></co
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
 <p>(*) We can select the underlying implementation
 of <code class="docutils literal notranslate"><span class="pre">BLAS</span></code> at R’s compile time; see Section A.3 of
-<span id="id12">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2023).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">67</a>]</span>. Some of them are faster than others.</p>
+<span id="id12">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2024).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">67</a>]</span>. Some of them are faster than others.</p>
 </aside>
 <aside class="footnote brackets" id="footcopula" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
@@ -2261,7 +2258,7 @@ carrying the reciprocals of its non-zero elements.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-08-26T12:21:30+0200.
+              Last updated on 2024-08-27T15:00:04+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
