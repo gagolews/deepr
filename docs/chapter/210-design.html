@@ -241,7 +241,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.1
+v1.0.1.9001
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -646,11 +646,9 @@ yield a matrix or a data frame.</p>
 <span class="c1">## [1,]    1    4</span>
 </pre></div>
 </div>
-</div></div><p>We proclaim that, if there are many options,
-the default functions’ behaviour should be to return
-the object of the most generic kind possible, even when it is not the most
-convenient form.
-Then, either:</p>
+</div></div><p>We proclaim that, if there are many options, the default behaviour
+should be to return an object of the most generic kind possible,
+even when it is not the most convenient form. Then, either:</p>
 <ul class="simple">
 <li><p>we equip the function with a further argument which must be
 explicitly set if we <em>really</em> want to simplify the output, or</p></li>
@@ -1036,7 +1034,7 @@ Also, it is possible to use various continuous integration techniques
 that are automatically triggered when pushing changes to our software
 repositories; see GitLab CI or GitHub Actions.
 For instance, we can run a package build, install,
-and check process is possible on every <strong class="program">git</strong> commit.
+and check process on every <strong class="program">git</strong> commit.
 Also, CRAN deploys continuous integration services, including
 checking the package on various platforms.</p>
 </div>
@@ -1572,18 +1570,19 @@ a recoded copy of the following:</p>
         
     </div><div class="proof-content">
 <p>(*) Consider the  `<strong class="command">recode&lt;-</strong>` function again
-but now let an example object be a data frame with
-a column of the <code class="docutils literal notranslate"><span class="pre">factor</span></code> class:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">51</span><span class="p">,</span><span class="w"> </span><span class="m">101</span><span class="p">),</span><span class="w"> </span><span class="p">]</span>
+but now let an example object be a list with
+an element of the <code class="docutils literal notranslate"><span class="pre">factor</span></code> class:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.list</span><span class="p">(</span><span class="n">iris</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">51</span><span class="p">,</span><span class="w"> </span><span class="m">101</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)])</span>
 <span class="nf">recode</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="s">&quot;Species&quot;</span><span class="p">]]))</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span>
 <span class="w">    </span><span class="n">setosa</span><span class="o">=</span><span class="s">&quot;SET&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">versicolor</span><span class="o">=</span><span class="s">&quot;VER&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">virginica</span><span class="o">=</span><span class="s">&quot;VIR&quot;</span>
 <span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">##     Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
-<span class="c1">## 1            5.1         3.5          1.4         0.2     SET</span>
-<span class="c1">## 2            4.9         3.0          1.4         0.2     SET</span>
-<span class="c1">## 51           7.0         3.2          4.7         1.4     VER</span>
-<span class="c1">## 101          6.3         3.3          6.0         2.5     VIR</span>
+<span class="c1">## $Sepal.Length</span>
+<span class="c1">## [1] 5.1 4.9 7.0 6.3</span>
+<span class="c1">##</span>
+<span class="c1">## $Species</span>
+<span class="c1">## [1] SET SET VER VIR</span>
+<span class="c1">## Levels: SET VER VIR</span>
 </pre></div>
 </div>
 <p>How to change <strong class="command">levels</strong><code class="code docutils literal notranslate"><span class="pre">(x[[&quot;Species&quot;]])</span></code> and return
@@ -1654,7 +1653,7 @@ We can always pass an object as an argument explicitly.</p>
 <p class="admonition-title">Note</p>
 <p>It is a function call as such, not curly braces per se
 that form a local scope.
-When we run “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">{</span> <span class="pre">y</span> <span class="pre">&lt;-</span> <span class="pre">1;</span> <span class="pre">y</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">}</span></code>”, <code class="docutils literal notranslate"><span class="pre">y</span></code> is not an temporary variable.
+When we run “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">{</span> <span class="pre">y</span> <span class="pre">&lt;-</span> <span class="pre">1;</span> <span class="pre">y</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">}</span></code>”, <code class="docutils literal notranslate"><span class="pre">y</span></code> is not a temporary variable.
 It is an ordinary named object created alongside <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
 <p>On the other hand, in
 “<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">(</span></code><strong class="command">function</strong><code class="code docutils literal notranslate"><span class="pre">()</span> <span class="pre">{</span> <span class="pre">z</span> <span class="pre">&lt;-</span> <span class="pre">1;</span> <span class="pre">z</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">})()</span></code>”,
@@ -1685,11 +1684,11 @@ a corresponding <span class="math">\(y\)</span> can be determined for any <span 
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x559585055398&gt;</span>
+<span class="c1">## &lt;environment: 0x56520157c180&gt;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
 <span class="c1">## function (v)</span>
 <span class="c1">## .approxfun(x, y, v, method, yleft, yright, f, na.rm)</span>
-<span class="c1">## &lt;environment: 0x55958515e1d8&gt;</span>
+<span class="c1">## &lt;environment: 0x5652024b3888&gt;</span>
 </pre></div>
 </div>
 <p>We might wonder why they produce different results:
@@ -2505,7 +2504,7 @@ lines/proprietary solutions/payable services, etc.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2024-08-27T15:00:04+0200.
+              Last updated on 2024-10-14T11:08:08+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2598,7 +2597,7 @@ lines/proprietary solutions/payable services, etc.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d29a5c0e"></script>
+</div><script src="../_static/documentation_options.js?v=2b367170"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
