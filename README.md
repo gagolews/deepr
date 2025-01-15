@@ -24,7 +24,7 @@ knowledge's sake.
 **Please spread the news about this project.**
 
 Consider citing this book as:
-[Gagolewski M.][1] (2024), *Deep R Programming*, Melbourne,
+[Gagolewski M.][1] (2025), *Deep R Programming*, Melbourne,
 DOI: [10.5281/zenodo.7490464](https://dx.doi.org/10.5281/zenodo.7490464),
 ISBN: 978-0-6455719-2-9,
 URL: <https://deepr.gagolewski.com/>.
@@ -64,7 +64,7 @@ hierarchical clustering algorithm in both Python and R).
 
 --------------------------------------------------------------------------------
 
-Copyright (C) 2022–2024, [Marek Gagolewski][1]. Some rights reserved.
+Copyright (C) 2022–2025, [Marek Gagolewski][1]. Some rights reserved.
 
 This material is licensed under the Creative Commons
 [Attribution-NonCommercial-NoDerivatives 4.0 International][2] License
