@@ -342,7 +342,7 @@ Refer to the <a class="reference internal" href="000-preface.html#chap-preface">
 <a class="reference external" href="https://github.com/gagolews/deepr">bug/typo reports/fixes</a>
 are appreciated. Make sure to check out
 <a class="reference external" href="https://datawranglingpy.gagolewski.com/"><em>Minimalist Data Wrangling with Python</em></a>
-<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2025).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">27</a>]</span>, too.</em></p>
+<span id="id1">[<a class="reference internal" href="999-bibliography.html#id3" title="Gagolewski, M. (2025).  Minimalist Data Wrangling with Python. URL: https://datawranglingpy.gagolewski.com/, DOI: 10.5281/zenodo.6451068.">28</a>]</span>, too.</em></p>
 </div></blockquote>
 <p>When we equip an atomic or generic vector with the <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute,
 it automatically becomes an object of the S3 class <code class="docutils literal notranslate"><span class="pre">array</span></code>.
@@ -1440,9 +1440,9 @@ configuration is possible. Notice some peculiarities:</p>
 involve rather straightforward matrix algebra and numerical mathematics.
 Suffice it to say that anyone serious about data science and scientific
 computing should learn the necessary theory;
-see, for example, <span id="id5">[<a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2024).  Matrix Algebra: Theory, Computations and Applications in Statistics. Springer.">31</a>]</span> and <span id="id6">[<a class="reference internal" href="999-bibliography.html#id41" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">30</a>]</span>.</p>
+see, for example, <span id="id5">[<a class="reference internal" href="999-bibliography.html#id42" title="Gentle, J.E. (2024).  Matrix Algebra: Theory, Computations and Applications in Statistics. Springer.">32</a>]</span> and <span id="id6">[<a class="reference internal" href="999-bibliography.html#id41" title="Gentle, J.E. (2009).  Computational Statistics. Springer.">31</a>]</span>.</p>
 <p>R is a convenient interface to the stable and well-tested algorithms from,
-amongst others, <code class="docutils literal notranslate"><span class="pre">LAPACK</span></code> and <code class="docutils literal notranslate"><span class="pre">BLAS</span></code><a class="footnote-reference brackets" href="#footblas" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Below we mention a few of
+amongst others, <code class="docutils literal notranslate"><span class="pre">BLAS</span></code><a class="footnote-reference brackets" href="#footblas" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> and <code class="docutils literal notranslate"><span class="pre">LAPACK</span></code>. Below we mention a few of
 them. External packages implement hundreds of algorithms tackling
 differential equations, constrained and unconstrained optimisation, etc.;
 <a class="reference external" href="https://cran.r-project.org/web/views">CRAN Task Views</a> provide a good
@@ -1678,7 +1678,7 @@ about the origin <span class="math">\((0, 0)\)</span> by the counterclockwise an
 <p>The complex eigenvalues are <span class="math">\(e^{-\pi/6 i}\)</span> and <span class="math">\(e^{\pi/6 i}\)</span>
 and we have <span class="math">\(|e^{-\pi/6 i}|=|e^{\pi/6 i}|=1\)</span>.</p>
 </div></div><div class="proof proof-type-example" id="id37">
-
+<span id="exercise-pca"></span>
     <div class="proof-title">
         <span class="proof-type">Example 11.24</span>
         
@@ -1742,16 +1742,16 @@ Furthermore, its eigenvalues give the variances explained by each of them.</p>
 and the thereto-orthogonal
 <span class="math">\((-\sin \pi/6,  \cos \pi/6 )\simeq (-0.5, 0.866)\)</span>
 (up to an orientation inverse)
-with the corresponding variances of <span class="math">\(5\)</span> and <span class="math">\(2\)</span>
-(i.e., standard deviations of <span class="math">\(\sqrt{5}\)</span> and <span class="math">\(\sqrt{2}\)</span>), respectively.
+with the corresponding variances of 5 and 2, respectively
+(i.e., standard deviations of <span class="math">\(\sqrt{5}\)</span> and <span class="math">\(\sqrt{2}\)</span>).
 Note that this method of performing principal component analysis, i.e.,
 recreating the scale and rotation transformation applied on <span class="math">\(\mathbf{Z}\)</span>
 based only on <span class="math">\(\mathbf{X}\)</span>, is not particularly numerically stable;
-see below for an alternative.</p>
+see <a class="reference internal" href="#exercise-pca-svd"><span class="std std-numref">Exercise 11.26</span></a> for an alternative.</p>
 </div></div></section>
 <section id="qr-decomposition">
 <h3><span class="section-number">11.4.5. </span>QR decomposition<a class="headerlink" href="#qr-decomposition" title="Link to this heading">¶</a></h3>
-<p>We say that a real <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{Q}\)</span>, <span class="math">\(n\ge m\)</span>,
+<p>Let <span class="math">\(n\ge m\)</span>. We say that a real <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{Q}\)</span>
 is <em>orthogonal</em>, whenever <span class="math">\(\mathbf{Q}^T \mathbf{Q}  = \mathbf{I}\)</span>
 (identity matrix). This is equivalent to <span class="math">\(\mathbf{Q}\)</span>’s columns’ being
 orthogonal unit vectors. Also,
@@ -1760,26 +1760,27 @@ if <span class="math">\(\mathbf{Q}\)</span> is a square matrix, then
 <span class="math">\(\mathbf{Q}^T \mathbf{Q} = \mathbf{Q} \mathbf{Q}^T = \mathbf{I}\)</span>.</p>
 <p>Let <span class="math">\(\mathbf{A}\)</span> be a real<a class="footnote-reference brackets" href="#footcomplexqr" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> <span class="math">\(n\times m\)</span> matrix with <span class="math">\(n\ge m\)</span>.
 Then <span class="math">\(\mathbf{A}=\mathbf{Q}\mathbf{R}\)</span> is its QR
-decomposition (in the so-called narrow form),
-if <span class="math">\(\mathbf{Q}\)</span> is an orthogonal <span class="math">\(n\times m\)</span> matrix
-and <span class="math">\(\mathbf{R}\)</span> is an upper triangular
-<span class="math">\(m\times m\)</span> one.
-The <strong class="command">qr</strong> function returns an object of the S3 class <code class="docutils literal notranslate"><span class="pre">qr</span></code>
-from which we can extract  the two components; see the
+decomposition, if <span class="math">\(\mathbf{Q}\)</span> is an orthogonal <span class="math">\(n\times m\)</span> matrix
+and <span class="math">\(\mathbf{R}\)</span> is an upper triangular <span class="math">\(m\times m\)</span> one.
+Note that such a decomposition is not necessarily unique (without
+imposing additional requirements), and that we speak here
+of a QR factorisation in the so-called narrow form.</p>
+<p>The <strong class="command">qr</strong> function returns an object of the S3 class <code class="docutils literal notranslate"><span class="pre">qr</span></code>
+from which we can extract the two components of interest; see the
 <strong class="command">qr.Q</strong> and <strong class="command">qr.R</strong> functions.</p>
 <div class="proof proof-type-example" id="id39">
-
+<span id="exercise-leastsq-pca"></span>
     <div class="proof-title">
         <span class="proof-type">Example 11.25</span>
         
     </div><div class="proof-content">
 <p>Let <span class="math">\(\mathbf{X}\)</span> be an <span class="math">\(n\times m\)</span> data matrix, representing
 <span class="math">\(n\)</span> points in <span class="math">\(\mathbb{R}^m\)</span>, and a vector
-<span class="math">\(\mathbf{y}\in\mathbb{R}^n\)</span> of the <em>desired</em> outputs corresponding
-to each input.
-For fitting a linear model <span class="math">\(\mathbf{x}^T \boldsymbol\theta\)</span>,
-where <span class="math">\(\boldsymbol\theta\)</span> is a vector of <span class="math">\(m\)</span> parameters,
-we can use the method of least squares, which minimises:</p>
+<span class="math">\(\mathbf{y}\in\mathbb{R}^n\)</span>, where <span class="math">\(y_i\)</span> gives
+the <em>desired</em> output corresponding to the input <span class="math">\(\mathbf{x}_{i,\cdot}\)</span>.</p>
+<p>Let <span class="math">\(\boldsymbol\theta\)</span> be a vector of <span class="math">\(m\)</span> parameters.
+For fitting a linear model
+<span class="math">\(y=\mathbf{x}^T \boldsymbol\theta=\theta_1 x_1 + \dots+\theta_m x_m\)</span>, we can use the method of least squares, which minimises the quadratic loss function:</p>
 <div class="math-wrapper docutils container">
 <div class="math">
 \[
@@ -1790,24 +1791,31 @@ we can use the method of least squares, which minimises:</p>
 \|\mathbf{X} \boldsymbol\theta - \mathbf{y}\|_2^2.
 \]</div>
 </div>
-<p>It might be shown that if
+<p>It might be shown that if we have the QR factorisation
 <span class="math">\(\mathbf{X}=\mathbf{Q}\mathbf{R}\)</span>,
-then <span class="math">\(\boldsymbol\theta =
+then the optimal <span class="math">\(\boldsymbol\theta\)</span> is given by:</p>
+<div class="math-wrapper docutils container">
+<div class="math">
+\[
+\boldsymbol\theta =
 \left(\mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T \mathbf{y}
-= \mathbf{R}^{-1}\mathbf{Q}^T\mathbf{y}\)</span>, which can conveniently
+= \mathbf{R}^{-1}\mathbf{Q}^T\mathbf{y},
+\]</div>
+</div>
+<p>which can conveniently
 be determined via a call to <strong class="command">qr.coef</strong>.</p>
 <p>In particular, we can fit a simple linear regression
-model <span class="math">\(y=ax+b\)</span> by considering <span class="math">\(\mathbf{X} = (x, 1)\)</span> and
+model <span class="math">\(y=ax+b=\mathbf{x}^T \boldsymbol\theta\)</span>
+by considering <span class="math">\(\mathbf{x} = (x, 1)\)</span> and
 <span class="math">\(\boldsymbol\theta = (a, b)\)</span>.
-For instance (see <a class="reference internal" href="#fig-qr-lm"><span class="std std-numref">Figure 11.2</span></a>):</p>
+For instance:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cars</span><span class="p">[[</span><span class="s">&quot;speed&quot;</span><span class="p">]]</span>
 <span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cars</span><span class="p">[[</span><span class="s">&quot;dist&quot;</span><span class="p">]]</span>
 <span class="n">X1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">  </span><span class="c1"># the model is theta[1]*x + theta[2]*1</span>
 <span class="n">qrX1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">qr</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
-<span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="nf">qr.R</span><span class="p">(</span><span class="n">qrX1</span><span class="p">))</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="nf">qr.Q</span><span class="p">(</span><span class="n">qrX1</span><span class="p">))</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c1"># or: qr.coef(qrX1, y)</span>
-<span class="c1">##       [,1]</span>
-<span class="c1">## x   3.9324</span>
-<span class="c1">##   -17.5791</span>
+<span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">qr.coef</span><span class="p">(</span><span class="n">qrX1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">))</span>
+<span class="c1">##        x</span>
+<span class="c1">##   3.9324 -17.5791</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;speed&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;dist&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># scatter plot</span>
 <span class="nf">abline</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># add the regression line</span>
 </pre></div>
@@ -1818,14 +1826,42 @@ For instance (see <a class="reference internal" href="#fig-qr-lm"><span class="s
 <p><span class="caption-number">Figure 11.2 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">cars</span></code> dataset and the fitted regression line.</span><a class="headerlink" href="#id40" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
-<p><strong class="command">solve</strong> with one argument determines the inverse of a given matrix.
-The fitted model is <span class="math">\(y=3.93241x-17.5791\)</span>.</p>
+<p>Thus, the fitted model is <span class="math">\(y=3.9324x-17.5791\)</span>,
+see <a class="reference internal" href="#fig-qr-lm"><span class="std std-numref">Figure 11.2</span></a>.</p>
 <p>The same approach is used by <strong class="command">lm.fit</strong>,
-the workhorse behind the <strong class="command">lm</strong> method accepting an R formula
+the workhorse behind the <strong class="command">lm</strong> method that
+allows for specifying regression models using an R formula
 (which some readers might be familiar with; compare <a class="reference internal" href="340-lazy.html#sec-formula"><span class="std std-numref">Section 17.6</span></a>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">lm.fit</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">)[[</span><span class="s">&quot;coefficients&quot;</span><span class="p">]]</span><span class="w">  </span><span class="c1"># also: lm(dist~speed, data=cars)</span>
 <span class="c1">##        x</span>
 <span class="c1">##   3.9324 -17.5791</span>
+</pre></div>
+</div>
+<p>As an exercise, let us compute
+<span class="math">\(\boldsymbol\theta=\mathbf{R}^{-1}\mathbf{Q}^T\mathbf{y}\)</span>
+manually. We note that the one-argument version of <strong class="command">solve</strong>
+determines the inverse of a given matrix. Thus:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">qr.Q</span><span class="p">(</span><span class="n">qrX1</span><span class="p">)</span>
+<span class="n">R</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">qr.R</span><span class="p">(</span><span class="n">qrX1</span><span class="p">)</span>
+<span class="nf">solve</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">y</span><span class="w">  </span><span class="c1"># or solve(R) %*% crossprod(Q, y)</span>
+<span class="c1">##       [,1]</span>
+<span class="c1">## x   3.9324</span>
+<span class="c1">##   -17.5791</span>
+</pre></div>
+</div>
+<p>However, from the perspective of numerical stability,
+computing a matrix inverse is rarely a good idea.
+Multiplying both sides of the equation
+<span class="math">\(\boldsymbol\theta=\mathbf{R}^{-1}\mathbf{Q}^T\mathbf{y}\)</span>
+by <span class="math">\(\mathbf{R}\)</span>, we get that it holds
+<span class="math">\(\mathbf{R} \boldsymbol\theta=\mathbf{b}\)</span>
+with <span class="math">\(\mathbf{b}=\mathbf{Q}^T\mathbf{y}\)</span>.
+This is a triangular system of linear equations, which
+can be efficiently solved using a designated routine:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">backsolve</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="nf">crossprod</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">))</span>
+<span class="c1">##          [,1]</span>
+<span class="c1">## [1,]   3.9324</span>
+<span class="c1">## [2,] -17.5791</span>
 </pre></div>
 </div>
 </div></div></section>
@@ -1834,26 +1870,30 @@ the workhorse behind the <strong class="command">lm</strong> method accepting an
 <p>Given a real <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{X}\)</span>,
 its singular value decomposition (SVD) is given by
 <span class="math">\(\mathbf{X}=\mathbf{U} \mathbf{D} \mathbf{V}^T\)</span>,
-where <span class="math">\(\mathbf{D}\)</span> is a <span class="math">\(p\times p\)</span> diagonal matrix
-(with the singular values of <span class="math">\(\mathbf{X}\)</span>,
-<span class="math">\(d_{1,1}\ge\dots\ge d_{p,p}\ge 0\)</span>, <span class="math">\(p=\min\{n,m\}\)</span>),
-and <span class="math">\(\mathbf{U}\)</span> and <span class="math">\(\mathbf{V}\)</span> are orthogonal matrices
-of dimensions <span class="math">\(n\times p\)</span> and <span class="math">\(m\times p\)</span>, respectively.
-The corresponding <strong class="command">svd</strong> function may not only be used to
-determine the solution to linear regression<a class="footnote-reference brackets" href="#footregsvd" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>
-but also to perform the principal component analysis<a class="footnote-reference brackets" href="#footpcasvd" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>.
-Namely, <span class="math">\(\mathbf{V}\)</span> gives the eigenvectors of <span class="math">\(\mathbf{X}^T \mathbf{X}\)</span>.
-Assuming that <span class="math">\(\mathbf{X}\)</span> is centred at <span class="math">\(\boldsymbol{0}\)</span>,
-the latter is precisely its scaled covariance matrix.</p>
+where <span class="math">\(\mathbf{U}\)</span> and <span class="math">\(\mathbf{V}\)</span> are orthogonal matrices
+of dimensions <span class="math">\(n\times p\)</span> and <span class="math">\(m\times p\)</span>, respectively,
+and <span class="math">\(\mathbf{D}\)</span> is a <span class="math">\(p\times p\)</span> diagonal matrix
+with the singular values of <span class="math">\(\mathbf{X}\)</span>.
+It is usually assumed that <span class="math">\(d_{1,1}\ge\dots\ge d_{p,p}\ge 0\)</span>,
+<span class="math">\(p=\min\{n,m\}\)</span>, and then the SVD factorisation is unique.</p>
+<p>The corresponding <strong class="command">svd</strong> function
+may be used to perform the principal component analysis<a class="footnote-reference brackets" href="#footpcasvd" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.
+Namely, if <span class="math">\(\mathbf{X}=\mathbf{U} \mathbf{D} \mathbf{V}^T\)</span>,
+then the columns of <span class="math">\(\mathbf{V}\)</span> give the eigenvectors
+of <span class="math">\(\mathbf{X}^T \mathbf{X}\)</span>.
+The latter is precisely its scaled covariance matrix
+if we assume that <span class="math">\(\mathbf{X}\)</span> is centred at <span class="math">\(\boldsymbol{0}\)</span>,</p>
 <div class="proof proof-type-example" id="id41">
-
+<span id="exercise-pca-svd"></span>
     <div class="proof-title">
         <span class="proof-type">Example 11.26</span>
         
     </div><div class="proof-content">
 <p>(*)
-Continuing the example featuring a bivariate normal sample,
-we can determine the principal directions also by calling:</p>
+Continuing <a class="reference internal" href="#exercise-pca"><span class="std std-numref">Exercise 11.24</span></a> that features a rotated
+bivariate normal sample, we can determine the principal directions
+by referring to the <span class="math">\(\mathbf{V}\)</span> component
+of the SVD decomposition of a centred version of the data matrix:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Xc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">-</span><span class="nf">colMeans</span><span class="p">(</span><span class="n">X</span><span class="p">))</span><span class="w">  </span><span class="c1"># centred version of X</span>
 <span class="nf">svd</span><span class="p">(</span><span class="n">Xc</span><span class="p">)[[</span><span class="s">&quot;v&quot;</span><span class="p">]]</span>
 <span class="c1">##          [,1]     [,2]</span>
@@ -1861,7 +1901,42 @@ we can determine the principal directions also by calling:</p>
 <span class="c1">## [2,] -0.50408  0.86366</span>
 </pre></div>
 </div>
-</div></div></section>
+<p>The SVD factorisation can also aid in determining
+the solution to linear regression.
+In the previous section,
+we mentioned that the parameter vector <span class="math">\(\boldsymbol\theta\)</span> minimising
+<span class="math">\(\|\mathbf{X} \boldsymbol\theta - \mathbf{y}\|_2^2\)</span>
+is given by <span class="math">\(\boldsymbol\theta =
+\left(\mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T \mathbf{y}
+\)</span>.
+The component <span class="math">\(\mathbf{X}^+=\left(\mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T\)</span> is called the pseudoinverse of <span class="math">\(\mathbf{X}\)</span> for
+it holds that <span class="math">\(\mathbf{X}^+ \mathbf{X}=\mathbf{I}\)</span>.
+If the SVD decomposition is <span class="math">\(\mathbf{X}=\mathbf{U} \mathbf{D} \mathbf{V}^T\)</span>,
+then <span class="math">\(\mathbf{X}^+=\mathbf{V} \mathbf{D}^+ \mathbf{U}^T\)</span>,
+where <span class="math">\(\mathbf{D}^+\)</span> is the transposed version of <span class="math">\(\mathbf{D}\)</span>
+carrying the reciprocals of its non-zero elements.</p>
+<div class="proof proof-type-example" id="id42">
+<span id="exercise-leastsq-svd"></span>
+    <div class="proof-title">
+        <span class="proof-type">Example 11.27</span>
+        
+    </div><div class="proof-content">
+<p>Let us go back to the simple linear regression model
+discussed in <a class="reference internal" href="#exercise-leastsq-pca"><span class="std std-numref">Exercise 11.25</span></a>. The same solution
+can be obtained by computing:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">svdX1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">svd</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+<span class="n">V</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svdX1</span><span class="p">[[</span><span class="s">&quot;v&quot;</span><span class="p">]]</span>
+<span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svdX1</span><span class="p">[[</span><span class="s">&quot;d&quot;</span><span class="p">]]</span><span class="w">  </span><span class="c1"># only the elements on the diagonal</span>
+<span class="n">U</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svdX1</span><span class="p">[[</span><span class="s">&quot;u&quot;</span><span class="p">]]</span>
+<span class="n">V</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">diag</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">U</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">y</span>
+<span class="c1">##          [,1]</span>
+<span class="c1">## [1,]   3.9324</span>
+<span class="c1">## [2,] -17.5791</span>
+</pre></div>
+</div>
+</div></div></div></div><p>The book <span id="id11">[<a class="reference internal" href="999-bibliography.html#id78" title="Blum, A., Hopcroft, J., and Kannan, R. (2020).  Foundations of Data Science. Cambridge University Press. URL: https://www.cs.cornell.edu/jeh/book.pdf.">8</a>]</span> gives many more applications of the SVD
+factorisation in data science.</p>
+</section>
 <section id="a-note-on-the-matrix-package">
 <span id="sec-matrix-s4"></span><h3><span class="section-number">11.4.7. </span>A note on the <strong class="program">Matrix</strong> package<a class="headerlink" href="#a-note-on-the-matrix-package" title="Link to this heading">¶</a></h3>
 <p>The <strong class="program">Matrix</strong> package is perhaps the most widely known showcase of
@@ -1908,10 +1983,10 @@ For example:</p>
 </section>
 <section id="exercises">
 <h2><span class="section-number">11.5. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">¶</a></h2>
-<div class="proof proof-type-exercise" id="id42">
+<div class="proof proof-type-exercise" id="id43">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.27</span>
+        <span class="proof-type">Exercise 11.28</span>
         
     </div><div class="proof-content">
 <p>Let <code class="docutils literal notranslate"><span class="pre">X</span></code> be a matrix with <code class="docutils literal notranslate"><span class="pre">dimnames</span></code> set. For instance:</p>
@@ -1940,10 +2015,10 @@ involving matrix subsetting. Note that a few of them are invalid.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">X[X[,1]&gt;=5</span> <span class="pre">&amp;</span> <span class="pre">X[,1]&lt;=10,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;)]</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">X[,</span> </code><strong class="command">c</strong><code class="code docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;d&quot;)]</span></code>.</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id43">
+</div></div><div class="proof proof-type-exercise" id="id44">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.28</span>
+        <span class="proof-type">Exercise 11.29</span>
         
     </div><div class="proof-content">
 <p>Assuming that <code class="docutils literal notranslate"><span class="pre">X</span></code> is an array, what is the difference between the following
@@ -1958,10 +2033,10 @@ operations involving indexing?</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">X[X[,</span> <span class="pre">1]&gt;0]</span></code> vs <code class="docutils literal notranslate"><span class="pre">X[X[,</span> <span class="pre">1]&gt;0,]</span></code> vs <code class="docutils literal notranslate"><span class="pre">X[,X[,1]&gt;0]</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">X[X[,</span> <span class="pre">1]&gt;5,</span> <span class="pre">X[1,</span> <span class="pre">]&lt;10]</span></code> vs <code class="docutils literal notranslate"><span class="pre">X[X[1,</span> <span class="pre">]&gt;5,</span> <span class="pre">X[,</span> <span class="pre">1]&lt;10]</span></code>.</p></li>
 </ul>
-</div></div><div class="proof proof-type-exercise" id="id44">
+</div></div><div class="proof proof-type-exercise" id="id45">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.29</span>
+        <span class="proof-type">Exercise 11.30</span>
         
     </div><div class="proof-content">
 <p>Give a few ways to create a matrix like:</p>
@@ -1990,10 +2065,10 @@ operations involving indexing?</p>
 <span class="c1">## [12,]    2    3    2</span>
 </pre></div>
 </div>
-</div></div><div class="proof proof-type-exercise" id="id45">
+</div></div><div class="proof proof-type-exercise" id="id46">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.30</span>
+        <span class="proof-type">Exercise 11.31</span>
         
     </div><div class="proof-content">
 <p>For a given real <span class="math">\(n\times m\)</span> matrix <span class="math">\(\mathbf{X}\)</span>,
@@ -2001,10 +2076,10 @@ encoding <span class="math">\(n\)</span> input points in an <span class="math">\
 determine their bounding hyperrectangle, i.e.,
 return a <span class="math">\(2\times m\)</span> matrix <span class="math">\(\mathbf{B}\)</span>
 with <span class="math">\(b_{1,j}=\min_i x_{i,j}\)</span> and <span class="math">\(b_{2,j}=\max_i x_{i,j}\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id46">
+</div></div><div class="proof proof-type-exercise" id="id47">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.31</span>
+        <span class="proof-type">Exercise 11.32</span>
         
     </div><div class="proof-content">
 <p>Let <span class="math">\(\mathbf{t}\)</span> be a vector of <span class="math">\(n\)</span> integers in <span class="math">\(\{1,\dots,k\}\)</span>.
@@ -2048,10 +2123,10 @@ R = \left[
 <p>As usual, try to solve all the exercises without using explicit
 <strong class="command">for</strong> and <strong class="command">while</strong> loops (provided that it is possible).</p>
 </div>
-<div class="proof proof-type-exercise" id="id47">
+<div class="proof proof-type-exercise" id="id48">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.32</span>
+        <span class="proof-type">Exercise 11.33</span>
         
     </div><div class="proof-content">
 <p>Given an <span class="math">\(n\times k\)</span> real matrix, apply the softmax
@@ -2060,10 +2135,10 @@ function on each row, i.e., map
 Then, one-hot decode the values in each row, i.e., find the
 column number with the greatest value. Return a vector of size <span class="math">\(n\)</span>
 with elements in <span class="math">\(\{1,\dots,k\}\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id48">
+</div></div><div class="proof proof-type-exercise" id="id49">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.33</span>
+        <span class="proof-type">Exercise 11.34</span>
         
     </div><div class="proof-content">
 <p>Assume that an <span class="math">\(n\times m\)</span> real matrix <span class="math">\(\mathbf{X}\)</span> represents
@@ -2072,10 +2147,10 @@ with elements in <span class="math">\(\{1,\dots,k\}\)</span>.</p>
 the <span class="math">\(n\)</span> points and a given <span class="math">\(\mathbf{y}\in\mathbb{R}^m\)</span>.
 Return a vector <span class="math">\(\mathbf{d}\)</span> of length <span class="math">\(n\)</span>
 with <span class="math">\(d_{i}=\|\mathbf{x}_{i,\cdot}-\mathbf{y}\|_2\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id49">
+</div></div><div class="proof proof-type-exercise" id="id50">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.34</span>
+        <span class="proof-type">Exercise 11.35</span>
         
     </div><div class="proof-content">
 <p>Let <span class="math">\(\mathbf{X}\)</span> and <span class="math">\(\mathbf{Y}\)</span>
@@ -2086,27 +2161,27 @@ such that <span class="math">\(r_i\)</span> indicates the index of the
 point in <span class="math">\(\mathbf{X}\)</span> with the least distance to (the closest to)
 the <span class="math">\(i\)</span>-th point in <span class="math">\(\mathbf{Y}\)</span>, i.e.,
 <span class="math">\(r_i = \mathrm{arg}\min_j \|\mathbf{x}_{j,\cdot}-\mathbf{y}_{i,\cdot}\|_2\)</span>.</p>
-</div></div><div class="proof proof-type-exercise" id="id50">
-
-    <div class="proof-title">
-        <span class="proof-type">Exercise 11.35</span>
-        
-    </div><div class="proof-content">
-<p>Write your version of <strong class="program">utils</strong>::<strong class="command">combn</strong>.</p>
 </div></div><div class="proof proof-type-exercise" id="id51">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.36</span>
         
     </div><div class="proof-content">
-<p>Time series are vectors or matrices of the class <code class="docutils literal notranslate"><span class="pre">ts</span></code>
-equipped with the <code class="docutils literal notranslate"><span class="pre">tsp</span></code> attribute, amongst others.
-Refer to <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;ts&quot;)</span></code> for more information about
-how they are represented and what S3 methods have been overloaded for them.</p>
+<p>Write your version of <strong class="program">utils</strong>::<strong class="command">combn</strong>.</p>
 </div></div><div class="proof proof-type-exercise" id="id52">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 11.37</span>
+        
+    </div><div class="proof-content">
+<p>Time series are vectors or matrices of the class <code class="docutils literal notranslate"><span class="pre">ts</span></code>
+equipped with the <code class="docutils literal notranslate"><span class="pre">tsp</span></code> attribute, amongst others.
+Refer to <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;ts&quot;)</span></code> for more information about
+how they are represented and what S3 methods have been overloaded for them.</p>
+</div></div><div class="proof proof-type-exercise" id="id53">
+
+    <div class="proof-title">
+        <span class="proof-type">Exercise 11.38</span>
         
     </div><div class="proof-content">
 <p>(*) Numeric matrices can be stored in a CSV file, amongst others.
@@ -2129,10 +2204,10 @@ which is based on a few calls to <strong class="command">scan</strong> instead.
 Use <strong class="command">file</strong> to establish a file connection so that you can
 ignore the comment lines and fetch the column names
 before reading the actual numeric values.</p>
-</div></div><div class="proof proof-type-exercise" id="id53">
+</div></div><div class="proof proof-type-exercise" id="id54">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.38</span>
+        <span class="proof-type">Exercise 11.39</span>
         
     </div><div class="proof-content">
 <p>(*)
@@ -2141,10 +2216,10 @@ Using <strong class="command">readBin</strong>, read the <code class="file docut
 The output object should be a three-dimensional, <span class="math">\(10000\times 28\times 28\)</span>
 array with real elements between 0 and 255. Refer to the <em>File Formats</em>
 section therein for more details.</p>
-</div></div><div class="proof proof-type-exercise" id="id54">
+</div></div><div class="proof proof-type-exercise" id="id55">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.39</span>
+        <span class="proof-type">Exercise 11.40</span>
         
     </div><div class="proof-content">
 <p>(**)
@@ -2154,10 +2229,10 @@ whereas affine transformations require only the latter.
 Apply various image transformations such as sharpening,
 shearing, and rotating on the MNIST digits
 and plot the results using the <strong class="command">image</strong> function.</p>
-</div></div><div class="proof proof-type-exercise" id="id55">
+</div></div><div class="proof proof-type-exercise" id="id56">
 
     <div class="proof-title">
-        <span class="proof-type">Exercise 11.40</span>
+        <span class="proof-type">Exercise 11.41</span>
         
     </div><div class="proof-content">
 <p>(*) Using <strong class="command">constrOptim</strong>,
@@ -2190,12 +2265,12 @@ also <code class="docutils literal notranslate"><span class="pre">dim</span></co
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
 <p>(*) We can select the underlying implementation
 of <code class="docutils literal notranslate"><span class="pre">BLAS</span></code> at R’s compile time; see Section A.3 of
-<span id="id12">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2025).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">67</a>]</span>. Some of them are faster than others.</p>
+<span id="id12">[<a class="reference internal" href="999-bibliography.html#id12" title="R Development Core Team. (2025).  R Installation and Administration. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-admin.html.">68</a>]</span>. Some of them are faster than others.</p>
 </aside>
 <aside class="footnote brackets" id="footcopula" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">5</a><span class="fn-bracket">]</span></span>
 <p>For drawing random samples from any multivariate distribution,
-refer to the theory of copulas, e.g., <span id="id13">[<a class="reference internal" href="999-bibliography.html#id70" title="Nelsen, R.B. (1999).  An Introduction to Copulas. Springer.">49</a>]</span>.
+refer to the theory of copulas, e.g., <span id="id13">[<a class="reference internal" href="999-bibliography.html#id70" title="Nelsen, R.B. (1999).  An Introduction to Copulas. Springer.">50</a>]</span>.
 There are a few R packages on CRAN that implement the most popular
 models.</p>
 </aside>
@@ -2204,18 +2279,8 @@ models.</p>
 <p>If <span class="math">\(\mathbf{A}\)</span> is a complex matrix, its QR decomposition
 spawns <span class="math">\(\mathbf{Q}\)</span> that is a unitary matrix.</p>
 </aside>
-<aside class="footnote brackets" id="footregsvd" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">7</a><span class="fn-bracket">]</span></span>
-<p>As the pseudoinverse
-<span class="math">\(\mathbf{X}^+=\left(\mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T
-=\mathbf{V} \mathbf{D}^+ \mathbf{U}^T=\mathbf{R}^{-1}\mathbf{Q}^T\)</span>,
-with
-<span class="math">\(\mathbf{X}^+ \mathbf{X}=\mathbf{I}\)</span>.
-Here, <span class="math">\(\mathbf{D}^+\)</span> is a transposed version of <span class="math">\(\mathbf{D}\)</span>
-carrying the reciprocals of its non-zero elements.</p>
-</aside>
 <aside class="footnote brackets" id="footpcasvd" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">8</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">7</a><span class="fn-bracket">]</span></span>
 <p>See the source code of
 <strong class="command">getS3method</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;prcomp&quot;,</span> <span class="pre">&quot;default&quot;)</span></code>.</p>
 </aside>
@@ -2258,7 +2323,7 @@ carrying the reciprocals of its non-zero elements.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2025-01-15T15:08:13+0100.
+              Last updated on 2025-01-24T16:44:54+0100.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
