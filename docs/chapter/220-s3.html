@@ -229,7 +229,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.1.9005
+v1.0.2
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -504,7 +504,8 @@ In particular, we can only set <code class="docutils literal notranslate"><span 
 (possibly of length greater than one; see <a class="reference internal" href="#sec-multi-class"><span class="std std-numref">Section 10.2.5</span></a>).</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">12345</span>
 <span class="nf">attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;class&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># character vectors only</span>
-<span class="c1">## Error in attr(x, &quot;class&quot;) &lt;- 1: attempt to set invalid &#39;class&#39; attribute</span>
+<span class="c1">## Error in `attr(x, &quot;class&quot;) &lt;- 1`: ! attempt to set invalid &#39;class&#39;</span>
+<span class="c1">##     attribute</span>
 </pre></div>
 </div>
 <p>Furthermore, the <strong class="command">class</strong> function can read the value of
@@ -1011,7 +1012,7 @@ only because there is a <strong class="command">print</strong> method overloaded
 for objects of the <code class="docutils literal notranslate"><span class="pre">kmeans</span></code> class.</p>
 <p>But is there?</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">print.kmeans</span>
-<span class="c1">## Error: object &#39;print.kmeans&#39; not found</span>
+<span class="c1">## Error: ! object &#39;print.kmeans&#39; not found</span>
 </pre></div>
 </div>
 <p>Even though the method is hidden (internal) in the <strong class="program">stats</strong> package’s
@@ -1026,7 +1027,7 @@ or referring to <strong class="program">stats</strong><code class="code docutils
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> attribute can be instantiated as a character vector
 of any length. For example:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">t1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2026-01-07 10:42:02 CET&quot;</span>
+<span class="c1">## [1] &quot;2026-07-30 14:11:33 CEST&quot;</span>
 <span class="p">(</span><span class="n">t2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">strptime</span><span class="p">(</span><span class="s">&quot;2021-08-15T12:59:59+1000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span><span class="p">))</span>
 <span class="c1">## [1] &quot;2021-08-15 04:59:59&quot;</span>
 </pre></div>
@@ -1224,7 +1225,7 @@ and the default internal method will be called.</p>
 we can define the meaning of all binary operators at once.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Ops.categorical</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">.Generic</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;&lt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&lt;=&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&gt;=&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;==&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;!=&quot;</span><span class="p">)))</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="p">(</span><span class="n">.Generic</span><span class="w"> </span><span class="o">%notin%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;&lt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&lt;=&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&gt;=&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;==&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;!=&quot;</span><span class="p">))</span>
 <span class="w">        </span><span class="nf">stop</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%s not defined for &#39;categorical&#39; objects&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">.Generic</span><span class="p">))</span>
 <span class="w">    </span><span class="n">e1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
 <span class="w">    </span><span class="n">e2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">e2</span><span class="p">)</span>
@@ -1262,53 +1263,54 @@ as a simple exercise for the studious reader.</p>
 <section id="date-time-etc">
 <span id="sec-datetime"></span><h3><span class="section-number">10.3.1. </span>Date, time, etc.<a class="headerlink" href="#date-time-etc" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Date</span></code> class represents… dates (calendar ones, not fruits).</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2023-02-29&quot;</span><span class="p">))))</span>
-<span class="c1">## [1] &quot;2026-01-07&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; NA</span>
-<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">curd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.Date</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1969-12-31&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2026-07-30&quot;</span><span class="p">))))</span>
+<span class="c1">## [1] &quot;2026-07-30&quot; &quot;1969-12-31&quot; &quot;1970-01-01&quot; &quot;2026-07-30&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">curd</span><span class="p">)</span>
 <span class="c1">## [1] &quot;Date&quot;</span>
 </pre></div>
 </div>
 <p>Complex types are built on basic ones. Underneath,
 what we deal with here is:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">curd</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
-<span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 20460    -1     0    NA</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">curd</span><span class="p">)</span>
+<span class="c1">## [1] 20664    -1     0 20664</span>
 </pre></div>
 </div>
 <p>which is the number of days since the <em>UNIX epoch</em>,
 1970-01-01T00:00:00+0000 (midnight GMT/UTC).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> (calendar time) class represents date-time objects:</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
-<span class="c1">## [1] &quot;2026-01-07 10:42:02 CET&quot;</span>
-<span class="nf">class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">curt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">())</span>
+<span class="c1">## [1] &quot;2026-07-30 14:11:33 CEST&quot;</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">curt</span><span class="p">)</span>
 <span class="c1">## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</span>
-<span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nf">typeof</span><span class="p">(</span><span class="n">curt</span><span class="p">)</span>
 <span class="c1">## [1] &quot;double&quot;</span>
-<span class="nf">unclass</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1">## [1] 1767778923</span>
+<span class="nf">unclass</span><span class="p">(</span><span class="n">curt</span><span class="p">)</span>
+<span class="c1">## [1] 1785413493</span>
 </pre></div>
 </div>
 <p>Underneath, it is the number of seconds since the UNIX epoch.
-By default, whilst printing, the current default timezone
+By default, whilst printing, the current default time zone
 is used (see <strong class="command">Sys.timezone</strong>).
 However, such objects can be equipped with the <code class="docutils literal notranslate"><span class="pre">tzone</span></code> attribute.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;POSIXt&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># using current default timezone</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;POSIXt&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># using current default time zone</span>
 <span class="c1">## [1] &quot;1970-01-01 01:00:01 CET&quot;</span>
 <span class="nf">structure</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;POSIXct&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;POSIXt&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">tzone</span><span class="o">=</span><span class="s">&quot;UTC&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;1970-01-01 00:00:01 UTC&quot;</span>
 </pre></div>
 </div>
 <p>In both cases, the time is 1 second after the beginning of the UNIX epoch.
-On the author’s PC, the former is displayed in the current local timezone, though.</p>
+On the author’s PC, the former is displayed in the current local time zone,
+though.</p>
 <div class="proof proof-type-exercise" id="id57">
 
     <div class="proof-title">
         <span class="proof-type">Exercise 10.14</span>
         
     </div><div class="proof-content">
-<p>Use <strong class="command">ISOdatetime</strong> to inspect how
-midnights are displayed in different timezones.</p>
+<p>Inspect how <strong class="command">ISOdatetime</strong> displays
+midnights in different time zones.</p>
 </div></div><p>The <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> (local time) class is represented using a list
 of atomic vectors<a class="footnote-reference brackets" href="#footposixlt" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></a>.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.POSIXlt</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&quot;1970-01-01 00:00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="s">&quot;2030-12-31 23:59:59&quot;</span><span class="p">)))</span>
@@ -1373,13 +1375,17 @@ already involved the use of <strong class="command">c.Date</strong>.</p>
 <strong class="command">as.character</strong>.</p>
 </div></div><p>A specific number of days or seconds can be added to or
 subtracted from a date or time, respectively.
-However, `<strong class="command">-</strong>` (see also <strong class="command">diff</strong>)
-can also be applied on two date-time objects,
-which yields an object of the class <code class="docutils literal notranslate"><span class="pre">difftime</span></code>.</p>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">Sys.Date</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
-<span class="c1">## Time difference of 1 days</span>
-<span class="nf">Sys.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="nf">Sys.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+However, `<strong class="command">-</strong>` and <strong class="command">diff</strong>
+can also be applied on date-time objects;
+they yield an object of the class <code class="docutils literal notranslate"><span class="pre">difftime</span></code>.</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">curt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">curt</span><span class="m">-1</span><span class="p">)</span>
 <span class="c1">## Time difference of 1 secs</span>
+<span class="nf">diff</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">curt</span><span class="p">,</span><span class="w"> </span><span class="n">curt</span><span class="m">+1</span><span class="p">,</span><span class="w"> </span><span class="n">curt</span><span class="m">+7</span><span class="p">,</span><span class="w"> </span><span class="n">curt</span><span class="m">+67</span><span class="p">))</span>
+<span class="c1">## Time differences in secs</span>
+<span class="c1">## [1]  1  6 60</span>
+<span class="nf">diff</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">curt</span><span class="p">,</span><span class="w"> </span><span class="n">curt</span><span class="m">+1</span><span class="p">,</span><span class="w"> </span><span class="n">curt</span><span class="m">+7</span><span class="p">,</span><span class="w"> </span><span class="n">curt</span><span class="m">+67</span><span class="p">),</span><span class="w"> </span><span class="n">units</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">)</span>
+<span class="c1">## Time differences in mins</span>
+<span class="c1">## [1] 0.016667 0.100000 1.000000</span>
 </pre></div>
 </div>
 <div class="proof proof-type-exercise" id="id61">
@@ -1417,7 +1423,7 @@ to execute a given expression:</p>
 <span class="c1">## [1] 4999488</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">proc.time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">)</span><span class="w">  </span><span class="c1"># elapsed time</span>
 <span class="c1">##    user  system elapsed</span>
-<span class="c1">##   0.120   0.005   0.124</span>
+<span class="c1">##   0.104   0.006   0.111</span>
 </pre></div>
 </div>
 <p>The function returns an object of the class <code class="docutils literal notranslate"><span class="pre">proc_time</span></code>.
@@ -1649,7 +1655,7 @@ in functions such as
 <strong class="command">aggregate</strong> (computing aggregates within data groups),
 <strong class="command">boxplot</strong> (box-and-whisker plots for a variable
 split by a combination of factors), or <strong class="command">plot</strong> (scatter plots);
-see also Chapter 11 of <span id="id31">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2025).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">59</a>]</span>. For instance, formulae can be
+see also Chapter 11 of <span id="id31">[<a class="reference internal" href="999-bibliography.html#id9" title="Venables, W.N., Smith, D.M., and R Development Core Team. (2026).  An Introduction to R. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-intro.html.">59</a>]</span>. For instance, formulae can be
 used to describe symbolic relationships such as:</p>
 <ul class="simple">
 <li><p>“<code class="docutils literal notranslate"><span class="pre">y</span></code> as a linear combination of <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, and <code class="docutils literal notranslate"><span class="pre">x3</span></code>”,</p></li>
@@ -1911,7 +1917,7 @@ new S4 classes.</p>
 <span class="c1">## [1] &quot;S4&quot;</span>
 </pre></div>
 </div>
-<p>See Section 1.12 of <span id="id42">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2025).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span> for technical details on how they are
+<p>See Section 1.12 of <span id="id42">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2026).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span> for technical details on how they are
 internally represented. In particular, in our case, all the slots are simply
 stored as object attributes:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">attributes</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
@@ -1943,12 +1949,11 @@ operator and the <strong class="command">slot</strong> function or their replace
 <p>The `<strong class="command">&#64;</strong>` operator can only be used on S4 objects,
 and some sanity checks are automatically performed:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">@</span><span class="n">unknown</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span>
-<span class="c1">## Error in (function (cl, name, valueClass) : &#39;unknown&#39; is not a slot in</span>
-<span class="c1">##     class &quot;qualitative&quot;</span>
+<span class="c1">## Error: ! &#39;unknown&#39; is not a slot in class &quot;qualitative&quot;</span>
 <span class="n">z</span><span class="o">@</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;spam&quot;</span>
-<span class="c1">## Error in (function (cl, name, valueClass) : assignment of an object of</span>
-<span class="c1">##     class &quot;character&quot; is not valid for @&#39;data&#39; in an object of class</span>
-<span class="c1">##     &quot;qualitative&quot;; is(value, &quot;integer&quot;) is not TRUE</span>
+<span class="c1">## Error: ! assignment of an object of class &quot;character&quot; is not valid for</span>
+<span class="c1">##     @&#39;data&#39; in an object of class &quot;qualitative&quot;; is(value, &quot;integer&quot;) is</span>
+<span class="c1">##     not TRUE</span>
 </pre></div>
 </div>
 </div>
@@ -2163,9 +2168,9 @@ Was that straightforward?</p>
     </div><div class="proof-content">
 <p>Explain why the two following calls return significantly different results.</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">c</span><span class="p">(</span><span class="nf">Sys.Date</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;1970-01-01&quot;</span><span class="p">)</span>
-<span class="c1">## [1] &quot;2026-01-07&quot; &quot;1970-01-01&quot;</span>
+<span class="c1">## [1] &quot;2026-07-30&quot; &quot;1970-01-01&quot;</span>
 <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">Sys.Date</span><span class="p">())</span>
-<span class="c1">## [1] &quot;1970-01-01&quot; &quot;20460&quot;</span>
+<span class="c1">## [1] &quot;1970-01-01&quot; &quot;20664&quot;</span>
 </pre></div>
 </div>
 <p>Propose a workaround.</p>
@@ -2186,7 +2191,7 @@ for our example <code class="docutils literal notranslate"><span class="pre">cat
 <p>(*) Write an R package that defines S3 class <code class="docutils literal notranslate"><span class="pre">categorical</span></code>.
 Add a few methods for this class.
 Note the need to use the <code class="docutils literal notranslate"><span class="pre">S3method</span></code> directive
-in the <code class="file docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file; see <span id="id43">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2025).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">66</a>]</span>.</p>
+in the <code class="file docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file; see <span id="id43">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2026).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">66</a>]</span>.</p>
 </div></div><div class="proof proof-type-exercise" id="id77">
 
     <div class="proof-title">
@@ -2276,7 +2281,7 @@ and other ones proposed by third-party packages.</p>
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
 <p>Their list is hardcoded at the C language level;
 see the list of <code class="docutils literal notranslate"><span class="pre">SEXPTYPE</span></code>s in <a class="reference internal" href="310-compiled.html#tab-sexp-types"><span class="std std-numref">Table 14.1</span></a> and
-<span id="id5">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2025).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span>.</p>
+<span id="id5">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2026).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span>.</p>
 </aside>
 <aside class="footnote brackets" id="footexternalptr" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">4</a><span class="fn-bracket">]</span></span>
@@ -2307,7 +2312,7 @@ Before dispatching to a particular method,
 it creates a couple of hidden variables which give more detail
 on the operation conveyed, e.g., `<code class="docutils literal notranslate"><span class="pre">.Generic</span></code>` or
 `<code class="docutils literal notranslate"><span class="pre">.Class</span></code>`; see <strong class="command">help</strong><code class="code docutils literal notranslate"><span class="pre">(&quot;UseMethod&quot;)</span></code> and
-Section 5 of <span id="id12">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2025).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>.</p>
+Section 5 of <span id="id12">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2026).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>.</p>
 </aside>
 <aside class="footnote brackets" id="foots3consistency" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">8</a><span class="fn-bracket">]</span></span>
@@ -2429,7 +2434,7 @@ As an exercise, check out its source code.</p>
 </aside>
 <aside class="footnote brackets" id="footfactorint" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">22</a><span class="fn-bracket">]</span></span>
-<p><span id="id28">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2025).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span> states: <em>Factors are currently
+<p><span id="id28">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2026).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span> states: <em>Factors are currently
 implemented using an integer
 array to specify the actual levels and a second array of names that are
 mapped to the integers. Rather unfortunately users often make use of the
@@ -2546,7 +2551,7 @@ This would be beautiful, but it is not the case in R.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2026-01-07T10:57:42+0100.
+              Last updated on 2026-07-30T14:17:26+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -2606,7 +2611,7 @@ This would be beautiful, but it is not the case in R.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d7476bd7"></script>
+</div><script src="../_static/documentation_options.js?v=e562d664"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

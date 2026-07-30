@@ -229,7 +229,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.1.9005
+v1.0.2
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -496,7 +496,7 @@ or a whole source file:</p>
 <span class="s">&quot;</span><span class="p">)</span>
 <span class="c1">## expression(x &lt;- runif(5, -1, 1), print(mean(x) + 2))</span>
 <span class="nf">parse</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;2+&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># syntax error - unfinished business</span>
-<span class="c1">## Error in parse(text = &quot;2+&quot;): &lt;text&gt;:2:0: unexpected end of input 1: 2+ ^</span>
+<span class="c1">## Error in `parse()`: ! &lt;text&gt;:2:0: unexpected end of input 1: 2+ ^</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -748,8 +748,7 @@ and a <em>name</em>:</p>
 to prepare the package name programmatically before the call:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">which_package</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;gsl&quot;</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">which_package</span><span class="p">)</span><span class="w">  </span><span class="c1"># library(&quot;which_package&quot;)</span>
-<span class="c1">## Error in library(which_package): there is no package called</span>
-<span class="c1">##     &#39;which_package&#39;</span>
+<span class="c1">## Error in `library()`: ! there is no package called &#39;which_package&#39;</span>
 </pre></div>
 </div>
 <p>In order to make the above possible, we need to
@@ -853,7 +852,7 @@ dig into the call stack much more deeply:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Matching function parameters <em>to</em> the passed arguments
-is done in the following order (see Section 4.3 of <span id="id11">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2025).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>):</p>
+is done in the following order (see Section 4.3 of <span id="id11">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2026).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>):</p>
 <ol class="arabic simple">
 <li><p>First, keyword arguments with names are matched exactly.
 Each name is matched at most once.</p></li>
@@ -880,7 +879,7 @@ arguments (named or not).</p></li>
 <span class="c1">## test(spam = 4, jasmine = &quot;no&quot;, jam = 1, 2, ham = 7)</span>
 <span class="nf">test</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">ja</span><span class="o">=</span><span class="m">7</span><span class="p">)</span><span class="w">  </span><span class="c1"># ambiguous match</span>
 <span class="c1">## Warning in test(1, 2, ja = 7): partial argument match of &#39;ja&#39; to &#39;jasmine&#39;</span>
-<span class="c1">## Error in test(1, 2, ja = 7): argument 3 matches multiple formal arguments</span>
+<span class="c1">## Error in `test()`: ! argument 3 matches multiple formal arguments</span>
 <span class="nf">test</span><span class="p">(</span><span class="n">o</span><span class="o">=</span><span class="m">7</span><span class="p">)</span><span class="w">  </span><span class="c1"># partial matching of `option` failed - `option` is after `...`</span>
 <span class="c1">## test(o = 7)</span>
 </pre></div>
@@ -1018,8 +1017,8 @@ code s-expressions in Lisp), we can express it like:</p>
 <aside class="footnote brackets" id="footpairlist" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">6</a><span class="fn-bracket">]</span></span>
 <p>(*) Actually, a special internal datatype called
-<code class="docutils literal notranslate"><span class="pre">pairlist</span></code>, which is rarely seen at the R level; see <span id="id9">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2025).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span> and
-<span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2025).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">66</a>]</span> for information on how to deal with them in C. In the
+<code class="docutils literal notranslate"><span class="pre">pairlist</span></code>, which is rarely seen at the R level; see <span id="id9">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2026).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span> and
+<span id="id10">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2026).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">66</a>]</span> for information on how to deal with them in C. In the
 current context, seeing pairlists as named lists is perfectly fine.</p>
 </aside>
 <aside class="footnote brackets" id="footinception" role="doc-footnote">
@@ -1064,7 +1063,7 @@ returns a modified version of itself.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2026-01-07T10:57:42+0100.
+              Last updated on 2026-07-30T14:17:26+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1112,7 +1111,7 @@ returns a modified version of itself.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d7476bd7"></script>
+</div><script src="../_static/documentation_options.js?v=e562d664"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

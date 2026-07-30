@@ -229,7 +229,7 @@
 <div class="sidebar-brand">
 An open-access textbook<br />
 by <a href='https://www.gagolewski.com/' style="display: contents">Marek Gagolewski</a><br />
-v1.0.1.9005
+v1.0.2
 </div>
 <form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -423,7 +423,7 @@ Therefore, it was not evaluated (no printing of <em>eggs</em> occurred).</p>
 <span class="nf">print</span><span class="p">(</span><span class="n">testx</span><span class="p">)</span>
 <span class="c1">## [1] &quot;goulash&quot;</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">testy</span><span class="p">)</span>
-<span class="c1">## Error: object &#39;testy&#39; not found</span>
+<span class="c1">## Error: ! object &#39;testy&#39; not found</span>
 </pre></div>
 </div>
 <p>On a side note, the `<strong class="command">~</strong>` (formula) operator will be discussed
@@ -538,7 +538,7 @@ is a shorthand for
 <p class="admonition-title">Note</p>
 <p>(*)
 Internally, lazy evaluation of arguments is implemented using the so-called
-<em>promises</em>, compare <span id="id3">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2025).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>, which consist of:</p>
+<em>promises</em>, compare <span id="id3">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2026).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>, which consist of:</p>
 <ul class="simple">
 <li><p>an expression (which we can access by calling <strong class="command">substitute</strong>);</p></li>
 <li><p>an environment where the expression is to be evaluated
@@ -814,7 +814,7 @@ in <a class="reference internal" href="320-language.html#sec-sys-call"><span cla
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">e</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">match.call</span><span class="p">()[</span><span class="m">-1</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">as.list</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="o">!</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="nf">formals</span><span class="p">(</span><span class="nf">sys.function</span><span class="p">())))])</span>
+<span class="w">    </span><span class="nf">as.list</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="nf">names</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">%notin%</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="nf">formals</span><span class="p">(</span><span class="nf">sys.function</span><span class="p">()))])</span>
 <span class="p">}</span>
 
 <span class="nf">str</span><span class="p">(</span><span class="nf">test</span><span class="p">(</span><span class="m">1+1</span><span class="p">,</span><span class="w"> </span><span class="m">2+2</span><span class="p">,</span><span class="w"> </span><span class="m">3+3</span><span class="p">,</span><span class="w"> </span><span class="m">4+4</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="o">=</span><span class="m">4</span><span class="p">))</span>
@@ -832,7 +832,7 @@ keyword arguments, cannot be referred to by their name
 as if they were local variables:</p>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="n">zzz</span>
 <span class="nf">test</span><span class="p">(</span><span class="n">zzz</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
-<span class="c1">## Error in test(zzz = 3): object &#39;zzz&#39; not found</span>
+<span class="c1">## Error in `test()`: ! object &#39;zzz&#39; not found</span>
 </pre></div>
 </div>
 <p>In other words, no assignment in the local environment is triggered.</p>
@@ -891,7 +891,7 @@ For instance:</p>
 <span class="c1">## [1] &quot;return value&quot;</span>
 <span class="nf">test</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="c1">## roti canai</span>
-<span class="c1">## Error in test(error = TRUE): aaarrgh!</span>
+<span class="c1">## Error in `test()`: ! aaarrgh!</span>
 </pre></div>
 </div>
 <p>We can always manage without <strong class="command">on.exit</strong>,
@@ -955,8 +955,7 @@ choices, similarly to <strong class="command">pmatch</strong>:</p>
 <span class="nf">match.arg</span><span class="p">(</span><span class="s">&quot;s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">choices</span><span class="p">)</span><span class="w">  </span><span class="c1"># partial matching</span>
 <span class="c1">## [1] &quot;spam&quot;</span>
 <span class="nf">match.arg</span><span class="p">(</span><span class="s">&quot;eggplant&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">choices</span><span class="p">)</span><span class="w">  </span><span class="c1"># no match</span>
-<span class="c1">## Error in match.arg(&quot;eggplant&quot;, choices): &#39;arg&#39; should be one of &quot;spam&quot;,</span>
-<span class="c1">##     &quot;bacon&quot;, &quot;eggs&quot;</span>
+<span class="c1">## Error in `match.arg()`: ! &#39;arg&#39; should be one of &quot;spam&quot;, &quot;bacon&quot;, &quot;eggs&quot;</span>
 <span class="nf">match.arg</span><span class="p">(</span><span class="n">choices</span><span class="p">,</span><span class="w"> </span><span class="n">choices</span><span class="p">)</span><span class="w">  </span><span class="c1"># match first</span>
 <span class="c1">## [1] &quot;spam&quot;</span>
 </pre></div>
@@ -972,7 +971,7 @@ of the function it is enclosed in!</p>
 <span class="nf">test</span><span class="p">(</span><span class="s">&quot;s&quot;</span><span class="p">)</span>
 <span class="c1">## [1] &quot;spam&quot;</span>
 <span class="nf">test</span><span class="p">(</span><span class="s">&quot;eggplant&quot;</span><span class="p">)</span>
-<span class="c1">## Error in match.arg(x): &#39;arg&#39; should be one of &quot;spam&quot;, &quot;bacon&quot;, &quot;eggs&quot;</span>
+<span class="c1">## Error in `match.arg()`: ! &#39;arg&#39; should be one of &quot;spam&quot;, &quot;bacon&quot;, &quot;eggs&quot;</span>
 <span class="nf">test</span><span class="p">()</span>
 <span class="c1">## [1] &quot;spam&quot;</span>
 </pre></div>
@@ -1578,9 +1577,9 @@ that we set forth in the <a class="reference internal" href="000-preface.html#ch
 <p>Now that we have reached the end of this course,
 we might be interested in reading:</p>
 <ul class="simple">
-<li><p><em>R Language Definition</em> <span id="id7">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2025).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>,</p></li>
-<li><p><em>R Internals</em> <span id="id8">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2025).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span>,</p></li>
-<li><p><em>Writing R Extensions</em> <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2025).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">66</a>]</span>,</p></li>
+<li><p><em>R Language Definition</em> <span id="id7">[<a class="reference internal" href="999-bibliography.html#id11" title="R Development Core Team. (2026).  R Language Definition. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-lang.html.">70</a>]</span>,</p></li>
+<li><p><em>R Internals</em> <span id="id8">[<a class="reference internal" href="999-bibliography.html#id13" title="R Development Core Team. (2026).  R Internals. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-ints.html.">69</a>]</span>,</p></li>
+<li><p><em>Writing R Extensions</em> <span id="id9">[<a class="reference internal" href="999-bibliography.html#id15" title="R Development Core Team. (2026).  Writing R Extensions. URL: https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html.">66</a>]</span>,</p></li>
 <li><p>R’s source code available at <a class="reference external" href="https://cran.r-project.org/src/base">https://cran.r-project.org/src/base</a>.</p></li>
 </ul>
 <p>What is more, the <code class="docutils literal notranslate"><span class="pre">NEWS</span></code> files available at
@@ -1647,7 +1646,7 @@ Such exceptions go against this natural coping strategy of theirs.</p>
               Some rights reserved. Licensed under <a href='https://creativecommons.org/licenses/by-nc-nd/4.0'>CC BY-NC-ND 4.0</a>.
               Built with <a href="https://sphinx-doc.org/">Sphinx</a>
               and a customised <a href="https://github.com/pradyunsg/furo">Furo</a> theme.
-              Last updated on 2026-01-07T10:57:42+0100.
+              Last updated on 2026-07-30T14:17:26+0200.
               This site will never display any ads: it is a non-profit project.
               It does not collect any data.
             </div>
@@ -1697,7 +1696,7 @@ Such exceptions go against this natural coping strategy of theirs.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d7476bd7"></script>
+</div><script src="../_static/documentation_options.js?v=e562d664"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
